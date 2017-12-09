@@ -1,0 +1,292 @@
+{
+  "AUTHORIZE_KEY": {
+    "authorization_id": 1062,
+    "creation_date": "2017-11-23T09:15:10",
+    "expiry_date": "2017-11-23T09:45:10",
+    "usage_limit": null,
+    "authorization_name": "Read",
+    "status": "Failed",
+    "functional_data": {
+      "card_type_id_enhanced": "1",
+      "login_flag": 2,
+      "proxy_number": "3090",
+      "account_number": "1002000000000001565",
+      "error_number": null
+    },
+    "scope": {
+      "scope_name": "Main Screen",
+      "service_scope": [
+        {
+          "service_name": "GetCardDetailEnhanced ",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "GetCVC ",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "CardActivationSS ",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "CardActivationValidationParameterSSEnhanced",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "CardSearchEnhanced",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "UserRegistration",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "UserRegistrationValidationParametersEnhanced",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "ForgotPassword",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "ForgotPasswordValidationParameterEnhanced",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "W2WTransferInitiateEnhanced",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "GetTransactionHistory",
+          "count_limit": null,
+          "method": "GET ",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "CardLockUnlockRequest",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "FXRateSearch",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[ProductID]"
+        },
+        {
+          "service_name": "GetSecretKey",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[ProxyNumber]"
+        },
+        {
+          "service_name": "GetTransactionDetail ",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "ListStatementDate",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "SearchWalletAccount",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "StatementInformationMultiCurrency",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "StatementsInformation",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "UpdateWalletPriority",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "VirtualCardCreate",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "VirtualCardUpdate",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "W2WTransferConfirm",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber,AccountNumber]"
+        },
+        {
+          "service_name": "ForgotPIN ",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "ForgotPINValidationParameters",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "GenerateOTP ",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "SendOTPSMS ",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "ValidateOTP ",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "ValidateOTPSMS ",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "ForgotUserId ",
+          "count_limit": null,
+          "method": "POST",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "ForgotUserIdValidationParametersEnhanced",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[CardNumber,ProxyNumber]"
+        },
+        {
+          "service_name": "Document_metadata ",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": "Example:/6/*/ENG/*",
+          "data_authorization_keys": "[accessor_id]"
+        },
+        {
+          "service_name": "Transaction_attributes ",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[ProxyNumber]"
+        },
+        {
+          "service_name": "GetProductParametersEnhanced",
+          "count_limit": null,
+          "method": "GET",
+          "uri_mask": null,
+          "data_authorization_keys": "[ProductID]"
+        }
+      ],
+      "data_scope": {
+        "endpoint_id": "2",
+        "accessor_id": "6",
+        "product_id": "1656",
+        "username": "aftab3090",
+        "proxy_number": "3090",
+        "account_number": "1002000000000001565",
+        "proxy_numbers": [
+          3088,
+          3090,
+          3176
+        ]
+      }
+    },
+    "identity": {
+      "identity_name": "Owner of User Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data",
+          "authentication_data": {
+            "public_data": {
+              "username": "aftab3090"
+            },
+            "private_data": null
+          }
+        }
+      ]
+    },
+    "prerequisite_authorization": {
+      "token": "eyJhbGciOiJIUzUxMiJ9.eyJBVVRIT1JJWkVfS0VZIjp7ImF1dGhvcml6YXRpb25faWQiOjEwNjAsImNyZWF0aW9uX2RhdGUiOiIyMDE3LTExLTIzVDA5OjE0OjA0IiwiZXhwaXJ5X2RhdGUiOiIyMDE3LTExLTIzVDA5OjQ0OjA0IiwidXNhZ2VfbGltaXQiOm51bGwsImF1dGhvcml6YXRpb25fbmFtZSI6IkFub255bW91cyIsInN0YXR1cyI6IkZhaWxlZCIsImZ1bmN0aW9uYWxfZGF0YSI6eyJjYXJkX3R5cGVfaWRfZW5oYW5jZWQiOm51bGwsImxvZ2luX2ZsYWciOm51bGwsInByb3h5X251bWJlciI6bnVsbCwiYWNjb3VudF9udW1iZXIiOm51bGwsImVycm9yX251bWJlciI6bnVsbH0sInNjb3BlIjp7InNjb3BlX25hbWUiOiJBbm9ueW1vdXMgU2VydmljZXMiLCJzZXJ2aWNlX3Njb3BlIjpbeyJzZXJ2aWNlX25hbWUiOiJVc2VyUmVnaXN0cmF0aW9uICIsImNvdW50X2xpbWl0IjpudWxsLCJtZXRob2QiOiJQT1NUIiwidXJpX21hc2siOm51bGwsImRhdGFfYXV0aG9yaXphdGlvbl9rZXlzIjoiW0NhcmROdW1iZXIsUHJveHlOdW1iZXJdIn0seyJzZXJ2aWNlX25hbWUiOiJVc2VyUmVnaXN0cmF0aW9uVmFsaWRhdGlvblBhcmFtZXRlcnNFbmhhbmNlZCIsImNvdW50X2xpbWl0IjpudWxsLCJtZXRob2QiOiJHRVQiLCJ1cmlfbWFzayI6bnVsbCwiZGF0YV9hdXRob3JpemF0aW9uX2tleXMiOiJbQ2FyZE51bWJlcixQcm94eU51bWJlcl0ifSx7InNlcnZpY2VfbmFtZSI6IkNhcmRBY3RpdmF0aW9uU1MgIiwiY291bnRfbGltaXQiOm51bGwsIm1ldGhvZCI6IlBPU1QiLCJ1cmlfbWFzayI6bnVsbCwiZGF0YV9hdXRob3JpemF0aW9uX2tleXMiOiJbQ2FyZE51bWJlcixQcm94eU51bWJlcl0ifSx7InNlcnZpY2VfbmFtZSI6IkZvcmdvdFBhc3N3b3JkICIsImNvdW50X2xpbWl0IjpudWxsLCJtZXRob2QiOiJQT1NUIiwidXJpX21hc2siOm51bGwsImRhdGFfYXV0aG9yaXphdGlvbl9rZXlzIjoiW0NhcmROdW1iZXIsUHJveHlOdW1iZXJdIn0seyJzZXJ2aWNlX25hbWUiOiJGb3Jnb3RQYXNzd29yZFZhbGlkYXRpb25QYXJhbWV0ZXJFbmhhbmNlZCIsImNvdW50X2xpbWl0IjpudWxsLCJtZXRob2QiOiJHRVQgIiwidXJpX21hc2siOm51bGwsImRhdGFfYXV0aG9yaXphdGlvbl9rZXlzIjoiW0NhcmROdW1iZXIsUHJveHlOdW1iZXJdIn0seyJzZXJ2aWNlX25hbWUiOiJHZXRTZWNyZXRLZXkgIiwiY291bnRfbGltaXQiOm51bGwsIm1ldGhvZCI6IkdFVCAiLCJ1cmlfbWFzayI6bnVsbCwiZGF0YV9hdXRob3JpemF0aW9uX2tleXMiOiJbUHJveHlOdW1iZXJdIn0seyJzZXJ2aWNlX25hbWUiOiJGb3Jnb3RVc2VySWQgIiwiY291bnRfbGltaXQiOm51bGwsIm1ldGhvZCI6IlBPU1QiLCJ1cmlfbWFzayI6bnVsbCwiZGF0YV9hdXRob3JpemF0aW9uX2tleXMiOiJbQ2FyZE51bWJlcixQcm94eU51bWJlcl0ifSx7InNlcnZpY2VfbmFtZSI6IkZvcmdvdFVzZXJJZFZhbGlkYXRpb25QYXJhbWV0ZXJzRW5oYW5jZWQiLCJjb3VudF9saW1pdCI6bnVsbCwibWV0aG9kIjoiR0VUICIsInVyaV9tYXNrIjpudWxsLCJkYXRhX2F1dGhvcml6YXRpb25fa2V5cyI6IltDYXJkTnVtYmVyLFByb3h5TnVtYmVyXSJ9LHsic2VydmljZV9uYW1lIjoiQ2FyZEFjdGl2YXRpb25WYWxpZGF0aW9uUGFyYW1ldGVyU1NFbmhhbmNlZCIsImNvdW50X2xpbWl0IjpudWxsLCJtZXRob2QiOiJHRVQiLCJ1cmlfbWFzayI6bnVsbCwiZGF0YV9hdXRob3JpemF0aW9uX2tleXMiOiJbQ2FyZE51bWJlcixQcm94eU51bWJlcl0ifV0sImRhdGFfc2NvcGUiOnsiZW5kcG9pbnRfaWQiOiIyIiwiYWNjZXNzb3JfaWQiOiI2IiwicHJvZHVjdF9pZCI6bnVsbCwidXNlcm5hbWUiOm51bGwsInByb3h5X251bWJlciI6bnVsbCwiYWNjb3VudF9udW1iZXIiOm51bGwsInByb3h5X251bWJlcnMiOltdfX0sImlkZW50aXR5Ijp7ImlkZW50aXR5X25hbWUiOiJPd25lciBvZiBBY2Nlc3NvciBEYXRhIiwiYXV0aGVudGljYXRpb25zIjpbeyJhdXRoZW50aWNhdGlvbl9uYW1lIjoiQWNjZXNzb3JfZGF0YSIsImF1dGhlbnRpY2F0aW9uX2RhdGEiOnsicHVibGljX2RhdGEiOnsiYWNjZXNzb3JfbmFtZSI6IkxNTiBNdWx0aSBDdXJyZW5jeSBOYXRpdmUoUUEpIiwicGxhdGZvcm0iOiJpT1MiLCJGSUlEIjoiMTE1MCIsImFwaV9tYWpvcl92ZXJzaW9uIjoiMi54LngiLCJhcHBfdmVyc2lvbiI6IjAuMTAuMSIsImxhbmd1YWdlIjoiZW5nIiwic3BlY2lmaWNfZGF0YSI6eyJJTUVJIjoiOTkwMDAwODYyNDcxODU0IiwibWFudWZhY3R1cmVyIjoiQXBwbGUiLCJtb2RlbCI6IkExNTg2In19LCJwcml2YXRlX2RhdGEiOm51bGx9fV19LCJwcmVyZXF1aXNpdGVfYXV0aG9yaXphdGlvbiI6bnVsbCwidG9rZW4iOm51bGx9LCJleHAiOjE1MTE0MzAyNDR9.Wfjea6KClTkuSbBLWFOwWn4xc2m4_D2WMEZcCs2RhiZbX1S19xNxHG0-sWHCay8CPmMOVbMLy8PSnJ2iEQoIrQ"
+    },
+    "token": null
+  },
+  "exp": 1511430310
+}
