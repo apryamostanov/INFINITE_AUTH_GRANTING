@@ -19,8 +19,11 @@ class T_auth_grant_conf {
     @Value('${infinite.auth.configuration.baseUrl}')
     public String infiniteAuthConfigurationBaseUrl
 
-    @Value('${infinite.auth.configuration.relativeUrls.scopes.search.findByScopeName.usingScopeName}')
-    public String infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameUsingScopeName
+    @Value('${infinite.auth.configuration.relativeUrls.scopes.search.findByScopeName}')
+    public String infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName
+
+    @Value('infinite.auth.configuration.relativeUrls.authorizations.search.findByAuthorizationName}')
+    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsFindByAuthorizationName
 
     @PostConstruct
     void init() {

@@ -5,10 +5,10 @@ import groovy.transform.CompileStatic
 
 @CompileStatic
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Identity {
+class Scope {
 
-    String identityName
-
-    Set<Authentication> authenticationSet = new HashSet<Authentication>()
+    String scopeName
+    Accessor accessor
+    Set<Authorization> authorizationSet = new HashSet<Authorization>()
 
 }
