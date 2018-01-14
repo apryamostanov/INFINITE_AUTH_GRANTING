@@ -1,6 +1,7 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
+import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_util
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -57,12 +58,11 @@ class Token {
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
         } else {
-            Set<Scope> l_scope_set = Scope.create_from_configuration(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()))
+            Set<Scope> l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())) as Set<Scope>
             for (l_scope in l_scope_set) {
                 Token l_token = new Token(scope: l_scope)
                 Set<Token> l_token_set = new HashSet<Token>()
                 l_token_set.add(l_token)
-                //String l_scope_self_href = l_scope?._links?.
                 l_granting_response = Response.ok().entity(l_token_set).build()
             }
         }

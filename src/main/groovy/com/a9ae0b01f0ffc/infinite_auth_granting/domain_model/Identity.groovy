@@ -14,16 +14,4 @@ class Identity {
 
     Set<Authentication> authenticationSet = new HashSet<Authentication>()
 
-    static Set<Identity> create_from_configuration(String i_identity_set_url) {
-        ObjectMapper l_object_mapper = new ObjectMapper()
-        Set<Identity> l_identity_set = new HashSet<Identity>()
-        def (Object l_identity_set_json, Response l_identity_set_response, String l_identity_set_response_body) = okhttp_request(i_identity_set_url)
-        for (l_identity_json in l_identity_set_json?._embedded?.identities) {
-            Identity l_identity = l_object_mapper.readValue(JsonOutput.toJson(l_identity_json), Identity.class)
-            l_identity.getAuthenticationSet().addAll(Authentication.create_from_configuration(l_identity_json?._links?.authenticationSet?.href))
-            l_identity_set.add(l_identity)
-        }
-        return l_identity_set
-    }
-
 }
