@@ -1,10 +1,10 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.base
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_host_name_verifier
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.OkHttpClient
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.ApplicationContext
-import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component
 import other.T_thread_local
 
@@ -16,6 +16,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     static T_thread_local<T_auth_grant_base_5_context> p_auth_base_5_context_thread_local = new T_thread_local<T_auth_grant_base_5_context>()
     GroovyScriptEngine p_authentication_runner = null
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
+    ObjectMapper p_object_mapper = new ObjectMapper()
     @Autowired
     @JsonIgnore
     T_auth_grant_conf p_app_conf
