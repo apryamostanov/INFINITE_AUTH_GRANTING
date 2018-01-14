@@ -41,80 +41,10 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
         }
     }
 
-    static void process_parent_versions(String i_initial_parent_version_url, Version i_initial_version) {
-        String l_parent_version_url = i_initial_parent_version_url
-        Version l_version = i_initial_version
-        ObjectMapper l_object_mapper = new ObjectMapper()
-        while (GC_TRUE) {
-            try {
-                def (Object l_parent_version_json, Response l_parent_version_response, String l_parent_version_response_body) = okhttp_request(l_parent_version_url)
-                Version l_parent_version = l_object_mapper.readValue(l_parent_version_response_body, Version.class)
-                l_version.setParentVersion(l_parent_version)
-                l_version = l_parent_version
-                l_parent_version_url = l_parent_version_json?._links?.parentVersion?.href
-            } catch (E_api_exception e_api_exception) {
-                if (e_api_exception.get_code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                    break
-                } else {
-                    throw e_api_exception
-                }
-            }
-        }
-    }
 
-    static void process_parent_accessors(String i_initial_parent_accessor_url, Accessor i_initial_accessor) {
-        String l_parent_accessor_url = i_initial_parent_accessor_url
-        Accessor l_accessor = i_initial_accessor
-        ObjectMapper l_object_mapper = new ObjectMapper()
-        while (GC_TRUE) {
-            try {
-                def (Object l_parent_accessor_json, Response l_parent_accessor_response, String l_parent_accessor_response_body) = okhttp_request(l_parent_accessor_url)
-                Accessor l_parent_accessor = l_object_mapper.readValue(l_parent_accessor_response_body, Accessor.class)
-                l_accessor.setParentAccessor(l_parent_accessor)
-                l_accessor = l_parent_accessor
-                l_parent_accessor_url = l_parent_accessor_json?._links?.parentAccessor?.href
-            } catch (E_api_exception e_api_exception) {
-                if (e_api_exception.get_code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                    break
-                } else {
-                    throw e_api_exception
-                }
-            }
-        }
-    }
 
-    static void process_prerequisite_authorizations(String i_initial_prerequisite_authorization_url, Authorization i_initial_authorization) {
-        String l_prerequisite_authorization_url = i_initial_prerequisite_authorization_url
-        Authorization l_authorization = i_initial_authorization
-        ObjectMapper l_object_mapper = new ObjectMapper()
-        while (GC_TRUE) {
-            try {
-                def (Object l_prerequisite_authorization_json, Response l_prerequisite_authorization_response, String l_prerequisite_authorization_response_body) = okhttp_request(l_prerequisite_authorization_url)
-                Authorization l_prerequisite_authorization = l_object_mapper.readValue(l_prerequisite_authorization_response_body, Authorization.class)
-                l_authorization.setPrerequisiteAuthorization(l_prerequisite_authorization)
-                l_authorization = l_prerequisite_authorization
-                l_prerequisite_authorization_url = l_prerequisite_authorization_json?._links?.prerequisiteAuthorization?.href
-                def (Object l_identity_set_json, Response l_identity_set_response, String l_identity_set_response_body) = okhttp_request(l_prerequisite_authorization_json?._links?.identitySet?.href)
-                for (l_identity_json in l_identity_set_json?._embedded?.identities) {
-                    Identity l_identity = l_object_mapper.readValue(JsonOutput.toJson(l_identity_json), Identity.class)
-                    l_authorization.getIdentitySet().add(l_identity)
-                    def (Object l_authentication_set_json, Response l_authentication_set_response, String l_authentication_set_response_body) = okhttp_request(l_identity_json?._links?.authenticationSet?.href)
-                    for (l_authentication_json in l_authentication_set_json?._embedded?.authentications) {
-                        Authentication l_authentication = l_object_mapper.readValue(JsonOutput.toJson(l_authentication_json), Authentication.class)
-                        l_identity.getAuthenticationSet().add(l_authentication)
-                    }
-                }
-            } catch (E_api_exception e_api_exception) {
-                if (e_api_exception.get_code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                    break
-                } else {
-                    throw e_api_exception
-                }
-            }
-        }
-    }
-
-    static Object hal_request(String i_href) {
+    static Object hal_request(String i_href, Boolean i_is_traverse = GC_TRAVERSE_NO) {
+        System.out.println(i_href)
         T_client_response l_client_response = okhttp_request(i_href, javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode())
         String l_resource_name
         Object l_hal_resource
@@ -127,7 +57,12 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
                     l_hal_resource.add(l_item)
                     for (l_key in ((Map) l_embedded_resource._links)?.keySet()) {
                         if (l_item.properties.containsKey(l_key)) {
-                            l_item."${l_key}" = hal_request(l_embedded_resource._links?.get(l_key)?.href)
+                            if (i_is_traverse) {
+                                l_item."${l_key}" = hal_request(l_embedded_resource._links?.get(l_key)?.href, GC_TRAVERSE_YES)
+                            }
+                        }
+                        if (l_key == GC_LINK_NAME_SELF && l_item.properties.containsKey(GC_RESOURCE_URL_PROPERTY_NAME)) {
+                            l_item."${GC_RESOURCE_URL_PROPERTY_NAME}" = l_embedded_resource._links?.get(l_key)?.href
                         }
                     }
                 }
@@ -137,7 +72,9 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
                 l_hal_resource = get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_resource), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_resource_name))
                 for (l_key in l_resource._links?.keySet()) {
                     if (l_hal_resource.properties.containsKey(l_key)) {
-                        l_hal_resource."${l_key}" = hal_request(l_resource._links?.get(l_key)?.href)
+                        if (i_is_traverse) {
+                            l_hal_resource."${l_key}" = hal_request(l_resource._links?.get(l_key)?.href, GC_TRAVERSE_YES)
+                        }
                     }
                 }
             }

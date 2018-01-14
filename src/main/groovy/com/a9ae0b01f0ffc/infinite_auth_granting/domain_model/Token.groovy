@@ -1,9 +1,11 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_util
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
@@ -18,19 +20,28 @@ import java.nio.charset.StandardCharsets
 import static base.T_common_base_3_utils.is_null
 
 @Path("/tokens")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 class Token {
 
+    Accessor accessor
+
+    Authorization authorization
+
+    Identity identity
+
     Scope scope
-    Map<String, List<String>> dataFieldListMap
-    String prerequisiteToken
+
+    Integer durationSeconds
+
+    Integer maxUsageCount
+
+    Token prerequisiteToken
+    Token refreshToken
     Date creationDate
     Date expiryDate
-    Integer usageLimit
-    List<Grant> resourceGrantList
     String tokenStatus
     String errorCode
-    Token refreshToken
     String jwt
 
     @Autowired
@@ -58,13 +69,13 @@ class Token {
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
         } else {
-            Set<Scope> l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())) as Set<Scope>
+            Set<Scope> l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_NO) as Set<Scope>
+            Set<Token> l_final_token_set = new HashSet<Token>()
             for (l_scope in l_scope_set) {
-                Token l_token = new Token(scope: l_scope)
-                Set<Token> l_token_set = new HashSet<Token>()
-                l_token_set.add(l_token)
-                l_granting_response = Response.ok().entity(l_token_set).build()
+                Set<Token> l_token_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsTokensSearchFindByScope + URLEncoder.encode(l_scope.resourceUrl, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_YES) as Set<Token>
+                l_final_token_set.addAll(l_token_set)
             }
+            l_granting_response = Response.ok().entity(l_final_token_set).build()
         }
         return l_granting_response
     }

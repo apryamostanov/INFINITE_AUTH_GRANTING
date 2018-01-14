@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Grant {
 
-    RestResource resource
+    RestResource restResource
 
     Set<Method> methodSet = new HashSet<Method>()
 

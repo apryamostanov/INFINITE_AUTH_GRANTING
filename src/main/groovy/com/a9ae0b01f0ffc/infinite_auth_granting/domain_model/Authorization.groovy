@@ -8,5 +8,7 @@ class Authorization {
     String authorizationName
     Set<Identity> identitySet = new HashSet<Identity>()
     Authorization prerequisiteAuthorization
+    String authorizationStatus
+    Accessor accessor
 
 }
