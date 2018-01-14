@@ -12,4 +12,7 @@ class Scope {
     Accessor accessor
     Set<Authorization> authorizationSet = new HashSet<Authorization>()
 
+
+    Set<Grant> grantSet = new HashSet<Grant>()
+
 }

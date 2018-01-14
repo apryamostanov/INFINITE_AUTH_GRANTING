@@ -1,21 +1,20 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
-import groovy.transform.CompileStatic
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-@CompileStatic
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Grant {
 
-    String resourceName
+    RestResource resource
 
-    List<String> methodList
+    Set<Method> methodSet = new HashSet<Method>()
 
-    /*Ownership by another resource with existing grant/access*/
-    Grant parentResourceGrant
+    Grant parentGrant
 
-    String uri
+    Url url
 
-    List<String> searchUriList
+    Set<Url> searchUrlSet = new HashSet<Url>()
 
-    Map<String, List<String>> payloadKeyFieldList
+    Set<DataField> payloadKeyFieldSet = new HashSet<DataField>()
 
 }

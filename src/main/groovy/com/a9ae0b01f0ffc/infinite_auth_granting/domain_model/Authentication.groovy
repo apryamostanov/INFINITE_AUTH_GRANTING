@@ -12,6 +12,14 @@ class Authentication {
 
     String authenticationName
 
+    Set<DataField> publicDataFieldSet = new HashSet<DataField>()
+
+    Set<DataField> privateDataFieldSet = new HashSet<DataField>()
+
+    Set<DataField> keyFieldSet = new HashSet<DataField>()
+
+    Set<DataField> functionalFieldSet = new HashSet<DataField>()
+
 /*
     Boolean validate(List<DataField> publicDataFieldList, List<DataField> privateDataFieldList, List<DataField> functionalDataFieldList, List<DataField> keyDataFieldList) {
         Binding l_binding = new Binding()

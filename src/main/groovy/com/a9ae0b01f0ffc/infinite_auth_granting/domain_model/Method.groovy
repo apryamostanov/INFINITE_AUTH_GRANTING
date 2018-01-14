@@ -2,11 +2,11 @@ package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-class Authorization {
+import static base.T_common_base_1_const.GC_EMPTY_STRING
 
-    String authorizationName
-    Set<Identity> identitySet = new HashSet<Identity>()
-    Authorization prerequisiteAuthorization
+@JsonIgnoreProperties(ignoreUnknown = true)
+class Method {
+
+    String methodName = GC_EMPTY_STRING
 
 }
