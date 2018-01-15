@@ -3,6 +3,7 @@ package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_util
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -13,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import javax.ws.rs.*
+import javax.ws.rs.core.Context
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import javax.ws.rs.core.UriInfo
 import java.nio.charset.StandardCharsets
 
 import static base.T_common_base_3_utils.is_null
@@ -25,10 +28,12 @@ import static base.T_common_base_3_utils.is_null
 class Token {
 
     String resourceName = this.getClass().getSimpleName()
+    String resourceUrl
+    String cacheUrl
+    Boolean isCached = T_auth_grant_base_4_const.GC_IS_CACHED_NO
     String tokenName
     Accessor accessor
 
-    Authorization authorization
 
     Identity identity
 
@@ -65,20 +70,21 @@ class Token {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/search/findByScopeName")
-    Response find_by_scope_name(@QueryParam("scopeName") String i_scope_name) {
+    Response find_by_scope_name(@QueryParam("scopeName") String i_scope_name, @Context UriInfo i_uri_info) {
         Response l_granting_response = Response.ok().entity(new HashSet<Token>()).build()
         ObjectMapper l_object_mapper = new ObjectMapper()
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
         } else {
-            Set<Scope> l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_NO) as Set<Scope>
+            T_resource_set<Scope> l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_NO) as T_resource_set<Scope>
             Set<Token> l_final_token_set = new HashSet<Token>()
-            for (l_scope in l_scope_set) {
-                Set<Token> l_token_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsTokensSearchFindByScope + URLEncoder.encode(l_scope.resourceUrl, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_YES) as Set<Token>
-                l_final_token_set.addAll(l_token_set)
+            for (l_scope in l_scope_set.resourceSet) {
+                T_resource_set<Token> l_token_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsTokensSearchFindByScope + URLEncoder.encode(l_scope.resourceUrl, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_YES) as T_resource_set<Token>
+                l_final_token_set.addAll(l_token_set.getResourceSet())
             }
             l_granting_response = Response.ok().entity(l_final_token_set).build()
         }
+        T_auth_grant_base_5_context.get_app_context().p_resources_by_url.clear()
         return l_granting_response
     }
 

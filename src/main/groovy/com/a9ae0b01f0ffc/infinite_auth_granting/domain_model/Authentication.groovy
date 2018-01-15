@@ -1,25 +1,30 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_client_response
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.json.JsonOutput
 
+import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.GC_IS_CACHED_NO
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_util.okhttp_request
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Authentication {
 
     String resourceName = this.getClass().getSimpleName()
+    String resourceUrl
+    String cacheUrl
+    Boolean isCached = GC_IS_CACHED_NO
     String authenticationName
 
-    Set<DataField> publicDataFieldSet = new HashSet<DataField>()
+    T_resource_set<DataField> publicDataFieldSet
 
-    Set<DataField> privateDataFieldSet = new HashSet<DataField>()
+    T_resource_set<DataField> privateDataFieldSet
 
-    Set<DataField> keyFieldSet = new HashSet<DataField>()
+    T_resource_set<DataField> keyFieldSet
 
-    Set<DataField> functionalFieldSet = new HashSet<DataField>()
+    T_resource_set<DataField> functionalFieldSet
 
     String authenticationStatus
 

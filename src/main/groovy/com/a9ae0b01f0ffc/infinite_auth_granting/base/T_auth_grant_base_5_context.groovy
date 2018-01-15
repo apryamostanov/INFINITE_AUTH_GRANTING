@@ -17,6 +17,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     GroovyScriptEngine p_authentication_runner = null
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
     ObjectMapper p_object_mapper = new ObjectMapper()
+    Map<String, Object> p_resources_by_url = new HashMap<String, Object>()
     @Autowired
     @JsonIgnore
     T_auth_grant_conf p_app_conf

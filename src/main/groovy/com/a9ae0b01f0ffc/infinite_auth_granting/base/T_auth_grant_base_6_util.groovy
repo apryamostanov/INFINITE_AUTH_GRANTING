@@ -1,16 +1,14 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.base
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_client_response
-import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.*
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.E_api_exception
-import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONObject
-import other.E_application_exception
 
 class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
 
@@ -42,19 +40,34 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
     }
 
 
-
     static Object hal_request(String i_href, Boolean i_is_traverse = GC_TRAVERSE_NO) {
+        if (get_app_context().p_resources_by_url.containsKey(i_href)) {
+            System.out.println("From cache: " + i_href)
+            Object l_cached_resource
+            if (get_app_context().p_resources_by_url.get(i_href) instanceof Set) {
+                l_cached_resource = new T_resource_set()
+            } else {
+                l_cached_resource = get_app_context().p_resources_by_url.get(i_href).getClass().newInstance()
+            }
+            if (is_not_null(l_cached_resource)) {
+                l_cached_resource."${GC_CACHE_URL_PROPERTY_NAME}" = i_href
+                l_cached_resource."${GC_RESOURCE_ISCACHED_PROPERTY_NAME}" = GC_IS_CACHED_YES
+                return l_cached_resource
+            } else {
+                return GC_NULL_OBJ_REF
+            }
+        }
         System.out.println(i_href)
         T_client_response l_client_response = okhttp_request(i_href, javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode())
         String l_resource_name
         Object l_hal_resource
         if (is_not_null(l_client_response.p_slurped_response_json)) {
             if (is_not_null(l_client_response.p_slurped_response_json?._embedded)) {
-                l_hal_resource = new HashSet()
+                l_hal_resource = new T_resource_set()
                 for (l_embedded_resource in l_client_response.p_slurped_response_json?._embedded?.values()?.first()) {
                     l_resource_name = l_embedded_resource.resourceName
                     Object l_item = get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_embedded_resource), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_resource_name))
-                    l_hal_resource.add(l_item)
+                    l_hal_resource.resourceSet.add(l_item)
                     for (l_key in ((Map) l_embedded_resource._links)?.keySet()) {
                         if (l_item.properties.containsKey(l_key)) {
                             if (i_is_traverse) {
@@ -76,10 +89,16 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
                             l_hal_resource."${l_key}" = hal_request(l_resource._links?.get(l_key)?.href, GC_TRAVERSE_YES)
                         }
                     }
+                    if (l_key == GC_LINK_NAME_SELF && l_hal_resource.properties.containsKey(GC_RESOURCE_URL_PROPERTY_NAME)) {
+                        l_hal_resource."${GC_RESOURCE_URL_PROPERTY_NAME}" = l_resource._links?.get(l_key)?.href
+                    }
                 }
             }
+            l_hal_resource."${GC_CACHE_URL_PROPERTY_NAME}" = i_href
+            get_app_context().p_resources_by_url.put(i_href, l_hal_resource)
             return l_hal_resource
         } else {
+            get_app_context().p_resources_by_url.put(i_href, GC_NULL_OBJ_REF)
             return GC_NULL_OBJ_REF
         }
     }
