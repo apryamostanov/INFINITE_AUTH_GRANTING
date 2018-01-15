@@ -8,6 +8,7 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Version {
 
+    String resourceName = this.getClass().getSimpleName()
     String versionName = GC_EMPTY_STRING
     Version parentVersion = GC_NULL_OBJ_REF as Version
 

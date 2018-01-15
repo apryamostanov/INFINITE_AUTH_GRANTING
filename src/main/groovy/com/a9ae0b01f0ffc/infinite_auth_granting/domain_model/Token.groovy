@@ -24,6 +24,8 @@ import static base.T_common_base_3_utils.is_null
 @Component
 class Token {
 
+    String resourceName = this.getClass().getSimpleName()
+    String tokenName
     Accessor accessor
 
     Authorization authorization

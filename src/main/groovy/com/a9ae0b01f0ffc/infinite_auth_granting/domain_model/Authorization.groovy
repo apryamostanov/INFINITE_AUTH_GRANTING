@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Authorization {
 
+    String resourceName = this.getClass().getSimpleName()
     String authorizationName
-    Set<Identity> identitySet = new HashSet<Identity>()
-    Authorization prerequisiteAuthorization
     String authorizationStatus
     Accessor accessor
 

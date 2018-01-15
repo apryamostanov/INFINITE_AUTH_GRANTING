@@ -10,6 +10,7 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Accessor {
 
+    String resourceName = this.getClass().getSimpleName()
     String appName
     String accessorName
     String platform

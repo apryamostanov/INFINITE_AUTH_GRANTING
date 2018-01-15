@@ -9,9 +9,9 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Scope {
 
+    String resourceName = this.getClass().getSimpleName()
     String scopeName
     Accessor accessor
-    Set<Authorization> authorizationSet = new HashSet<Authorization>()
 
 
     Set<Grant> grantSet = new HashSet<Grant>()

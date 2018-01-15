@@ -7,6 +7,7 @@ import static base.T_common_base_1_const.GC_EMPTY_STRING
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Url {
 
+    String resourceName = this.getClass().getSimpleName()
     String urlName = GC_EMPTY_STRING
 
 }

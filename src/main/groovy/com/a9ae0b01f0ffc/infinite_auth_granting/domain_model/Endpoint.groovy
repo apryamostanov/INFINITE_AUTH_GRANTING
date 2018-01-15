@@ -10,6 +10,7 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Endpoint {
 
+    String resourceName = this.getClass().getSimpleName()
     String endpointName = GC_EMPTY_STRING
     Version apiVersion = GC_NULL_OBJ_REF as Version
 
