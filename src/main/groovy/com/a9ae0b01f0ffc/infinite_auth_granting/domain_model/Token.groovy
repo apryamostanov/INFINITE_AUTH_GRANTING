@@ -3,6 +3,7 @@ package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_util
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.ReferencingResource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -25,26 +26,21 @@ import static base.T_common_base_3_utils.is_null
 @Path("/tokens")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Component
-class Token {
-
-    String resourceName = this.getClass().getSimpleName()
-    String resourceUrl
-    String cacheUrl
-    Boolean isCached = T_auth_grant_base_4_const.GC_IS_CACHED_NO
+class Token  extends ReferencingResource{
     String tokenName
-    Accessor accessor
+    ReferencingResource accessor
 
 
-    Identity identity
+    ReferencingResource identity
 
-    Scope scope
+    ReferencingResource scope
 
     Integer durationSeconds
 
     Integer maxUsageCount
 
-    Token prerequisiteToken
-    Token refreshToken
+    ReferencingResource prerequisiteToken
+    ReferencingResource refreshToken
     Date creationDate
     Date expiryDate
     String tokenStatus
@@ -76,10 +72,10 @@ class Token {
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
         } else {
-            T_resource_set<Scope> l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_NO) as T_resource_set<Scope>
+            T_resource_set l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_NO) as T_resource_set
             Set<Token> l_final_token_set = new HashSet<Token>()
-            for (l_scope in l_scope_set.resourceSet) {
-                T_resource_set<Token> l_token_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsTokensSearchFindByScope + URLEncoder.encode(l_scope.resourceUrl, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_YES) as T_resource_set<Token>
+            for (l_scope in l_scope_set.getResourceSet()) {
+                T_resource_set l_token_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsTokensSearchFindByScope + URLEncoder.encode(l_scope.resourceAbsoluteUrl, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_YES) as T_resource_set
                 l_final_token_set.addAll(l_token_set.getResourceSet())
             }
             l_granting_response = Response.ok().entity(l_final_token_set).build()

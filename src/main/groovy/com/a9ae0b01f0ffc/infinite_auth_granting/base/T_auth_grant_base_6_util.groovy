@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.base
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.ReferencingResource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_client_response
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.E_api_exception
@@ -40,65 +41,99 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
     }
 
 
-    static Object hal_request(String i_href, Boolean i_is_traverse = GC_TRAVERSE_NO) {
-        if (get_app_context().p_resources_by_url.containsKey(i_href)) {
-            System.out.println("From cache: " + i_href)
-            Object l_cached_resource
-            if (get_app_context().p_resources_by_url.get(i_href) instanceof Set) {
-                l_cached_resource = new T_resource_set()
-            } else {
-                l_cached_resource = get_app_context().p_resources_by_url.get(i_href).getClass().newInstance()
-            }
-            if (is_not_null(l_cached_resource)) {
-                l_cached_resource."${GC_CACHE_URL_PROPERTY_NAME}" = i_href
-                l_cached_resource."${GC_RESOURCE_ISCACHED_PROPERTY_NAME}" = GC_IS_CACHED_YES
-                return l_cached_resource
+    static Object hal_request(String i_url, Boolean i_is_traverse = GC_TRAVERSE_NO) {
+        if (get_app_context().p_resources_by_url.containsKey(i_url)) {
+            if (is_not_null(get_app_context().p_resources_by_url.get(i_url))) {
+                System.out.println("From cache: " + i_url)
+                ReferencingResource l_referenced_resource = new ReferencingResource()
+                l_referenced_resource.setResourceAccessUrl(i_url)
+                l_referenced_resource.setResourceAbsoluteUrl(get_app_context().p_resources_by_url.get(i_url)?.getResourceAbsoluteUrl())
+                l_referenced_resource.setIsReferencing(GC_IS_REFERENCED_YES)
+                return l_referenced_resource
             } else {
                 return GC_NULL_OBJ_REF
             }
         }
-        System.out.println(i_href)
-        T_client_response l_client_response = okhttp_request(i_href, javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode())
+        System.out.println(i_url)
+        T_client_response l_client_response = okhttp_request(i_url, javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode())
         String l_resource_name
-        Object l_hal_resource
+        ReferencingResource l_hal_resource
         if (is_not_null(l_client_response.p_slurped_response_json)) {
             if (is_not_null(l_client_response.p_slurped_response_json?._embedded)) {
                 l_hal_resource = new T_resource_set()
                 for (l_embedded_resource in l_client_response.p_slurped_response_json?._embedded?.values()?.first()) {
                     l_resource_name = l_embedded_resource.resourceName
-                    Object l_item = get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_embedded_resource), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_resource_name))
-                    l_hal_resource.resourceSet.add(l_item)
-                    for (l_key in ((Map) l_embedded_resource._links)?.keySet()) {
-                        if (l_item.properties.containsKey(l_key)) {
-                            if (i_is_traverse) {
-                                l_item."${l_key}" = hal_request(l_embedded_resource._links?.get(l_key)?.href, GC_TRAVERSE_YES)
-                            }
+                    ReferencingResource l_item = get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_embedded_resource), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_resource_name)) as ReferencingResource
+                    if (["https://localhost:8080/api/tokens/3", "https://localhost:8080/api/tokens/7/refreshToken"].contains(i_url)) {
+                        System.out.println("q")
+                    }///////////////\/\/\/\/
+                    if (get_app_context().p_resources_by_url.containsKey(l_embedded_resource._links?.self)) {
+                        if (is_not_null(get_app_context().p_resources_by_url.get(l_embedded_resource._links?.self))) {
+                            System.out.println("From cache: " + i_url)
+                            ReferencingResource l_referenced_resource = new ReferencingResource()
+                            l_referenced_resource.setResourceAccessUrl(i_url)
+                            l_referenced_resource.setResourceAbsoluteUrl(get_app_context().p_resources_by_url.get(i_url)?.getResourceAbsoluteUrl())
+                            l_referenced_resource.setIsReferencing(GC_IS_REFERENCED_YES)
+                            get_app_context().p_resources_by_url.put(i_url, l_referenced_resource)
+                            l_hal_resource.resourceSet.add(l_referenced_resource)
+                        } else {
+                            get_app_context().p_resources_by_url.put(i_url, GC_NULL_OBJ_REF as ReferencingResource)
+                            l_hal_resource.resourceSet.add(GC_NULL_OBJ_REF)
                         }
-                        if (l_key == GC_LINK_NAME_SELF && l_item.properties.containsKey(GC_RESOURCE_URL_PROPERTY_NAME)) {
-                            l_item."${GC_RESOURCE_URL_PROPERTY_NAME}" = l_embedded_resource._links?.get(l_key)?.href
+                    } else {////////////////\/\/\/\
+                        l_hal_resource.resourceSet.add(l_item)
+                        for (l_key in ((Map) l_embedded_resource._links)?.keySet()) {
+                            if (l_item.properties.containsKey(l_key)) {
+                                if (i_is_traverse) {
+                                    l_item."${l_key}" = hal_request(l_embedded_resource._links?.get(l_key)?.href, GC_TRAVERSE_YES)
+                                }
+                            }
+                            if (l_key == GC_LINK_NAME_SELF) {
+                                l_item.setResourceAbsoluteUrl(l_embedded_resource._links?.get(l_key)?.href)
+                                //l_item.setResourceRelativeUrl(i_url)
+                            }
                         }
                     }
                 }
             } else {
                 Object l_resource = l_client_response.p_slurped_response_json
                 l_resource_name = l_resource.resourceName
-                l_hal_resource = get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_resource), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_resource_name))
+                l_hal_resource = get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_resource), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_resource_name)) as ReferencingResource
                 for (l_key in l_resource._links?.keySet()) {
                     if (l_hal_resource.properties.containsKey(l_key)) {
                         if (i_is_traverse) {
                             l_hal_resource."${l_key}" = hal_request(l_resource._links?.get(l_key)?.href, GC_TRAVERSE_YES)
                         }
                     }
-                    if (l_key == GC_LINK_NAME_SELF && l_hal_resource.properties.containsKey(GC_RESOURCE_URL_PROPERTY_NAME)) {
-                        l_hal_resource."${GC_RESOURCE_URL_PROPERTY_NAME}" = l_resource._links?.get(l_key)?.href
+                    if (l_key == GC_LINK_NAME_SELF) {
+                        l_hal_resource.setResourceAbsoluteUrl(l_resource._links?.get(l_key)?.href)
+                    }
+                }
+                if (get_app_context().p_resources_by_url.containsKey(l_hal_resource.getResourceAbsoluteUrl())) {
+                    if (is_not_null(get_app_context().p_resources_by_url.get(l_hal_resource.getResourceAbsoluteUrl()))) {
+                        System.out.println("From cache: " + i_url)
+                        ReferencingResource l_referenced_resource = new ReferencingResource()
+                        l_referenced_resource.setResourceAccessUrl(i_url)
+                        l_referenced_resource.setResourceAbsoluteUrl(get_app_context().p_resources_by_url.get(i_url)?.getResourceAbsoluteUrl())
+                        l_referenced_resource.setIsReferencing(GC_IS_REFERENCED_YES)
+                        get_app_context().p_resources_by_url.put(i_url, l_referenced_resource)
+                        return l_referenced_resource
+                    } else {
+                        get_app_context().p_resources_by_url.put(i_url, GC_NULL_OBJ_REF as ReferencingResource)
+                        return GC_NULL_OBJ_REF
                     }
                 }
             }
-            l_hal_resource."${GC_CACHE_URL_PROPERTY_NAME}" = i_href
-            get_app_context().p_resources_by_url.put(i_href, l_hal_resource)
+            l_hal_resource.setResourceAccessUrl(i_url)
+            if (is_not_null(l_hal_resource.getResourceAccessUrl())) {
+                get_app_context().p_resources_by_url.put(l_hal_resource.getResourceAccessUrl(), l_hal_resource)
+            }
+            if (is_not_null(l_hal_resource.getResourceAbsoluteUrl())) {
+                get_app_context().p_resources_by_url.put(l_hal_resource.getResourceAbsoluteUrl(), l_hal_resource)
+            }
             return l_hal_resource
         } else {
-            get_app_context().p_resources_by_url.put(i_href, GC_NULL_OBJ_REF)
+            get_app_context().p_resources_by_url.put(i_url, GC_NULL_OBJ_REF as ReferencingResource)
             return GC_NULL_OBJ_REF
         }
     }

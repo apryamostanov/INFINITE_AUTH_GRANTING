@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.base
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.ReferencingResource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_host_name_verifier
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -17,7 +18,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     GroovyScriptEngine p_authentication_runner = null
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
     ObjectMapper p_object_mapper = new ObjectMapper()
-    Map<String, Object> p_resources_by_url = new HashMap<String, Object>()
+    Map<String, ReferencingResource> p_resources_by_url = new HashMap<String, ReferencingResource>()
     @Autowired
     @JsonIgnore
     T_auth_grant_conf p_app_conf
