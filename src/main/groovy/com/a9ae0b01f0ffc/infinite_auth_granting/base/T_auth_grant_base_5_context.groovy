@@ -19,6 +19,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
     ObjectMapper p_object_mapper = new ObjectMapper()
     Map<String, T_hal_resource> p_resources_by_reference_url = new HashMap<String, T_hal_resource>()
+    Map<String, T_hal_resource> p_resources_by_self_url = new HashMap<String, T_hal_resource>()
     @Autowired
     @JsonIgnore
     T_auth_grant_conf p_app_conf

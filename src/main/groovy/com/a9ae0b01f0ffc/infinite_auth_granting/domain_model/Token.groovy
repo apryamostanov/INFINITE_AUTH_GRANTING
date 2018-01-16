@@ -39,7 +39,7 @@ class Token  extends T_hal_resource{
 
     Integer maxUsageCount
 
-    T_hal_resource prerequisiteToken
+    T_hal_resource prerequisiteTokenSet
     T_hal_resource refreshToken
     Date creationDate
     Date expiryDate
@@ -73,6 +73,8 @@ class Token  extends T_hal_resource{
         } else {
             T_resource_set l_scope_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_NO) as T_resource_set
             Set<T_hal_resource> l_final_token_set = new HashSet<T_hal_resource>()
+            T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
+            T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
             for (l_scope in l_scope_set.getResourceSet()) {
                 T_resource_set l_token_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsTokensSearchFindByScope + URLEncoder.encode(l_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()), T_auth_grant_base_4_const.GC_TRAVERSE_YES) as T_resource_set
                 l_final_token_set.addAll(l_token_set.getResourceSet())
@@ -80,6 +82,7 @@ class Token  extends T_hal_resource{
             l_granting_response = Response.ok().entity(l_final_token_set).build()
         }
         T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
+        T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
         return l_granting_response
     }
 
