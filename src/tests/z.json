@@ -1,1117 +1,125 @@
-[
-  {
-    "scope": {
-      "scopeName": "Main Screen",
-      "accessor": {
-        "appName": "Any",
-        "accessorName": "Any accessor Multi Currency 2.0.x",
-        "platform": "Any",
-        "appVersion": "Any",
-        "user": "Any",
-        "product": "Any",
-        "productGroup": "Multi Currency",
-        "endpoint": null,
-        "apiVersion": {
-          "versionName": "2.0.x",
-          "parentVersion": null
-        },
-        "parentAccessor": null,
-        "fiid": "Any"
-      },
-      "authorizationSet": [
-        {
-          "authorizationName": "Read",
-          "identitySet": [
-            {
-              "identityName": "Owner of User Data",
-              "authenticationSet": [
-                {
-                  "authenticationName": "User_data",
-                  "publicDataFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "username",
-                      "fieldValue": "%USERNAME%"
-                    }
-                  ],
-                  "privateDataFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "password",
-                      "fieldValue": "%PASSWORD%"
-                    }
-                  ],
-                  "keyFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "error_number",
-                      "fieldValue": "%ERRORNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "login_flag",
-                      "fieldValue": "%LOGINFLAG%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "card_type_id_enhanced",
-                      "fieldValue": "%CARDTYPEIDENHANCED%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "proxy_number",
-                      "fieldValue": "%PROXYNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "account_number",
-                      "fieldValue": "%ACCOUNTNUMBER%"
-                    }
-                  ],
-                  "functionalFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "username",
-                      "fieldValue": "%USERNAME%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "account_number",
-                      "fieldValue": "%ACCOUNTNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "proxy_number",
-                      "fieldValue": "%PROXYNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "product_id",
-                      "fieldValue": "%PRODUCTID%"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "identityName": "Owner of Refresh Data",
-              "authenticationSet": [
-                {
-                  "authenticationName": "Refresh_data",
-                  "publicDataFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "proxy_number",
-                      "fieldValue": "%PROXYNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "old_access_token",
-                      "fieldValue": "%OLDACCESSTOKEN%"
-                    }
-                  ],
-                  "privateDataFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "refresh_token",
-                      "fieldValue": "%REFRESHTOKEN%"
-                    }
-                  ],
-                  "keyFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "login_flag",
-                      "fieldValue": "%LOGINFLAG%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "error_number",
-                      "fieldValue": "%ERRORNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "proxy_number",
-                      "fieldValue": "%PROXYNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "card_type_id_enhanced",
-                      "fieldValue": "%CARDTYPEIDENHANCED%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "account_number",
-                      "fieldValue": "%ACCOUNTNUMBER%"
-                    }
-                  ],
-                  "functionalFieldSet": [
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "username",
-                      "fieldValue": "%USERNAME%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "proxy_number",
-                      "fieldValue": "%PROXYNUMBER%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "product_id",
-                      "fieldValue": "%PRODUCTID%"
-                    },
-                    {
-                      "resourceName": "DataField",
-                      "fieldName": "account_number",
-                      "fieldValue": "%ACCOUNTNUMBER%"
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "prerequisiteAuthorization": {
-            "authorizationName": "Anonymous",
-            "identitySet": [
-              {
-                "identityName": "Owner of Accessor Data",
-                "authenticationSet": [
+{
+  "_embedded": {
+    "authentications": [
+      {
+        "resourceName": "Authentication",
+        "authenticationName": "Accessor_data",
+        "_links": {
+          "self": {
+            "href": "https://localhost:8080/api/authentications/1"
+          },
+          "authentication": {
+            "href": "https://localhost:8080/api/authentications/1"
+          },
+          "publicDataFieldSet": {
+            "href": "https://localhost:8080/api/authentications/1/publicDataFieldSet",
+            "resource": {
+              "resourceName": "EmbeddedResourceSet",
+              "resourceSet": {
+                "dataFields": [
                   {
-                    "authenticationName": "Accessor_data",
-                    "publicDataFieldSet": [
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "accessor_id",
-                        "fieldValue": "%ACCESSORID%"
+                    "resourceName": "DataField",
+                    "fieldName": "accessor_id",
+                    "fieldValue": "%ACCESSORID%",
+                    "_links": {
+                      "self": {
+                        "href": "https://localhost:8080/api/dataFields/5"
                       },
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "language",
-                        "fieldValue": "%LANGUAGE%"
-                      },
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "api_version",
-                        "fieldValue": "%APIVERSION%"
-                      },
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "FIID",
-                        "fieldValue": "%FIID%"
-                      },
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "platform",
-                        "fieldValue": "%PLATFORM%"
-                      },
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "specific_data",
-                        "fieldValue": "%SPECIFICDATA%"
+                      "dataField": {
+                        "href": "https://localhost:8080/api/dataFields/5"
                       }
-                    ],
-                    "privateDataFieldSet": [],
-                    "keyFieldSet": [
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "accessor_id",
-                        "fieldValue": "%ACCESSORID%"
+                    }
+                  },
+                  {
+                    "resourceName": "DataField",
+                    "fieldName": "platform",
+                    "fieldValue": "%PLATFORM%",
+                    "_links": {
+                      "self": {
+                        "href": "https://localhost:8080/api/dataFields/9"
+                      },
+                      "dataField": {
+                        "href": "https://localhost:8080/api/dataFields/9"
                       }
-                    ],
-                    "functionalFieldSet": [
-                      {
-                        "resourceName": "DataField",
-                        "fieldName": "language",
-                        "fieldValue": "%LANGUAGE%"
+                    }
+                  },
+                  {
+                    "resourceName": "DataField",
+                    "fieldName": "FIID",
+                    "fieldValue": "%FIID%",
+                    "_links": {
+                      "self": {
+                        "href": "https://localhost:8080/api/dataFields/10"
+                      },
+                      "dataField": {
+                        "href": "https://localhost:8080/api/dataFields/10"
                       }
-                    ]
+                    }
+                  },
+                  {
+                    "resourceName": "DataField",
+                    "fieldName": "language",
+                    "fieldValue": "%LANGUAGE%",
+                    "_links": {
+                      "self": {
+                        "href": "https://localhost:8080/api/dataFields/13"
+                      },
+                      "dataField": {
+                        "href": "https://localhost:8080/api/dataFields/13"
+                      }
+                    }
+                  },
+                  {
+                    "resourceName": "DataField",
+                    "fieldName": "api_version",
+                    "fieldValue": "%APIVERSION%",
+                    "_links": {
+                      "self": {
+                        "href": "https://localhost:8080/api/dataFields/11"
+                      },
+                      "dataField": {
+                        "href": "https://localhost:8080/api/dataFields/11"
+                      }
+                    }
+                  },
+                  {
+                    "resourceName": "DataField",
+                    "fieldName": "specific_data",
+                    "fieldValue": "%SPECIFICDATA%",
+                    "_links": {
+                      "self": {
+                        "href": "https://localhost:8080/api/dataFields/14"
+                      },
+                      "dataField": {
+                        "href": "https://localhost:8080/api/dataFields/14"
+                      }
+                    }
                   }
                 ]
+              },
+              "_links": {
+                "self": {
+                  "href": "https://localhost:8080/api/authentications/1/publicDataFieldSet"
+                }
               }
-            ],
-            "prerequisiteAuthorization": null
+            }
+          },
+          "privateDataFieldSet": {
+            "href": "https://localhost:8080/api/authentications/1/privateDataFieldSet"
+          },
+          "functionalFieldSet": {
+            "href": "https://localhost:8080/api/authentications/1/functionalFieldSet"
+          },
+          "keyFieldSet": {
+            "href": "https://localhost:8080/api/authentications/1/keyFieldSet"
           }
         }
-      ],
-      "grantSet": [
-        {
-          "resource": {
-            "restResourceName": "GetCardDetailEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "UpdateWalletPriority"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "ForgotPassword"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "SendOTPSMS"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "CardActivationSS"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "GenerateOTP"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "StatementsInformation"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "ValidateOTPSMS"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "CardActivationValidationParameterSSEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "ForgotUserId"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "Document_metadata"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": {
-            "urlName": "/%ACCESSORID%/*/*/*"
-          },
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": []
-        },
-        {
-          "resource": {
-            "restResourceName": "ForgotPasswordValidationParameterEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "CardLockUnlockRequest"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "VirtualCardUpdate"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "FXRateSearch"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProductID",
-              "fieldValue": "%PRODUCTID%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "ValidateOTP"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "ForgotUserIdValidationParametersEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "GetProductParametersEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProductID",
-              "fieldValue": "%PRODUCTID%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "GetSecretKey"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "SetStatementDate"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "ForgotPIN"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "UserRegistration"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "UserRegistrationValidationParametersEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "GetTransactionHistory"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "W2WTransferInitiateEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "CardSearchEnhanced"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "GetCVC"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "Document"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": {
-            "urlName": "/%ACCESSORID%/*/*/*"
-          },
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": []
-        },
-        {
-          "resource": {
-            "restResourceName": "StatementInformationMultiCurrency"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "VirtualCardCreate"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "ForgotPINValidationParameters"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "W2WTransferConfirm"
-          },
-          "methodSet": [
-            {
-              "methodName": "POST"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "SearchWalletAccount"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "AccountNumber",
-              "fieldValue": "%ACCOUNTNUMBER%"
-            }
-          ]
-        },
-        {
-          "resource": {
-            "restResourceName": "GetTransactionDetail"
-          },
-          "methodSet": [
-            {
-              "methodName": "GET"
-            }
-          ],
-          "parentGrant": null,
-          "url": null,
-          "searchUrlSet": [],
-          "payloadKeyFieldSet": [
-            {
-              "resourceName": "DataField",
-              "fieldName": "CardNumber",
-              "fieldValue": "%CARDNUMBER%"
-            },
-            {
-              "resourceName": "DataField",
-              "fieldName": "ProxyNumber",
-              "fieldValue": "%PROXYNUMBER%"
-            }
-          ]
-        }
-      ]
-    },
-    "dataFieldListMap": null,
-    "prerequisiteToken": null,
-    "creationDate": null,
-    "expiryDate": null,
-    "usageLimit": null,
-    "resourceGrantList": null,
-    "tokenStatus": null,
-    "errorCode": null,
-    "refreshToken": null,
-    "jwt": null
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://localhost:8080/api/identities/1/authenticationSet"
+    }
   }
-]
+}

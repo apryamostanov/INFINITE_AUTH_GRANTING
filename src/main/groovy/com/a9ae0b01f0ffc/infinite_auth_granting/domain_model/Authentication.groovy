@@ -1,19 +1,19 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
-import com.a9ae0b01f0ffc.infinite_auth_granting.client.ReferencingResource
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Authentication  extends ReferencingResource{
+class Authentication  extends T_hal_resource{
     String authenticationName
 
-    //ReferencingResource publicDataFieldSet
+    //T_hal_resource publicDataFieldSet
 
-    //ReferencingResource privateDataFieldSet
+    //T_hal_resource privateDataFieldSet
 
-    //ReferencingResource keyFieldSet
+    //T_hal_resource keyFieldSet
 
-    //ReferencingResource functionalFieldSet
+    //T_hal_resource functionalFieldSet
 
     String authenticationStatus
 
