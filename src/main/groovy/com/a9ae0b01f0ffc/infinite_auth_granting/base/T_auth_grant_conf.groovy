@@ -22,8 +22,8 @@ class T_auth_grant_conf {
     @Value('${infinite.auth.configuration.relativeUrls.scopes.search.findByScopeName}')
     public String infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName
 
-    @Value('${infinite.auth.configuration.relativeUrls.tokens.search.findByScope}')
-    public String infiniteAuthConfigurationRelativeUrlsTokensSearchFindByScope
+    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScope}')
+    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScope
 
     @PostConstruct
     void init() {

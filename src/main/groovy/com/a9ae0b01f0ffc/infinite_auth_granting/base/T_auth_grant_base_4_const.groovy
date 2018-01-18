@@ -16,5 +16,7 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_RESOURCE_ISCACHED_PROPERTY_NAME = "isReferencing"
     static final Boolean GC_IS_REFERENCE_YES = true
     static final Boolean GC_IS_REFERENCE_NO = false
+    static final String GC_NEST_MODE_REFERENCE = "reference"
+    static final String GC_NEST_MODE_VALUE = "value"
 
 }

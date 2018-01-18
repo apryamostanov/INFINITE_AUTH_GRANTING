@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 class Authentication  extends T_hal_resource{
     String authenticationName
 
-    //T_hal_resource publicDataFieldSet
+    T_hal_resource publicDataFieldSet
 
-    //T_hal_resource privateDataFieldSet
+    T_hal_resource privateDataFieldSet
 
-    //T_hal_resource keyFieldSet
+    T_hal_resource keyFieldSet
 
-    //T_hal_resource functionalFieldSet
+    T_hal_resource functionalFieldSet
 
-    String authenticationStatus
+    String authenticationStatus = "new"
 
 /*
     Boolean validate(List<DataField> publicDataFieldList, List<DataField> privateDataFieldList, List<DataField> functionalDataFieldList, List<DataField> keyDataFieldList) {

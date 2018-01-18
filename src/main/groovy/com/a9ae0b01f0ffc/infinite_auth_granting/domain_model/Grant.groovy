@@ -13,8 +13,6 @@ class Grant  extends T_hal_resource{
 
     T_hal_resource url
 
-    T_hal_resource searchUrlSet
-
     T_hal_resource payloadKeyFieldSet
 
 }

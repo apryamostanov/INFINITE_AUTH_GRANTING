@@ -7,6 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 class Scope extends T_hal_resource {
     String scopeName
     T_hal_resource accessor
-    //T_hal_resource grantSet
+    T_hal_resource grantSet
 
 }
