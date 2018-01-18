@@ -12,9 +12,10 @@ class Accessor extends T_hal_resource{
     String platform
     String appVersion
     String user
-    String FIID
+    String fiid
     String product
     String productGroup
+    Integer lookupPriority
     T_hal_resource endpoint
     T_hal_resource apiVersion
     T_hal_resource parentAccessor

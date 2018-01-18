@@ -41,6 +41,7 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
     }
 
     static Object hal_request(String i_resource_reference_url, Boolean i_is_traverse = GC_TRAVERSE_NO, String i_nest_mode = GC_NEST_MODE_REFERENCE) {
+        System.out.println(i_resource_reference_url)
         T_hal_resource l_hal_resource_result
         if (get_app_context().p_resources_by_reference_url.containsKey(i_resource_reference_url)) {
             l_hal_resource_result = get_from_reference_cache(i_resource_reference_url, i_nest_mode)
