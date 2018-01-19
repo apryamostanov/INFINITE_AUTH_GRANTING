@@ -7,8 +7,7 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.databind.ObjectMapper
-import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -29,25 +28,26 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 @Component
 class Authorization extends T_hal_resource {
     String authorizationName
-    T_hal_resource accessor
+    Accessor accessor
 
 
-    T_hal_resource authenticationSet
+    T_resource_set<Authentication> authenticationSet
 
-    T_hal_resource scope
+    Scope scope
 
     Integer durationSeconds
 
     Integer maxUsageCount
 
-    T_hal_resource prerequisiteAuthorizationSet
-    T_hal_resource refreshAuthorization
+    T_resource_set<Authorization> prerequisiteAuthorizationSet
+    Authorization refreshAuthorization
     Date creationDate
     Date expiryDate
     String authorizationStatus = GC_STATUS_NEW
     String errorCode
     String jwt
     String authorizationType
+
     @Autowired
     @JsonIgnore
     T_auth_grant_base_5_context p_context
@@ -55,13 +55,17 @@ class Authorization extends T_hal_resource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    void post_list(String i_json_string) {
+    @Produces(MediaType.APPLICATION_JSON)
+    Response post_list(String i_json_string) {
         Object l_parsed_json_array = new JsonSlurper().parseText(i_json_string)
+        Response l_granting_response
+        Set<Authorization> l_authorization_set = new HashSet<Authorization>()
         l_parsed_json_array.each { l_json_array_element ->
-            ObjectMapper l_object_mapper = new ObjectMapper()
-            Authorization l_token = (Authorization) l_object_mapper.readValue(new JsonBuilder(l_json_array_element).toPrettyString(), this.class)
-            System.out.println("Received authorization " + l_token.getAuthorizationName())
+            Authorization l_authorization = T_auth_grant_base_5_context.get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_json_array_element), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_json_array_element.resourceName)) as Authorization
+            l_authorization_set.add(l_authorization)
         }
+        l_granting_response = Response.ok().entity(l_authorization_set).build()
+        return l_granting_response
     }
 
     @GET
@@ -127,7 +131,7 @@ class Authorization extends T_hal_resource {
                                 l_final_authorization_set_specific_accessor.add(l_authorization)
                             } else if (is_null(l_authorization.accessor)) {
                                 l_final_authorization_set_all_accessors.add(l_authorization)
-                            }//TODO: does not work well with reference nest mode
+                            }
                         }
                     }
                 }

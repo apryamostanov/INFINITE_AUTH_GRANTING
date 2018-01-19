@@ -1,0 +1,4 @@
+
+http://localhost:8089/authorizations/search/findByScopeName?nestMode=value&scopeName=Main Screen&accessorAppName=LMN Multi Currency React (FT2 Development)&accessorFiid=1100&accessorProductGroup=Multi Currency&accessorApiVersionName=2.0.x&accessorPlatform=React&accessorFiid=1100&authorizationType=Access
+
+http://localhost:8089/authorizations/search/findByScopeName?nestMode=reference&scopeName=Main Screen&accessorProductGroup=Multi Currency&accessorApiVersionName=2.0.x

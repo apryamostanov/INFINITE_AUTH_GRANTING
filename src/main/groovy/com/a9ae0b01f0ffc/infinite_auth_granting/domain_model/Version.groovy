@@ -10,6 +10,6 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 class Version  extends T_hal_resource{
 
     String versionName = GC_EMPTY_STRING
-    T_hal_resource parentVersion = GC_NULL_OBJ_REF as Version
+    Version parentVersion = GC_NULL_OBJ_REF as Version
 
 }

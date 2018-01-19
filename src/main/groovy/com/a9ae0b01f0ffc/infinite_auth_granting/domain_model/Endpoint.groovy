@@ -9,6 +9,6 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Endpoint  extends T_hal_resource{
     String endpointName = GC_EMPTY_STRING
-    T_hal_resource apiVersion = GC_NULL_OBJ_REF as Version
+    Version apiVersion = GC_NULL_OBJ_REF as Version
 
 }
