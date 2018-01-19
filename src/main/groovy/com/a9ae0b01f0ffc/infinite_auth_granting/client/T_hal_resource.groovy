@@ -6,7 +6,5 @@ class T_hal_resource {
 
     String resourceName = this.getClass().getSimpleName()
     String resourceSelfUrl
-    String resourceReferenceUrl
-    Boolean isReference = T_auth_grant_base_4_const.GC_IS_REFERENCE_NO
 
 }

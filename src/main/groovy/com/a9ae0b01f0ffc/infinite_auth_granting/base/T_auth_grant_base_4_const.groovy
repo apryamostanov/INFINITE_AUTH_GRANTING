@@ -19,5 +19,9 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_NEST_MODE_VALUE = "value"
     static final String GC_NEST_MODE_REFERENCE = "reference"
     static final String GC_ANY = "Any"
+    static final String GC_STATUS_NEW = "new"
+    static final String GC_STATUS_FAILED = "failed"
+    static final String GC_STATUS_SUCCESSFUL = "successful"
+    static final String GC_STATUS_ERROR = "error"
 
 }

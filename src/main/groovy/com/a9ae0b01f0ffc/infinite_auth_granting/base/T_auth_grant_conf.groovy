@@ -25,8 +25,8 @@ class T_auth_grant_conf {
     @Value('${infinite.auth.configuration.relativeUrls.scopes.search.findByScopeNameAndAccessor}')
     public String infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor
 
-    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScope}')
-    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScope
+    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScopeAndAuthorizationType}')
+    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationType
 
     @Value('${infinite.auth.configuration.relativeUrls.versions.search.findByVersionName}')
     public String infiniteAuthConfigurationRelativeUrlsVersionsSearchFindByVersionName

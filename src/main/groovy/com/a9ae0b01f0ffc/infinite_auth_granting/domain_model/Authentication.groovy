@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
@@ -15,7 +16,7 @@ class Authentication  extends T_hal_resource{
 
     T_hal_resource functionalFieldSet
 
-    String authenticationStatus = "new"
+    String authenticationStatus = T_auth_grant_base_4_const.GC_STATUS_NEW
 
 /*
     Boolean validate(List<DataField> publicDataFieldList, List<DataField> privateDataFieldList, List<DataField> functionalDataFieldList, List<DataField> keyDataFieldList) {
