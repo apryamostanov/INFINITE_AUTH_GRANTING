@@ -87,11 +87,11 @@ class Authorization extends T_hal_resource {
             String l_AccessorApiVersionName = nvl(i_AccessorApiVersionName, "Any")
             T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
             T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
-            T_resource_set l_version_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsVersionsSearchFindByVersionName + URLEncoder.encode(l_AccessorApiVersionName, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO, GC_NEST_MODE_VALUE) as T_resource_set
+            T_resource_set l_version_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsVersionsSearchFindByVersionName + URLEncoder.encode(l_AccessorApiVersionName, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO, GC_NEST_MODE_REFERENCE) as T_resource_set
             Set<T_hal_resource> l_final_authorization_set = new HashSet<T_hal_resource>()
             Set<T_hal_resource> l_final_authorization_set_specific_accessor = new HashSet<T_hal_resource>()
             for (l_version in l_version_set.resourceSet) {
-                T_resource_set l_accessor_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAccessors, GC_TRAVERSE_YES, GC_NEST_MODE_VALUE) as T_resource_set
+                T_resource_set l_accessor_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAccessors, GC_TRAVERSE_YES, GC_NEST_MODE_REFERENCE) as T_resource_set
                 List<Accessor> l_matched_accessor_set = new ArrayList<Accessor>()
                 for (Accessor l_accessor in l_accessor_set?.getResourceSet()) {
                     if ([nvl(i_AccessorAppName, "Any"), "Any"].contains(l_accessor.appName)
@@ -110,7 +110,7 @@ class Authorization extends T_hal_resource {
                 l_matched_accessor_set.reverse()
                 Set<Scope> l_scope_set = new HashSet<Scope>()
                 for (l_matched_accessor in l_matched_accessor_set) {
-                    T_resource_set l_scope_resource_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO, GC_NEST_MODE_VALUE) as T_resource_set
+                    T_resource_set l_scope_resource_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO, GC_NEST_MODE_REFERENCE) as T_resource_set
                     l_scope_set.addAll(l_scope_resource_set.getResourceSet() as Collection<? extends Scope>)
                     T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
                     T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
@@ -121,7 +121,7 @@ class Authorization extends T_hal_resource {
                                 l_final_authorization_set_specific_accessor.add(l_authorization)
                             } else if (is_null(l_authorization.accessor)) {
                                 l_final_authorization_set.add(l_authorization)
-                            }
+                            }//TODO: does not work well with reference nest mode
                         }
                     }
                 }
