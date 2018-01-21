@@ -52,6 +52,8 @@ class Authorization extends T_hal_resource {
     @Autowired
     @JsonIgnore
     T_auth_grant_base_5_context p_context
+    @JsonIgnore
+    String[] PC_INGORED_PROPERTY_NAMES = ["p_context", "creationDate", "expiryDate"]
 
     void validate_authorization() {
         Set<T_hal_resource> l_config_authorization_set = find_authorization(
@@ -67,11 +69,14 @@ class Authorization extends T_hal_resource {
                 , accessor?.apiVersion?.versionName
         )
         for (Authorization l_config_authorization in l_config_authorization_set) {
+            System.out.println("Start validation!!!")
             if (match_with_conf(l_config_authorization)) {
+                System.out.println("SUCCESS!!!!!!!!")
                 authorizationStatus = GC_STATUS_SUCCESSFUL
                 set_validity()
-                break
             }
+        }
+        if (authorizationStatus == GC_STATUS_NEW) {
             authorizationStatus = GC_STATUS_FAILED
         }
     }
@@ -149,22 +154,20 @@ class Authorization extends T_hal_resource {
             }
             l_matched_accessor_set = l_matched_accessor_set.sort { it.lookupPriority }
             l_matched_accessor_set = l_matched_accessor_set.reverse()
-            Set<Scope> l_scope_set = new HashSet<Scope>()
+            Set<Scope> l_accessor_scope_set = new HashSet<Scope>()
             for (l_matched_accessor in l_matched_accessor_set) {
                 //specific accessor can have the authorization but no specific scope - only more broader scope
                 System.out.println("Matched accessor: " + l_matched_accessor.accessorName)
                 T_resource_set l_scope_resource_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO) as T_resource_set
-                l_scope_set.addAll(l_scope_resource_set.getResourceSet() as Collection<? extends Scope>)
+                l_accessor_scope_set.addAll(l_scope_resource_set.getResourceSet() as Collection<? extends Scope>)
             }
             T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
             T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
-            for (l_scope in l_scope_set) {
+            for (l_scope in l_accessor_scope_set) {
                 T_resource_set l_authorization_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationType + "?scope=" + URLEncoder.encode(l_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
-                //todo: add accessor to search and search for all accessors; refactor this method - separate initial accessor matching, scope searching and authorization searching.
-                //make it more transparent
                 for (Authorization l_authorization in l_authorization_set.getResourceSet()) {
                     l_authorization.set_validity()
-                    if (l_authorization.accessor?.resourceSelfUrl == l_matched_accessor.resourceSelfUrl) {
+                    if (l_authorization.accessor?.resourceSelfUrl == l_matched_accessor_set.reverse().last().resourceSelfUrl) {
                         l_final_authorization_set_specific_accessor.add(l_authorization)
                     } else if (is_null(l_authorization.accessor)) {
                         l_final_authorization_set_all_accessors.add(l_authorization)
