@@ -1,9 +1,31 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.client
 
+import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
+
 class T_resource_set<T> extends T_hal_resource {
 
     String resourceName = "ResourceSet"
 
     Set<T> resourceSet = new HashSet<T>()
 
+    @Override
+    Boolean match_with_conf(T_hal_resource i_conf_resource) {
+        if (getClass() != i_conf_resource.class) return false
+        T_resource_set<T_hal_resource> l_conf_resource = (T_resource_set) i_conf_resource
+        if (l_conf_resource.resourceSet.size() != resourceSet.size()) return false
+        if (l_conf_resource.resourceSet.size() == resourceSet.size() && resourceSet.size() == GC_ZERO) return true
+        /*T_hal_resource l_sample_resource = resourceSet.getAt(GC_FIRST_INDEX) as T_hal_resource
+        String l_resource_own_name = l_sample_resource.resourceName.substring(GC_FIRST_CHAR, GC_SECOND_INDEX).toLowerCase() + l_sample_resource.resourceName.substring(GC_SECOND_INDEX) + "Name"
+        if (l_sample_resource.properties.containsKey(l_resource_own_name)) {
+            resourceSet.sort { it."$l_resource_own_name" }
+            l_conf_resource.resourceSet.sort { it."$l_resource_own_name" }
+        }*/
+        resourceSet = resourceSet.sort { it.resourceSelfUrl }
+        l_conf_resource.resourceSet = l_conf_resource.resourceSet.sort { it.resourceSelfUrl }
+        for (Integer l_resource_index = GC_ZERO; l_resource_index < l_conf_resource.resourceSet.size(); l_resource_index ++) {
+            if (l_resource_index >= resourceSet.size()) return false
+            if (not(l_conf_resource.resourceSet[l_resource_index].match_with_conf(resourceSet[l_resource_index] as T_hal_resource))) return false
+        }
+        return true
+    }
 }
