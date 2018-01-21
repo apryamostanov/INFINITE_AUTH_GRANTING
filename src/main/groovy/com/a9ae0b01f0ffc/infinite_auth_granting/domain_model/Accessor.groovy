@@ -27,6 +27,5 @@ class Accessor extends T_hal_resource{
     Integer lookupPriority
     Endpoint endpoint
     Version apiVersion
-    Accessor parentAccessor
 
 }

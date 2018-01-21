@@ -53,7 +53,7 @@ class Authorization extends T_hal_resource {
     @JsonIgnore
     T_auth_grant_base_5_context p_context
     @JsonIgnore
-    String[] PC_INGORED_PROPERTY_NAMES = ["p_context", "creationDate", "expiryDate"]
+    String[] p_ignored_property_names = ["p_context", "creationDate", "expiryDate"]
 
     void validate_authorization() {
         Set<T_hal_resource> l_config_authorization_set = find_authorization(
