@@ -23,5 +23,6 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_STATUS_FAILED = "failed"
     static final String GC_STATUS_SUCCESSFUL = "successful"
     static final String GC_STATUS_ERROR = "error"
+    static final String GC_AUTHORIZATION_TYPE_ACCESS = "Access"
 
 }

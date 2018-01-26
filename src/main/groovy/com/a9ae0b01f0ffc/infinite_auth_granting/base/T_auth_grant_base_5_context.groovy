@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import other.T_thread_local
 
+import javax.annotation.PostConstruct
 import javax.net.ssl.HostnameVerifier
+import java.security.Key
+import java.security.KeyStore
 
 @Component
 class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
@@ -18,6 +21,9 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     GroovyScriptEngine p_authentication_runner = null
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
     ObjectMapper p_object_mapper = new ObjectMapper()
+
+    @Autowired
+    T_jwt_manager p_jwt_manager
     Map<String, T_hal_resource> p_resources_by_reference_url = new HashMap<String, T_hal_resource>()
     Map<String, T_hal_resource> p_resources_by_self_url = new HashMap<String, T_hal_resource>()
     @Autowired
@@ -32,10 +38,16 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         p_auth_base_5_context_thread_local.set(this)
     }
 
+    @PostConstruct
+    void init() {
+        if (is_null(p_auth_base_5_context_thread_local.get(T_auth_grant_base_5_context.class))) {
+            p_auth_base_5_context_thread_local.set(new T_auth_grant_base_5_context())
+        }
+    }
+
     static T_auth_grant_base_5_context get_app_context() {
         if (is_null(p_auth_base_5_context_thread_local.get(T_auth_grant_base_5_context.class))) {
             p_auth_base_5_context_thread_local.set(new T_auth_grant_base_5_context())
-
         }
         return p_auth_base_5_context_thread_local.get(T_auth_grant_base_5_context.class) as T_auth_grant_base_5_context
     }
@@ -47,5 +59,6 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     T_auth_grant_conf app_conf() {
         return p_app_conf
     }
+
 
 }

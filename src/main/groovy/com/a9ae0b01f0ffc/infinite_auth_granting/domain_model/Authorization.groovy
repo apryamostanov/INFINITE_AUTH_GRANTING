@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.time.TimeCategory
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -74,6 +76,7 @@ class Authorization extends T_hal_resource {
                 System.out.println("SUCCESS!!!!!!!!")
                 authorizationStatus = GC_STATUS_SUCCESSFUL
                 set_validity()
+                set_jwt()
             }
         }
         if (authorizationStatus == GC_STATUS_NEW) {
@@ -86,6 +89,14 @@ class Authorization extends T_hal_resource {
         use(TimeCategory) {
             expiryDate = creationDate + durationSeconds.seconds
         }
+    }
+
+
+    void set_jwt() {
+        String l_payload = T_auth_grant_base_6_util.get_app_context().p_object_mapper.writeValueAsString(this)
+        jwt = Jwts.builder().setPayload(l_payload).claim()
+                .signWith(SignatureAlgorithm.HS512, p_context.p_jwt_manager.get_jwt_key())
+                .compact()
     }
 
 
@@ -134,7 +145,7 @@ class Authorization extends T_hal_resource {
         T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
         T_resource_set l_version_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsVersionsSearchFindByVersionName + URLEncoder.encode(l_AccessorApiVersionName, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO) as T_resource_set
         Set<T_hal_resource> l_final_authorization_set = new HashSet<T_hal_resource>()
-        Set<T_hal_resource> l_final_authorization_set_all_accessors = new HashSet<T_hal_resource>()
+        Set<T_hal_resource> l_final_authorization_set_any_accessor = new HashSet<T_hal_resource>()
         Set<T_hal_resource> l_final_authorization_set_specific_accessor = new HashSet<T_hal_resource>()
         for (l_version in l_version_set.resourceSet) {
             T_resource_set l_accessor_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAccessors, GC_TRAVERSE_YES) as T_resource_set
@@ -164,13 +175,13 @@ class Authorization extends T_hal_resource {
             T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
             T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
             for (l_scope in l_accessor_scope_set) {
-                T_resource_set l_authorization_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationType + "?scope=" + URLEncoder.encode(l_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
+                T_resource_set l_authorization_set = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationType + "?scope=" + URLEncoder.encode(l_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(nvl(i_authorization_type, GC_AUTHORIZATION_TYPE_ACCESS) as String, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
                 for (Authorization l_authorization in l_authorization_set.getResourceSet()) {
                     l_authorization.set_validity()
                     if (l_authorization.accessor?.resourceSelfUrl == l_matched_accessor_set.reverse().last().resourceSelfUrl) {
                         l_final_authorization_set_specific_accessor.add(l_authorization)
                     } else if (is_null(l_authorization.accessor)) {
-                        l_final_authorization_set_all_accessors.add(l_authorization)
+                        l_final_authorization_set_any_accessor.add(l_authorization)
                     }
                 }
             }
@@ -178,7 +189,7 @@ class Authorization extends T_hal_resource {
         if (!l_final_authorization_set_specific_accessor.isEmpty()) {
             l_final_authorization_set = l_final_authorization_set_specific_accessor
         } else {
-            l_final_authorization_set = l_final_authorization_set_all_accessors
+            l_final_authorization_set = l_final_authorization_set_any_accessor
         }
         T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
         T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
@@ -203,8 +214,6 @@ class Authorization extends T_hal_resource {
         Response l_granting_response = Response.ok().entity(new HashSet<Authorization>()).build()
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
-        } else if (is_null(i_authorization_type)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'authorizationType' is missing")).build()
         } else if (is_null(i_AccessorProductGroup)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorProductGroup' is missing")).build()
         } else if (is_null(i_AccessorApiVersionName)) {

@@ -10,9 +10,7 @@ class Grant  extends T_hal_resource{
 
     T_resource_set<Method> methodSet
 
-    Grant parentGrant
-
-    Url url
+    Url selfUrl
 
     T_resource_set<DataField> payloadKeyFieldSet
 

@@ -1,10 +1,7 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.base
 
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.stereotype.Component
 
 import javax.annotation.PostConstruct
@@ -34,6 +31,19 @@ class T_auth_grant_conf {
 
     @Value('${infinite.auth.configuration.relativeUrls.accessors}')
     public String infiniteAuthConfigurationRelativeUrlsAccessors
+
+
+    @Value('${infinite.auth.granting.jwt.keystore.path}')
+    public String infiniteAuthGrantingJwtKeystorePath
+
+    @Value('${infinite.auth.granting.jwt.keystore.type}')
+    public String infiniteAuthGrantingJwtKeystoreType
+
+    @Value('${infinite.auth.granting.jwt.keystore.password}')
+    public String infiniteAuthGrantingJwtKeystorePassword
+
+    @Value('${infinite.auth.granting.jwt.keystore.alias}')
+    public String infiniteAuthGrantingJwtKeystoreAlias
 
     @PostConstruct
     void init() {
