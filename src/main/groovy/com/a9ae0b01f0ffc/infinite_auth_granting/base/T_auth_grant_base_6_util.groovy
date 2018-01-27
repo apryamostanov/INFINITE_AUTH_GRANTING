@@ -6,15 +6,23 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.E_api_exception
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import groovy.time.TimeCategory
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONObject
 
 class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
+
+    static Boolean like(String str, String expr) {
+        if (str == expr) return true
+        expr = expr.toLowerCase(); // ignoring locale for now
+        expr = expr.replace(".", "\\."); // "\\" is escaped to "\" (thanks, Alan M)
+        // ... escape any other potentially problematic characters here
+        expr = expr.replace("?", ".");
+        expr = expr.replace("%", ".*");
+        str = str.toLowerCase();
+        return str.matches(expr);
+    }
 
     static T_client_response okhttp_request(String i_url, Integer... i_ignore_error_codes = GC_SKIPPED_ARGS as Integer[]) {
         Request l_request = new Request.Builder().url(i_url).build()
@@ -44,7 +52,7 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
     }
 
     static Object hal_request(String i_resource_reference_url, Boolean i_is_traverse = GC_TRAVERSE_NO) {
-        //System.out.println(i_resource_reference_url)
+        System.out.println(i_resource_reference_url)
         T_hal_resource l_hal_resource_result
         if (get_app_context().p_resources_by_reference_url.containsKey(i_resource_reference_url)) {
             l_hal_resource_result = get_from_reference_cache(i_resource_reference_url)
@@ -73,7 +81,7 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
         T_hal_resource l_hal_resource_result
         T_hal_resource l_referenced_resource = get_app_context().p_resources_by_reference_url.get(i_resource_reference_url)
         if (is_not_null(l_referenced_resource)) {
-                l_hal_resource_result = get_app_context().p_resources_by_reference_url.get(i_resource_reference_url)
+            l_hal_resource_result = get_app_context().p_resources_by_reference_url.get(i_resource_reference_url)
         } else {
             l_hal_resource_result = GC_NULL_OBJ_REF as T_hal_resource
         }
@@ -91,7 +99,7 @@ class T_auth_grant_base_6_util extends T_auth_grant_base_5_context {
         }
         l_hal_resource.setResourceSelfUrl(i_slurped_json._links?.self?.href)
         if (get_app_context().p_resources_by_self_url.containsKey(l_hal_resource.getResourceSelfUrl())) {
-                l_hal_resource = get_app_context().p_resources_by_self_url.get(l_hal_resource.getResourceSelfUrl())
+            l_hal_resource = get_app_context().p_resources_by_self_url.get(l_hal_resource.getResourceSelfUrl())
         } else {
             get_app_context().p_resources_by_self_url.put(l_hal_resource.getResourceSelfUrl(), l_hal_resource)
         }

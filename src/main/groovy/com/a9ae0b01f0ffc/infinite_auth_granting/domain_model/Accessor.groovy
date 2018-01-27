@@ -20,12 +20,11 @@ class Accessor extends T_hal_resource{
     String accessorName
     String platform
     String appVersion
-    String user
     String fiid
     String product
     String productGroup
     Integer lookupPriority
-    Endpoint endpoint
-    Version apiVersion
+    String endpointName
+    String apiVersionName
 
 }
