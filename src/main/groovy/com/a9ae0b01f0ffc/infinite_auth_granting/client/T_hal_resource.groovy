@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.client
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.fasterxml.jackson.annotation.JsonIgnore
 
 import static base.T_common_base_1_const.GC_FALSE
@@ -19,7 +20,7 @@ class T_hal_resource {
     @JsonIgnore
     String[] p_ignored_property_names = ["resourceSelfUrl"]
 
-    Boolean match_with_conf(T_hal_resource i_conf_resource) {
+    Boolean match_with_conf(T_hal_resource i_conf_resource, T_auth_grant_base_5_context i_context) {
         if (getClass() != i_conf_resource.class) {
             return false
         }
@@ -30,7 +31,7 @@ class T_hal_resource {
                 if (properties.get(l_prop_name) instanceof T_hal_resource) {
                     System.out.println((T_hal_resource) properties.get(l_prop_name))
                     System.out.println(i_conf_resource.properties.get(l_prop_name))
-                    if (!((T_hal_resource) properties.get(l_prop_name)).match_with_conf(i_conf_resource.properties.get(l_prop_name) as T_hal_resource)) return GC_FALSE
+                    if (!((T_hal_resource) properties.get(l_prop_name)).match_with_conf(i_conf_resource.properties.get(l_prop_name) as T_hal_resource, i_context)) return GC_FALSE
                 } else {
                     System.out.println(properties.get(l_prop_name))
                     System.out.println(i_conf_resource.properties.get(l_prop_name))

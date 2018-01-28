@@ -1,7 +1,7 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
+import com.a9ae0b01f0ffc.infinite_auth_configuration.base.T_auth_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
-import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_6_util
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
@@ -53,12 +53,24 @@ class Authorization extends T_hal_resource {
 
     @Autowired
     @JsonIgnore
-    T_auth_grant_base_5_context p_context
-    @JsonIgnore
-    String[] p_ignored_property_names = ["resourceSelfUrl", "p_context", "creationDate", "expiryDate"]
+    T_auth_grant_base_5_context p_app_context
 
-    void validate_authorization() {
-        Set<T_hal_resource> l_config_authorization_set = find_authorizations(
+    @JsonIgnore
+    String[] p_ignored_property_names = ["resourceSelfUrl", "p_app_context", "creationDate", "expiryDate"]
+
+    @Override
+    Boolean match_with_conf(T_hal_resource i_conf_resource, T_auth_grant_base_5_context i_context) {
+        Boolean l_is_successful = super.match_with_conf(i_conf_resource, i_context)
+        if (l_is_successful) {
+            authorizationStatus = GC_STATUS_SUCCESSFUL
+            set_validity(i_context)
+            set_jwt(i_context)
+        }
+        return l_is_successful
+    }
+
+    void validate_authorization(T_auth_grant_base_5_context i_context) {
+        Set<Authorization> l_config_authorization_set = find_authorizations(
                 scope?.scopeName
                 , authorizationType
                 , accessor?.appName
@@ -69,14 +81,13 @@ class Authorization extends T_hal_resource {
                 , accessor?.productGroup
                 , accessor?.apiVersionName
                 , accessor?.endpointName
+                , i_context
         )
         for (Authorization l_config_authorization in l_config_authorization_set) {
             System.out.println("Start validation!!!")
-            if (match_with_conf(l_config_authorization)) {
+            if (match_with_conf(l_config_authorization, i_context)) {
                 System.out.println("SUCCESS!!!!!!!!")
-                authorizationStatus = GC_STATUS_SUCCESSFUL
-                set_validity()
-                set_jwt()
+                break
             }
         }
         if (authorizationStatus == GC_STATUS_NEW) {
@@ -84,7 +95,7 @@ class Authorization extends T_hal_resource {
         }
     }
 
-    void set_validity() {
+    void set_validity(T_auth_grant_base_5_context i_context) {
         creationDate = new Date()
         use(TimeCategory) {
             expiryDate = creationDate + durationSeconds.seconds
@@ -92,10 +103,10 @@ class Authorization extends T_hal_resource {
     }
 
 
-    void set_jwt() {
-        String l_payload = T_auth_grant_base_6_util.get_app_context().p_object_mapper.writeValueAsString(this)
+    void set_jwt(T_auth_grant_base_5_context i_context) {
+        String l_payload = i_context.p_object_mapper.writeValueAsString(this)
         jwt = Jwts.builder().setPayload(l_payload)
-                .signWith(SignatureAlgorithm.HS512, p_context.p_jwt_manager.get_jwt_key())
+                .signWith(SignatureAlgorithm.HS512, i_context.p_jwt_manager.get_jwt_key())
                 .compact()
     }
 
@@ -108,9 +119,8 @@ class Authorization extends T_hal_resource {
         Response l_granting_response
         Set<Authorization> l_authorization_set = new HashSet<Authorization>()
         l_parsed_json_array.each { l_json_array_element ->
-            Authorization l_authorization = T_auth_grant_base_5_context.get_app_context().p_object_mapper.readValue(JsonOutput.toJson(l_json_array_element), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_json_array_element.resourceName)) as Authorization
-            l_authorization.p_context = p_context
-            l_authorization.validate_authorization()
+            Authorization l_authorization = p_app_context.p_object_mapper.readValue(JsonOutput.toJson(l_json_array_element), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_json_array_element.resourceName)) as Authorization
+            l_authorization.validate_authorization(p_app_context)
             l_authorization_set.add(l_authorization)
         }
         l_granting_response = Response.ok().entity(l_authorization_set).build()
@@ -126,8 +136,9 @@ class Authorization extends T_hal_resource {
             , String i_AccessorProductGroup
             , String i_AccessorApiVersionName
             , String i_AccessorEndpointName
+            , T_auth_grant_base_5_context i_context
     ) {
-        T_resource_set<Accessor> l_accessor_set_to_match = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().matchAccessors
+        T_resource_set<Accessor> l_accessor_set_to_match = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAccessors
                 + "?appName=" + URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name())
                 + "&platform=" + URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name())
                 + "&appVersion=" + URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name())
@@ -140,9 +151,9 @@ class Authorization extends T_hal_resource {
         return l_accessor_set_to_match.resourceSet
     }
 
-    Scope find_scope(String i_scope_name, List<Accessor> i_match_accessor_list) {
+    Scope find_scope(String i_scope_name, List<Accessor> i_match_accessor_list, T_auth_grant_base_5_context i_context) {
         for (Accessor l_matched_accessor in i_match_accessor_list) {
-            T_resource_set<Scope> l_matched_accessor_scopes = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO) as T_resource_set
+            T_resource_set<Scope> l_matched_accessor_scopes = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()), GC_TRAVERSE_NO) as T_resource_set
             if (not(l_matched_accessor_scopes.resourceSet.isEmpty())) {
                 return l_matched_accessor_scopes.resourceSet.first()
             }
@@ -150,17 +161,17 @@ class Authorization extends T_hal_resource {
         return GC_NULL_OBJ_REF as Scope
     }
 
-    Set<Authorization> find_authorizations(Scope i_scope, List<Accessor> i_match_accessor_list, String i_authorization_type) {
-        T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
-        T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
+    Set<Authorization> find_authorizations(Scope i_scope, List<Accessor> i_match_accessor_list, String i_authorization_type, T_auth_grant_base_5_context i_context) {
+        i_context.p_resources_by_reference_url.clear()
+        i_context.p_resources_by_self_url.clear()
         if (is_not_null(i_scope)) {
             for (Accessor l_matched_accessor in i_match_accessor_list) {
-                T_resource_set<Authorization> l_matched_accessor_authorizations = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndAccessor + "?scope=" + URLEncoder.encode(i_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(nvl(i_authorization_type, GC_AUTHORIZATION_TYPE_ACCESS) as String, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
+                T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndAccessor + "?scope=" + URLEncoder.encode(i_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(nvl(i_authorization_type, GC_AUTHORIZATION_TYPE_ACCESS) as String, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
                 if (not(l_matched_accessor_authorizations.resourceSet.isEmpty())) {
                     return l_matched_accessor_authorizations.resourceSet
                 }
             }
-            T_resource_set<Authorization> l_matched_accessor_authorizations = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndDefaultAccessor + "?scope=" + URLEncoder.encode(i_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(nvl(i_authorization_type, GC_AUTHORIZATION_TYPE_ACCESS) as String, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
+            T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndDefaultAccessor + "?scope=" + URLEncoder.encode(i_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(nvl(i_authorization_type, GC_AUTHORIZATION_TYPE_ACCESS) as String, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
             if (not(l_matched_accessor_authorizations.resourceSet.isEmpty())) {
                 return l_matched_accessor_authorizations.resourceSet
             }
@@ -168,7 +179,7 @@ class Authorization extends T_hal_resource {
         } else return new HashSet<Authorization>()
     }
 
-    Set<T_hal_resource> find_authorizations(
+    Set<Authorization> find_authorizations(
             String i_scope_name
             , String i_authorization_type
             , String i_AccessorAppName
@@ -179,6 +190,7 @@ class Authorization extends T_hal_resource {
             , String i_AccessorProductGroup
             , String i_AccessorApiVersionName
             , String i_AccessorEndpointName
+            , T_auth_grant_base_5_context i_context
     ) {
         LinkedList<Accessor> l_matched_accessor_set = find_accessors(
                 i_AccessorAppName
@@ -189,9 +201,10 @@ class Authorization extends T_hal_resource {
                 , i_AccessorProductGroup
                 , i_AccessorApiVersionName
                 , i_AccessorEndpointName
+                , i_context
         )
-        Scope l_target_scope = find_scope(i_scope_name, l_matched_accessor_set)
-        return find_authorizations(l_target_scope, l_matched_accessor_set, i_authorization_type)
+        Scope l_target_scope = find_scope(i_scope_name, l_matched_accessor_set, i_context)
+        return find_authorizations(l_target_scope, l_matched_accessor_set, i_authorization_type, i_context)
     }
 
     @GET
@@ -238,6 +251,7 @@ class Authorization extends T_hal_resource {
                     , i_AccessorProductGroup
                     , i_AccessorApiVersionName
                     , i_AccessorEndPointName
+                    , p_app_context
             )
             l_granting_response = Response.ok().entity(l_final_authorization_set).build()
         }
