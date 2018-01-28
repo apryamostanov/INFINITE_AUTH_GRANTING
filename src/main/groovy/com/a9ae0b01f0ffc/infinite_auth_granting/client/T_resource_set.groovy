@@ -14,11 +14,13 @@ class T_resource_set<T> extends T_hal_resource {
         T_resource_set<T_hal_resource> l_conf_resource = (T_resource_set) i_conf_resource
         if (l_conf_resource.resourceSet.size() != resourceSet.size()) return false
         if (l_conf_resource.resourceSet.size() == resourceSet.size() && resourceSet.size() == GC_ZERO) return true
-        resourceSet = resourceSet.sort { it.resourceSelfUrl }
-        l_conf_resource.resourceSet = l_conf_resource.resourceSet.sort { it.resourceSelfUrl }
+        resourceSet = resourceSet.sort { it.getSortKeyValue() }
+        l_conf_resource.resourceSet = l_conf_resource.resourceSet.sort { it.getSortKeyValue() }
         for (Integer l_resource_index = GC_ZERO; l_resource_index < l_conf_resource.resourceSet.size(); l_resource_index ++) {
             if (l_resource_index >= resourceSet.size()) return false
-            if (not(l_conf_resource.resourceSet[l_resource_index].match_with_conf(resourceSet[l_resource_index] as T_hal_resource))) return false
+            if (not(l_conf_resource.resourceSet[l_resource_index].match_with_conf(resourceSet[l_resource_index] as T_hal_resource))) {
+                return false
+            }
         }
         return true
     }

@@ -17,10 +17,12 @@ class T_hal_resource {
     }
 
     @JsonIgnore
-    String[] p_ignored_property_names = []
+    String[] p_ignored_property_names = ["resourceSelfUrl"]
 
     Boolean match_with_conf(T_hal_resource i_conf_resource) {
-        if (getClass() != i_conf_resource.class) return false
+        if (getClass() != i_conf_resource.class) {
+            return false
+        }
         T_hal_resource l_config_resource = getClass().cast(i_conf_resource) as T_hal_resource
         for (l_prop_name in properties.keySet()) {
             System.out.println("Property: " + l_prop_name)
@@ -39,6 +41,11 @@ class T_hal_resource {
             }
         }
         return GC_TRUE
+    }
+
+    @JsonIgnore
+    String getSortKeyValue() {
+        return resourceSelfUrl
     }
 
 }

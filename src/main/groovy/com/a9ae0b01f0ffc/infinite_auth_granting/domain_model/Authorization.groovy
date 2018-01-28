@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response
 import java.nio.charset.StandardCharsets
 
 import static base.T_common_base_1_const.GC_NULL_OBJ_REF
+import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -54,7 +55,7 @@ class Authorization extends T_hal_resource {
     @JsonIgnore
     T_auth_grant_base_5_context p_context
     @JsonIgnore
-    String[] p_ignored_property_names = ["p_context", "creationDate", "expiryDate"]
+    String[] p_ignored_property_names = ["resourceSelfUrl", "p_context", "creationDate", "expiryDate"]
 
     void validate_authorization() {
         Set<T_hal_resource> l_config_authorization_set = find_authorizations(
@@ -127,14 +128,14 @@ class Authorization extends T_hal_resource {
             , String i_AccessorEndpointName
     ) {
         T_resource_set<Accessor> l_accessor_set_to_match = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().matchAccessors
-                + "?appName="+URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name())
-                + "&platform="+URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name())
-                + "&appVersion="+URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name())
-                + "&fiid="+URLEncoder.encode(i_AccessorFiid, StandardCharsets.UTF_8.name())
-                + "&product="+URLEncoder.encode(nvl(i_AccessorProduct, GC_ANY) as String, StandardCharsets.UTF_8.name())
-                + "&productGroup="+URLEncoder.encode(i_AccessorProductGroup, StandardCharsets.UTF_8.name())
-                + "&apiVersionName="+URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name())
-                + "&endpointName="+URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name())
+                + "?appName=" + URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name())
+                + "&platform=" + URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name())
+                + "&appVersion=" + URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name())
+                + "&fiid=" + URLEncoder.encode(i_AccessorFiid, StandardCharsets.UTF_8.name())
+                + "&product=" + URLEncoder.encode(nvl(i_AccessorProduct, GC_ANY) as String, StandardCharsets.UTF_8.name())
+                + "&productGroup=" + URLEncoder.encode(i_AccessorProductGroup, StandardCharsets.UTF_8.name())
+                + "&apiVersionName=" + URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name())
+                + "&endpointName=" + URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name())
                 , GC_TRAVERSE_YES) as T_resource_set
         return l_accessor_set_to_match.resourceSet
     }
@@ -158,6 +159,10 @@ class Authorization extends T_hal_resource {
                 if (not(l_matched_accessor_authorizations.resourceSet.isEmpty())) {
                     return l_matched_accessor_authorizations.resourceSet
                 }
+            }
+            T_resource_set<Authorization> l_matched_accessor_authorizations = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndDefaultAccessor + "?scope=" + URLEncoder.encode(i_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(nvl(i_authorization_type, GC_AUTHORIZATION_TYPE_ACCESS) as String, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set
+            if (not(l_matched_accessor_authorizations.resourceSet.isEmpty())) {
+                return l_matched_accessor_authorizations.resourceSet
             }
             return new HashSet<Authorization>()
         } else return new HashSet<Authorization>()
@@ -237,6 +242,11 @@ class Authorization extends T_hal_resource {
             l_granting_response = Response.ok().entity(l_final_authorization_set).build()
         }
         return l_granting_response
+    }
+
+    @JsonIgnore
+    String getSortKeyValue() {
+        return authorizationName
     }
 
 }

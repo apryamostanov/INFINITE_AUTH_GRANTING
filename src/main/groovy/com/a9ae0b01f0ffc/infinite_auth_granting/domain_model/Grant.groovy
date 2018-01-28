@@ -2,6 +2,7 @@ package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -12,6 +13,12 @@ class Grant  extends T_hal_resource{
 
     String urlMask
 
-    T_resource_set<DataField> keyFieldSet
+    T_resource_set<Field> keyFieldSet
+
+
+    @JsonIgnore
+    String getSortKeyValue() {
+        return restResourceName + method + urlMask
+    }
 
 }
