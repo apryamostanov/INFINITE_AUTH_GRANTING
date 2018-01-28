@@ -150,6 +150,8 @@ class Authorization extends T_hal_resource {
     }
 
     Set<Authorization> find_authorizations(Scope i_scope, List<Accessor> i_match_accessor_list, String i_authorization_type) {
+        T_auth_grant_base_5_context.get_app_context().p_resources_by_reference_url.clear()
+        T_auth_grant_base_5_context.get_app_context().p_resources_by_self_url.clear()
         if (is_not_null(i_scope)) {
             for (Accessor l_matched_accessor in i_match_accessor_list) {
                 T_resource_set<Authorization> l_matched_accessor_authorizations = T_auth_grant_base_6_util.hal_request(p_context.app_conf().infiniteAuthConfigurationBaseUrl + p_context.app_conf().infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndAccessor + "?scope=" + URLEncoder.encode(i_scope.getResourceSelfUrl(), StandardCharsets.UTF_8.name()) + "&accessor=" + URLEncoder.encode(l_matched_accessor.resourceSelfUrl, StandardCharsets.UTF_8.name()) + "&authorizationType=" + URLEncoder.encode(nvl(i_authorization_type, GC_AUTHORIZATION_TYPE_ACCESS) as String, StandardCharsets.UTF_8.name()), GC_TRAVERSE_YES) as T_resource_set

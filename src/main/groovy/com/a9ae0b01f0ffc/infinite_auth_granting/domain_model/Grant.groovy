@@ -6,12 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Grant  extends T_hal_resource{
-    RestResource restResource
+    String restResourceName
 
-    T_resource_set<Method> methodSet
+    String method
 
-    Url selfUrl
+    String urlMask
 
-    T_resource_set<DataField> payloadKeyFieldSet
+    T_resource_set<DataField> keyFieldSet
 
 }

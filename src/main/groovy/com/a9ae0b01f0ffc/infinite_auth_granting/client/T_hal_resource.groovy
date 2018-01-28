@@ -12,6 +12,11 @@ class T_hal_resource {
     String resourceSelfUrl
 
     @JsonIgnore
+    String getResourceSelfUrl() {
+        return resourceSelfUrl
+    }
+
+    @JsonIgnore
     String[] p_ignored_property_names = []
 
     Boolean match_with_conf(T_hal_resource i_conf_resource) {
