@@ -11,9 +11,4 @@ class Scope extends T_hal_resource {
     Accessor accessor
     T_resource_set<Grant> grantSet
 
-    @JsonIgnore
-    String getSortKeyValue() {
-        return scopeName + accessor.getSortKeyValue()
-    }
-
 }

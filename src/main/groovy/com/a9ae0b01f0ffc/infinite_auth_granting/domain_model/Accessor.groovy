@@ -4,17 +4,8 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-import static base.T_common_base_3_utils.not
-import static base.T_common_base_3_utils.not
-import static base.T_common_base_3_utils.not
-import static base.T_common_base_3_utils.not
-import static base.T_common_base_3_utils.not
-import static base.T_common_base_3_utils.not
-import static base.T_common_base_3_utils.not
-import static base.T_common_base_3_utils.not
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Accessor extends T_hal_resource{
+class Accessor extends T_hal_resource {
 
 
     String appName
@@ -27,10 +18,5 @@ class Accessor extends T_hal_resource{
     Integer lookupPriority
     String endpointName
     String apiVersionName
-
-    @JsonIgnore
-    String getSortKeyValue() {
-        return accessorName
-    }
 
 }

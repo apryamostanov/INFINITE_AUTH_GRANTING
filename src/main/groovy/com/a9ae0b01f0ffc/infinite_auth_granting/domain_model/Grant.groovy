@@ -16,9 +16,4 @@ class Grant  extends T_hal_resource{
     T_resource_set<Field> keyFieldSet
 
 
-    @JsonIgnore
-    String getSortKeyValue() {
-        return restResourceName + method + urlMask
-    }
-
 }

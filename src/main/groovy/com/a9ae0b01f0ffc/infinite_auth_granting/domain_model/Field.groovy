@@ -13,9 +13,5 @@ class Field extends T_hal_resource{
 
     String fieldValue = GC_EMPTY_STRING
 
-    @JsonIgnore
-    String getSortKeyValue() {
-        return fieldName
-    }
 
 }

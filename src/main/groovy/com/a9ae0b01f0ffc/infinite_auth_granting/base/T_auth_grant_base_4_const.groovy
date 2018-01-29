@@ -24,5 +24,19 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_STATUS_SUCCESSFUL = "successful"
     static final String GC_STATUS_ERROR = "error"
     static final String GC_AUTHORIZATION_TYPE_ACCESS = "Access"
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_01 = 1
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_02 = 2
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_03 = 3
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_04 = 4
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_05 = 5
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_06 = 6
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_07 = 7
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_08 = 8
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_09 = 9
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_10 = 10
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_11 = 11
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_12 = 12
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_13 = 13
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_14 = 14
 
 }

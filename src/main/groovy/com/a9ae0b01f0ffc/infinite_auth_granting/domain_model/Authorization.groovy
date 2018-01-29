@@ -1,6 +1,5 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
-import com.a9ae0b01f0ffc.infinite_auth_configuration.base.T_auth_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
@@ -11,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.time.TimeCategory
+import io.jsonwebtoken.Jwt
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.nio.charset.StandardCharsets
 
-import static base.T_common_base_1_const.GC_NULL_OBJ_REF
+import static base.T_common_base_1_const.*
 import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
@@ -55,18 +55,125 @@ class Authorization extends T_hal_resource {
     @JsonIgnore
     T_auth_grant_base_5_context p_app_context
 
-    @JsonIgnore
-    String[] p_ignored_property_names = ["resourceSelfUrl", "p_app_context", "creationDate", "expiryDate"]
 
-    @Override
-    Boolean match_with_conf(T_hal_resource i_conf_resource, T_auth_grant_base_5_context i_context) {
-        Boolean l_is_successful = super.match_with_conf(i_conf_resource, i_context)
-        if (l_is_successful) {
-            authorizationStatus = GC_STATUS_SUCCESSFUL
-            set_validity(i_context)
+    void success(T_auth_grant_base_5_context i_context) {
+        this.authorizationStatus = GC_STATUS_SUCCESSFUL
+        if (is_null(this.jwt)) {
             set_jwt(i_context)
+            set_validity(i_context)
         }
-        return l_is_successful
+    }
+
+    void failure(Integer i_error_code) {
+        this.authorizationStatus = GC_STATUS_FAILED
+        this.errorCode = i_error_code
+    }
+
+    Boolean is_invalid_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+        try {
+            Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_key()).parse(i_jwt_string)
+            Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
+        } catch (Exception ignored) {
+            return GC_FALSE
+        }
+        return GC_TRUE
+    }
+
+    void common_authorization_granting(Authorization i_conf_authorization, T_auth_grant_base_5_context i_context) {
+        Boolean l_is_authentication_needed
+        Authorization l_user_authorization
+        if (is_not_null(this.jwt)) {
+            if (is_invalid_jwt(this.jwt, i_context)) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_01)
+                return
+            }
+            l_user_authorization = jwt2authorization(this.jwt, i_context)
+            if (is_null(l_user_authorization.expiryDate)) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_02)
+                return
+            }
+            if (l_user_authorization.expiryDate.before(new Date())) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_03)
+                return
+            }
+            l_is_authentication_needed = GC_FALSE
+        } else {
+            l_user_authorization = this
+            l_is_authentication_needed = GC_TRUE
+        }
+        if (l_user_authorization.authorizationName != i_conf_authorization.authorizationName) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_04)
+            return
+        }
+        if (is_not_null(i_conf_authorization.prerequisiteAuthorizationSet?.resourceSet)) {
+            if (not(i_conf_authorization.prerequisiteAuthorizationSet?.resourceSet?.isEmpty())) {
+                if (is_null(l_user_authorization.prerequisiteAuthorizationSet?.resourceSet)) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_05)
+                    return
+                }
+                if (l_user_authorization.prerequisiteAuthorizationSet.resourceSet.isEmpty()) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_06)
+                    return
+                }
+                if (l_user_authorization.prerequisiteAuthorizationSet.resourceSet.size() != GC_ONE_ONLY) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_07)
+                    return
+                }
+                Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorizationSet.resourceSet.first()
+                for (Authorization l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet.resourceSet) {
+                    l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)
+                }
+                if (l_prerequisite_user_auth.authorizationStatus != GC_STATUS_SUCCESSFUL) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_08)
+                    return
+                }
+            }
+        }
+        if (is_not_null(i_conf_authorization.refreshAuthorization)) {
+            if (is_null(l_user_authorization.refreshAuthorization)) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_09)
+                return
+            }
+            Authorization l_refresh_user_authorization = l_user_authorization.refreshAuthorization
+            l_refresh_user_authorization.common_authorization_granting(l_refresh_user_authorization, i_context)
+            if (l_refresh_user_authorization.authorizationStatus != GC_STATUS_SUCCESSFUL) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_10)
+                return
+            }
+        }
+        if (l_is_authentication_needed) {
+            if (is_null(l_user_authorization.authenticationSet?.resourceSet)) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_11)
+                return
+            }
+            if (l_user_authorization.authenticationSet.resourceSet.isEmpty()) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_12)
+                return
+            }
+            if (l_user_authorization.authenticationSet.resourceSet.size() != i_conf_authorization.authenticationSet.resourceSet.size()) {
+                failure(GC_AUTHORIZATION_ERROR_CODE_13)
+                return
+            }
+            i_conf_authorization.authenticationSet.resourceSet = i_conf_authorization.authenticationSet.resourceSet.sort { it -> it.authenticationName }
+            l_user_authorization.authenticationSet.resourceSet = l_user_authorization.authenticationSet.resourceSet.sort { it -> it.authenticationName }
+            Integer l_authentication_index = GC_ZERO
+            for (Authentication l_user_authentication in l_user_authorization.authenticationSet.resourceSet) {
+                l_user_authentication.common_authentication_validation(i_conf_authorization.authenticationSet.resourceSet[l_authentication_index])
+                if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_14)
+                    return
+                }
+                l_authentication_index++
+            }
+        }
+        success(i_context)
+        l_user_authorization.scope = i_conf_authorization.scope
+    }
+
+    Authorization jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+        Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_key()).parse(i_jwt_string)
+        Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
+        return l_authorization
     }
 
     void validate_authorization(T_auth_grant_base_5_context i_context) {
@@ -85,7 +192,8 @@ class Authorization extends T_hal_resource {
         )
         for (Authorization l_config_authorization in l_config_authorization_set) {
             System.out.println("Start validation!!!")
-            if (match_with_conf(l_config_authorization, i_context)) {
+            common_authorization_granting(l_config_authorization, i_context)
+            if (this.getAuthorizationStatus() == GC_STATUS_SUCCESSFUL) {
                 System.out.println("SUCCESS!!!!!!!!")
                 break
             }
@@ -256,11 +364,6 @@ class Authorization extends T_hal_resource {
             l_granting_response = Response.ok().entity(l_final_authorization_set).build()
         }
         return l_granting_response
-    }
-
-    @JsonIgnore
-    String getSortKeyValue() {
-        return authorizationName
     }
 
 }

@@ -21,9 +21,8 @@ class Authentication  extends T_hal_resource{
 
     String authenticationStatus = T_auth_grant_base_4_const.GC_STATUS_NEW
 
-    @JsonIgnore
-    String getSortKeyValue() {
-        return authenticationName
+    void common_authentication_validation(Authentication i_conf_authentication) {
+
     }
 
 }
