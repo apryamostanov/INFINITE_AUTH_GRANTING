@@ -38,5 +38,6 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final Integer GC_AUTHORIZATION_ERROR_CODE_12 = 12
     static final Integer GC_AUTHORIZATION_ERROR_CODE_13 = 13
     static final Integer GC_AUTHORIZATION_ERROR_CODE_14 = 14
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_15 = 15
 
 }
