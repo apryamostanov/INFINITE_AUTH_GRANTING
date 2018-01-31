@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import javax.net.ssl.HostnameVerifier
+import java.nio.charset.StandardCharsets
+import java.util.zip.GZIPInputStream
+import java.util.zip.GZIPOutputStream
 
 @Component
 class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
@@ -130,6 +133,22 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
             p_resources_by_self_url.put(l_hal_resource.getResourceSelfUrl(), l_hal_resource)
         }
         return l_hal_resource
+    }
+
+    static def zip(String s){
+        def targetStream = new ByteArrayOutputStream()
+        def zipStream = new GZIPOutputStream(targetStream)
+        zipStream.write(s.getBytes(StandardCharsets.UTF_8.name()))
+        zipStream.close()
+        def zippedBytes = targetStream.toByteArray()
+        targetStream.close()
+        return zippedBytes.encodeBase64()
+    }
+
+    static def unzip(String compressed){
+        def inflaterStream = new GZIPInputStream(new ByteArrayInputStream(compressed.decodeBase64()))
+        def uncompressedStr = inflaterStream.getText(StandardCharsets.UTF_8.name())
+        return uncompressedStr
     }
 
 }

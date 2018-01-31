@@ -140,22 +140,22 @@ class Authorization extends T_hal_resource {
                 return
             }
         }
+        if (is_null(l_user_authorization.identity.authenticationSet?.resourceSet)) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_11)
+            return
+        }
+        if (l_user_authorization.identity.authenticationSet.resourceSet.isEmpty()) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_12)
+            return
+        }
+        if (l_user_authorization.identity.authenticationSet.resourceSet.size() != i_conf_authorization.identity.authenticationSet.resourceSet.size()) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_13)
+            return
+        }
+        i_conf_authorization.identity.authenticationSet.resourceSet = i_conf_authorization.identity.authenticationSet.resourceSet.sort { it -> it.authenticationName }
+        l_user_authorization.identity.authenticationSet.resourceSet = l_user_authorization.identity.authenticationSet.resourceSet.sort { it -> it.authenticationName }
+        Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
-            if (is_null(l_user_authorization.identity.authenticationSet?.resourceSet)) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_11)
-                return
-            }
-            if (l_user_authorization.identity.authenticationSet.resourceSet.isEmpty()) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_12)
-                return
-            }
-            if (l_user_authorization.identity.authenticationSet.resourceSet.size() != i_conf_authorization.identity.authenticationSet.resourceSet.size()) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_13)
-                return
-            }
-            i_conf_authorization.identity.authenticationSet.resourceSet = i_conf_authorization.identity.authenticationSet.resourceSet.sort { it -> it.authenticationName }
-            l_user_authorization.identity.authenticationSet.resourceSet = l_user_authorization.identity.authenticationSet.resourceSet.sort { it -> it.authenticationName }
-            Integer l_authentication_index = GC_ZERO
             for (Authentication l_user_authentication in l_user_authorization.identity.authenticationSet.resourceSet) {
                 l_user_authentication.common_authentication_validation(i_conf_authorization.identity.authenticationSet.resourceSet[l_authentication_index])
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
@@ -170,7 +170,7 @@ class Authorization extends T_hal_resource {
     }
 
     Authorization jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
-        Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_key()).parse(i_jwt_string)
+        Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_key()).parse(i_context.unzip(i_jwt_string))
         Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
         return l_authorization
     }
@@ -214,7 +214,7 @@ class Authorization extends T_hal_resource {
 
 
     void set_jwt(T_auth_grant_base_5_context i_context) {
-        String l_payload = i_context.p_object_mapper.writeValueAsString(this)
+        String l_payload = i_context.zip(i_context.p_object_mapper.writeValueAsString(this))
         jwt = Jwts.builder().setPayload(l_payload)
                 .signWith(SignatureAlgorithm.HS512, i_context.p_jwt_manager.get_jwt_key())
                 .compact()
@@ -302,7 +302,7 @@ class Authorization extends T_hal_resource {
         T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAuthorizations
                 + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())
                 + (is_null(i_identity_name) ? GC_EMPTY_STRING : ("&identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())))
-                + (is_null(i_authorization_type) ? GC_EMPTY_STRING  : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
+                + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
                 , GC_TRAVERSE_YES) as T_resource_set
         if (not(l_matched_accessor_authorizations.resourceSet.isEmpty())) {
             return l_matched_accessor_authorizations.resourceSet
