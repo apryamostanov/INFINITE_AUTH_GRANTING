@@ -21,8 +21,6 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.nio.charset.StandardCharsets
 
-import static base.T_common_base_1_const.*
-import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -83,16 +81,16 @@ class Authorization extends T_hal_resource {
         Authorization l_user_authorization
         if (is_not_null(this.jwt)) {
             if (is_invalid_jwt(this.jwt, i_context)) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_01)
+                failure(GC_AUTHORIZATION_ERROR_CODE_01_INVALID_JWT)
                 return
             }
             l_user_authorization = jwt2authorization(this.jwt, i_context)
             if (is_null(l_user_authorization.expiryDate)) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_02)
+                failure(GC_AUTHORIZATION_ERROR_CODE_02_EMPTY_EXPIRY)
                 return
             }
             if (l_user_authorization.expiryDate.before(new Date())) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_03)
+                failure(GC_AUTHORIZATION_ERROR_CODE_03_EXPIRED)
                 return
             }
             l_is_authentication_needed = GC_FALSE
@@ -101,21 +99,21 @@ class Authorization extends T_hal_resource {
             l_is_authentication_needed = GC_TRUE
         }
         if (l_user_authorization.authorizationName != i_conf_authorization.authorizationName) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_04)
+            failure(GC_AUTHORIZATION_ERROR_CODE_04_WRONG_NAME)
             return
         }
         if (is_not_null(i_conf_authorization.prerequisiteAuthorizationSet?.resourceSet)) {
             if (not(i_conf_authorization.prerequisiteAuthorizationSet?.resourceSet?.isEmpty())) {
                 if (is_null(l_user_authorization.prerequisiteAuthorizationSet?.resourceSet)) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_05)
+                    failure(GC_AUTHORIZATION_ERROR_CODE_05_NO_PREREQUISITES)
                     return
                 }
                 if (l_user_authorization.prerequisiteAuthorizationSet.resourceSet.isEmpty()) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_06)
+                    failure(GC_AUTHORIZATION_ERROR_CODE_06_EMPTY_PREREQUISITES)
                     return
                 }
                 if (l_user_authorization.prerequisiteAuthorizationSet.resourceSet.size() != GC_ONE_ONLY) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_07)
+                    failure(GC_AUTHORIZATION_ERROR_CODE_07_MORE_THEN_ONE_PREREQUISITE)
                     return
                 }
                 Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorizationSet.resourceSet.first()
@@ -123,29 +121,37 @@ class Authorization extends T_hal_resource {
                     l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)
                 }
                 if (l_prerequisite_user_auth.authorizationStatus != GC_STATUS_SUCCESSFUL) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_08)
+                    failure(GC_AUTHORIZATION_ERROR_CODE_08_FAILED_PREREQUISITE)
                     return
                 }
             }
         }
         if (is_not_null(i_conf_authorization.refreshAuthorization)) {
             if (is_null(l_user_authorization.refreshAuthorization)) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_09)
+                failure(GC_AUTHORIZATION_ERROR_CODE_09_UNEXPECTED_REFRESH)
                 return
             }
             Authorization l_refresh_user_authorization = l_user_authorization.refreshAuthorization
             l_refresh_user_authorization.common_authorization_granting(l_refresh_user_authorization, i_context)
             if (l_refresh_user_authorization.authorizationStatus != GC_STATUS_SUCCESSFUL) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_10)
+                failure(GC_AUTHORIZATION_ERROR_CODE_10_FAILED_REFRESH)
                 return
             }
         }
+        if (is_null(l_user_authorization.identity)) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_11_1_NO_IDENTITY)
+            return
+        }
+        if (is_null(l_user_authorization.identity.authenticationSet)) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_11_2_NO_AUTHENTICATIONS)
+            return
+        }
         if (is_null(l_user_authorization.identity.authenticationSet?.resourceSet)) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_11)
+            failure(GC_AUTHORIZATION_ERROR_CODE_11_EMPTY_AUTHENTICATIONS)
             return
         }
         if (l_user_authorization.identity.authenticationSet.resourceSet.isEmpty()) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_12)
+            failure(GC_AUTHORIZATION_ERROR_CODE_12_EMPTY_AUTHENTICATIONS)
             return
         }
         if (l_user_authorization.identity.authenticationSet.resourceSet.size() != i_conf_authorization.identity.authenticationSet.resourceSet.size()) {

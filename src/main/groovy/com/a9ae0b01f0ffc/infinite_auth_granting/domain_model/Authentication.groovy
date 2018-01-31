@@ -6,7 +6,7 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.GC_AUTHORIZATION_ERROR_CODE_04
+import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.GC_AUTHORIZATION_ERROR_CODE_04_WRONG_NAME
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.getGC_STATUS_FAILED
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -32,7 +32,7 @@ class Authentication extends T_hal_resource {
 
     void common_authentication_validation(Authentication i_conf_authentication, T_auth_grant_base_5_context i_context) {
         if (authenticationName != i_conf_authentication.authenticationName) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_04)
+            failure(GC_AUTHORIZATION_ERROR_CODE_04_WRONG_NAME)
             return
         }
         Binding l_binding = new Binding()
