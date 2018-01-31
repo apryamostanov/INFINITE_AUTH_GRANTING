@@ -18,5 +18,6 @@ class Accessor extends T_hal_resource {
     Integer lookupPriority
     String endpointName
     String apiVersionName
+    Integer isForbidden
 
 }

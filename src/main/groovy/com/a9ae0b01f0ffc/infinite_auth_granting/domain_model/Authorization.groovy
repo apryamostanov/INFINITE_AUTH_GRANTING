@@ -157,7 +157,7 @@ class Authorization extends T_hal_resource {
         Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
             for (Authentication l_user_authentication in l_user_authorization.identity.authenticationSet.resourceSet) {
-                l_user_authentication.common_authentication_validation(i_conf_authorization.identity.authenticationSet.resourceSet[l_authentication_index])
+                l_user_authentication.common_authentication_validation(i_conf_authorization.identity.authenticationSet.resourceSet[l_authentication_index], i_context)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_14)
                     return

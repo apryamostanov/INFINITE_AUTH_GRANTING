@@ -13,6 +13,9 @@ class T_auth_grant_conf {
     @Value('${authenticationModulesPath}')
     public String authenticationModulesPath
 
+    @Value('${authenticationModulesExtension}')
+    public String authenticationModulesExtension
+
     @Value('${infinite.auth.configuration.baseUrl}')
     public String infiniteAuthConfigurationBaseUrl
 
