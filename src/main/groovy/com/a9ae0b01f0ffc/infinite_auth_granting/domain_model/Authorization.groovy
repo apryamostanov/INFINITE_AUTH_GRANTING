@@ -56,8 +56,8 @@ class Authorization extends T_hal_resource {
     void success(T_auth_grant_base_5_context i_context) {
         this.authorizationStatus = GC_STATUS_SUCCESSFUL
         if (is_null(this.jwt)) {
-            set_jwt(i_context)
             set_validity(i_context)
+            set_jwt(i_context)
         }
     }
 
@@ -139,11 +139,11 @@ class Authorization extends T_hal_resource {
             }
         }
         if (is_null(l_user_authorization.identity)) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_11_1_NO_IDENTITY)
+            failure(GC_AUTHORIZATION_ERROR_CODE_12_NO_IDENTITY)
             return
         }
         if (is_null(l_user_authorization.identity.authenticationSet)) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_11_2_NO_AUTHENTICATIONS)
+            failure(GC_AUTHORIZATION_ERROR_CODE_13_NO_AUTHENTICATIONS)
             return
         }
         if (is_null(l_user_authorization.identity.authenticationSet?.resourceSet)) {
@@ -151,11 +151,11 @@ class Authorization extends T_hal_resource {
             return
         }
         if (l_user_authorization.identity.authenticationSet.resourceSet.isEmpty()) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_12_EMPTY_AUTHENTICATIONS)
+            failure(GC_AUTHORIZATION_ERROR_CODE_14_EMPTY_AUTHENTICATIONS)
             return
         }
         if (l_user_authorization.identity.authenticationSet.resourceSet.size() != i_conf_authorization.identity.authenticationSet.resourceSet.size()) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_13)
+            failure(GC_AUTHORIZATION_ERROR_CODE_15_WRONG_AUTHENTICATIONS_NUMBER)
             return
         }
         i_conf_authorization.identity.authenticationSet.resourceSet = i_conf_authorization.identity.authenticationSet.resourceSet.sort { it -> it.authenticationName }
@@ -165,7 +165,7 @@ class Authorization extends T_hal_resource {
             for (Authentication l_user_authentication in l_user_authorization.identity.authenticationSet.resourceSet) {
                 l_user_authentication.common_authentication_validation(i_conf_authorization.identity.authenticationSet.resourceSet[l_authentication_index], i_context)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_14)
+                    failure(GC_AUTHORIZATION_ERROR_CODE_16_FAILED_AUTHENTICATION)
                     return
                 }
                 l_authentication_index++
@@ -176,8 +176,8 @@ class Authorization extends T_hal_resource {
     }
 
     Authorization jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
-        Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_key()).parse(i_context.unzip(i_jwt_string))
-        Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
+        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_key()).parse(i_jwt_string)
+        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
         return l_authorization
     }
 
@@ -197,7 +197,7 @@ class Authorization extends T_hal_resource {
                 , identity?.identityName
         )
         if (l_config_authorization_set.size() != GC_ONE_ONLY) {
-            failure(GC_AUTHORIZATION_ERROR_CODE_15)
+            failure(GC_AUTHORIZATION_ERROR_CODE_17)
             return
         }
         Authorization l_config_authorization = l_config_authorization_set.first()
@@ -242,6 +242,8 @@ class Authorization extends T_hal_resource {
         l_granting_response = Response.ok().entity(l_authorization_set).build()
         return l_granting_response
     }
+
+    //TODO: remove accessor from scope (granting only; keep it in configuration)
 
     LinkedList<Accessor> find_accessors(
             String i_AccessorAppName
