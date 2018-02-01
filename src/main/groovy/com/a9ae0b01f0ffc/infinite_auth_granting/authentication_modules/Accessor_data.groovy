@@ -30,6 +30,7 @@ if (io_authentication.publicDataFieldSet.get("appName") == null ||
         io_authentication.publicDataFieldSet.get("productGroup") == null ||
         io_authentication.publicDataFieldSet.get("apiVersionName") == null ||
         io_authentication.publicDataFieldSet.get("endpointName") == null) {
+    //todo: add specific data etc/device data...
     io_authentication.failure()
     return
 }
