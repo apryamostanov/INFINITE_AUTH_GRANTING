@@ -235,15 +235,13 @@ class Authorization extends T_hal_resource {
         Response l_granting_response
         Set<Authorization> l_authorization_set = new HashSet<Authorization>()
         l_parsed_json_array.each { l_json_array_element ->
-            Authorization l_authorization = p_app_context.p_object_mapper.readValue(JsonOutput.toJson(l_json_array_element), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + l_json_array_element.resourceName)) as Authorization
+            Authorization l_authorization = p_app_context.p_object_mapper.readValue(JsonOutput.toJson(l_json_array_element), Authorization.class) as Authorization
             l_authorization.validate_authorization(p_app_context)
             l_authorization_set.add(l_authorization)
         }
         l_granting_response = Response.ok().entity(l_authorization_set).build()
         return l_granting_response
     }
-
-    //TODO: remove accessor from scope (granting only; keep it in configuration)
 
     LinkedList<Accessor> find_accessors(
             String i_AccessorAppName
