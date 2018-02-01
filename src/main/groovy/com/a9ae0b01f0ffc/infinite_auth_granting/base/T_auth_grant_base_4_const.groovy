@@ -18,7 +18,7 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final Boolean GC_IS_REFERENCE_NO = false
     static final String GC_NEST_MODE_VALUE = "value"
     static final String GC_NEST_MODE_REFERENCE = "reference"
-    static final String GC_ANY = "%"
+    static final String GC_ANY = "Any"
     static final String GC_STATUS_NEW = "new"
     static final String GC_STATUS_FAILED = "failed"
     static final String GC_STATUS_SUCCESSFUL = "successful"
@@ -40,6 +40,7 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final Integer GC_AUTHORIZATION_ERROR_CODE_15_WRONG_AUTHENTICATIONS_NUMBER = 15
     static final Integer GC_AUTHORIZATION_ERROR_CODE_16_FAILED_AUTHENTICATION = 16
     static final Integer GC_AUTHORIZATION_ERROR_CODE_17 = 17
+    static final Integer GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY = 18
 
     static final Integer GC_AUTHENTICATION_ERROR_CODE_04_WRONG_NAME = 4
     static final Integer GC_AUTHENTICATION_ERROR_CODE_16_FAILED_AUTHENTICATION = 16

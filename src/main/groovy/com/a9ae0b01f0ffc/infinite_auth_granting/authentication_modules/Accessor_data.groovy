@@ -15,6 +15,8 @@ System.out.println(this.getClass().getSimpleName())
 
 T_auth_grant_base_5_context i_context = binding.getVariable("i_context") as T_auth_grant_base_5_context
 Authentication io_authentication = binding.getVariable("io_authentication") as Authentication
+Map<String, String> o_key_field_map = binding.getVariable("o_key_field_map") as Map<String, String>
+Map<String, String> o_functional_field_map = binding.getVariable("o_functional_field_map") as Map<String, String>
 
 if (is_null(io_authentication.publicDataFieldSet)) {
     io_authentication.failure()
@@ -52,5 +54,5 @@ if (l_accessor_set_to_match.first().isForbidden == 1) {
     io_authentication.failure()
     return
 }
-
+o_key_field_map.put("accessorName", l_accessor_set_to_match.first().accessorName)
 io_authentication.success()

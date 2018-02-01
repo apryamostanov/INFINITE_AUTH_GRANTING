@@ -38,9 +38,9 @@ class Authorization extends T_hal_resource {
 
     Integer maxUsageCount
 
-    Map<String, String> keyFieldSet
+    Map<String, String> keyFieldMap
 
-    Map<String, String> functionalFieldSet
+    Map<String, String> functionalFieldMap
 
     T_resource_set<Authorization> prerequisiteAuthorizationSet
     Authorization refreshAuthorization
@@ -167,7 +167,13 @@ class Authorization extends T_hal_resource {
         Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
             for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
-                l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], i_context)
+                Map<String, String> l_key_field_map = new HashMap<String, String>()
+                Map<String, String> l_functional_field_map = new HashMap<String, String>()
+                l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], l_key_field_map, l_functional_field_map, i_context)
+                if (not(merge_field_maps(l_key_field_map, l_functional_field_map))) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY)
+                    return
+                }
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_16_FAILED_AUTHENTICATION)
                     return
@@ -177,6 +183,24 @@ class Authorization extends T_hal_resource {
         }
         success(i_context)
         l_user_authorization.scope = i_conf_authorization.scope
+    }
+
+    Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
+        for (String l_key in i_key_field_map.keySet()) {
+            if (keyFieldMap == null) keyFieldMap = new HashMap<String, String>()
+            if (keyFieldMap.containsKey(l_key)) {
+                if (keyFieldMap.get(l_key) != i_key_field_map.get(l_key)) return false
+                else keyFieldMap.put(l_key, i_key_field_map.get(l_key))
+            }
+        }
+        for (String l_key in i_functional_field_map.keySet()) {
+            if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
+            if (functionalFieldMap.containsKey(l_key)) {
+                if (functionalFieldMap.get(l_key) != i_functional_field_map.get(l_key)) return false
+                else functionalFieldMap.put(l_key, i_functional_field_map.get(l_key))
+            }
+        }
+        return true
     }
 
     Authorization jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
@@ -259,14 +283,14 @@ class Authorization extends T_hal_resource {
             , T_auth_grant_base_5_context i_context
     ) {
         T_resource_set<Accessor> l_accessor_set_to_match = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAccessors
-                + "?appName=" + URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name())
-                + "&platform=" + URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name())
-                + "&appVersion=" + URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name())
-                + "&fiid=" + URLEncoder.encode(i_AccessorFiid, StandardCharsets.UTF_8.name())
+                + "?a=1" + (is_null(i_AccessorAppName)?GC_EMPTY_STRING:"&appName=" + URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorPlatform)?GC_EMPTY_STRING:"&platform=" + URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorAppVersion)?GC_EMPTY_STRING:"&appVersion=" + URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorFiid)?GC_EMPTY_STRING:"&fiid=" + URLEncoder.encode(i_AccessorFiid, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorProductGroup)?GC_EMPTY_STRING:"&productGroup=" + URLEncoder.encode(i_AccessorProductGroup, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorApiVersionName)?GC_EMPTY_STRING:"&apiVersionName=" + URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorEndpointName)?GC_EMPTY_STRING:"&endpointName=" + URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name()))
                 + "&product=" + URLEncoder.encode(nvl(i_AccessorProduct, GC_ANY) as String, StandardCharsets.UTF_8.name())
-                + "&productGroup=" + URLEncoder.encode(i_AccessorProductGroup, StandardCharsets.UTF_8.name())
-                + "&apiVersionName=" + URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name())
-                + "&endpointName=" + URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name())
                 , GC_TRAVERSE_YES) as T_resource_set
         return l_accessor_set_to_match
     }
@@ -298,24 +322,25 @@ class Authorization extends T_hal_resource {
         )
         i_context.p_resources_by_reference_url.clear()
         i_context.p_resources_by_self_url.clear()
-        for (Accessor l_matched_accessor in l_matched_accessor_set) {
-            T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAuthorizations
+        for (Accessor l_matched_accessor_for_scope in l_matched_accessor_set) {
+            for (Accessor l_matched_accessor_for_authorization in l_matched_accessor_set) {
+            T_resource_set<Scope> l_matched_accessor_scopes = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor
                     + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())
-                    + (is_null(l_matched_accessor.accessorName) ? GC_EMPTY_STRING : ("&accessorName=" + URLEncoder.encode(l_matched_accessor.accessorName, StandardCharsets.UTF_8.name())))
-                    + (is_null(i_identity_name) ? GC_EMPTY_STRING : ("&identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())))
-                    + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
-                    , GC_TRAVERSE_YES) as T_resource_set
-            if (not(l_matched_accessor_authorizations.isEmpty())) {
-                return l_matched_accessor_authorizations
+                    + "&accessor=" + URLEncoder.encode(l_matched_accessor_for_scope.resourceSelfUrl, StandardCharsets.UTF_8.name())
+                    , GC_TRAVERSE_YES
+            ) as T_resource_set<Scope>
+                for (Scope l_matched_accessor_scope in l_matched_accessor_scopes) {
+                    T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAuthorizations
+                            + "?scope=" + URLEncoder.encode(l_matched_accessor_scope.resourceSelfUrl, StandardCharsets.UTF_8.name())
+                            + (is_null(l_matched_accessor_for_authorization.accessorName) ? GC_EMPTY_STRING : ("&accessor=" + URLEncoder.encode(l_matched_accessor_for_authorization.resourceSelfUrl, StandardCharsets.UTF_8.name())))
+                            + (is_null(i_identity_name) ? GC_EMPTY_STRING : ("&identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())))
+                            + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
+                            , GC_TRAVERSE_YES) as T_resource_set
+                    if (not(l_matched_accessor_authorizations.isEmpty())) {
+                        return l_matched_accessor_authorizations
+                    }
+                }
             }
-        }
-        T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAuthorizations
-                + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())
-                + (is_null(i_identity_name) ? GC_EMPTY_STRING : ("&identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())))
-                + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
-                , GC_TRAVERSE_YES) as T_resource_set
-        if (not(l_matched_accessor_authorizations.isEmpty())) {
-            return l_matched_accessor_authorizations
         }
         return new HashSet<Authorization>()
     }
