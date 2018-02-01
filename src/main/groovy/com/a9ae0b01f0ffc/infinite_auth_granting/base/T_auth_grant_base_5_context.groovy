@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.base
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.client.I_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_client_response
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_host_name_verifier
@@ -34,8 +35,8 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
 
     @Autowired
     T_jwt_manager p_jwt_manager
-    Map<String, T_hal_resource> p_resources_by_reference_url = new HashMap<String, T_hal_resource>()
-    Map<String, T_hal_resource> p_resources_by_self_url = new HashMap<String, T_hal_resource>()
+    Map<String, I_hal_resource> p_resources_by_reference_url = new HashMap<String, I_hal_resource>()
+    Map<String, I_hal_resource> p_resources_by_self_url = new HashMap<String, I_hal_resource>()
     @Autowired
     @JsonIgnore
     T_auth_grant_conf p_app_conf
@@ -85,7 +86,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
 
     Object hal_request(String i_resource_reference_url, Boolean i_is_traverse = GC_TRAVERSE_NO) {
         System.out.println(i_resource_reference_url)
-        T_hal_resource l_hal_resource_result
+        I_hal_resource l_hal_resource_result
         if (p_resources_by_reference_url.containsKey(i_resource_reference_url)) {
             l_hal_resource_result = get_from_reference_cache(i_resource_reference_url)
         } else {
@@ -95,7 +96,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
                     l_hal_resource_result = new T_resource_set()
                     l_hal_resource_result.setResourceSelfUrl(l_client_response.p_slurped_response_json?._links?.self?.href)
                     for (l_embedded_resource in l_client_response.p_slurped_response_json?._embedded?.values()?.first()) {
-                        l_hal_resource_result.resourceSet.add(slurped_json2resource(l_embedded_resource, i_is_traverse, i_resource_reference_url))
+                        l_hal_resource_result.add(slurped_json2resource(l_embedded_resource, i_is_traverse, i_resource_reference_url))
                     }
                 } else {
                     l_hal_resource_result = slurped_json2resource(l_client_response.p_slurped_response_json, i_is_traverse, i_resource_reference_url)
@@ -109,9 +110,9 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     }
 
 
-    T_hal_resource get_from_reference_cache(String i_resource_reference_url) {
-        T_hal_resource l_hal_resource_result
-        T_hal_resource l_referenced_resource = p_resources_by_reference_url.get(i_resource_reference_url)
+    I_hal_resource get_from_reference_cache(String i_resource_reference_url) {
+        I_hal_resource l_hal_resource_result
+        I_hal_resource l_referenced_resource = p_resources_by_reference_url.get(i_resource_reference_url)
         if (is_not_null(l_referenced_resource)) {
             l_hal_resource_result = p_resources_by_reference_url.get(i_resource_reference_url)
         } else {
@@ -120,8 +121,8 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         return l_hal_resource_result
     }
 
-    T_hal_resource slurped_json2resource(Object i_slurped_json, Boolean i_is_traverse, String i_resource_reference_url) {
-        T_hal_resource l_hal_resource = new ObjectMapper().readValue(JsonOutput.toJson(i_slurped_json), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + i_slurped_json.resourceName)) as T_hal_resource
+    I_hal_resource slurped_json2resource(Object i_slurped_json, Boolean i_is_traverse, String i_resource_reference_url) {
+        I_hal_resource l_hal_resource = new ObjectMapper().readValue(JsonOutput.toJson(i_slurped_json), Class.forName(GC_DOMAIN_MODEL_CLASS_PREFIX + i_slurped_json.resourceName)) as T_hal_resource
         if (i_is_traverse) {
             for (l_key in i_slurped_json._links?.keySet()) {
                 if (l_hal_resource.properties.containsKey(l_key)) {

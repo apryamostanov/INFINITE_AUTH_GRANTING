@@ -16,6 +16,11 @@ System.out.println(this.getClass().getSimpleName())
 T_auth_grant_base_5_context i_context = binding.getVariable("i_context") as T_auth_grant_base_5_context
 Authentication io_authentication = binding.getVariable("io_authentication") as Authentication
 
+if (is_null(io_authentication.publicDataFieldSet)) {
+    io_authentication.failure()
+    return
+}
+
 if (io_authentication.publicDataFieldSet.get("appName") == null ||
         io_authentication.publicDataFieldSet.get("platform") == null ||
         io_authentication.publicDataFieldSet.get("appVersion") == null ||
@@ -38,12 +43,12 @@ T_resource_set<Accessor> l_accessor_set_to_match = i_context.hal_request(i_conte
         + "&endpointName=" + URLEncoder.encode(io_authentication.publicDataFieldSet.get("endpointName"), StandardCharsets.UTF_8.name())
         , GC_TRAVERSE_YES) as T_resource_set
 
-if (l_accessor_set_to_match.resourceSet.isEmpty()) {
+if (l_accessor_set_to_match.isEmpty()) {
     io_authentication.failure()
     return
 }
 
-if (l_accessor_set_to_match.resourceSet.first().isForbidden == 1) {
+if (l_accessor_set_to_match.first().isForbidden == 1) {
     io_authentication.failure()
     return
 }

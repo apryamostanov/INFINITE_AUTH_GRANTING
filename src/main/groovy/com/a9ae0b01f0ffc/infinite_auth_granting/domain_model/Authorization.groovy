@@ -102,22 +102,22 @@ class Authorization extends T_hal_resource {
             failure(GC_AUTHORIZATION_ERROR_CODE_04_WRONG_NAME)
             return
         }
-        if (is_not_null(i_conf_authorization.prerequisiteAuthorizationSet?.resourceSet)) {
-            if (not(i_conf_authorization.prerequisiteAuthorizationSet?.resourceSet?.isEmpty())) {
-                if (is_null(l_user_authorization.prerequisiteAuthorizationSet?.resourceSet)) {
+        if (is_not_null(i_conf_authorization.prerequisiteAuthorizationSet)) {
+            if (not(i_conf_authorization.prerequisiteAuthorizationSet?.isEmpty())) {
+                if (is_null(l_user_authorization.prerequisiteAuthorizationSet)) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_05_NO_PREREQUISITES)
                     return
                 }
-                if (l_user_authorization.prerequisiteAuthorizationSet.resourceSet.isEmpty()) {
+                if (l_user_authorization.prerequisiteAuthorizationSet.isEmpty()) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_06_EMPTY_PREREQUISITES)
                     return
                 }
-                if (l_user_authorization.prerequisiteAuthorizationSet.resourceSet.size() != GC_ONE_ONLY) {
+                if (l_user_authorization.prerequisiteAuthorizationSet.size() != GC_ONE_ONLY) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_07_MORE_THEN_ONE_PREREQUISITE)
                     return
                 }
-                Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorizationSet.resourceSet.first()
-                for (Authorization l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet.resourceSet) {
+                Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorizationSet.first()
+                for (Authorization l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet) {
                     l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)
                 }
                 if (l_prerequisite_user_auth.authorizationStatus != GC_STATUS_SUCCESSFUL) {
@@ -146,24 +146,24 @@ class Authorization extends T_hal_resource {
             failure(GC_AUTHORIZATION_ERROR_CODE_13_NO_AUTHENTICATIONS)
             return
         }
-        if (is_null(l_user_authorization.identity.authenticationSet?.resourceSet)) {
+        if (is_null(l_user_authorization.identity.authenticationSet)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_11_EMPTY_AUTHENTICATIONS)
             return
         }
-        if (l_user_authorization.identity.authenticationSet.resourceSet.isEmpty()) {
+        if (l_user_authorization.identity.authenticationSet.isEmpty()) {
             failure(GC_AUTHORIZATION_ERROR_CODE_14_EMPTY_AUTHENTICATIONS)
             return
         }
-        if (l_user_authorization.identity.authenticationSet.resourceSet.size() != i_conf_authorization.identity.authenticationSet.resourceSet.size()) {
+        if (l_user_authorization.identity.authenticationSet.size() != i_conf_authorization.identity.authenticationSet.size()) {
             failure(GC_AUTHORIZATION_ERROR_CODE_15_WRONG_AUTHENTICATIONS_NUMBER)
             return
         }
-        i_conf_authorization.identity.authenticationSet.resourceSet = i_conf_authorization.identity.authenticationSet.resourceSet.sort { it -> it.authenticationName }
-        l_user_authorization.identity.authenticationSet.resourceSet = l_user_authorization.identity.authenticationSet.resourceSet.sort { it -> it.authenticationName }
+        List l_sorted_conf_authentication_list = i_conf_authorization.identity.authenticationSet.sort { it -> it.authenticationName }
+        List l_sorted_user_authentication_list = l_user_authorization.identity.authenticationSet.sort { it -> it.authenticationName }
         Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
-            for (Authentication l_user_authentication in l_user_authorization.identity.authenticationSet.resourceSet) {
-                l_user_authentication.common_authentication_validation(i_conf_authorization.identity.authenticationSet.resourceSet[l_authentication_index], i_context)
+            for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
+                l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], i_context)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_16_FAILED_AUTHENTICATION)
                     return
@@ -266,7 +266,7 @@ class Authorization extends T_hal_resource {
                 + "&apiVersionName=" + URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name())
                 + "&endpointName=" + URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name())
                 , GC_TRAVERSE_YES) as T_resource_set
-        return l_accessor_set_to_match.resourceSet
+        return l_accessor_set_to_match
     }
 
     Set<Authorization> find_authorizations(
@@ -303,8 +303,8 @@ class Authorization extends T_hal_resource {
                     + (is_null(i_identity_name) ? GC_EMPTY_STRING : ("&identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())))
                     + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
                     , GC_TRAVERSE_YES) as T_resource_set
-            if (not(l_matched_accessor_authorizations.resourceSet.isEmpty())) {
-                return l_matched_accessor_authorizations.resourceSet
+            if (not(l_matched_accessor_authorizations.isEmpty())) {
+                return l_matched_accessor_authorizations
             }
         }
         T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAuthorizations
@@ -312,8 +312,8 @@ class Authorization extends T_hal_resource {
                 + (is_null(i_identity_name) ? GC_EMPTY_STRING : ("&identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())))
                 + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
                 , GC_TRAVERSE_YES) as T_resource_set
-        if (not(l_matched_accessor_authorizations.resourceSet.isEmpty())) {
-            return l_matched_accessor_authorizations.resourceSet
+        if (not(l_matched_accessor_authorizations.isEmpty())) {
+            return l_matched_accessor_authorizations
         }
         return new HashSet<Authorization>()
     }
