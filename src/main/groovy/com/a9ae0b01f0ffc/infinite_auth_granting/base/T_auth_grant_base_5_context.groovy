@@ -4,7 +4,6 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_client_response
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_host_name_verifier
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
-import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Field
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.E_api_exception
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -56,13 +55,6 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         return p_app_conf
     }
 
-    static Map resource_set2map(T_resource_set<Field> i_resource_set) {
-        Map l_map = new HashMap()
-        for (Field l_field in i_resource_set.resourceSet) {
-            l_map.put(l_field.fieldName, l_field.fieldValue)
-        }
-        return l_map
-    }
 
     T_client_response okhttp_request(String i_url, Integer... i_ignore_error_codes = GC_SKIPPED_ARGS as Integer[]) {
         Request l_request = new Request.Builder().url(i_url).build()
@@ -146,7 +138,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         return l_hal_resource
     }
 
-    static def zip(String s){
+    static def zip(String s) {
         def targetStream = new ByteArrayOutputStream()
         def zipStream = new GZIPOutputStream(targetStream)
         zipStream.write(s.getBytes(StandardCharsets.UTF_8.name()))
@@ -156,7 +148,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         return zippedBytes.encodeBase64()
     }
 
-    static def unzip(String compressed){
+    static def unzip(String compressed) {
         def inflaterStream = new GZIPInputStream(new ByteArrayInputStream(compressed.decodeBase64()))
         def uncompressedStr = inflaterStream.getText(StandardCharsets.UTF_8.name())
         return uncompressedStr

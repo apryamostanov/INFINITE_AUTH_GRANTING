@@ -14,13 +14,13 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 class Authentication extends T_hal_resource {
     String authenticationName
 
-    T_resource_set<Field> publicDataFieldSet
+    Map<String, String> publicDataFieldSet
 
-    T_resource_set<Field> privateDataFieldSet
+    Map<String, String> privateDataFieldSet
 
-    T_resource_set<Field> keyFieldSet
+    Map<String, String> keyFieldSet
 
-    T_resource_set<Field> functionalFieldSet
+    Map<String, String> functionalFieldSet
 
     String authenticationStatus = T_auth_grant_base_4_const.GC_STATUS_NEW
 

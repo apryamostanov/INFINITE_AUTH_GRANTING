@@ -1,110 +1,37 @@
 [
   {
     "resourceName": "Authorization",
-    "authorizationName": "Access to Main Screen",
+    "authorizationName": "Access to Anonymous Services",
     "accessor": {
-      "resourceName": "Accessor",
       "appName": "LMN Multi Currency React (FT2 Development)",
-      "accessorName": "LMN Multi Currency React (FT2 Development)",
       "platform": "iOS",
       "appVersion": "1.87",
       "fiid": "1100",
-      "product": "",
-      "productGroup": "Single Currency",
-      "lookupPriority": null,
-      "endpointName": "FT2 Development",
+      "productGroup": "Multi Currency",
       "apiVersionName": "2.0.x",
-      "isForbidden": null
+      "endpointName": "FT2 Development"
     },
     "identity": {
       "resourceName": "Identity",
-      "identityName": "Owner of Refresh Data",
+      "identityName": "Owner of Accessor Data",
       "authenticationSet": {
         "resourceName": "ResourceSet",
         "resourceSet": [
           {
             "resourceName": "Authentication",
-            "authenticationName": "Refresh_data",
+            "authenticationName": "Accessor_data",
             "publicDataFieldSet": {
-              "resourceName": "ResourceSet",
-              "resourceSet": [
-                {
-                  "resourceName": "Field",
-                  "fieldName": "proxy_number",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "old_access_authorization",
-                  "fieldValue": ""
-                }
-              ]
+              "appName": "LMN Multi Currency React (FT2 Development)",
+              "platform": "iOS",
+              "appVersion": "1.87",
+              "fiid": "1100",
+              "productGroup": "Multi Currency",
+              "apiVersionName": "2.0.x",
+              "endpointName": "FT2 Development"
             },
-            "privateDataFieldSet": {
-              "resourceName": "ResourceSet",
-              "resourceSet": [
-                {
-                  "resourceName": "Field",
-                  "fieldName": "refresh_authorization",
-                  "fieldValue": ""
-                }
-              ]
-            },
-            "keyFieldSet": {
-              "resourceName": "ResourceSet",
-              "resourceSet": [
-                {
-                  "resourceName": "Field",
-                  "fieldName": "product_id",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "account_number",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "proxy_number",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "username",
-                  "fieldValue": ""
-                }
-              ]
-            },
-            "functionalFieldSet": {
-              "resourceName": "ResourceSet",
-              "resourceSet": [
-                {
-                  "resourceName": "Field",
-                  "fieldName": "proxy_number",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "account_number",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "card_type_id_enhanced",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "error_number",
-                  "fieldValue": ""
-                },
-                {
-                  "resourceName": "Field",
-                  "fieldName": "login_flag",
-                  "fieldValue": ""
-                }
-              ]
-            },
+            "privateDataFieldSet": null,
+            "keyFieldSet": null,
+            "functionalFieldSet": null,
             "authenticationStatus": "new",
             "errorCode": null
           }
@@ -113,40 +40,207 @@
     },
     "scope": {
       "resourceName": "Scope",
-      "scopeName": "Main Screen",
-      "accessor": {
-        "resourceName": "Accessor",
-        "appName": "%",
-        "accessorName": "Any accessor Multi Currency 2.0.x",
-        "platform": "%",
-        "appVersion": "%",
-        "fiid": "%",
-        "product": "%",
-        "productGroup": "Multi Currency",
-        "lookupPriority": 0,
-        "endpointName": "%",
-        "apiVersionName": "2.0.%",
-        "isForbidden": null
+      "scopeName": "Anonymous Services",
+      "grantSet": {
+        "resourceName": "ResourceSet",
+        "resourceSet": [
+          {
+            "resourceName": "Grant",
+            "restResourceName": "CardActivationSS",
+            "method": "POST",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "UserRegistration",
+            "method": "POST",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "CardActivationValidationParameterSSEnhanced",
+            "method": "GET",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "UserRegistrationValidationParametersEnhanced",
+            "method": "GET",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "ForgotPasswordValidationParameterEnhanced",
+            "method": "GET",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "GetSecretKey",
+            "method": "GET",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "ForgotUserId",
+            "method": "POST",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "ForgotPassword",
+            "method": "POST",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          },
+          {
+            "resourceName": "Grant",
+            "restResourceName": "ForgotUserIdValidationParametersEnhanced",
+            "method": "GET",
+            "urlMask": "",
+            "keyFieldSet": {
+              "resourceName": "ResourceSet",
+              "resourceSet": [
+                {
+                  "resourceName": "Field",
+                  "fieldName": "ProxyNumber",
+                  "fieldValue": ""
+                },
+                {
+                  "resourceName": "Field",
+                  "fieldName": "CardNumber",
+                  "fieldValue": ""
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "durationSeconds": 1800,
     "maxUsageCount": null,
     "prerequisiteAuthorizationSet": {
       "resourceName": "ResourceSet",
-      "resourceSet": [
-        {
-          "resourceName": "Authorization",
-          "jwt": "eyJhbGciOiJIUzUxMiJ9.SDRzSUFBQUFBQUFBQU8xWVcwL2JNQlQrSzVHbFNac1VvY0xMVU4rcWNoSGFnS29CWHRBMG1maWtlQ1IyZG15WFpxai9mWFl1YlpNR0ZHNWJIbmhxZmM3eFovdkxkNDR2RHdSQlNZTWhuTkVFeUpDTWpMNlZ5UDlRemFVZ1BxR2I3U29tREVFcFQwdHZKS1RJRW1tVUZ3RE91VFc3THJsYkloa0tFOGMrNFF5RTVqb2p3NGZtYUNlVmF4MVZlczd2QmFBbkkyOVVvbmtIVk5OeVFpNHl6R2NVZ0c2Qm5aWk41L1ZYemp6MmVpdDRWQVBjR3FHMlpvay9XVEdOMU56RVBIUnpPdUlRc3plWVI0NWp3eUwzVzlyU21PcElZbEtacjJoc25KMmZCMlRwZDROQXlVeW9qMUdhdEFrVGNER0x3UnNiUkJCaDFoV1NwdWtWb0NyWXFnSHU3dXgvN1k3Q1M1VGMwRURhMnhuc0xMcENnV0NwNUVLM0FSMWQ3SGtITUlkWXBvbjlxbDBoSTg3WjF1cDJCNE5uY05RMm0rK25aOTZwaVRWZmtlNU5nWWJhKzl5WTU1ZG5mdC9tUUdUNVkybFZpbnhPTmJ4Q3BnN2xEckwzRkhsVkw5cjRLcFlSR1JHNlhLVHhLMWJSS0J5YWFxTnNOMlh5NFNNVDIxNkFLSEVzR1JTMXl3NXVPNnBRcHRBeVlKRGJTMzlWSnA0dWlOdkZwM0w1SzhVTXlhZU5QaXZjekt0TVRRRVZxZUt2aTBXSnNNN1N3cEJMdXZoYmlhYldLa3JFa05UaHJUK1c4czZrRStSMkkzQmxmT0RYTTY0YXI1YlBSUW83QjFkSEVtODRzd1crcE5Vbk02UkN2NEdlamgxT0VhYW5kZGVZSWh0WjJjeUw3eDNZcUFUc1p1WTRtSndIRjdadE1ENmw2czdwN04xVlBrRzV5TTVNY2dPNExmSnVxZTVXOUJpQ1UrcHoyTEdmWkNiMWhDcDFMOUhoY0piek5LRm9BelRnb2JpbElnUzJTZHZ4NGI5bTdha2xkeVB0U2Q1Znh0cWxBanhoLzFsUHZXU20wdE1ITjQ5WG9wWmNDNEorWkZ2UGFwVExzeW5NdU5MNEdIT3FIOFQxVEhCTjRqNjJ2cG9MN01ralJORGZJT3R4dnIxbWIrcHZwcnkvRnZJek96Tll2ZytFVWpCN3p0L2RIOWhqYTBJWGw0ck9ZQ3lOcGJGOG4wZ1JFSDRicnJpRzJ2UEh5KzRaQ0pFMTN0WWZVc3Fock9yeXRyMlFRV1dEUmNveDI3VFUzbHc2WFZSODh1dGV0M2EveU5MMVBZTXMvd0xOSUxzNThCRUFBQT09.ZhYV_UqHlvE_Y3XDmyQN-U_KKqCOImQ4aXs5x1But6fnuqqzXlAtbVZmv3i09KzIsY4IaxlCoTTRuYg5bvxONA",
-        }
-      ]
+      "resourceSet": []
     },
-    "refreshAuthorization": {
-      "resourceName": "Authorization",
-      "jwt": "eyJhbGciOiJIUzUxMiJ9.SDRzSUFBQUFBQUFBQU8xY2EzUGFQQmIrS3hsbU9yT1h0Szh2a0laK0MyQWJuTmpHdGl5RGQzWXl4bEppNDJ1RkRKaDMrdDlYQnRJbUpHM1RKbWxvbDJZYVFKS1BqbzdPVFVjUCtidEI4Q3d2U1lCMVA4V05ENDJ6a29ZNWlWWStqZktzY2R6d2IzL2Vqckh3RlhzcVBLTDVrZVpIMlpFZEVJelhnNE1BejJZNWFYekl5aVE1YmtRSVp6U2lWZVBEMzd2ekRHNjZ2b3phOWhpTERKT2ovT3JJbWJIWG5rLzlMUnYxcUdETmg0M3BBeVN0N2NlNjkvaHo1M3JzZis0TlBydEQ4TjRNMjFFMUM1ZG93MEpSVHBJb3FQbVJJNXlnWitCaFRZY051NnBmdDIwbG16R3IzMjZib1orVWRYdmowMzgvTVI1SU5QY3BmbWttQ244MlcrUUVQY3hFakt1WG5Kd3BVVjVtOURJcjB3a205MWs0ZnR3U1NJN0tnRjVHRHl6aTBSU1cxUk81K1BadVhwVlpVQ3Vibjd5a1BERWhPWG5pT3BMOE9zb3VyeEwvK2pXbEdmZ0VYZEtxd0d4WEwzRVcrbG1BZjNwN3Y2ZG05UWJ0ZUIzcTAzTEdPak84WU9QWGN1M21DRys4SFh1QVBURUw4Z0kvc0l2MnVuM2J2MjM3bXUrODc2dHV1dGlvb3RnMnZybjF6TTI0ckRxNmFUclN5b1JHUjkyU0VKd0YxWkh3am51M3JMMVk0dE9ybktRM0ZJb0NZaktyWGVDbTRTcGlGck41dXpXaHU1OFVrcGRGemZ3ZDhxdy95Zk80TElZa1l0R2k5dmdjazFDR2lqeks2RzJPaTJnNzM3YXg1cXZ1aUdaeVRpWVJZckZnSzgvanhqWHhNL29NVnFIVWREYkRxSFczeXltWWQ4ZXVueVNZZnViOXVKRmlGdlZxT1F3Tkc3RFBKVWswZnhiWGl2SGkvcS9MdEZ4L2twME1hMXY3R29sYVRYOUVRdkxJWWhLeXNVK0M4TFprRk9sWEMyYTQwY0JCNyttTFlyUFcxb3hUWnQwc21PSlhYOWpYOSt0eFcvNHRwZmxSNGNDSTBOSlBhcEliOC9pekRlSnhKTTQyNGVMWnJDb24xemtkRHZSWGx1MTNsdlYwNVhzRmorVUtMbUM5c3l2TXduTjJGYkZnZDFEZzUxWmdCZE11N0w2dTM5d3p2V01pc1RGTDUrZzVybDVYTU0rNnJGckttL0F2ZlVtNTkzVnh2ejVhOXZLZ3JOT0lTeVlTZjFzcStLcDAvbnB6MXUxS3RtMVlnOTZidi81Vi96eEpZRDlqdFd6dFBjWnFsT3pIZGo1TEJOb3puVkRxdzhRNldSMzZoRFZSZHVUWkQyay9ZdzU5SzAzc0V2ekhwNGsvNHpiUEFsclg2OWhwbDlHSjBQcmRaNDJ3N2IxUmlYMnluVTJvMlp6SXQ3N2g0S0NlVzhnMXJZczhpSjBzWWI4dC9MRmtZMTdaZnZkTVJGdUx4UVlZMnBwOVNIVHZIVjdydTVFQmVzQ3g3VStvMnlkOTJwNzR0emNyRDRqdElMWHZxTm9odjdqZFZjdkV3dGZSakpLdlpSaDdZb2g3SnJqUGhkL1pJS3R2UW00dWdBOUc5eVVGeTlEOXNQZTdWaWYzVExoM3p3WDJhNHQ0ejR6elZ1MTJrRVUwWXFiNmtCTTdwS2UzMHRPREJ0MnR2V1NZN0lWZ1hyNW8vd3FoNFNaNDNvcWRheWpBTFNUQTczNVczenVGcG11WDZLK3hRcHZTN1NHaCswWW0vUHViL1V2Y1QzeExaVjc3V3VMemJmaERoNWpmUGpYZk95ZCsxNlAwbWVIazVPQzRuOTB2M2EzNC9QRmVhWTEvUkNYWklyU0RQRU96eGdlaDFSWTRqbU9MOTVmT3pML0czWFZGZndzUUx3Z20rR01aelNLSzd5RFBud25oL1Qwayt3WlpXUVBaejdJOHE5SzhuQjNabU13ajF0eDRiano3RFl6emxUSHROMno4V2x6N0RYQjFSM011TkgwWHFXcGg1cGVPL2lFRDRhaUg1empKaXpwOC9mTUhnZDgvcStTM0FMRTdGUGgzcCs4ZlMyV05vdDE5bnVlNEgxekVCbXk3UThlT3N1c0VmNEhlUHBia0RmQjNoMXhrMkkrWHpSM3c3ZzZoRGNMNGthVHVRSU4zQ08zcy9ITjk4K0hYZkhYaEN4NzdBUjk1L0hUSS96ZGc2Yk55UGYxVldSOFBub3hPLzQ1RHZPOThEaUQxSituVG9kVC8waG5ZNGM3dHR6eFA3NWxPN1ZuOWZzOTA1dy9Gd083Uk5mU2ViZmhlSFhMMzJsVWNJSUEvWTIzL3o3bk93eFVWL3ZSWGxGUHFjd2JaZk0vL2JpRmxPMVZRUTM3cis0Z2ErTXN5Wkk0L2ZjdnhiMFVlOE0wUHpaTVB6ZGE3VnJQNWI0NzlxMDhqeXlJaTFXWXMzK0xmTjNtMmloWWJzRk9XZWRSWjVyZ3hYZFFKUDY3VWNLSUVrUkdwQTJmbExMVkliYit6ZTliS2R1U08rZm4vNmRJRjJ1SkNVSFV6TmduTWtuT2cwQk4zMUxFbVBCcFBoQUVQWXhVRW9OT0JDWlJRVEx1QnhBdldTbXBCdCtCMERyVmN1Vmo2MFNrNUZ3dDVESXVWMXRkTk0xNWF1a1JMTElYcFpCbzBkYUVwWXVBTmRSRVZwa0F6TnkyR05nOVBiR2U4Y2podU5SRmw0a1UwbjdpVU14T1oyRUJ2Nm9sbjJGSmlPQUx5M1ZoMU5DV3hjU3JiVGlKYkRqQjV6VlZYUVIvYWdadUV6a2gxN0pqS3ZtVHBqc3Z6eU9GalVMV1htbkRLZzU0Y0J6RU5qUjdrelFSMVBQRjZZY3VkT2VMaEFNYWU3cVZVQXh6WDFCVlVhSkpVSVM0NU1jQlpOWW4xR1k2RENtWFdIUGVRTXVaa3p1cEJxRUZ0anVPaThKbGNHUGNydEZKMU9PMDBUYzdMUVQvczJrcEJIYW5WUkFBdDNNU3l3VFE4R1l1ZU1JYjYrVmlBR29wendZdlZBcnF6aGRWdHp5ME9Ra2ZRdXc3WHpnSmU0czY1YTE0VHZhN2o2cUxmNjRDSnc0bklRWnFXeUQ1U1doZlFiVlBINVphVHhCdU1VemtkeCsyZUlhbXVHd2R6VTlRMU5Db0VuUTg1M3cwLzRzd3FZZFUyTk9lVTF4a05pNk1kVFpGdFRXbHlFNGNDeE9rTEwxT0JCYTFsSU9qQW5lcFFWN3g4RE9RVHROSldDS0p5UEVvcUxiVk9ncFZYQUZtMWJIZEpKaUtNemJobGpWT1kydE53NVNYNnlwZE5maEtqaFM2cFJGT3NscmVTU1REdExEQzhYZ1pTYTRsSDhnaEF5L05kcTRKeFFyUVVzbjIzUEYxcUdaREpHUXF0QzkwNUZXMnBxQ3l4NkZpeFY3ajlRcDBJY09IMTVNaDM0Ukp5TkhLQUpWblNqSWRUbUNLbFRXMHBJUFowME1UdTB0VVZ1WUtpUTZCc05ZTStjc2RwR0RKNWxVSFdVYkFzWDJoc1hacWpENUVyYXlZYzhCNVVSeWdwb29rYzJqNGZ4cDRFQ1p6cS9JUzNMdUFxMFlGQWJRUTdvaVBDajY3aTlXd2hOSURpTmFFQUZRTU9LbE9VQk1BVmlqNHFmTC92TkdGUDVXeW5JTDdqcFI3bkVFdFdtNEJQUWpjT1hVOUdpdW1HSjJZYTlwRFRKQzZBa1NPMCtsRDBSSzNmR2ZsU2kvUEVmQUVoYkFWS01yVkg4Y0lUNVpuV3BiWXY2Q1hxd3h3SkVGZ2pPVWRTS01KVUZ6ek81SzNVb29IQ0xabmNUVjBZdEN4bHFhSk1OejBoSE9oOWZlcUxCYS96eUFaQ080Y3BYRUF1b1VpS0syUGtxVnJhTm9KVVhYaEF6YkcwbUdzeFBZRlRMMkoyWEFMTzh3MW1uRHFBVTlBL3E1eXBTVUFQTHRBME9UOFg4NmFoU0J3WUlXa2NheFZ3bkxrRDFCYVl5azBJelNvUWFPWEgrbEJMOWNSYWFTM0RUVXh0cENvWGdsVDV3RXFaSHRqT2xQa0c3cm9Gd1dBVlZEUGhuRmRMVCtIWi91cmlCYk1KUHg2SU9EUG5YaTlvK1VvdTZIM0VBeVVFbml3cmhpSlRUYzduVGcvS3ZwT1l6QWJIdGdTTmlRSjVwMzgyMTl5V2FvOFNic3g1U3dQcXBpWEN5TGJiSnU2MlExdXk1QWxmYUZaTUdYOXl5R1RMZTRrbXNOZVpIUzlheUxVU3AzZld4S013dmxpcGlRT2dhempNZDYyU0tiTXp1ZmFiUThDOU05TVR4RXlobmNSTjNyc1NlOFdsL3Y2eUFHVXpwSmZUTWI4QTZWakxocXBNUnozUXVqN3REMWNtbm5yZWRENDR2eERRcGRpMWpSUlFKTUwzWVJZbWJ4TmlhWjV4dGx1S0IxWHhwWDYwcVpJOVB2QnMybTZIbDAzTFQwZVZCeDdmTXJqOXF6ZU5ULzhEeXhEckREUkhBQUE9.LR6NXKs4BgZApQoLp0TipKUCmz22cPXBoiyr2Qsy2rh7BkK1Mi49UjIciSjdyK7d4CrIdfIdy_SXpmav_47IVg",
-    },
-    "creationDate": "2018-01-31T14:46:45.579+0000",
-    "expiryDate": "2018-01-31T15:16:45.579+0000",
-    "authorizationStatus": "successful",
+    "refreshAuthorization": null,
+    "creationDate": null,
+    "expiryDate": null,
+    "authorizationStatus": "new",
     "errorCode": null,
     "jwt": null,
     "authorizationType": "Access"

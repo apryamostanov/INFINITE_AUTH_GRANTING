@@ -13,7 +13,7 @@ class Grant  extends T_hal_resource{
 
     String urlMask
 
-    T_resource_set<Field> keyFieldSet
+    Set<String> keyFieldSet
 
 
 }
