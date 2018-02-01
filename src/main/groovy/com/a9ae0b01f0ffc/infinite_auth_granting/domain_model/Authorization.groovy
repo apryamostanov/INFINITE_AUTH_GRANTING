@@ -38,6 +38,10 @@ class Authorization extends T_hal_resource {
 
     Integer maxUsageCount
 
+    Map<String, String> keyFieldSet
+
+    Map<String, String> functionalFieldSet
+
     T_resource_set<Authorization> prerequisiteAuthorizationSet
     Authorization refreshAuthorization
     @JsonFormat(timezone = "UTC")

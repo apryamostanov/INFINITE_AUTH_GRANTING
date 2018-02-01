@@ -20,4 +20,14 @@ class Accessor extends T_hal_resource {
     String apiVersionName
     Integer isForbidden
 
+    @JsonIgnore
+    String getLookupPriority() {
+        return lookupPriority
+    }
+
+    @JsonIgnore
+    Integer getIsForbidden() {
+        return isForbidden
+    }
+
 }

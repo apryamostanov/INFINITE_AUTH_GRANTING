@@ -18,10 +18,6 @@ class Authentication extends T_hal_resource {
 
     Map<String, String> privateDataFieldSet
 
-    Map<String, String> keyFieldSet
-
-    Map<String, String> functionalFieldSet
-
     String authenticationStatus = T_auth_grant_base_4_const.GC_STATUS_NEW
 
     String errorCode
