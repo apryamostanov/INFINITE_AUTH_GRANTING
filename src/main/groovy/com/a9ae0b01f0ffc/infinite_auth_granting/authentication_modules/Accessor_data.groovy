@@ -7,8 +7,10 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Authentication
 
 import java.nio.charset.StandardCharsets
 
+import static base.T_common_base_3_utils.is_null
 import static base.T_common_base_3_utils.nvl
-import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
+import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.getGC_ANY
+import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.getGC_TRAVERSE_YES
 
 System.out.println(this.getClass().getSimpleName())
 
@@ -29,8 +31,10 @@ if (io_authentication.publicDataFieldSet.get("appName") == null ||
         io_authentication.publicDataFieldSet.get("fiid") == null ||
         io_authentication.publicDataFieldSet.get("productGroup") == null ||
         io_authentication.publicDataFieldSet.get("apiVersionName") == null ||
-        io_authentication.publicDataFieldSet.get("endpointName") == null) {
-    //todo: add specific data etc/device data...
+        io_authentication.publicDataFieldSet.get("endpointName") == null ||
+        io_authentication.publicDataFieldSet.get("language") == null ||
+        io_authentication.publicDataFieldSet.get("specificData") == null) {
+    //todo: expand specific data
     io_authentication.failure()
     return
 }
@@ -56,4 +60,5 @@ if (l_accessor_set_to_match.first().isForbidden == 1) {
     return
 }
 o_key_field_map.put("accessorName", l_accessor_set_to_match.first().accessorName)
+o_functional_field_map.put("fiid", l_accessor_set_to_match.first().fiid)
 io_authentication.success()

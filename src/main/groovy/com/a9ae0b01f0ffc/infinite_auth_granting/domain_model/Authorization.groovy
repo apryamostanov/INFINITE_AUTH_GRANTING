@@ -121,6 +121,12 @@ class Authorization extends T_hal_resource {
                     return
                 }
                 Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorizationSet.first()
+                Authorization l_unwrapped_prerequisite_authorization
+                if (l_prerequisite_user_auth.jwt != null) {
+                    l_unwrapped_prerequisite_authorization = jwt2authorization(l_prerequisite_user_auth.jwt, i_context)
+                } else {
+                    l_unwrapped_prerequisite_authorization = l_prerequisite_user_auth
+                }
                 for (Authorization l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet) {
                     l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)
                 }
@@ -128,18 +134,10 @@ class Authorization extends T_hal_resource {
                     failure(GC_AUTHORIZATION_ERROR_CODE_08_FAILED_PREREQUISITE)
                     return
                 }
-            }
-        }
-        if (is_not_null(i_conf_authorization.refreshAuthorization)) {
-            if (is_null(l_user_authorization.refreshAuthorization)) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_09_UNEXPECTED_REFRESH)
-                return
-            }
-            Authorization l_refresh_user_authorization = l_user_authorization.refreshAuthorization
-            l_refresh_user_authorization.common_authorization_granting(l_refresh_user_authorization, i_context)
-            if (l_refresh_user_authorization.authorizationStatus != GC_STATUS_SUCCESSFUL) {
-                failure(GC_AUTHORIZATION_ERROR_CODE_10_FAILED_REFRESH)
-                return
+                if (not(merge_field_maps(l_unwrapped_prerequisite_authorization.keyFieldMap as HashMap<String, String>, l_unwrapped_prerequisite_authorization.functionalFieldMap as HashMap<String, String>))) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY)
+                    return
+                }
             }
         }
         if (is_null(l_user_authorization.identity)) {
@@ -169,13 +167,13 @@ class Authorization extends T_hal_resource {
             for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
                 Map<String, String> l_key_field_map = new HashMap<String, String>()
                 Map<String, String> l_functional_field_map = new HashMap<String, String>()
-                l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], l_key_field_map, l_functional_field_map, i_context)
-                if (not(merge_field_maps(l_key_field_map, l_functional_field_map))) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY)
-                    return
-                }
+                l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], l_key_field_map, l_functional_field_map, functionalFieldMap, i_context)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_16_FAILED_AUTHENTICATION)
+                    return
+                }
+                if (not(merge_field_maps(l_key_field_map, l_functional_field_map))) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY)
                     return
                 }
                 l_authentication_index++
@@ -183,23 +181,34 @@ class Authorization extends T_hal_resource {
         }
         success(i_context)
         l_user_authorization.scope = i_conf_authorization.scope
+        if (is_not_null(i_conf_authorization.refreshAuthorization)) {
+            l_user_authorization.refreshAuthorization = i_conf_authorization.refreshAuthorization
+            l_user_authorization.refreshAuthorization.set_validity(i_context)
+            l_user_authorization.refreshAuthorization.set_jwt(i_context)
+        }
     }
 
     Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
+        if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
+        if (keyFieldMap == null) keyFieldMap = new HashMap<String, String>()
+        Map l_local_key_field_map = new HashMap()
+        l_local_key_field_map.putAll(keyFieldMap)
+        Map l_local_functional_field_map = new HashMap()
+        l_local_functional_field_map.putAll(functionalFieldMap)
         for (String l_key in i_key_field_map.keySet()) {
-            if (keyFieldMap == null) keyFieldMap = new HashMap<String, String>()
-            if (keyFieldMap.containsKey(l_key)) {
-                if (keyFieldMap.get(l_key) != i_key_field_map.get(l_key)) return false
-                else keyFieldMap.put(l_key, i_key_field_map.get(l_key))
-            }
+            if (l_local_key_field_map.containsKey(l_key)) {
+                if (l_local_key_field_map.get(l_key) != i_key_field_map.get(l_key)) return false
+                else l_local_key_field_map.put(l_key, i_key_field_map.get(l_key))
+            } else l_local_key_field_map.put(l_key, i_key_field_map.get(l_key))
         }
         for (String l_key in i_functional_field_map.keySet()) {
-            if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
-            if (functionalFieldMap.containsKey(l_key)) {
-                if (functionalFieldMap.get(l_key) != i_functional_field_map.get(l_key)) return false
-                else functionalFieldMap.put(l_key, i_functional_field_map.get(l_key))
-            }
+            if (l_local_functional_field_map.containsKey(l_key)) {
+                if (l_local_functional_field_map.get(l_key) != i_functional_field_map.get(l_key)) return false
+                else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
+            } else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
         }
+        keyFieldMap = l_local_key_field_map
+        functionalFieldMap = l_local_functional_field_map
         return true
     }
 
@@ -248,10 +257,13 @@ class Authorization extends T_hal_resource {
 
 
     void set_jwt(T_auth_grant_base_5_context i_context) {
+        Authorization l_refresh_authorization = this.refreshAuthorization
+        this.refreshAuthorization = GC_NULL_OBJ_REF as Authorization
         String l_payload = i_context.zip(i_context.p_object_mapper.writeValueAsString(this))
         jwt = Jwts.builder().setPayload(l_payload)
                 .signWith(SignatureAlgorithm.HS512, i_context.p_jwt_manager.get_jwt_key())
                 .compact()
+        this.refreshAuthorization = l_refresh_authorization
     }
 
 
