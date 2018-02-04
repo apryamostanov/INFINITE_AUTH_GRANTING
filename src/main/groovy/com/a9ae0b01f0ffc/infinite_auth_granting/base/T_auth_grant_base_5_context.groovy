@@ -6,11 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import okhttp3.MediaType
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.Response
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +23,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
 
 
     GroovyScriptEngine p_authentication_runner
+    GroovyScriptEngine p_authentication_config_holder
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
 
     @JsonIgnore
@@ -51,18 +49,21 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         return p_authentication_runner
     }
 
+    GroovyScriptEngine get_authentication_config_holder() {
+        if (is_null(p_authentication_runner)) {
+            p_authentication_config_holder = new GroovyScriptEngine(app_conf().authenticationConfigPath)
+        }
+        return p_authentication_config_holder
+    }
+
     T_auth_grant_conf app_conf() {
         return p_app_conf
     }
 
 
-    T_client_response okhttp_request(String i_url, String i_request_body_string, Integer[] i_ignore_error_codes = GC_SKIPPED_ARGS as Integer[]) {
+    T_client_response okhttp_get_request(String i_url, Integer[] i_ignore_error_codes = GC_SKIPPED_ARGS as Integer[]) {
         Request l_request
-        if (is_not_null(i_request_body_string)) {
-            l_request = new Request.Builder().post(RequestBody.create(MediaType.parse("application/json"))).url(i_url).build()
-        } else {
-            l_request = new Request.Builder().url(i_url).build()
-        }
+        l_request = new Request.Builder().url(i_url).build()
         OkHttpClient l_ok_http_client = p_ok_http_client
         Response l_response
         try {
@@ -94,7 +95,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         if (p_resources_by_reference_url.containsKey(i_resource_reference_url)) {
             l_hal_resource_result = get_from_reference_cache(i_resource_reference_url)
         } else {
-            T_client_response l_client_response = okhttp_request(i_resource_reference_url, GC_EMPTY_STRING, [javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode()] as Integer[])
+            T_client_response l_client_response = okhttp_get_request(i_resource_reference_url, [javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode()] as Integer[])
             if (is_not_null(l_client_response.p_slurped_response_json)) {
                 if (is_not_null(l_client_response.p_slurped_response_json?._embedded)) {
                     l_hal_resource_result = new T_resource_set()

@@ -38,9 +38,9 @@ class Authorization extends T_hal_resource {
 
     Integer maxUsageCount
 
-    Map<String, String> keyFieldMap
+    HashMap<String, String> keyFieldMap
 
-    Map<String, String> functionalFieldMap
+    HashMap<String, String> functionalFieldMap
 
     T_resource_set<Authorization> prerequisiteAuthorizationSet
     Authorization refreshAuthorization
@@ -165,14 +165,12 @@ class Authorization extends T_hal_resource {
         Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
             for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
-                Map<String, String> l_key_field_map = new HashMap<String, String>()
-                Map<String, String> l_functional_field_map = new HashMap<String, String>()
-                l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], l_key_field_map, l_functional_field_map, functionalFieldMap, i_context)
+                l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], i_context, this)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_16_FAILED_AUTHENTICATION)
                     return
                 }
-                if (not(merge_field_maps(l_key_field_map, l_functional_field_map))) {
+                if (not(merge_field_maps(l_user_authentication.keyFieldMap, l_user_authentication.functionalFieldMap))) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY)
                     return
                 }
@@ -191,9 +189,9 @@ class Authorization extends T_hal_resource {
     Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
         if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
         if (keyFieldMap == null) keyFieldMap = new HashMap<String, String>()
-        Map l_local_key_field_map = new HashMap()
+        HashMap l_local_key_field_map = new HashMap()
         l_local_key_field_map.putAll(keyFieldMap)
-        Map l_local_functional_field_map = new HashMap()
+        HashMap l_local_functional_field_map = new HashMap()
         l_local_functional_field_map.putAll(functionalFieldMap)
         for (String l_key in i_key_field_map.keySet()) {
             if (l_local_key_field_map.containsKey(l_key)) {

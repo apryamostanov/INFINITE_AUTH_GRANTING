@@ -13,6 +13,12 @@ class T_auth_grant_conf {
     @Value('${authenticationModulesPath}')
     public String authenticationModulesPath
 
+    @Value('${authenticationConfigPath}')
+    public String authenticationConfigPath
+
+    @Value('${authenticationConfigFileName}')
+    public String authenticationConfigFileName
+
     @Value('${authenticationModulesExtension}')
     public String authenticationModulesExtension
 
