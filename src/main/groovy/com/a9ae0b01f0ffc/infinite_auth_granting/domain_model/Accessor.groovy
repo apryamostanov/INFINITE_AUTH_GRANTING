@@ -30,4 +30,28 @@ class Accessor extends T_hal_resource {
         return isForbidden
     }
 
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        Accessor accessor = (Accessor) o
+
+        if (accessorName != accessor.accessorName) return false
+        if (apiVersionName != accessor.apiVersionName) return false
+        if (appName != accessor.appName) return false
+        if (appVersion != accessor.appVersion) return false
+        if (endpointName != accessor.endpointName) return false
+        if (fiid != accessor.fiid) return false
+        if (isForbidden != accessor.isForbidden) return false
+        if (lookupPriority != accessor.lookupPriority) return false
+        if (platform != accessor.platform) return false
+        if (product != accessor.product) return false
+        if (productGroup != accessor.productGroup) return false
+
+        return true
+    }
+
+    int hashCode() {
+        return (accessorName != null ? accessorName.hashCode() : 0)
+    }
 }

@@ -51,28 +51,31 @@ if (!l_response.isSuccessful()) {
 } else {
     JsonSlurper l_configuration_api_response_json_slurper = new JsonSlurper()
     Object l_slurped_conf_api_response_json = l_configuration_api_response_json_slurper.parseText(l_response_body)
+
     if (!(l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.UniqueID != null &&
             l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.UniqueIDFlag == 0 &&
             l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ErrorFound == "No" &&
             l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ErrorNumber == "0" &&
             l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ErrorMessage == "Processed successfully." &&
-            l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccessToken != null &&
-            l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.RefreshToken != null &&
             l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.LoginFlag != null)) {
         io_user_authentication.failure()
         return
+    } else {
+        io_user_authentication.keyFieldMap = new HashMap<String, String>()
+        io_user_authentication.functionalFieldMap = new HashMap<String, String>()
+        io_user_authentication.keyFieldMap.put("proxyNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ProxyNumber.toString())
+        io_user_authentication.keyFieldMap.put("accountNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccountNumber.toString())
+        io_user_authentication.keyFieldMap.put("username", io_user_authentication.publicDataFieldSet.get("username"))
+        io_user_authentication.functionalFieldMap.put("cardTypeIdEnhanced", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.CardTypeIDEnhanced.toString())
+        io_user_authentication.functionalFieldMap.put("loginFlag", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.LoginFlag.toString())
+        io_user_authentication.functionalFieldMap.put("errorNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ErrorNumber.toString())
+        if (l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccessToken != null &&
+                l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.RefreshToken != null) {
+            io_user_authentication.success()
+            return
+        } else {
+            io_user_authentication.failure()
+            return
+        }
     }
-
-    io_user_authentication.keyFieldMap = new HashMap<String, String>()
-    io_user_authentication.functionalFieldMap = new HashMap<String, String>()
-    io_user_authentication.keyFieldMap.put("proxyNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ProxyNumber.toString())
-    io_user_authentication.keyFieldMap.put("accountNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccountNumber.toString())
-//io_user_authentication.keyFieldMap.put("productId", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccountNumber.toString())
-    io_user_authentication.keyFieldMap.put("username", io_user_authentication.publicDataFieldSet.get("username"))
-//todo: error number
-    io_user_authentication.functionalFieldMap.put("cardTypeIdEnhanced", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.CardTypeIDEnhanced.toString())
-    io_user_authentication.functionalFieldMap.put("loginFlag", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.LoginFlag.toString())
-    io_user_authentication.functionalFieldMap.put("ErrorNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.LoginFlag.toString())
-
-    io_user_authentication.success()
 }

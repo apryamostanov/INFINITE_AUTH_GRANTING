@@ -70,9 +70,19 @@ class Authorization extends T_hal_resource {
         this.errorCode = i_error_code
     }
 
-    Boolean is_invalid_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+    Boolean is_invalid_access_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         try {
             Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
+            Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
+        } catch (Exception ignored) {
+            return GC_FALSE
+        }
+        return GC_TRUE
+    }
+
+    Boolean is_invalid_refresh_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+        try {
+            Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_refresh_key()).parse(i_jwt_string)
             Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
         } catch (Exception ignored) {
             return GC_FALSE
@@ -84,11 +94,11 @@ class Authorization extends T_hal_resource {
         Boolean l_is_authentication_needed
         Authorization l_user_authorization
         if (is_not_null(this.jwt)) {
-            if (is_invalid_jwt(this.jwt, i_context)) {
+            if (is_invalid_access_jwt(this.jwt, i_context)) {
                 failure(GC_AUTHORIZATION_ERROR_CODE_01_INVALID_JWT)
                 return
             }
-            l_user_authorization = jwt2authorization(this.jwt, i_context)
+            l_user_authorization = access_jwt2authorization(this.jwt, i_context)
             if (is_null(l_user_authorization.expiryDate)) {
                 failure(GC_AUTHORIZATION_ERROR_CODE_02_EMPTY_EXPIRY)
                 return
@@ -123,7 +133,7 @@ class Authorization extends T_hal_resource {
                 Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorizationSet.first()
                 Authorization l_unwrapped_prerequisite_authorization
                 if (l_prerequisite_user_auth.jwt != null) {
-                    l_unwrapped_prerequisite_authorization = jwt2authorization(l_prerequisite_user_auth.jwt, i_context)
+                    l_unwrapped_prerequisite_authorization = access_jwt2authorization(l_prerequisite_user_auth.jwt, i_context)
                 } else {
                     l_unwrapped_prerequisite_authorization = l_prerequisite_user_auth
                 }
@@ -182,6 +192,9 @@ class Authorization extends T_hal_resource {
         if (is_not_null(i_conf_authorization.refreshAuthorization)) {
             l_user_authorization.refreshAuthorization = i_conf_authorization.refreshAuthorization
             l_user_authorization.authorizationStatus = GC_STATUS_SUCCESSFUL
+            l_user_authorization.refreshAuthorization.accessor = l_user_authorization.accessor
+            l_user_authorization.refreshAuthorization.keyFieldMap = l_user_authorization.keyFieldMap
+            l_user_authorization.refreshAuthorization.functionalFieldMap = l_user_authorization.functionalFieldMap
             l_user_authorization.refreshAuthorization.set_validity(i_context)
             l_user_authorization.refreshAuthorization.set_refresh_jwt(i_context)
         }
@@ -211,8 +224,14 @@ class Authorization extends T_hal_resource {
         return true
     }
 
-    Authorization jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+    Authorization access_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
+        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
+        return l_authorization
+    }
+
+    Authorization refresh_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_refresh_key()).parse(i_jwt_string)
         Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
         return l_authorization
     }

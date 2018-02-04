@@ -32,8 +32,6 @@ class Authentication extends T_hal_resource {
     @JsonIgnore
     def p_conf //lol haha
 
-    String errorCode
-
     @JsonIgnore
     T_auth_grant_base_5_context p_context
 
