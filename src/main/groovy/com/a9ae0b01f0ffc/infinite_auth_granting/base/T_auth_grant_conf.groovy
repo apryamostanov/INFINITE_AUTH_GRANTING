@@ -60,17 +60,29 @@ class T_auth_grant_conf {
     public String infiniteAuthConfigurationRelativeUrlsAccessors
 
 
-    @Value('${infinite.auth.granting.jwt.keystore.path}')
-    public String infiniteAuthGrantingJwtKeystorePath
+    @Value('${infinite.auth.granting.jwt.access.keystore.path}')
+    public String infiniteAuthGrantingJwtAccessKeystorePath
 
-    @Value('${infinite.auth.granting.jwt.keystore.type}')
-    public String infiniteAuthGrantingJwtKeystoreType
+    @Value('${infinite.auth.granting.jwt.access.keystore.type}')
+    public String infiniteAuthGrantingJwtAccessKeystoreType
 
-    @Value('${infinite.auth.granting.jwt.keystore.password}')
-    public String infiniteAuthGrantingJwtKeystorePassword
+    @Value('${infinite.auth.granting.jwt.access.keystore.password}')
+    public String infiniteAuthGrantingJwtAccessKeystorePassword
 
-    @Value('${infinite.auth.granting.jwt.keystore.alias}')
-    public String infiniteAuthGrantingJwtKeystoreAlias
+    @Value('${infinite.auth.granting.jwt.access.keystore.alias}')
+    public String infiniteAuthGrantingJwtAccessKeystoreAlias
+
+    @Value('${infinite.auth.granting.jwt.refresh.keystore.path}')
+    public String infiniteAuthGrantingJwtRefreshKeystorePath
+
+    @Value('${infinite.auth.granting.jwt.refresh.keystore.type}')
+    public String infiniteAuthGrantingJwtRefreshKeystoreType
+
+    @Value('${infinite.auth.granting.jwt.refresh.keystore.password}')
+    public String infiniteAuthGrantingJwtRefreshKeystorePassword
+
+    @Value('${infinite.auth.granting.jwt.refresh.keystore.alias}')
+    public String infiniteAuthGrantingJwtRefreshKeystoreAlias
 
     @PostConstruct
     void init() {

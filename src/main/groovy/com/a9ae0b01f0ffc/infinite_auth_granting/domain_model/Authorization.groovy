@@ -61,7 +61,7 @@ class Authorization extends T_hal_resource {
         this.authorizationStatus = GC_STATUS_SUCCESSFUL
         if (is_null(this.jwt)) {
             set_validity(i_context)
-            set_jwt(i_context)
+            set_access_jwt(i_context)
         }
     }
 
@@ -72,7 +72,7 @@ class Authorization extends T_hal_resource {
 
     Boolean is_invalid_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         try {
-            Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_key()).parse(i_jwt_string)
+            Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
             Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
         } catch (Exception ignored) {
             return GC_FALSE
@@ -181,8 +181,9 @@ class Authorization extends T_hal_resource {
         l_user_authorization.scope = i_conf_authorization.scope
         if (is_not_null(i_conf_authorization.refreshAuthorization)) {
             l_user_authorization.refreshAuthorization = i_conf_authorization.refreshAuthorization
+            l_user_authorization.authorizationStatus = GC_STATUS_SUCCESSFUL
             l_user_authorization.refreshAuthorization.set_validity(i_context)
-            l_user_authorization.refreshAuthorization.set_jwt(i_context)
+            l_user_authorization.refreshAuthorization.set_refresh_jwt(i_context)
         }
     }
 
@@ -211,7 +212,7 @@ class Authorization extends T_hal_resource {
     }
 
     Authorization jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
-        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_key()).parse(i_jwt_string)
+        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
         Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
         return l_authorization
     }
@@ -254,12 +255,22 @@ class Authorization extends T_hal_resource {
     }
 
 
-    void set_jwt(T_auth_grant_base_5_context i_context) {
+    void set_access_jwt(T_auth_grant_base_5_context i_context) {
         Authorization l_refresh_authorization = this.refreshAuthorization
         this.refreshAuthorization = GC_NULL_OBJ_REF as Authorization
         String l_payload = i_context.zip(i_context.p_object_mapper.writeValueAsString(this))
         jwt = Jwts.builder().setPayload(l_payload)
-                .signWith(SignatureAlgorithm.HS512, i_context.p_jwt_manager.get_jwt_key())
+                .signWith(SignatureAlgorithm.HS512, i_context.p_jwt_manager.get_jwt_access_key())
+                .compact()
+        this.refreshAuthorization = l_refresh_authorization
+    }
+
+    void set_refresh_jwt(T_auth_grant_base_5_context i_context) {
+        Authorization l_refresh_authorization = this.refreshAuthorization
+        this.refreshAuthorization = GC_NULL_OBJ_REF as Authorization
+        String l_payload = i_context.zip(i_context.p_object_mapper.writeValueAsString(this))
+        jwt = Jwts.builder().setPayload(l_payload)
+                .signWith(SignatureAlgorithm.HS512, i_context.p_jwt_manager.get_jwt_refresh_key())
                 .compact()
         this.refreshAuthorization = l_refresh_authorization
     }
