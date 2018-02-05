@@ -11,6 +11,8 @@ class Scope extends T_hal_resource {
     Accessor accessor
     T_resource_set<Grant> grantSet
 
+    HashMap<String, String> keyFieldMap
+
     @JsonIgnore
     Accessor getAccessor() {
         return accessor
@@ -24,6 +26,7 @@ class Scope extends T_hal_resource {
 
         if (accessor != scope.accessor) return false
         if (grantSet != scope.grantSet) return false
+        if (keyFieldMap != scope.keyFieldMap) return false
         if (scopeName != scope.scopeName) return false
 
         return true
@@ -34,6 +37,7 @@ class Scope extends T_hal_resource {
         result = scopeName.hashCode()
         result = 31 * result + (accessor != null ? accessor.hashCode() : 0)
         result = 31 * result + (grantSet != null ? grantSet.hashCode() : 0)
+        result = 31 * result + (keyFieldMap != null ? keyFieldMap.hashCode() : 0)
         return result
     }
 }

@@ -50,7 +50,7 @@ if (l_old_access_authorization.scope != l_refresh_authorization.scope) {
     return
 }
 
-if (!l_refresh_authorization.merge_field_maps(l_old_access_authorization.keyFieldMap, l_old_access_authorization.functionalFieldMap)) {
+if (!l_refresh_authorization.merge_field_maps(l_old_access_authorization.scope.keyFieldMap, l_old_access_authorization.functionalFieldMap)) {
     io_user_authentication.failure()
     return
 }
@@ -65,7 +65,7 @@ if (io_user_authentication.keyFieldMap.get("proxyNumber") != io_user_authenticat
     return
 }
 
-io_user_authentication.keyFieldMap = l_refresh_authorization.keyFieldMap
+io_user_authentication.keyFieldMap = l_refresh_authorization.scope.keyFieldMap
 io_user_authentication.functionalFieldMap = l_refresh_authorization.functionalFieldMap
 
 io_user_authentication.success()

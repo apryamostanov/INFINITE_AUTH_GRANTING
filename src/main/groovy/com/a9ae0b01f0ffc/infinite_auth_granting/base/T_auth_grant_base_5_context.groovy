@@ -4,6 +4,7 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.client.*
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.E_api_exception
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import okhttp3.OkHttpClient
@@ -27,8 +28,8 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
 
     @JsonIgnore
-    ObjectMapper p_object_mapper = new ObjectMapper()
-
+    @Autowired
+    ObjectMapper p_object_mapper
 
     @Autowired
     T_jwt_manager p_jwt_manager

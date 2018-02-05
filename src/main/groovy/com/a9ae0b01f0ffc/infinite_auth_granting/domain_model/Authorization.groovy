@@ -38,8 +38,6 @@ class Authorization extends T_hal_resource {
 
     Integer maxUsageCount
 
-    HashMap<String, String> keyFieldMap
-
     HashMap<String, String> functionalFieldMap
 
     T_resource_set<Authorization> prerequisiteAuthorizationSet
@@ -144,7 +142,7 @@ class Authorization extends T_hal_resource {
                     failure(GC_AUTHORIZATION_ERROR_CODE_08_FAILED_PREREQUISITE)
                     return
                 }
-                if (not(merge_field_maps(l_unwrapped_prerequisite_authorization.keyFieldMap as HashMap<String, String>, l_unwrapped_prerequisite_authorization.functionalFieldMap as HashMap<String, String>))) {
+                if (not(merge_field_maps(l_unwrapped_prerequisite_authorization.scope?.keyFieldMap as HashMap<String, String>, l_unwrapped_prerequisite_authorization.functionalFieldMap as HashMap<String, String>))) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY)
                     return
                 }
@@ -193,7 +191,7 @@ class Authorization extends T_hal_resource {
             l_user_authorization.refreshAuthorization = i_conf_authorization.refreshAuthorization
             l_user_authorization.authorizationStatus = GC_STATUS_SUCCESSFUL
             l_user_authorization.refreshAuthorization.accessor = l_user_authorization.accessor
-            l_user_authorization.refreshAuthorization.keyFieldMap = l_user_authorization.keyFieldMap
+            l_user_authorization.refreshAuthorization.scope?.keyFieldMap = l_user_authorization.scope?.keyFieldMap
             l_user_authorization.refreshAuthorization.functionalFieldMap = l_user_authorization.functionalFieldMap
             l_user_authorization.refreshAuthorization.set_validity(i_context)
             l_user_authorization.refreshAuthorization.set_refresh_jwt(i_context)
@@ -202,9 +200,9 @@ class Authorization extends T_hal_resource {
 
     Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
         if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
-        if (keyFieldMap == null) keyFieldMap = new HashMap<String, String>()
+        if (scope?.keyFieldMap == null) scope?.keyFieldMap = new HashMap<String, String>()
         HashMap l_local_key_field_map = new HashMap()
-        l_local_key_field_map.putAll(keyFieldMap)
+        l_local_key_field_map.putAll(scope?.keyFieldMap)
         HashMap l_local_functional_field_map = new HashMap()
         l_local_functional_field_map.putAll(functionalFieldMap)
         for (String l_key in i_key_field_map.keySet()) {
@@ -219,7 +217,7 @@ class Authorization extends T_hal_resource {
                 else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
             } else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
         }
-        keyFieldMap = l_local_key_field_map
+        scope?.keyFieldMap = l_local_key_field_map
         functionalFieldMap = l_local_functional_field_map
         return true
     }
@@ -431,7 +429,7 @@ class Authorization extends T_hal_resource {
                     , i_AccessorEndPointName
                     , p_app_context
             )
-            l_granting_response = Response.ok().entity(l_final_authorization_set).build()
+            l_granting_response = Response.ok().entity(p_app_context.p_object_mapper.writeValueAsString(l_final_authorization_set)).build()
         }
         return l_granting_response
     }
