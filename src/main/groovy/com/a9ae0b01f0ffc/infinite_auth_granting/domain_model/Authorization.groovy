@@ -21,6 +21,8 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.nio.charset.StandardCharsets
 
+import static base.T_common_base_1_const.*
+import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -49,6 +51,20 @@ class Authorization extends T_hal_resource {
     String errorCode
     String jwt
     String authorizationType
+
+    T_resource_set<Scope> scopeSet
+
+    T_resource_set<Identity> identitySet
+
+    @JsonIgnore
+    T_resource_set<Scope> getScopeSet() {
+        return scopeSet
+    }
+
+    @JsonIgnore
+    T_resource_set<Identity> getIdentitySet() {
+        return identitySet
+    }
 
     @Autowired
     @JsonIgnore
@@ -321,13 +337,13 @@ class Authorization extends T_hal_resource {
             , T_auth_grant_base_5_context i_context
     ) {
         T_resource_set<Accessor> l_accessor_set_to_match = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAccessors
-                + "?a=1" + (is_null(i_AccessorAppName)?GC_EMPTY_STRING:"&appName=" + URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorPlatform)?GC_EMPTY_STRING:"&platform=" + URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorAppVersion)?GC_EMPTY_STRING:"&appVersion=" + URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorFiid)?GC_EMPTY_STRING:"&fiid=" + URLEncoder.encode(i_AccessorFiid, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorProductGroup)?GC_EMPTY_STRING:"&productGroup=" + URLEncoder.encode(i_AccessorProductGroup, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorApiVersionName)?GC_EMPTY_STRING:"&apiVersionName=" + URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorEndpointName)?GC_EMPTY_STRING:"&endpointName=" + URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name()))
+                + "?a=1" + (is_null(i_AccessorAppName) ? GC_EMPTY_STRING : "&appName=" + URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorPlatform) ? GC_EMPTY_STRING : "&platform=" + URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorAppVersion) ? GC_EMPTY_STRING : "&appVersion=" + URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorFiid) ? GC_EMPTY_STRING : "&fiid=" + URLEncoder.encode(i_AccessorFiid, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorProductGroup) ? GC_EMPTY_STRING : "&productGroup=" + URLEncoder.encode(i_AccessorProductGroup, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorApiVersionName) ? GC_EMPTY_STRING : "&apiVersionName=" + URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name()))
+                + (is_null(i_AccessorEndpointName) ? GC_EMPTY_STRING : "&endpointName=" + URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name()))
                 + "&product=" + URLEncoder.encode(nvl(i_AccessorProduct, GC_ANY) as String, StandardCharsets.UTF_8.name())
                 , GC_TRAVERSE_YES) as T_resource_set
         return l_accessor_set_to_match
@@ -360,13 +376,19 @@ class Authorization extends T_hal_resource {
         )
         i_context.p_resources_by_reference_url.clear()
         i_context.p_resources_by_self_url.clear()
-        for (Accessor l_matched_accessor_for_scope in l_matched_accessor_set) {
-            for (Accessor l_matched_accessor_for_authorization in l_matched_accessor_set) {
-            T_resource_set<Scope> l_matched_accessor_scopes = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor
-                    + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())
-                    + "&accessor=" + URLEncoder.encode(l_matched_accessor_for_scope.resourceSelfUrl, StandardCharsets.UTF_8.name())
-                    , GC_TRAVERSE_YES
-            ) as T_resource_set<Scope>
+        T_resource_set<Identity> l_identities
+        if (is_not_null(i_identity_name)) {
+            l_identities = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsIdentitiesSearchFindByIdentityName
+                    + "?identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())
+                    , GC_TRAVERSE_YES) as T_resource_set
+        }
+        for (Accessor l_matched_accessor_for_authorization in l_matched_accessor_set) {
+            for (Accessor l_matched_accessor_for_scope in l_matched_accessor_set) {
+                T_resource_set<Scope> l_matched_accessor_scopes = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor
+                        + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())
+                        + "&accessor=" + URLEncoder.encode(l_matched_accessor_for_scope.resourceSelfUrl, StandardCharsets.UTF_8.name())
+                        , GC_TRAVERSE_YES
+                ) as T_resource_set<Scope>
                 for (Scope l_matched_accessor_scope in l_matched_accessor_scopes) {
                     T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAuthorizations
                             + "?scope=" + URLEncoder.encode(l_matched_accessor_scope.resourceSelfUrl, StandardCharsets.UTF_8.name())
@@ -375,12 +397,41 @@ class Authorization extends T_hal_resource {
                             + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
                             , GC_TRAVERSE_YES) as T_resource_set
                     if (not(l_matched_accessor_authorizations.isEmpty())) {
-                        return l_matched_accessor_authorizations
+                        T_resource_set<Authorization> l_final_authorization_set = new T_resource_set<Authorization>()
+                        l_matched_accessor_authorizations.forEach { l_matched_accessor_authorization ->
+                            l_matched_accessor_authorization.identitySet.forEach { l_matched_accessor_authorization_identity ->
+                                l_final_authorization_set.add(l_matched_accessor_authorization.spawn_user_authorization_from_conf(l_matched_accessor_authorization_identity, l_matched_accessor_scope))
+                            }
+                        }
+                        return l_final_authorization_set
                     }
                 }
             }
         }
         return new HashSet<Authorization>()
+    }
+
+    Authorization spawn_user_authorization_from_conf(Identity i_identity, Scope i_scope) {
+        Authorization l_user_authorization = new Authorization()
+        l_user_authorization.authorizationName = this.authorizationName
+        l_user_authorization.accessor = this.accessor
+        l_user_authorization.identity = i_identity
+        l_user_authorization.scope = i_scope
+        l_user_authorization.durationSeconds = this.durationSeconds
+        l_user_authorization.maxUsageCount = this.maxUsageCount
+        l_user_authorization.functionalFieldMap = this.functionalFieldMap
+        l_user_authorization.prerequisiteAuthorizationSet = this.prerequisiteAuthorizationSet//todo - flatten
+        l_user_authorization.refreshAuthorization = this.refreshAuthorization?.spawn_user_authorization_from_conf(i_identity, i_scope)
+        l_user_authorization.creationDate = this.creationDate
+        l_user_authorization.expiryDate = this.expiryDate
+        l_user_authorization.authorizationStatus = this.authorizationStatus
+        l_user_authorization.errorCode = this.errorCode
+        l_user_authorization.jwt = this.jwt
+        l_user_authorization.authorizationType = this.authorizationType
+        l_user_authorization.scopeSet = this.scopeSet
+        l_user_authorization.identitySet = this.identitySet
+        l_user_authorization.p_app_context = this.p_app_context
+        return l_user_authorization
     }
 
     @GET

@@ -34,27 +34,11 @@ class T_auth_grant_conf {
     @Value('${infinite.auth.configuration.relativeUrls.identities.search.findByIdentityName}')
     public String infiniteAuthConfigurationRelativeUrlsIdentitiesSearchFindByIdentityName
 
-    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScopeAndAuthorizationType}')
-    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationType
-
     @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.matchAuthorizations}')
     public String matchAuthorizations
 
     @Value('${infinite.auth.configuration.relativeUrls.accessors.search.matchAccessors}')
     public String matchAccessors
-
-    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScopeAndAuthorizationTypeAndAccessor}')
-    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndAccessor
-
-    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScopeAndAuthorizationTypeAndAccessorAndIdentity}')
-    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndAccessorAndIdentity
-
-    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScopeAndAuthorizationTypeAndDefaultAccessor}')
-    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndDefaultAccessor
-
-
-    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.findByScopeAndAuthorizationTypeAndDefaultAccessorAndIdentity}')
-    public String infiniteAuthConfigurationRelativeUrlsAuthorizationsSearchFindByScopeAndAuthorizationTypeAndDefaultAccessorAndIdentity
 
     @Value('${infinite.auth.configuration.relativeUrls.accessors}')
     public String infiniteAuthConfigurationRelativeUrlsAccessors
