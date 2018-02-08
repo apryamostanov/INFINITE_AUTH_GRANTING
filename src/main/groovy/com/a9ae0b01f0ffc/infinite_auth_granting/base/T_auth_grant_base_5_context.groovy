@@ -1,6 +1,12 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.base
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.*
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_accessor_type_repository
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_authentication_type_repository
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_authorization_type_repository
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_grant_type_repository
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_identity_type_repository
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_scope_type_repository
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.E_api_exception
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -33,11 +39,28 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
 
     @Autowired
     T_jwt_manager p_jwt_manager
-    Map<String, I_hal_resource> p_resources_by_reference_url = new HashMap<String, I_hal_resource>()
-    Map<String, I_hal_resource> p_resources_by_self_url = new HashMap<String, I_hal_resource>()
     @Autowired
     @JsonIgnore
     T_auth_grant_conf p_app_conf
+
+    @Autowired
+    @JsonIgnore
+    I_accessor_type_repository p_accessor_type_repository
+    @Autowired
+    @JsonIgnore
+    I_authentication_type_repository p_authentication_repository
+    @Autowired
+    @JsonIgnore
+    I_identity_type_repository p_identity_repository
+    @Autowired
+    @JsonIgnore
+    I_scope_type_repository p_scope_repository
+    @Autowired
+    @JsonIgnore
+    I_grant_type_repository p_grant_repository
+    @Autowired
+    @JsonIgnore
+    I_authorization_type_repository p_authorization_type_repository
 
     static HostnameVerifier get_unsecure_host_name_verifier() {
         return new T_host_name_verifier()

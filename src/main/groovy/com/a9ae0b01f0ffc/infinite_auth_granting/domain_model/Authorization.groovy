@@ -3,6 +3,9 @@ package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_resource_set
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AccessorType
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthenticationType
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -19,10 +22,7 @@ import org.springframework.stereotype.Component
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import java.nio.charset.StandardCharsets
 
-import static base.T_common_base_1_const.*
-import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -104,7 +104,7 @@ class Authorization extends T_hal_resource {
         return GC_TRUE
     }
 
-    void common_authorization_granting(Authorization i_conf_authorization, T_auth_grant_base_5_context i_context) {
+    void common_authorization_granting(AuthorizationType i_conf_authorization, T_auth_grant_base_5_context i_context) {
         Boolean l_is_authentication_needed
         Authorization l_user_authorization
         if (is_not_null(this.jwt)) {
@@ -151,7 +151,7 @@ class Authorization extends T_hal_resource {
                 } else {
                     l_unwrapped_prerequisite_authorization = l_prerequisite_user_auth
                 }
-                for (Authorization l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet) {
+                for (AuthorizationType l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet) {
                     l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)
                 }
                 if (l_prerequisite_user_auth.authorizationStatus != GC_STATUS_SUCCESSFUL) {
@@ -180,12 +180,16 @@ class Authorization extends T_hal_resource {
             failure(GC_AUTHORIZATION_ERROR_CODE_14_EMPTY_AUTHENTICATIONS)
             return
         }
-        if (l_user_authorization.identity.authenticationSet.size() != i_conf_authorization.identity.authenticationSet.size()) {
+        List<AuthenticationType> l_sorted_conf_authentication_list = i_conf_authorization.identitySet.each { l_conf_identity->
+            if (l_conf_identity.identityName == l_user_authorization.identity.identityName) {
+                return l_conf_identity.authenticationSet.sort { it -> it.authenticationName }
+            }
+        } as List<AuthenticationType>
+        List l_sorted_user_authentication_list = l_user_authorization.identity.authenticationSet.sort { it -> it.authenticationName }
+        if (l_user_authorization.identity.authenticationSet.size() != l_sorted_conf_authentication_list.size()) {
             failure(GC_AUTHORIZATION_ERROR_CODE_15_WRONG_AUTHENTICATIONS_NUMBER)
             return
         }
-        List l_sorted_conf_authentication_list = i_conf_authorization.identity.authenticationSet.sort { it -> it.authenticationName }
-        List l_sorted_user_authentication_list = l_user_authorization.identity.authenticationSet.sort { it -> it.authenticationName }
         Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
             for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
@@ -202,7 +206,7 @@ class Authorization extends T_hal_resource {
             }
         }
         success(i_context)
-        l_user_authorization.scope = i_conf_authorization.scope
+        /*
         if (is_not_null(i_conf_authorization.refreshAuthorization)) {
             l_user_authorization.refreshAuthorization = i_conf_authorization.refreshAuthorization
             l_user_authorization.authorizationStatus = GC_STATUS_SUCCESSFUL
@@ -211,7 +215,7 @@ class Authorization extends T_hal_resource {
             l_user_authorization.refreshAuthorization.functionalFieldMap = l_user_authorization.functionalFieldMap
             l_user_authorization.refreshAuthorization.set_validity(i_context)
             l_user_authorization.refreshAuthorization.set_refresh_jwt(i_context)
-        }
+        }*/ //todo: handle refresh authorization
     }
 
     Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
@@ -238,22 +242,22 @@ class Authorization extends T_hal_resource {
         return true
     }
 
-    Authorization access_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+    static Authorization access_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
         Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
         return l_authorization
     }
 
-    Authorization refresh_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+    static Authorization refresh_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_refresh_key()).parse(i_jwt_string)
         Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
         return l_authorization
     }
 
     void validate_authorization(T_auth_grant_base_5_context i_context) {
-        Set<Authorization> l_config_authorization_set = find_authorizations(
+        AuthorizationType l_config_authorization = p_app_context.p_authorization_type_repository.matchAuthorizations(
                 scope?.scopeName
-                , authorizationType
+                , identity?.identityName
                 , accessor?.appName
                 , accessor?.platform
                 , accessor?.appVersion
@@ -262,14 +266,11 @@ class Authorization extends T_hal_resource {
                 , accessor?.productGroup
                 , accessor?.apiVersionName
                 , accessor?.endpointName
-                , i_context
-                , identity?.identityName
-        )
-        if (l_config_authorization_set.size() != GC_ONE_ONLY) {
+        )[GC_FIRST_INDEX]
+        if (is_null(l_config_authorization)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
             return
         }
-        Authorization l_config_authorization = l_config_authorization_set.first()
         System.out.println("Start validation!!!")
         common_authorization_granting(l_config_authorization, i_context)
         if (this.getAuthorizationStatus() == GC_STATUS_SUCCESSFUL) {
@@ -325,7 +326,7 @@ class Authorization extends T_hal_resource {
         return l_granting_response
     }
 
-    LinkedList<Accessor> find_accessors(
+    LinkedList<AccessorType> find_accessor_types(
             String i_AccessorAppName
             , String i_AccessorPlatform
             , String i_AccessorAppVersion
@@ -336,34 +337,7 @@ class Authorization extends T_hal_resource {
             , String i_AccessorEndpointName
             , T_auth_grant_base_5_context i_context
     ) {
-        T_resource_set<Accessor> l_accessor_set_to_match = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAccessors
-                + "?a=1" + (is_null(i_AccessorAppName) ? GC_EMPTY_STRING : "&appName=" + URLEncoder.encode(i_AccessorAppName, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorPlatform) ? GC_EMPTY_STRING : "&platform=" + URLEncoder.encode(i_AccessorPlatform, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorAppVersion) ? GC_EMPTY_STRING : "&appVersion=" + URLEncoder.encode(i_AccessorAppVersion, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorFiid) ? GC_EMPTY_STRING : "&fiid=" + URLEncoder.encode(i_AccessorFiid, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorProductGroup) ? GC_EMPTY_STRING : "&productGroup=" + URLEncoder.encode(i_AccessorProductGroup, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorApiVersionName) ? GC_EMPTY_STRING : "&apiVersionName=" + URLEncoder.encode(i_AccessorApiVersionName, StandardCharsets.UTF_8.name()))
-                + (is_null(i_AccessorEndpointName) ? GC_EMPTY_STRING : "&endpointName=" + URLEncoder.encode(i_AccessorEndpointName, StandardCharsets.UTF_8.name()))
-                + "&product=" + URLEncoder.encode(nvl(i_AccessorProduct, GC_ANY) as String, StandardCharsets.UTF_8.name())
-                , GC_TRAVERSE_YES) as T_resource_set
-        return l_accessor_set_to_match
-    }
-
-    Set<Authorization> find_authorizations(
-            String i_scope_name
-            , String i_authorization_type
-            , String i_AccessorAppName
-            , String i_AccessorPlatform
-            , String i_AccessorAppVersion
-            , String i_AccessorFiid
-            , String i_AccessorProduct
-            , String i_AccessorProductGroup
-            , String i_AccessorApiVersionName
-            , String i_AccessorEndpointName
-            , T_auth_grant_base_5_context i_context
-            , String i_identity_name = GC_EMPTY_STRING
-    ) {
-        LinkedList<Accessor> l_matched_accessor_set = find_accessors(
+        LinkedList<AccessorType> l_accessor_set_to_match = p_app_context.p_accessor_type_repository.matchAccessors(
                 i_AccessorAppName
                 , i_AccessorPlatform
                 , i_AccessorAppVersion
@@ -372,43 +346,8 @@ class Authorization extends T_hal_resource {
                 , i_AccessorProductGroup
                 , i_AccessorApiVersionName
                 , i_AccessorEndpointName
-                , i_context
         )
-        i_context.p_resources_by_reference_url.clear()
-        i_context.p_resources_by_self_url.clear()
-        T_resource_set<Identity> l_identities
-        if (is_not_null(i_identity_name)) {
-            l_identities = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsIdentitiesSearchFindByIdentityName
-                    + "?identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())
-                    , GC_TRAVERSE_YES) as T_resource_set
-        }
-        for (Accessor l_matched_accessor_for_authorization in l_matched_accessor_set) {
-            for (Accessor l_matched_accessor_for_scope in l_matched_accessor_set) {
-                T_resource_set<Scope> l_matched_accessor_scopes = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor
-                        + "?scopeName=" + URLEncoder.encode(i_scope_name, StandardCharsets.UTF_8.name())
-                        + "&accessor=" + URLEncoder.encode(l_matched_accessor_for_scope.resourceSelfUrl, StandardCharsets.UTF_8.name())
-                        , GC_TRAVERSE_YES
-                ) as T_resource_set<Scope>
-                for (Scope l_matched_accessor_scope in l_matched_accessor_scopes) {
-                    T_resource_set<Authorization> l_matched_accessor_authorizations = i_context.hal_request(i_context.app_conf().infiniteAuthConfigurationBaseUrl + i_context.app_conf().matchAuthorizations
-                            + "?scope=" + URLEncoder.encode(l_matched_accessor_scope.resourceSelfUrl, StandardCharsets.UTF_8.name())
-                            + (is_null(l_matched_accessor_for_authorization.accessorName) ? GC_EMPTY_STRING : ("&accessor=" + URLEncoder.encode(l_matched_accessor_for_authorization.resourceSelfUrl, StandardCharsets.UTF_8.name())))
-                            + (is_null(i_identity_name) ? GC_EMPTY_STRING : ("&identityName=" + URLEncoder.encode(i_identity_name, StandardCharsets.UTF_8.name())))
-                            + (is_null(i_authorization_type) ? GC_EMPTY_STRING : ("&authorizationType=" + URLEncoder.encode(i_authorization_type, StandardCharsets.UTF_8.name())))
-                            , GC_TRAVERSE_YES) as T_resource_set
-                    if (not(l_matched_accessor_authorizations.isEmpty())) {
-                        T_resource_set<Authorization> l_final_authorization_set = new T_resource_set<Authorization>()
-                        l_matched_accessor_authorizations.forEach { l_matched_accessor_authorization ->
-                            l_matched_accessor_authorization.identitySet.forEach { l_matched_accessor_authorization_identity ->
-                                l_final_authorization_set.add(l_matched_accessor_authorization.spawn_user_authorization_from_conf(l_matched_accessor_authorization_identity, l_matched_accessor_scope))
-                            }
-                        }
-                        return l_final_authorization_set
-                    }
-                }
-            }
-        }
-        return new HashSet<Authorization>()
+        return l_accessor_set_to_match
     }
 
     Authorization spawn_user_authorization_from_conf(Identity i_identity, Scope i_scope) {
@@ -437,9 +376,8 @@ class Authorization extends T_hal_resource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/search/findByScopeName")
-    Response find_by_scope_name(
+    Response get(
             @QueryParam("scopeName") String i_scope_name
-            , @QueryParam("authorizationType") String i_authorization_type
             , @QueryParam("accessorAppName") String i_AccessorAppName
             , @QueryParam("accessorPlatform") String i_AccessorPlatform
             , @QueryParam("accessorAppVersion") String i_AccessorAppVersion
@@ -448,6 +386,7 @@ class Authorization extends T_hal_resource {
             , @QueryParam("accessorProductGroup") String i_AccessorProductGroup
             , @QueryParam("accessorApiVersionName") String i_AccessorApiVersionName
             , @QueryParam("accessorEndpointName") String i_AccessorEndPointName
+            , @QueryParam("identityName") String i_identityName
     ) {
         Response l_granting_response = Response.ok().entity(new HashSet<Authorization>()).build()
         if (is_null(i_scope_name)) {
@@ -467,9 +406,9 @@ class Authorization extends T_hal_resource {
         } else if (is_null(i_AccessorEndPointName)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorEndpointName' is missing")).build()
         } else {
-            Set<T_hal_resource> l_final_authorization_set = find_authorizations(
+            AuthorizationType l_authorization_type = p_app_context.p_authorization_type_repository.matchAuthorizations(
                     i_scope_name
-                    , i_authorization_type
+                    , i_identityName
                     , i_AccessorAppName
                     , i_AccessorPlatform
                     , i_AccessorAppVersion
@@ -478,9 +417,14 @@ class Authorization extends T_hal_resource {
                     , i_AccessorProductGroup
                     , i_AccessorApiVersionName
                     , i_AccessorEndPointName
-                    , p_app_context
-            )
-            l_granting_response = Response.ok().entity(p_app_context.p_object_mapper.writeValueAsString(l_final_authorization_set)).build()
+            )[GC_FIRST_INDEX]
+            Set<Authorization> l_user_authorizations
+            if (is_not_null(l_authorization_type)) {
+                l_user_authorizations = l_authorization_type.to_user_authorization(i_scope_name, i_identityName)
+            } else {
+                l_user_authorizations = new HashSet<Authorization>()
+            }
+            l_granting_response = Response.ok().entity(p_app_context.p_object_mapper.writeValueAsString(l_user_authorizations)).build()
         }
         return l_granting_response
     }

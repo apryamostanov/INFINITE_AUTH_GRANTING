@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting
 
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.data.T_data_generator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
@@ -15,9 +16,11 @@ class T_spring_boot_application implements CommandLineRunner {
         SpringApplication.run(T_spring_boot_application.class, args)
     }
 
+    @Autowired
+    private T_data_generator p_data_generator
 
     @Override
     void run(String... args) throws Exception {
-
+        p_data_generator.generate_data()
     }
 }

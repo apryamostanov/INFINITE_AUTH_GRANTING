@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 class Scope extends T_hal_resource {
     String scopeName
     Accessor accessor
-    T_resource_set<Grant> grantSet
+    Set<Grant> grantSet
 
     HashMap<String, String> keyFieldMap
 

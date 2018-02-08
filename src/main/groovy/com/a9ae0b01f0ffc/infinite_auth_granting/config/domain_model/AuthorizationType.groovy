@@ -1,0 +1,75 @@
+package com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model
+
+import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Authorization
+import groovy.transform.CompileStatic
+
+import javax.persistence.*
+
+import static base.T_common_base_1_const.GC_NULL_OBJ_REF
+
+@CompileStatic
+@Entity
+//@Table(uniqueConstraints = @UniqueConstraint(columnNames=["accessor", "authorizationType", "scope", "identity"]))
+class AuthorizationType {
+
+    String resourceName = this.getClass().getSimpleName()
+
+    String authorizationName
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OrderColumn
+    AccessorType accessor = GC_NULL_OBJ_REF as AccessorType
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @OrderColumn
+    Set<IdentityType> identitySet = new HashSet<IdentityType>()
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @OrderColumn
+    Set<ScopeType> scopeSet = new HashSet<ScopeType>()
+
+    Integer durationSeconds
+
+    Integer maxUsageCount
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    AuthorizationType refreshAuthorization
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @OrderColumn
+    /**
+     * Any of these
+     */
+    Set<AuthorizationType> prerequisiteAuthorizationSet
+
+    String authorizationType
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    Long id
+
+    Set<Authorization> to_user_authorization(String i_scope_name, String i_identity_name) {
+        Set<Authorization> l_user_authorizations = new HashSet<Authorization>()
+        ScopeType l_scope_type = this.scopeSet.first()
+        if (l_scope_type.scopeName == i_scope_name) {
+            for (IdentityType l_identity_type in this.identitySet) {
+                if (i_identity_name == null || i_identity_name == l_identity_type.identityName) {
+                    Authorization l_user_authorization = new Authorization()
+                    l_user_authorization.authorizationName = this.authorizationName
+                    l_user_authorization.authorizationType = this.authorizationType
+                    l_user_authorization.accessor = this.accessor.to_user_accessor()
+                    l_user_authorization.identity = l_identity_type.to_user_identity()
+                    l_user_authorization.scope = l_scope_type.to_user_scope()
+                    l_user_authorization.durationSeconds = this.durationSeconds
+                    l_user_authorization.maxUsageCount = this.maxUsageCount
+                    l_user_authorizations.add(l_user_authorization)
+                }
+            }
+        }
+        if (this.refreshAuthorization != null) {
+            l_user_authorizations.addAll(this.refreshAuthorization.to_user_authorization(i_scope_name, i_identity_name))
+        }
+        return l_user_authorizations
+    }
+}

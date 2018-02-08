@@ -3,6 +3,7 @@ package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthenticationType
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
@@ -43,7 +44,7 @@ class Authentication extends T_hal_resource {
         this.authenticationStatus = GC_STATUS_SUCCESSFUL
     }
 
-    void common_authentication_validation(Authentication i_conf_authentication, T_auth_grant_base_5_context i_context, Authorization i_parent_authorization) {
+    void common_authentication_validation(AuthenticationType i_conf_authentication, T_auth_grant_base_5_context i_context, Authorization i_parent_authorization) {
         if (authenticationName != i_conf_authentication.authenticationName) {
             failure()
             return
