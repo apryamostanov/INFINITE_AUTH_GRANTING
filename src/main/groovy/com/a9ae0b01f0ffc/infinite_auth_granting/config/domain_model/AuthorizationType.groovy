@@ -49,7 +49,7 @@ class AuthorizationType {
     @Column(nullable = false)
     Long id
 
-    Set<Authorization> to_user_authorization(String i_scope_name, String i_identity_name) {
+    Set<Authorization> to_user_authorizations(String i_scope_name, String i_identity_name) {
         Set<Authorization> l_user_authorizations = new HashSet<Authorization>()
         ScopeType l_scope_type = this.scopeSet.first()
         if (l_scope_type.scopeName == i_scope_name) {
@@ -68,7 +68,7 @@ class AuthorizationType {
             }
         }
         if (this.refreshAuthorization != null) {
-            l_user_authorizations.addAll(this.refreshAuthorization.to_user_authorization(i_scope_name, i_identity_name))
+            l_user_authorizations.addAll(this.refreshAuthorization.to_user_authorizations(i_scope_name, i_identity_name))
         }
         return l_user_authorizations
     }

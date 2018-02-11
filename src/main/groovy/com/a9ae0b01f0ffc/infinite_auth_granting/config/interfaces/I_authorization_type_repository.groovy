@@ -37,7 +37,6 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
         and :productGroup like accessor.productGroup
         and :apiVersionName like accessor.apiVersionName
         and :endpointName like accessor.endpointName
-        and accessor.lookupPriority <= scopeAccessor.lookupPriority
         
         and :appName like scopeAccessor.appName
         and :platform like scopeAccessor.platform

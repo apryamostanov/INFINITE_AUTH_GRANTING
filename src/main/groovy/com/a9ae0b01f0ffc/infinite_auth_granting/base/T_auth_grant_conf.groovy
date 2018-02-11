@@ -22,28 +22,6 @@ class T_auth_grant_conf {
     @Value('${authenticationModulesExtension}')
     public String authenticationModulesExtension
 
-    @Value('${infinite.auth.configuration.baseUrl}')
-    public String infiniteAuthConfigurationBaseUrl
-
-    @Value('${infinite.auth.configuration.relativeUrls.scopes.search.findByScopeName}')
-    public String infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeName
-
-    @Value('${infinite.auth.configuration.relativeUrls.scopes.search.findByScopeNameAndAccessor}')
-    public String infiniteAuthConfigurationRelativeUrlsScopesSearchFindByScopeNameAndAccessor
-
-    @Value('${infinite.auth.configuration.relativeUrls.identities.search.findByIdentityName}')
-    public String infiniteAuthConfigurationRelativeUrlsIdentitiesSearchFindByIdentityName
-
-    @Value('${infinite.auth.configuration.relativeUrls.authorizations.search.matchAuthorizations}')
-    public String matchAuthorizations
-
-    @Value('${infinite.auth.configuration.relativeUrls.accessors.search.matchAccessors}')
-    public String matchAccessors
-
-    @Value('${infinite.auth.configuration.relativeUrls.accessors}')
-    public String infiniteAuthConfigurationRelativeUrlsAccessors
-
-
     @Value('${infinite.auth.granting.jwt.access.keystore.path}')
     public String infiniteAuthGrantingJwtAccessKeystorePath
 

@@ -1,11 +1,9 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
-import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Accessor extends T_hal_resource {
+class Accessor {
 
 
     String appName
@@ -15,20 +13,8 @@ class Accessor extends T_hal_resource {
     String fiid
     String product
     String productGroup
-    Integer lookupPriority
     String endpointName
     String apiVersionName
-    Integer isForbidden
-
-    @JsonIgnore
-    String getLookupPriority() {
-        return lookupPriority
-    }
-
-    @JsonIgnore
-    Integer getIsForbidden() {
-        return isForbidden
-    }
 
     boolean equals(o) {
         if (this.is(o)) return true
@@ -42,8 +28,6 @@ class Accessor extends T_hal_resource {
         if (appVersion != accessor.appVersion) return false
         if (endpointName != accessor.endpointName) return false
         if (fiid != accessor.fiid) return false
-        if (isForbidden != accessor.isForbidden) return false
-        if (lookupPriority != accessor.lookupPriority) return false
         if (platform != accessor.platform) return false
         if (product != accessor.product) return false
         if (productGroup != accessor.productGroup) return false

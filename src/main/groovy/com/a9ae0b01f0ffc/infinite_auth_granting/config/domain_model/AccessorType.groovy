@@ -66,10 +66,8 @@ class AccessorType {
         l_user_accessor.fiid = this.fiid
         l_user_accessor.product = this.product
         l_user_accessor.productGroup = this.productGroup
-        l_user_accessor.lookupPriority = this.lookupPriority
         l_user_accessor.endpointName = this.endpointName
         l_user_accessor.apiVersionName = this.apiVersionName
-        l_user_accessor.isForbidden = this.isForbidden
         return l_user_accessor
     }
 

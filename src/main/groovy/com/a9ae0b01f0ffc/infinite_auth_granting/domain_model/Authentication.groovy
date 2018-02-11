@@ -2,7 +2,6 @@ package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
-import com.a9ae0b01f0ffc.infinite_auth_granting.client.T_hal_resource
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthenticationType
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -12,7 +11,7 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.GC_STATUS_SUCCESSFUL
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Authentication extends T_hal_resource {
+class Authentication {
     String authenticationName
 
     HashMap<String, String> publicDataFieldSet
@@ -31,7 +30,7 @@ class Authentication extends T_hal_resource {
     String authenticationStatus = T_auth_grant_base_4_const.GC_STATUS_NEW
 
     @JsonIgnore
-    def p_conf //lol haha
+    def p_conf
 
     @JsonIgnore
     T_auth_grant_base_5_context p_context

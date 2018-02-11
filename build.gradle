@@ -39,8 +39,9 @@ targetCompatibility = 1.8
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.12'
     compile 'a9ae0b01f0ffc:INFINITE_TOOLS:1.0.0.BETA.009'
-    compile 'a9ae0b01f0ffc:INFINITE_LOGGING:1.0.0.BETA.002'
-    compile 'a9ae0b01f0ffc:INFINITE_AUTH_CONFIGURATION:1.0.0'
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
     compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
     compile "org.springframework.boot:spring-boot-starter-jersey"
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
