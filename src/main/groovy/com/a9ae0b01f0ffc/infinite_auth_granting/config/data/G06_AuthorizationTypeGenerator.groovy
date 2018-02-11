@@ -20,7 +20,7 @@ class G06_AuthorizationTypeGenerator {
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Anonymous",
                 scopeSet: p_scope_repository.findByScopeName("Anonymous Services"),
-                identitySet: p_identity_repository.findByIdentityName("Owner of Acce Data"),
+                identitySet: p_identity_repository.findByIdentityName("Owner of Accessor Data"),
                 durationSeconds: 1800,
                 maxUsageCount: null,
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),

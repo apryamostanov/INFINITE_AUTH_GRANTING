@@ -12,6 +12,18 @@ class G03_ScopeTypeGenerator {
     void generate_data(I_scope_type_repository p_scope_repository, I_grant_type_repository p_grant_repository, I_accessor_type_repository p_accessor_repository) {
         Set<ScopeType> l_entity_set = new HashSet<ScopeType>()
 
+        l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.findByAccessorName("Any accessor").first(), grantSet: [
+                p_grant_repository.findByRestResourceName("UserRegistration").first(),
+                p_grant_repository.findByRestResourceName("UserRegistrationValidationParametersEnhanced").first(),
+                p_grant_repository.findByRestResourceName("CardActivationSS").first(),
+                p_grant_repository.findByRestResourceName("CardActivationValidationParameterSSEnhanced").first(),
+                p_grant_repository.findByRestResourceName("ForgotPassword").first(),
+                p_grant_repository.findByRestResourceName("ForgotPasswordValidationParameterEnhanced").first(),
+                p_grant_repository.findByRestResourceName("GetSecretKey").first(),
+                p_grant_repository.findByRestResourceName("ForgotUserId").first(),
+                p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first()
+        ]))
+
         l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.findByAccessorName("Any accessor Multi Currency 2.0.x").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("UserRegistration").first(),
                 p_grant_repository.findByRestResourceName("UserRegistrationValidationParametersEnhanced").first(),

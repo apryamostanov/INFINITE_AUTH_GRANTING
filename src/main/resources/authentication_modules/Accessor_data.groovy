@@ -16,7 +16,7 @@ if (io_user_authentication.publicDataFieldSet.get("accessor_name") == null ||
         io_user_authentication.publicDataFieldSet.get("product_group") == null ||
         io_user_authentication.publicDataFieldSet.get("api_major_version") == null ||
         io_user_authentication.publicDataFieldSet.get("endpoint_name") == null ||
-        io_user_authentication.publicDataFieldSet.get("specific_data")
+        io_user_authentication.publicDataFieldSet.get("specific_data") == null
 ) {
     io_user_authentication.failure()
     return
@@ -44,7 +44,7 @@ if (l_accessor_set_to_match.first().isForbidden == 1) {
 }
 io_user_authentication.keyFieldMap = new HashMap<String, String>()
 io_user_authentication.functionalFieldMap = new HashMap<String, String>()
-io_user_authentication.keyFieldMap.put("accessor_name", l_accessor_set_to_match.first().accessorName)
-io_user_authentication.keyFieldMap.put("language", l_accessor_set_to_match.first().accessorName)
+io_user_authentication.keyFieldMap.put("accessor_id", l_accessor_set_to_match.first().accessorName)
+io_user_authentication.keyFieldMap.put("language", io_user_authentication.publicDataFieldSet.get("language"))
 io_user_authentication.functionalFieldMap.put("FIID", l_accessor_set_to_match.first().fiid)
 io_user_authentication.success()

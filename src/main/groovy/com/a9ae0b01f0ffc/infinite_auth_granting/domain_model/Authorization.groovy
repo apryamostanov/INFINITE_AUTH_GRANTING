@@ -22,6 +22,8 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.security.Key
 
+import static base.T_common_base_1_const.*
+import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -30,7 +32,7 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 class Authorization {
     String authorizationName
     Long authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
-    Accessor accessor
+    //Accessor accessor
 
     Identity identity
 
@@ -48,6 +50,7 @@ class Authorization {
     Authorization refreshAuthorization
     @JsonFormat(timezone = "UTC")
     Date creationDate
+    @JsonFormat(timezone = "UTC")
     Date expiryDate
     @JsonProperty("status")
     String authorizationStatus = GC_STATUS_NEW
@@ -198,7 +201,7 @@ class Authorization {
         success(i_context)
         if (is_not_null(i_conf_authorization.refreshAuthorization)) {
             l_user_authorization.refreshAuthorization = i_conf_authorization.refreshAuthorization.to_user_authorizations(this.scope.scopeName, this.identity.identityName).first()
-            l_user_authorization.refreshAuthorization.accessor = l_user_authorization.accessor
+            //l_user_authorization.refreshAuthorization.accessor = l_user_authorization.accessor
             l_user_authorization.refreshAuthorization.scope?.keyFieldMap = l_user_authorization.scope?.keyFieldMap
             l_user_authorization.refreshAuthorization.functionalFieldMap = l_user_authorization.functionalFieldMap
             l_user_authorization.refreshAuthorization.success(i_context)
@@ -242,17 +245,11 @@ class Authorization {
     }
 
     void validate_authorization(T_auth_grant_base_5_context i_context) {
-        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.matchAuthorizations(
+
+        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.matchAuthorizationsByAccessorName(
                 scope?.scopeName
                 , identity?.identityName
-                , accessor?.appName
-                , accessor?.platform
-                , accessor?.appVersion
-                , accessor?.fiid
-                , accessor?.product
-                , accessor?.productGroup
-                , accessor?.apiVersionName
-                , accessor?.endpointName
+                , scope?.keyFieldMap?.get("accessor_name")
         )[GC_FIRST_INDEX]
         if (is_null(l_config_authorization)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)

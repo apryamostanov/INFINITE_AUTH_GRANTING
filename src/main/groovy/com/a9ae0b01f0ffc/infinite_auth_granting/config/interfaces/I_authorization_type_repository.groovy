@@ -47,6 +47,15 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
         and :apiVersionName like scopeAccessor.apiVersionName
         and :endpointName like scopeAccessor.endpointName
         
+        and (scopeAccessor.appName like accessor.appName or scopeAccessor.appName = accessor.appName)
+        and (scopeAccessor.platform like accessor.platform or scopeAccessor.platform = accessor.platform)
+        and (scopeAccessor.appVersion like accessor.appVersion or scopeAccessor.appVersion = accessor.appVersion)
+        and (scopeAccessor.fiid like accessor.fiid or scopeAccessor.fiid = accessor.fiid)
+        and (scopeAccessor.product like accessor.product or scopeAccessor.product = accessor.product)
+        and (scopeAccessor.productGroup like accessor.productGroup or scopeAccessor.productGroup = accessor.productGroup)
+        and (scopeAccessor.apiVersionName like accessor.apiVersionName or scopeAccessor.apiVersionName = accessor.apiVersionName)
+        and (scopeAccessor.endpointName like accessor.endpointName or scopeAccessor.endpointName = accessor.endpointName)
+        
         order by accessor.lookupPriority desc, scopeAccessor.lookupPriority desc""")
     Set<AuthorizationType> matchAuthorizations(
             @Param("scopeName") String scopeName
@@ -60,6 +69,33 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
             , @Param("productGroup") String productGroup
             , @Param("apiVersionName") String apiVersionName
             , @Param("endpointName") String endpointName
+    )
+
+    @Query("""select a from AuthorizationType a
+        join a.identitySet identitySet
+        join a.scopeSet scopeSet
+        join a.accessor accessor
+        join scopeSet.accessor scopeAccessor
+        where scopeSet.scopeName = :scopeName
+        and (identitySet.identityName = :identityName or :identityName is null)
+        and a.authorizationType = 'Access'
+        
+        and (:accessorName = accessor.accessorName or ((:accessorName is null) and scopeAccessor.accessorName = 'Any accessor'))
+        
+        and (scopeAccessor.appName like accessor.appName or scopeAccessor.appName = accessor.appName)
+        and (scopeAccessor.platform like accessor.platform or scopeAccessor.platform = accessor.platform)
+        and (scopeAccessor.appVersion like accessor.appVersion or scopeAccessor.appVersion = accessor.appVersion)
+        and (scopeAccessor.fiid like accessor.fiid or scopeAccessor.fiid = accessor.fiid)
+        and (scopeAccessor.product like accessor.product or scopeAccessor.product = accessor.product)
+        and (scopeAccessor.productGroup like accessor.productGroup or scopeAccessor.productGroup = accessor.productGroup)
+        and (scopeAccessor.apiVersionName like accessor.apiVersionName or scopeAccessor.apiVersionName = accessor.apiVersionName)
+        and (scopeAccessor.endpointName like accessor.endpointName or scopeAccessor.endpointName = accessor.endpointName)
+        
+        order by accessor.lookupPriority desc, scopeAccessor.lookupPriority desc""")
+    Set<AuthorizationType> matchAuthorizationsByAccessorName(
+            @Param("scopeName") String scopeName
+            , @Param("identityName") String identityName
+            , @Param("accessorName") String accessorName
     )
 
 }
