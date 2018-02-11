@@ -18,9 +18,9 @@ class G06_AuthorizationTypeGenerator {
         void generate_data(I_authorization_type_repository p_authorization_repository, I_scope_type_repository p_scope_repository, I_identity_type_repository p_identity_repository, I_accessor_type_repository p_accessor_repository) {
         Set<AuthorizationType> l_entity_set = new HashSet<AuthorizationType>()
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Access to Anonymous Services",//todo: scopes -> collection; first identify accessor/matching authorization->then 1 actual scope using this accessor. Same applies to IdentityType
+                authorizationName: "Anonymous",
                 scopeSet: p_scope_repository.findByScopeName("Anonymous Services"),
-                identitySet: p_identity_repository.findByIdentityName("Owner of AccessorType Data"),
+                identitySet: p_identity_repository.findByIdentityName("Owner of Acce Data"),
                 durationSeconds: 1800,
                 maxUsageCount: null,
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),
@@ -55,7 +55,7 @@ class G06_AuthorizationTypeGenerator {
                 refreshAuthorization: p_authorization_repository.findByAuthorizationNameAndAccessor("Refresh to Main Screen", p_accessor_repository.findByAccessorName("Any accessor").first()).first(),
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),
                 authorizationType: "Access",
-                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Access to Anonymous Services")
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Access to Main Screen",
@@ -66,7 +66,7 @@ class G06_AuthorizationTypeGenerator {
                 refreshAuthorization: p_authorization_repository.findByAuthorizationNameAndAccessor("Refresh to Main Screen", p_accessor_repository.findByAccessorName("LMN Multi Currency React (FT2 Development)").first()).first(),
                 accessor: p_accessor_repository.findByAccessorName("LMN Multi Currency React (FT2 Development)").first(),
                 authorizationType: "Access",
-                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Access to Anonymous Services")
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
         p_authorization_repository.save(l_entity_set)
         l_entity_set.clear()

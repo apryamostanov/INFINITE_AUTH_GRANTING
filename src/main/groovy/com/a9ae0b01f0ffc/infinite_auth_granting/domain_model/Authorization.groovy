@@ -7,6 +7,7 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.time.TimeCategory
@@ -28,6 +29,7 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 @Component
 class Authorization {
     String authorizationName
+    Long authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
     Accessor accessor
 
     Identity identity
@@ -36,6 +38,7 @@ class Authorization {
 
     Integer durationSeconds
 
+    @JsonProperty("usage_limit")
     Integer maxUsageCount
 
     HashMap<String, String> functionalFieldMap
@@ -46,8 +49,11 @@ class Authorization {
     @JsonFormat(timezone = "UTC")
     Date creationDate
     Date expiryDate
+    @JsonProperty("status")
     String authorizationStatus = GC_STATUS_NEW
+    @JsonProperty("")
     String errorCode
+    @JsonProperty("token")
     String jwt
     String authorizationType
 

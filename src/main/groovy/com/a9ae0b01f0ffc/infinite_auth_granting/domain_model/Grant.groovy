@@ -1,15 +1,21 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Grant {
+
+
+    @JsonProperty("service_name")
     String restResourceName
 
     String method
 
+    @JsonProperty("uri_mask")
     String urlMask
 
+    @JsonProperty("data_authorization_keys")
     Set<String> keyFieldSet
 
     boolean equals(o) {

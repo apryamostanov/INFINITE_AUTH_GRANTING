@@ -5,6 +5,7 @@ import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthenticationType
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
 import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.GC_STATUS_FAILED
@@ -14,8 +15,10 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 class Authentication {
     String authenticationName
 
+    @JsonProperty("public_data")
     HashMap<String, String> publicDataFieldSet
 
+    @JsonProperty("private_data")
     HashMap<String, String> privateDataFieldSet
 
     @JsonIgnore
@@ -27,6 +30,7 @@ class Authentication {
     @JsonIgnore
     HashMap<String, String> functionalFieldMap
 
+    @JsonProperty("status")
     String authenticationStatus = T_auth_grant_base_4_const.GC_STATUS_NEW
 
     @JsonIgnore
