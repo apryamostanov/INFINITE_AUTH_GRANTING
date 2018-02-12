@@ -22,8 +22,6 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.security.Key
 
-import static base.T_common_base_1_const.*
-import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -31,7 +29,7 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 @Component
 class Authorization {
     String authorizationName
-    Long authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
+    Long authorizationId
     //Accessor accessor
 
     Identity identity
@@ -54,8 +52,10 @@ class Authorization {
     Date expiryDate
     @JsonProperty("status")
     String authorizationStatus = GC_STATUS_NEW
-    @JsonProperty("")
+    @JsonProperty("mdwl_error_number")
     String errorCode
+    @JsonProperty("mdwl_error_text")
+    String errorText
     @JsonProperty("token")
     String jwt
     String authorizationType
@@ -67,15 +67,17 @@ class Authorization {
 
     void success(T_auth_grant_base_5_context i_context) {
         this.authorizationStatus = GC_STATUS_SUCCESSFUL
+        this.authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
         if (is_null(this.jwt)) {
             set_validity()
             set_jwt(i_context)
         }
     }
 
-    void failure(Integer i_error_code) {
+    void failure(String i_error_code) {
         this.authorizationStatus = GC_STATUS_FAILED
         this.errorCode = i_error_code
+        this.authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
     }
 
     Boolean is_invalid_access_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
@@ -141,7 +143,11 @@ class Authorization {
                     l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)
                 }
                 if (l_prerequisite_user_auth.authorizationStatus != GC_STATUS_SUCCESSFUL) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_08_FAILED_PREREQUISITE)
+                    failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9403_FAILED_PREREQUISITE)
+                    return
+                }
+                if (l_prerequisite_user_auth.expiryDate.before(new Date())) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9401_EXPIRED_PREREQUISITE)
                     return
                 }
                 if (not(merge_field_maps(l_unwrapped_prerequisite_authorization.scope?.keyFieldMap as HashMap<String, String>, l_unwrapped_prerequisite_authorization.functionalFieldMap as HashMap<String, String>))) {
@@ -182,7 +188,8 @@ class Authorization {
             for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
                 l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], i_context, this)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
-                    failure(GC_AUTHORIZATION_ERROR_CODE_16_FAILED_AUTHENTICATION)
+                    this.errorText = l_sorted_conf_authentication_list[l_authentication_index].authenticationName
+                    failure(GC_AUTHORIZATION_ERROR_CODE_MDWL8001_FAILED_AUTHENTICATION)
                     return
                 }
                 if (not(merge_field_maps(l_user_authentication.keyFieldMap, l_user_authentication.functionalFieldMap))) {
@@ -217,13 +224,13 @@ class Authorization {
         l_local_functional_field_map.putAll(functionalFieldMap)
         for (String l_key in i_key_field_map.keySet()) {
             if (l_local_key_field_map.containsKey(l_key)) {
-                if (l_local_key_field_map.get(l_key) != i_key_field_map.get(l_key)) return false
+                if (is_not_null(i_key_field_map.get(l_key)) && is_not_null(l_local_key_field_map.get(l_key)) && l_local_key_field_map.get(l_key) != i_key_field_map.get(l_key)) return false
                 else l_local_key_field_map.put(l_key, i_key_field_map.get(l_key))
             } else l_local_key_field_map.put(l_key, i_key_field_map.get(l_key))
         }
         for (String l_key in i_functional_field_map.keySet()) {
             if (l_local_functional_field_map.containsKey(l_key)) {
-                if (l_local_functional_field_map.get(l_key) != i_functional_field_map.get(l_key)) return false
+                if (is_not_null(i_functional_field_map.get(l_key)) && is_not_null(l_local_functional_field_map.get(l_key)) && l_local_functional_field_map.get(l_key) != i_functional_field_map.get(l_key)) return false
                 else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
             } else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
         }
@@ -314,7 +321,6 @@ class Authorization {
             , @QueryParam("accessorProduct") String i_AccessorProduct
             , @QueryParam("accessorProductGroup") String i_AccessorProductGroup
             , @QueryParam("accessorApiVersionName") String i_AccessorApiVersionName
-            , @QueryParam("accessorEndpointName") String i_AccessorEndPointName
             , @QueryParam("identityName") String i_identityName
     ) {
         Response l_granting_response
@@ -332,8 +338,6 @@ class Authorization {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorProductGroup' is missing")).build()
         } else if (is_null(i_AccessorApiVersionName)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorApiVersionName' is missing")).build()
-        } else if (is_null(i_AccessorEndPointName)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorEndpointName' is missing")).build()
         } else {
             AuthorizationType l_authorization_type = p_app_context.p_authorization_type_repository.matchAuthorizations(
                     i_scope_name
@@ -345,7 +349,7 @@ class Authorization {
                     , i_AccessorProduct
                     , i_AccessorProductGroup
                     , i_AccessorApiVersionName
-                    , i_AccessorEndPointName
+                    , p_app_context.p_app_conf.endpoint_name
             )[GC_FIRST_INDEX]
             Set<Authorization> l_user_authorizations
             if (is_not_null(l_authorization_type)) {

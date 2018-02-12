@@ -1,30 +1,42 @@
-{
-  "authorization_name": "Anonymous",
-  "scope": {
-    "scope_name": "Anonymous Services"
-  },
-  "identity": {
-    "identity_name": "Owner of Accessor Data",
-    "authentications": [
-      {
-        "authentication_name": "Accessor_data",
-        "authentication_data": {
+[
+  {
+    "authorization_name": "Anonymous",
+    "accessor": {
+      "accessor_name": "LMN Multi Currency React (FT2 Development)",
+      "platform": "React",
+      "app_version": "1.87",
+      "fiid": "1100",
+      "product_group": "Multi Currency",
+      "endpoint_name": "FT2 Development",
+      "api_version_name": "2.0.x"
+    },
+    "identity": {
+      "identity_name": "Owner of Accessor Data",
+      "authentications": [
+        {
+          "authentication_name": "Accessor_data",
           "public_data": {
-            "accessor_name": "Whitelabeled Single Currency",
-            "platform": "iOS",
+            "accessor_name": "LMN Multi Currency React (FT2 Development)",
+            "platform": "React",
+            "app_version": "1.87",
             "FIID": "1100",
-            "api_major_version": "1.x.x",
-            "app_version": "0.10.1",
-            "language": "eng",
+            "product_group": "Multi Currency",
+            "endpoint_name": "FT2 Development",
+            "api_major_version": "2.0.x",
             "specific_data": {
               "IMEI": "990000862471854",
               "manufacturer": "Apple",
               "model": "A1586"
             }
           },
-          "private_data": null
+          "private_data": null,
+          "status": "new"
         }
-      }
-    ]
+      ]
+    },
+    "scope": {
+      "scope_name": "Anonymous Services"
+    },
+    "authorization_type": "Access"
   }
-}
+]

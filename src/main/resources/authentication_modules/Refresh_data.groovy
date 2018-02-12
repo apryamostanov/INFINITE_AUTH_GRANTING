@@ -1,13 +1,12 @@
 package authentication_modules
 
-import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Authentication
 import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Authorization
 
 import static base.T_common_base_3_utils.is_null
 
 System.out.println(this.getClass().getSimpleName())
 
-Authentication io_user_authentication = binding.getVariable("io_user_authentication") as Authentication
+def io_user_authentication = binding.getVariable("io_user_authentication")
 
 if (is_null(io_user_authentication.publicDataFieldSet)) {
     io_user_authentication.failure()
@@ -26,24 +25,24 @@ if (io_user_authentication.publicDataFieldSet.get("proxyNumber") == null ||
     return
 }
 
-if (io_user_authentication.p_parent_authorization.is_invalid_refresh_jwt(io_user_authentication.privateDataFieldSet.get("refreshToken"), io_user_authentication.p_context)) {
+if (io_user_authentication.p_parent_authorization.is_invalid_refresh_jwt(io_user_authentication.privateDataFieldSet.get("refreshToken") as String, io_user_authentication.p_context)) {
     io_user_authentication.failure()
     return
 }
 
-Authorization l_refresh_authorization = io_user_authentication.p_parent_authorization.refresh_jwt2authorization(io_user_authentication.privateDataFieldSet.get("refreshToken"), io_user_authentication.p_context)
+Authorization l_refresh_authorization = io_user_authentication.p_parent_authorization.refresh_jwt2authorization(io_user_authentication.privateDataFieldSet.get("refreshToken") as String, io_user_authentication.p_context)
 
 if (l_refresh_authorization.expiryDate.before(new Date())) {
     io_user_authentication.failure()
     return
 }
 
-if (io_user_authentication.p_parent_authorization.is_invalid_access_jwt(io_user_authentication.publicDataFieldSet.get("oldAccessToken"), io_user_authentication.p_context)) {
+if (io_user_authentication.p_parent_authorization.is_invalid_access_jwt(io_user_authentication.publicDataFieldSet.get("oldAccessToken") as String, io_user_authentication.p_context)) {
     io_user_authentication.failure()
     return
 }
 
-Authorization l_old_access_authorization = io_user_authentication.p_parent_authorization.access_jwt2authorization(io_user_authentication.publicDataFieldSet.get("oldAccessToken"), io_user_authentication.p_context)
+Authorization l_old_access_authorization = io_user_authentication.p_parent_authorization.access_jwt2authorization(io_user_authentication.publicDataFieldSet.get("oldAccessToken") as String, io_user_authentication.p_context)
 
 if (l_old_access_authorization.scope != l_refresh_authorization.scope) {
     io_user_authentication.failure()

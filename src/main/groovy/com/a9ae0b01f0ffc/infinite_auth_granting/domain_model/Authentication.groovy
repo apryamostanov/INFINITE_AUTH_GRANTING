@@ -16,10 +16,10 @@ class Authentication {
     String authenticationName
 
     @JsonProperty("public_data")
-    HashMap<String, String> publicDataFieldSet
+    HashMap<String, Object> publicDataFieldSet
 
     @JsonProperty("private_data")
-    HashMap<String, String> privateDataFieldSet
+    HashMap<String, Object> privateDataFieldSet
 
     @JsonIgnore
     Authorization p_parent_authorization

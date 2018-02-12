@@ -1,6 +1,5 @@
 package authentication_modules
 
-import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Authentication
 import groovy.json.JsonSlurper
 import okhttp3.*
 
@@ -8,7 +7,7 @@ import static base.T_common_base_3_utils.is_null
 
 System.out.println(this.getClass().getSimpleName())
 
-Authentication io_user_authentication = binding.getVariable("io_user_authentication") as Authentication
+def io_user_authentication = binding.getVariable("io_user_authentication")
 
 if (is_null(io_user_authentication.publicDataFieldSet)) {
     io_user_authentication.failure()
@@ -30,7 +29,7 @@ String l_request_body_string = """{"Authenticate": {"requestData": {
   "UniqueID": "${"MDWL" + new Date().format("yymmddHHmmssSSS")}",
   "CardUserId": "${io_user_authentication.publicDataFieldSet.get("username")}",
   "CurrentPassword": "${io_user_authentication.privateDataFieldSet.get("password")}",
-  "InstitutionID": "${io_user_authentication.p_parent_authorization.functionalFieldMap.get("fiid")}",
+  "InstitutionID": "${io_user_authentication.p_parent_authorization.functionalFieldMap.get("FIID")}",
   "UniqueIDFlag": "0"
 }}}"""
 
@@ -65,7 +64,7 @@ if (!l_response.isSuccessful()) {
         io_user_authentication.functionalFieldMap = new HashMap<String, String>()
         io_user_authentication.keyFieldMap.put("proxyNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ProxyNumber.toString())
         io_user_authentication.keyFieldMap.put("accountNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccountNumber.toString())
-        io_user_authentication.keyFieldMap.put("username", io_user_authentication.publicDataFieldSet.get("username"))
+        io_user_authentication.keyFieldMap.put("username", io_user_authentication.publicDataFieldSet.get("username") as String)
         io_user_authentication.functionalFieldMap.put("cardTypeIdEnhanced", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.CardTypeIDEnhanced.toString())
         io_user_authentication.functionalFieldMap.put("loginFlag", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.LoginFlag.toString())
         io_user_authentication.functionalFieldMap.put("errorNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ErrorNumber.toString())
