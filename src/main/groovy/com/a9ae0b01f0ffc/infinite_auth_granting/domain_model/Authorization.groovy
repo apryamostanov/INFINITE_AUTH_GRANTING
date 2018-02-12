@@ -1,6 +1,7 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
+import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AccessorType
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthenticationType
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
@@ -22,6 +23,8 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.security.Key
 
+import static base.T_common_base_1_const.*
+import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -80,23 +83,19 @@ class Authorization {
         this.authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
     }
 
-    Boolean is_invalid_access_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+    static Boolean is_invalid_access_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         try {
-            Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
-            Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
-            return (l_authorization.authorizationStatus != GC_STATUS_SUCCESSFUL)
+            return (access_jwt2authorization(i_jwt_string, i_context).authorizationStatus != GC_STATUS_SUCCESSFUL)
         } catch (Exception ignored) {
-            return GC_FALSE
+            return GC_TRUE
         }
     }
 
-    Boolean is_invalid_refresh_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
+    static Boolean is_invalid_refresh_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         try {
-            Jwt l_jwt = Jwts.parser().setSigningKey(p_app_context.p_jwt_manager.get_jwt_refresh_key()).parse(i_jwt_string)
-            Authorization l_authorization = i_context.p_object_mapper.readValue(l_jwt.getBody() as String, Authorization.class)
-            return (l_authorization.authorizationStatus != GC_STATUS_SUCCESSFUL)
+            return (refresh_jwt2authorization(i_jwt_string, i_context).authorizationStatus != GC_STATUS_SUCCESSFUL)
         } catch (Exception ignored) {
-            return GC_FALSE
+            return GC_TRUE
         }
     }
 
@@ -133,11 +132,8 @@ class Authorization {
                     return
                 }
                 Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorization
-                Authorization l_unwrapped_prerequisite_authorization
                 if (l_prerequisite_user_auth.jwt != null) {
-                    l_unwrapped_prerequisite_authorization = access_jwt2authorization(l_prerequisite_user_auth.jwt, i_context)
-                } else {
-                    l_unwrapped_prerequisite_authorization = l_prerequisite_user_auth
+                    l_prerequisite_user_auth = access_jwt2authorization(l_prerequisite_user_auth.jwt, i_context)
                 }
                 for (AuthorizationType l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet) {
                     l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)
@@ -150,7 +146,7 @@ class Authorization {
                     failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9401_EXPIRED_PREREQUISITE)
                     return
                 }
-                if (not(merge_field_maps(l_unwrapped_prerequisite_authorization.scope?.keyFieldMap as HashMap<String, String>, l_unwrapped_prerequisite_authorization.functionalFieldMap as HashMap<String, String>))) {
+                if (not(merge_field_maps(l_prerequisite_user_auth.scope?.keyFieldMap as HashMap<String, String>, l_prerequisite_user_auth.functionalFieldMap as HashMap<String, String>))) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY)
                     return
                 }
@@ -205,10 +201,16 @@ class Authorization {
         l_user_authorization.scope = i_conf_authorization.scopeSet.first().to_user_scope()
         l_user_authorization.scope.keyFieldMap = l_key_field_map
         l_user_authorization.refreshAuthorization = GC_NULL_OBJ_REF as Authorization
+        l_user_authorization.authorizationType = "Access"
         success(i_context)
         if (is_not_null(i_conf_authorization.refreshAuthorization)) {
-            l_user_authorization.refreshAuthorization = i_conf_authorization.refreshAuthorization.to_user_authorizations(this.scope.scopeName, this.identity.identityName).first()
-            //l_user_authorization.refreshAuthorization.accessor = l_user_authorization.accessor
+            l_user_authorization.refreshAuthorization = new Authorization()
+            l_user_authorization.refreshAuthorization.authorizationName = i_conf_authorization.refreshAuthorization.authorizationName
+            l_user_authorization.refreshAuthorization.authorizationType = i_conf_authorization.refreshAuthorization.authorizationType
+            l_user_authorization.refreshAuthorization.identity = this.identity
+            l_user_authorization.refreshAuthorization.scope = this.scope
+            l_user_authorization.refreshAuthorization.durationSeconds = i_conf_authorization.refreshAuthorization.durationSeconds
+            l_user_authorization.refreshAuthorization.maxUsageCount = i_conf_authorization.refreshAuthorization.maxUsageCount
             l_user_authorization.refreshAuthorization.scope?.keyFieldMap = l_user_authorization.scope?.keyFieldMap
             l_user_authorization.refreshAuthorization.functionalFieldMap = l_user_authorization.functionalFieldMap
             l_user_authorization.refreshAuthorization.success(i_context)
@@ -241,22 +243,49 @@ class Authorization {
 
     static Authorization access_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
-        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
+        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map)l_jwt.getBody()).get("token") as String), Authorization.class)
         return l_authorization
     }
 
     static Authorization refresh_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_refresh_key()).parse(i_jwt_string)
-        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(l_jwt.getBody() as String), Authorization.class)
+        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map)l_jwt.getBody()).get("token") as String), Authorization.class)
         return l_authorization
     }
 
     void validate_authorization(T_auth_grant_base_5_context i_context) {
-
-        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.matchAuthorizationsByAccessorName(
+        String l_accessor_id = GC_EMPTY_STRING
+        Authorization l_lookup_accessor_id_authorization = this
+        while (is_not_null(l_lookup_accessor_id_authorization) && is_null(l_accessor_id)) {
+            if (is_not_null(l_lookup_accessor_id_authorization.jwt)) {
+                if (!is_invalid_access_jwt(l_lookup_accessor_id_authorization.jwt, i_context)) {
+                    Authorization l_prerequisite_authorization = access_jwt2authorization(l_lookup_accessor_id_authorization.jwt, i_context)
+                    l_accessor_id = l_prerequisite_authorization.scope?.keyFieldMap?.get("accessor_id")
+                } else {
+                    prerequisiteAuthorization.failure(GC_AUTHORIZATION_ERROR_CODE_01_INVALID_JWT)
+                    failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9403_FAILED_PREREQUISITE)
+                    return
+                }
+            } else {
+                l_accessor_id = l_lookup_accessor_id_authorization.scope?.keyFieldMap?.get("accessor_id")
+            }
+            l_lookup_accessor_id_authorization = l_lookup_accessor_id_authorization.prerequisiteAuthorization
+        }
+        AccessorType l_prerequisite_accessor = GC_NULL_OBJ_REF as AccessorType
+        if (is_not_null(l_accessor_id)) {
+            l_prerequisite_accessor = i_context.p_accessor_type_repository.findByAccessorName(l_accessor_id).first()
+        }
+        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.matchAuthorizations(
                 scope?.scopeName
                 , identity?.identityName
-                , scope?.keyFieldMap?.get("accessor_name")
+                , l_prerequisite_accessor?.appName
+                , l_prerequisite_accessor?.platform
+                , l_prerequisite_accessor?.appVersion
+                , l_prerequisite_accessor?.fiid
+                , l_prerequisite_accessor?.product
+                , l_prerequisite_accessor?.productGroup
+                , l_prerequisite_accessor?.apiVersionName
+                , i_context.p_app_conf.endpoint_name
         )[GC_FIRST_INDEX]
         if (is_null(l_config_authorization)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
@@ -287,7 +316,7 @@ class Authorization {
         } else if (this.authorizationType == "Refresh") {
             l_key = i_context.p_jwt_manager.get_jwt_refresh_key()
         }
-        jwt = Jwts.builder().setPayload(l_payload).signWith(SignatureAlgorithm.HS512, l_key).compact()
+        jwt = Jwts.builder().addClaims(["token": l_payload]).signWith(SignatureAlgorithm.HS512, l_key).compact()
     }
 
     @POST
@@ -326,18 +355,6 @@ class Authorization {
         Response l_granting_response
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
-        } else if (is_null(i_AccessorAppName)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorAppName' is missing")).build()
-        } else if (is_null(i_AccessorPlatform)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorPlatform' is missing")).build()
-        } else if (is_null(i_AccessorAppVersion)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorAppVersion' is missing")).build()
-        } else if (is_null(i_AccessorFiid)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorFiid' is missing")).build()
-        } else if (is_null(i_AccessorProductGroup)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorProductGroup' is missing")).build()
-        } else if (is_null(i_AccessorApiVersionName)) {
-            l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'accessorApiVersionName' is missing")).build()
         } else {
             AuthorizationType l_authorization_type = p_app_context.p_authorization_type_repository.matchAuthorizations(
                     i_scope_name

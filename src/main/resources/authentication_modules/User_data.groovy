@@ -62,12 +62,12 @@ if (!l_response.isSuccessful()) {
     } else {
         io_user_authentication.keyFieldMap = new HashMap<String, String>()
         io_user_authentication.functionalFieldMap = new HashMap<String, String>()
-        io_user_authentication.keyFieldMap.put("proxyNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ProxyNumber.toString())
-        io_user_authentication.keyFieldMap.put("accountNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccountNumber.toString())
-        io_user_authentication.keyFieldMap.put("username", io_user_authentication.publicDataFieldSet.get("username") as String)
-        io_user_authentication.functionalFieldMap.put("cardTypeIdEnhanced", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.CardTypeIDEnhanced.toString())
-        io_user_authentication.functionalFieldMap.put("loginFlag", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.LoginFlag.toString())
-        io_user_authentication.functionalFieldMap.put("errorNumber", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ErrorNumber.toString())
+        io_user_authentication.keyFieldMap.put("proxy_number", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ProxyNumber.toString())
+        io_user_authentication.keyFieldMap.put("account_number", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccountNumber.toString())
+        io_user_authentication.keyFieldMap.put("user_name", io_user_authentication.publicDataFieldSet.get("username") as String)
+        io_user_authentication.functionalFieldMap.put("card_type_id_enhanced", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.CardTypeIDEnhanced.toString())
+        io_user_authentication.functionalFieldMap.put("login_flag", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.LoginFlag.toString())
+        io_user_authentication.functionalFieldMap.put("error_number", l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.ErrorNumber.toString())
         if (l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.AccessToken != null &&
                 l_slurped_conf_api_response_json.AuthenticateResponse.AuthenticateResult.RefreshToken != null) {
             io_user_authentication.success()

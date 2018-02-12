@@ -29,7 +29,7 @@ class G06_AuthorizationTypeGenerator {
         p_authorization_repository.save(l_entity_set)
         l_entity_set.clear()
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Refresh to Main Screen",
+                authorizationName: "Refresh",
                 scopeSet: p_scope_repository.findByScopeName("Main Screen"),
                 durationSeconds: 2592000,
                 maxUsageCount: null,
@@ -37,7 +37,7 @@ class G06_AuthorizationTypeGenerator {
                 authorizationType: "Refresh"
         ))
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Refresh to Main Screen",
+                authorizationName: "Refresh",
                 scopeSet: p_scope_repository.findByScopeName("Main Screen"),
                 durationSeconds: 1800,
                 maxUsageCount: null,
@@ -47,23 +47,23 @@ class G06_AuthorizationTypeGenerator {
         p_authorization_repository.save(l_entity_set)
         l_entity_set.clear()
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Access to Main Screen",
+                authorizationName: "Read",
                 scopeSet: p_scope_repository.findByScopeName("Main Screen"),
                 identitySet: [p_identity_repository.findByIdentityName("Owner of User Data").first(), p_identity_repository.findByIdentityName("Owner of Refresh Data").first()],
                 durationSeconds: 1800,
                 maxUsageCount: null,
-                refreshAuthorization: p_authorization_repository.findByAuthorizationNameAndAccessor("Refresh to Main Screen", p_accessor_repository.findByAccessorName("Any accessor").first()).first(),
+                refreshAuthorization: p_authorization_repository.findByAuthorizationNameAndAccessor("Refresh", p_accessor_repository.findByAccessorName("Any accessor").first()).first(),
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Access to Main Screen",
+                authorizationName: "Read",
                 scopeSet: p_scope_repository.findByScopeName("Main Screen"),
                 identitySet: [p_identity_repository.findByIdentityName("Owner of User Data").first(), p_identity_repository.findByIdentityName("Owner of Refresh Data").first()],
                 durationSeconds: 120,
                 maxUsageCount: null,
-                refreshAuthorization: p_authorization_repository.findByAuthorizationNameAndAccessor("Refresh to Main Screen", p_accessor_repository.findByAccessorName("LMN Multi Currency React (FT2 Development)").first()).first(),
+                refreshAuthorization: p_authorization_repository.findByAuthorizationNameAndAccessor("Refresh", p_accessor_repository.findByAccessorName("LMN Multi Currency React (FT2 Development)").first()).first(),
                 accessor: p_accessor_repository.findByAccessorName("LMN Multi Currency React (FT2 Development)").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
@@ -78,7 +78,7 @@ class G06_AuthorizationTypeGenerator {
                 maxUsageCount: 1,
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),
                 authorizationType: "Access",
-                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Access to Main Screen")
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Bearer of User Data and Provisioning Data",
@@ -87,7 +87,7 @@ class G06_AuthorizationTypeGenerator {
                 maxUsageCount: 20,
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),
                 authorizationType: "Access",
-                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Access to Main Screen")
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Access to Change Password",
@@ -97,7 +97,7 @@ class G06_AuthorizationTypeGenerator {
                 maxUsageCount: 1,
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),
                 authorizationType: "Access",
-                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Access to Main Screen")
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Access to Update Phone",
@@ -107,7 +107,7 @@ class G06_AuthorizationTypeGenerator {
                 maxUsageCount: 1,
                 accessor: p_accessor_repository.findByAccessorName("Any accessor").first(),
                 authorizationType: "Access",
-                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Access to Main Screen")
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         p_authorization_repository.save(l_entity_set)
     }

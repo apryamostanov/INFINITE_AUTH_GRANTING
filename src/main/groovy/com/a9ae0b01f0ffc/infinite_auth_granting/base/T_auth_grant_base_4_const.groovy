@@ -4,9 +4,9 @@ import base.T_common_base_3_utils
 
 class T_auth_grant_base_4_const extends T_common_base_3_utils {
 
-    static final String GC_STATUS_NEW = "new"
-    static final String GC_STATUS_FAILED = "failed"
-    static final String GC_STATUS_SUCCESSFUL = "successful"
+    static final String GC_STATUS_NEW = "New"
+    static final String GC_STATUS_FAILED = "Failed"
+    static final String GC_STATUS_SUCCESSFUL = "Successful"
     static final String GC_AUTHORIZATION_ERROR_CODE_01_INVALID_JWT = "1"
     static final String GC_AUTHORIZATION_ERROR_CODE_02_EMPTY_EXPIRY = "2"
     static final String GC_AUTHORIZATION_ERROR_CODE_03_EXPIRED = "3"
