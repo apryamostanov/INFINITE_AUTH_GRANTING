@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="7a797db4-9d5d-436f-9e27-919d62fcad7f" activeEnvironment="Default" name="Infinite Auth" resourceRoot="" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="beed602b-191a-4d5d-9443-0c1af9470544" name="Infinite Auth"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4c69d69e-616a-4b39-892a-9af793c3467d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Infinite Auth" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Anonymous" id="ceca378a-b04b-44d9-b090-c9a2b90461d6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+  {
+    "authorization_name": "Anonymous",
+    "identity": {
+      "identity_name": "Owner of Accessor Data",
+      "authentications": [
+        {
+          "authentication_name": "Accessor_data",
+          "public_data": {
+            "accessor_name": "LMN Multi Currency React (FT2 Development)",
+            "platform": "React",
+            "app_version": "1.87",
+            "FIID": "1100",
+            "product_group": "Multi Currency",
+            "api_major_version": "2.0.x",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Anonymous Services"
+    }
+  }
+]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="740682bb-f197-42b3-a012-3b1ad1a60a1b"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+context.anonymous_token = l_slurped_json[0].token</script></con:config></con:testStep><con:testStep type="httprequest" name="Read" id="4b750057-4ded-402f-83ed-8cb3b06bf5c4"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Read" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+  {
+    "authorization_name": "Read",
+    "identity": {
+      "identity_name": "Owner of User Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data",
+          "public_data": {
+            "username": "p161899e3220"
+          },
+          "private_data": {
+            "password": "Pwd@2018"
+          }
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Main Screen"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=context.anonymous_token}"
+    }
+  }
+]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Response" id="a5881d30-881f-4e8d-9c65-871f5d1213d2"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+if (l_slurped_json[0].authorization_name=="Refresh") {
+	context.refresh_token = l_slurped_json[0].token
+	context.read_token = l_slurped_json[1].token
+} else {
+	context.refresh_token = l_slurped_json[1].token
+	context.read_token = l_slurped_json[0].token
+}
+</script></con:config></con:testStep><con:testStep type="httprequest" name="Read Refresh" id="a2ffcf0a-119f-4962-b58a-2c280c211acb"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Read Refresh" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+  {
+    "authorization_name": "Read",
+    "identity": {
+      "identity_name": "Owner of Refresh Data",
+      "authentications": [
+        {
+          "authentication_name": "Refresh_data",
+          "public_data": {
+            "proxy_number": "43890",
+            "old_access_token": "${=context.read_token}"
+          },
+          "private_data": {
+            "refresh_token": "${=context.refresh_token}"
+          }
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Main Screen"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=context.anonymous_token}"
+    }
+  }
+]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>http://localhost:8089</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
