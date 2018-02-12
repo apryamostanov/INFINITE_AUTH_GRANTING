@@ -52,12 +52,12 @@ if (!l_refresh_authorization.merge_field_maps(l_old_access_authorization.scope.k
     return
 }
 
-if (!io_user_authentication.p_parent_authorization.scope.keyFieldMap.containsKey("proxy_number")) {
+if (!l_refresh_authorization.scope.keyFieldMap.containsKey("proxy_number")) {
     io_user_authentication.failure()
     return
 }
 
-if (io_user_authentication.p_parent_authorization.scope.keyFieldMap.get("proxy_number") != io_user_authentication.publicDataFieldSet.get("proxy_number")) {
+if (l_refresh_authorization.scope.keyFieldMap.get("proxy_number") != io_user_authentication.publicDataFieldSet.get("proxy_number")) {
     io_user_authentication.failure()
     return
 }

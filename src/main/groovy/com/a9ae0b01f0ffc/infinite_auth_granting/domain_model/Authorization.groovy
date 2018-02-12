@@ -80,6 +80,12 @@ class Authorization {
     void failure(String i_error_code) {
         this.authorizationStatus = GC_STATUS_FAILED
         this.errorCode = i_error_code
+        this.functionalFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
+        this.scope.keyFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
+        this.identity.authenticationSet.forEach{l_authentication->
+            l_authentication.keyFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
+            l_authentication.functionalFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
+        }
         this.authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
     }
 
