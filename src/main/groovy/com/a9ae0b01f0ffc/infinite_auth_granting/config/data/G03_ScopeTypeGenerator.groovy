@@ -12,6 +12,9 @@ class G03_ScopeTypeGenerator {
     void generate_data(I_scope_type_repository p_scope_repository, I_grant_type_repository p_grant_repository, I_accessor_type_repository p_accessor_repository) {
         Set<ScopeType> l_entity_set = new HashSet<ScopeType>()
 
+        l_entity_set.add(new ScopeType(scopeName: "Prerequisite Usage Only", accessor: p_accessor_repository.findByAccessorName("Any accessor").first()
+        ))
+
         l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.findByAccessorName("Any accessor").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("UserRegistration").first(),
                 p_grant_repository.findByRestResourceName("UserRegistrationValidationParametersEnhanced").first(),

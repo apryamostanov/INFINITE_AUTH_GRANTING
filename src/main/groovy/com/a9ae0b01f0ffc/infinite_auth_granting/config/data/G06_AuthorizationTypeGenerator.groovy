@@ -1,10 +1,5 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.config.data
 
-import com.a9ae0b01f0ffc.infinite_auth_configuration.domain_model.AuthorizationType
-import com.a9ae0b01f0ffc.infinite_auth_configuration.interfaces.I_accessor_type_repository
-import com.a9ae0b01f0ffc.infinite_auth_configuration.interfaces.I_authorization_type_repository
-import com.a9ae0b01f0ffc.infinite_auth_configuration.interfaces.I_identity_type_repository
-import com.a9ae0b01f0ffc.infinite_auth_configuration.interfaces.I_scope_type_repository
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_accessor_type_repository
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_authorization_type_repository
@@ -15,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class G06_AuthorizationTypeGenerator {
 
-        void generate_data(I_authorization_type_repository p_authorization_repository, I_scope_type_repository p_scope_repository, I_identity_type_repository p_identity_repository, I_accessor_type_repository p_accessor_repository) {
+    void generate_data(I_authorization_type_repository p_authorization_repository, I_scope_type_repository p_scope_repository, I_identity_type_repository p_identity_repository, I_accessor_type_repository p_accessor_repository) {
         Set<AuthorizationType> l_entity_set = new HashSet<AuthorizationType>()
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Anonymous",
@@ -81,7 +76,8 @@ class G06_AuthorizationTypeGenerator {
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Bearer of User Data and Provisioning Data",
+                authorizationName: "Provisioned User Data Usage",
+                scopeSet: p_scope_repository.findByScopeName("Prerequisite Usage Only"),
                 identitySet: p_identity_repository.findByIdentityName("Owner of User Data and Provisioning Data"),
                 durationSeconds: 2592000,
                 maxUsageCount: 20,

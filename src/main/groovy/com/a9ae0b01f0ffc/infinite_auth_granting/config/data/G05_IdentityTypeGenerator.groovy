@@ -18,7 +18,7 @@ class G05_IdentityTypeGenerator {
         l_entity_set.add(new IdentityType(identityName: "Owner of Provisioning Data", authenticationSet: [p_authentication_repository.findByAuthenticationName("Provisioning_data").first()]))
         l_entity_set.add(new IdentityType(identityName: "Owner of User Data and DOB Data", authenticationSet: [p_authentication_repository.findByAuthenticationName("User_data").first(), p_authentication_repository.findByAuthenticationName("DOB_data").first()]))
         l_entity_set.add(new IdentityType(identityName: "Owner of Provisioned User Data", authenticationSet: [p_authentication_repository.findByAuthenticationName("Provisioned_user_data").first()]))
-        l_entity_set.add(new IdentityType(identityName: "Owner of User Data and Provisioning Data", authenticationSet: [p_authentication_repository.findByAuthenticationName("Provisioning_data").first()]))
+        l_entity_set.add(new IdentityType(identityName: "Owner of User Data and Provisioning Data", authenticationSet: [p_authentication_repository.findByAuthenticationName("User_data").first(), p_authentication_repository.findByAuthenticationName("Provisioning_data").first()]))//todo: add user data here
         p_identity_repository.save(l_entity_set)
     }
 

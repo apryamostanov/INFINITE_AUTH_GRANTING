@@ -84,7 +84,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         return p_app_conf
     }
 
-    static def zip(String s) {return s
+    static def zip(String s) {
         def targetStream = new ByteArrayOutputStream()
         def zipStream = new GZIPOutputStream(targetStream)
         zipStream.write(s.getBytes(StandardCharsets.UTF_8.name()))
@@ -94,7 +94,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
         return zippedBytes.encodeBase64()
     }
 
-    static def unzip(String compressed) {return compressed
+    static def unzip(String compressed) {
         def inflaterStream = new GZIPInputStream(new ByteArrayInputStream(compressed.decodeBase64()))
         def uncompressedStr = inflaterStream.getText(StandardCharsets.UTF_8.name())
         return uncompressedStr
