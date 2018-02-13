@@ -278,6 +278,10 @@ class Authorization {
             }
             l_lookup_accessor_id_authorization = l_lookup_accessor_id_authorization.prerequisiteAuthorization
         }
+        if (is_not_null(jwt)) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_19_USER_SUPPLIED_JWT)
+            return
+        }
         AccessorType l_prerequisite_accessor = GC_NULL_OBJ_REF as AccessorType
         if (is_not_null(l_accessor_id)) {
             l_prerequisite_accessor = i_context.p_accessor_type_repository.findByAccessorName(l_accessor_id).first()

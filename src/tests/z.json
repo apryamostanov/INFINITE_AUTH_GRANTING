@@ -1,30 +1,7 @@
-{
-  "resourceName": "Authorization",
-  "authorizationName": "Read access to Main Screen as Owner of Refresh Data (React)",
-  "durationSeconds": 1800,
-  "maxUsageCount": null,
-  "authorizationType": "Access",
-  "_links": {
-    "self": {
-      "href": "https://localhost:8080/api/authorizations/6"
-    },
-    "authorization": {
-      "href": "https://localhost:8080/api/authorizations/6"
-    },
-    "scope": {
-      "href": "https://localhost:8080/api/authorizations/6/scope"
-    },
-    "accessor": {
-      "href": "https://localhost:8080/api/authorizations/6/accessor"
-    },
-    "authenticationSet": {
-      "href": "https://localhost:8080/api/authorizations/6/authenticationSet"
-    },
-    "refreshAuthorization": {
-      "href": "https://localhost:8080/api/authorizations/6/refreshAuthorization"
-    },
-    "prerequisiteAuthorizationSet": {
-      "href": "https://localhost:8080/api/authorizations/6/prerequisiteAuthorizationSet"
-    }
-  }
-}
+{"Authenticate": {"requestData": {
+  "UniqueID": "MDWL180213181618298",
+  "CardUserId": "Daniyal@wirecard.com",
+  "CurrentPassword": "Test@567",
+  "InstitutionID": "1150",
+  "UniqueIDFlag": "0"
+}}}

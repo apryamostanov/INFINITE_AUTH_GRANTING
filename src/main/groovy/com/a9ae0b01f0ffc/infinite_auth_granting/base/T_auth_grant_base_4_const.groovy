@@ -22,5 +22,6 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_AUTHORIZATION_ERROR_CODE_MDWL8001_FAILED_AUTHENTICATION = "mdwl8001"
     static final String GC_AUTHORIZATION_ERROR_CODE_17 = "17"
     static final String GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY = "18"
+    static final String GC_AUTHORIZATION_ERROR_CODE_19_USER_SUPPLIED_JWT = "19"
 
 }

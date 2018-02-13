@@ -66,7 +66,7 @@ class G06_AuthorizationTypeGenerator {
         p_authorization_repository.save(l_entity_set)
         l_entity_set.clear()
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Access to Update Profile",
+                authorizationName: "Demographic Updates",
                 scopeSet: p_scope_repository.findByScopeName("Update Profile"),
                 identitySet: [p_identity_repository.findByIdentityName("Owner of User Data").first(), p_identity_repository.findByIdentityName("Owner of Provisioned User Data").first()],
                 durationSeconds: 30,
@@ -86,7 +86,7 @@ class G06_AuthorizationTypeGenerator {
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Access to Change Password",
+                authorizationName: "Security Updates",
                 scopeSet: [p_scope_repository.findByScopeName("Change Password").first(), p_scope_repository.findByScopeName("Change Security Answers").first()],
                 identitySet: p_identity_repository.findByIdentityName("Owner of User Data and DOB Data"),
                 durationSeconds: 30,
@@ -96,7 +96,7 @@ class G06_AuthorizationTypeGenerator {
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
-                authorizationName: "Access to Update Phone",
+                authorizationName: "Secured Demographic Updates",
                 scopeSet: p_scope_repository.findByScopeName("Update Phone"),
                 identitySet: [p_identity_repository.findByIdentityName("Owner of OTP Data and User Data").first(), p_identity_repository.findByIdentityName("Owner of OTP Data and Provisioned User Data").first()],
                 durationSeconds: 30,
