@@ -92,4 +92,48 @@ if (l_slurped_json[0].authorization_name=="Refresh") {
     	 "token": "${=context.anonymous_token}"
     }
   }
+]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Refresh Response" id="fa90b706-cfee-49c8-a52a-4f055a0ab7d5"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+if (l_slurped_json[0].authorization_name=="Refresh") {
+	context.refresh_token = l_slurped_json[0].token
+	context.read_token = l_slurped_json[1].token
+} else {
+	context.refresh_token = l_slurped_json[1].token
+	context.read_token = l_slurped_json[0].token
+}
+assert context.refresh_token != null
+assert context.read_token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Provisioned User Data Usage" id="6b5b6d62-d8f2-4e51-8fdb-e61140ab6a20"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Provisioned User Data Usage" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+  {
+    "authorization_name": "Provisioned User Data Usage",
+    "identity": {
+      "identity_name": "Owner of User Data and Provisioning Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data",
+          "public_data": {
+            "username": "p161899e3220"
+          },
+          "private_data": {
+            "password": "Pwd@2018"
+          }
+        },
+        {
+          "authentication_name": "Provisioning_data",
+          "public_data": {
+            "proxy_number": "43890",
+            "provisioning_public_key": "abcd"
+          },
+          "private_data": null
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Prerequisite Usage Only"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=context.read_token}"
+    }
+  }
 ]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>http://localhost:8089</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

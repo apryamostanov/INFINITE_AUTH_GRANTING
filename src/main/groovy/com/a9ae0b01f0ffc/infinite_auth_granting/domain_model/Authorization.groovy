@@ -70,7 +70,7 @@ class Authorization {
 
     void success(T_auth_grant_base_5_context i_context) {
         this.authorizationStatus = GC_STATUS_SUCCESSFUL
-        this.authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
+        this.authorizationId = Long.parseLong(new Date().format("yyMMddHHmmssSSS"))
         if (is_null(this.jwt)) {
             set_validity()
             set_jwt(i_context)
@@ -86,7 +86,7 @@ class Authorization {
             l_authentication.keyFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
             l_authentication.functionalFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
         }
-        this.authorizationId = Long.parseLong(new Date().format("yymmddHHmmssSSS"))
+        this.authorizationId = Long.parseLong(new Date().format("yyMMddHHmmssSSS"))
     }
 
     static Boolean is_invalid_access_jwt(String i_jwt_string, T_auth_grant_base_5_context i_context) {
@@ -250,6 +250,7 @@ class Authorization {
     static Authorization access_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
         Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map)l_jwt.getBody()).get("token") as String), Authorization.class)
+        l_authorization.jwt = i_jwt_string
         return l_authorization
     }
 
