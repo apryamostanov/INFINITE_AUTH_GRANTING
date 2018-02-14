@@ -108,7 +108,106 @@ if (l_slurped_json[0].authorization_name=="Refresh") {
 	context.read_token = l_slurped_json[0].token
 }
 assert context.refresh_token != null
-assert context.read_token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Provisioned User Data Usage" id="6b5b6d62-d8f2-4e51-8fdb-e61140ab6a20"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Provisioned User Data Usage" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+assert context.read_token != null
+
+</script></con:config></con:testStep><con:testStep type="groovy" name="Prepare Provisioned User Data Usage" id="91ccae96-0552-4f32-af01-55aece405cc2"><con:settings/><con:config><script>package authentication_modules
+
+import sun.misc.BASE64Decoder
+import sun.misc.BASE64Encoder
+
+import java.security.Signature;
+import java.security.GeneralSecurityException
+import java.security.KeyFactory
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.PrivateKey
+import java.security.PublicKey
+import java.security.spec.PKCS8EncodedKeySpec
+import java.security.spec.X509EncodedKeySpec
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
+import javax.crypto.Cipher;
+
+
+public static PrivateKey loadPrivateKey(String key64) throws GeneralSecurityException {
+    byte[] clear = new BASE64Decoder().decodeBuffer(key64);
+    PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(clear);
+    KeyFactory fact = KeyFactory.getInstance("RSA");
+    PrivateKey priv = fact.generatePrivate(keySpec);
+    Arrays.fill(clear, (byte) 0);
+    return priv;
+}
+
+
+public static PublicKey loadPublicKey(String stored) throws GeneralSecurityException {
+    byte[] data = new BASE64Decoder().decodeBuffer(stored);
+    X509EncodedKeySpec spec = new X509EncodedKeySpec(data);
+    KeyFactory fact = KeyFactory.getInstance("RSA");
+    return fact.generatePublic(spec);
+}
+
+public static String savePrivateKey(PrivateKey priv) throws GeneralSecurityException {
+    KeyFactory fact = KeyFactory.getInstance("RSA");
+    PKCS8EncodedKeySpec spec = fact.getKeySpec(priv,
+            PKCS8EncodedKeySpec.class);
+    byte[] packed = spec.getEncoded();
+    String key64 = new BASE64Encoder().encode(packed);
+
+    Arrays.fill(packed, (byte) 0);
+    return key64;
+}
+
+
+public static String savePublicKey(PublicKey publ) throws GeneralSecurityException {
+    KeyFactory fact = KeyFactory.getInstance("RSA");
+    X509EncodedKeySpec spec = fact.getKeySpec(publ,
+            X509EncodedKeySpec.class);
+    return new BASE64Encoder().encode(spec.getEncoded());
+}
+
+
+public static void main(String[] args) throws Exception {
+    KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
+    KeyPair pair = gen.generateKeyPair();
+
+    String pubKey = savePublicKey(pair.getPublic());
+    PublicKey pubSaved = loadPublicKey(pubKey);
+    System.out.println(pair.getPublic()+"\n"+pubSaved);
+
+    String privKey = savePrivateKey(pair.getPrivate());
+    PrivateKey privSaved = loadPrivateKey(privKey);
+    System.out.println(pair.getPrivate()+"\n"+privSaved);
+}
+
+public static KeyPair buildKeyPair() throws NoSuchAlgorithmException {
+    final int keySize = 2048;
+    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+    keyPairGenerator.initialize(keySize);
+    return keyPairGenerator.genKeyPair();
+}
+
+public static byte[] encrypt(PrivateKey privateKey, String message) throws Exception {
+    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+    cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+
+    return cipher.doFinal(message.getBytes());
+}
+
+public static byte[] decrypt(PublicKey publicKey, byte [] encrypted) throws Exception {
+    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+    cipher.init(Cipher.DECRYPT_MODE, publicKey);
+
+    return cipher.doFinal(encrypted);
+}
+def l_key_pair = buildKeyPair()
+context.private_key = savePrivateKey(l_key_pair.getPrivate())
+context.public_key = savePublicKey(l_key_pair.getPublic())
+context.provisioning_unique_id = "MDWL"+new Date().format("yyMMddHHmmssSSS")
+context.provisioned_data_signature = new BASE64Encoder().encode(encrypt(l_key_pair.getPrivate(), (context.proxy_number + context.provisioning_unique_id)))</script></con:config></con:testStep><con:testStep type="httprequest" name="Provisioned User Data Usage" id="6b5b6d62-d8f2-4e51-8fdb-e61140ab6a20"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Provisioned User Data Usage" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
   {
     "authorization_name": "Provisioned User Data Usage",
     "identity": {
@@ -127,7 +226,7 @@ assert context.read_token != null</script></con:config></con:testStep><con:testS
           "authentication_name": "Provisioning_data",
           "public_data": {
             "proxy_number": "${=context.proxy_number}",
-            "provisioning_public_key": "abcd"
+            "provisioning_public_key": "${=context.public_key}"
           },
           "private_data": null
         }
@@ -144,7 +243,8 @@ assert context.read_token != null</script></con:config></con:testStep><con:testS
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
-assert l_slurped_json[0].token != null </script></con:config></con:testStep><con:testStep type="httprequest" name="SendOTPSMS" id="9b981b6f-f694-4e09-862a-08fd20671523"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="SendOTPSMS" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#ResourceURL}/SendOTPSMS</con:endpoint><con:request>{
+assert l_slurped_json[0].token != null 
+context.provisioned_user_data_usage_authorization = l_slurped_json[0].token</script></con:config></con:testStep><con:testStep type="httprequest" name="SendOTPSMS" id="9b981b6f-f694-4e09-862a-08fd20671523"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="SendOTPSMS" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#ResourceURL}/SendOTPSMS</con:endpoint><con:request>{
   "SendOTPSMS": {
     "requestData": {
       "UniqueID": "${="MDWL" + new Date().format("yyMMddHHmmssSSS")}",
@@ -173,6 +273,47 @@ context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:t
           },
           "private_data": {
             "password": "${=context.password}"
+          }
+        },
+        {
+          "authentication_name": "OTP_data",
+          "public_data": {
+            "proxy_number": "${=context.proxy_number}",
+            "otp_id": "${=context.otp_id}",
+            "phone_number": "+971559307088"
+          },
+          "private_data": {
+          	"otp": "${=context.otp}"
+          }
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Update Phone"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=context.read_token}"
+    }
+  }
+]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Secured Demographic Updates Response" id="e2667957-b3a6-48a4-8246-e02d9ca70123"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+assert l_slurped_json[0].token != null </script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates - Provisioned User Data" id="d7abeac2-b666-4fd5-a499-aa88fccb6278"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates - Provisioned User Data" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+  {
+    "authorization_name": "Secured Demographic Updates",
+    "identity": {
+      "identity_name": "Owner of OTP Data and Provisioned User Data",
+      "authentications": [
+        {
+          "authentication_name": "Provisioned_user_data",
+          "public_data": {
+            "proxy_number": "${=context.proxy_number}",
+            "provisioned_data_unique_id": "${=context.provisioning_unique_id}",
+            "provisioned_user_data_usage_authorization": "${=context.provisioned_user_data_usage_authorization}",
+          },
+          "private_data": {
+            "provisioned_data_signature": "${=context.provisioned_data_signature}"
           }
         },
         {
