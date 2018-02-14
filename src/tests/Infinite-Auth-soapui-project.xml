@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="7a797db4-9d5d-436f-9e27-919d62fcad7f" activeEnvironment="Default" name="Infinite Auth" resourceRoot="" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="beed602b-191a-4d5d-9443-0c1af9470544" name="Infinite Auth"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4c69d69e-616a-4b39-892a-9af793c3467d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Infinite Auth" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Init Data" id="70edc71c-71e4-43c6-b2a4-7ecc4f5c4b1f"><con:settings/><con:config><script>//context.username = "Daniyal@wirecard.com"
-//context.password = "Test@567"
-context.username = "mobileapp6@wirecard.com"
-context.password = "Wdp@1234"
+<con:soapui-project id="7a797db4-9d5d-436f-9e27-919d62fcad7f" activeEnvironment="Default" name="Infinite Auth" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="beed602b-191a-4d5d-9443-0c1af9470544" name="Infinite Auth"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4c69d69e-616a-4b39-892a-9af793c3467d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Infinite Auth" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Init Data" id="70edc71c-71e4-43c6-b2a4-7ecc4f5c4b1f"><con:settings/><con:config><script>context.username = "Daniyal@wirecard.com"
+context.password = "Test@567"
+//context.username = "mobileapp6@wirecard.com"
+//context.password = "Wdp@1234"
 context.fiid = 1150</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous" id="ceca378a-b04b-44d9-b090-c9a2b90461d6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
   {
     "authorization_name": "Anonymous",
@@ -158,26 +158,28 @@ assert l_slurped_json[0].token != null </script></con:config></con:testStep><con
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
 context.otp_id = l_slurped_json.SendOTPSMSResponse.SendOTPSMSResult.OTPUniqueId
-assert context.otp_id != null</script></con:config></con:testStep><con:testStep type="groovy" name="Enter OTP" id="60c0dde6-eee1-4e91-aa2c-e4085292fcb0"><con:settings/><con:config><script>context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates" id="05729bb2-e443-4c32-a18e-754d31c84ac2"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+assert context.otp_id != null</script></con:config></con:testStep><con:testStep type="groovy" name="Enter OTP" id="60c0dde6-eee1-4e91-aa2c-e4085292fcb0"><con:settings/><con:config><script>import com.eviware.soapui.support.*
+def alert = com.eviware.soapui.support.UISupport
+context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates" id="05729bb2-e443-4c32-a18e-754d31c84ac2"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
   {
     "authorization_name": "Secured Demographic Updates",
     "identity": {
-      "identity_name": "Owner of User Data and Provisioning Data",
+      "identity_name": "Owner of OTP Data and User Data",
       "authentications": [
         {
           "authentication_name": "User_data",
           "public_data": {
-            "username": "p161899e3220"
+            "username": "${=context.username}"
           },
           "private_data": {
-            "password": "Pwd@2018"
+            "password": "${=context.password}"
           }
         },
         {
           "authentication_name": "OTP_data",
           "public_data": {
-            "proxy_number": "43890",
-            "otp_id": "${=context.otp}",
+            "proxy_number": "${=context.proxy_number}",
+            "otp_id": "${=context.otp_id}",
             "phone_number": "+971559307088"
           },
           "private_data": {
