@@ -10,8 +10,6 @@ import javax.persistence.*
 @Entity
 class IdentityType {
 
-    String resourceName = this.getClass().getSimpleName()
-
     @Column(unique = true)
     String identityName
 

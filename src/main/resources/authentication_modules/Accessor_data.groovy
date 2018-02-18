@@ -29,7 +29,7 @@ Set l_accessor_set_to_match = io_user_authentication.p_context.p_accessor_type_r
         , io_user_authentication.publicDataFieldSet.get("product")
         , io_user_authentication.publicDataFieldSet.get("product_group")
         , io_user_authentication.publicDataFieldSet.get("api_major_version")
-        , io_user_authentication.p_context.p_app_conf.endpoint_name
+        , io_user_authentication.p_context.p_app_conf.granting_endpoint_name
 ) as Set
 
 if (l_accessor_set_to_match.isEmpty()) {

@@ -46,8 +46,8 @@ class T_auth_grant_conf {
     @Value('${infinite.auth.granting.jwt.refresh.keystore.alias}')
     public String infiniteAuthGrantingJwtRefreshKeystoreAlias
 
-    @Value('${endpoint_name}')
-    public String endpoint_name
+    @Value('${granting_endpoint_name}')
+    public String granting_endpoint_name
 
     @PostConstruct
     void init() {

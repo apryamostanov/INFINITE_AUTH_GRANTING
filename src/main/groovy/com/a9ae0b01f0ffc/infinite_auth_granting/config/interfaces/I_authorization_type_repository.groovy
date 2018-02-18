@@ -28,32 +28,32 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
         and (identitySet.identityName = :identityName or :identityName is null)
         and a.authorizationType = 'Access'
         
-        and nvl(:appName, 'Any') like authorizationAccessor.appName
-        and nvl(:platform, 'Any') like authorizationAccessor.platform
-        and nvl(:appVersion, 'Any') like authorizationAccessor.appVersion
-        and nvl(:fiid, 'Any') like authorizationAccessor.fiid
-        and nvl(:product, 'Any') like authorizationAccessor.product
-        and nvl(:productGroup, 'Any') like authorizationAccessor.productGroup
-        and nvl(:apiVersionName, 'Any') like authorizationAccessor.apiVersionName
-        and nvl(:endpointName, 'Any') like authorizationAccessor.endpointName
+        and nvl(:appName, 'Any') like authorizationAccessor.appName 
+        and nvl(:platform, 'Any') like authorizationAccessor.platform 
+        and nvl(:appVersion, 'Any') like authorizationAccessor.appVersion 
+        and nvl(:fiid, 'Any') like authorizationAccessor.fiid 
+        and nvl(:product, 'Any') like authorizationAccessor.product 
+        and nvl(:productGroup, 'Any') like authorizationAccessor.productGroup 
+        and nvl(:apiVersionName, 'Any') like authorizationAccessor.apiVersionName 
+        and nvl(:grantingEndpointName, 'Any') like authorizationAccessor.grantingEndpointName 
         
-        and nvl(:appName, 'Any') like scopeAccessor.appName
-        and nvl(:platform, 'Any') like scopeAccessor.platform
-        and nvl(:appVersion, 'Any') like scopeAccessor.appVersion
-        and nvl(:fiid, 'Any') like scopeAccessor.fiid
-        and nvl(:product, 'Any') like scopeAccessor.product
-        and nvl(:productGroup, 'Any') like scopeAccessor.productGroup
-        and nvl(:apiVersionName, 'Any') like scopeAccessor.apiVersionName
-        and nvl(:endpointName, 'Any') like scopeAccessor.endpointName
+        and nvl(:appName, 'Any') like scopeAccessor.appName 
+        and nvl(:platform, 'Any') like scopeAccessor.platform 
+        and nvl(:appVersion, 'Any') like scopeAccessor.appVersion 
+        and nvl(:fiid, 'Any') like scopeAccessor.fiid 
+        and nvl(:product, 'Any') like scopeAccessor.product 
+        and nvl(:productGroup, 'Any') like scopeAccessor.productGroup 
+        and nvl(:apiVersionName, 'Any') like scopeAccessor.apiVersionName 
+        and nvl(:grantingEndpointName, 'Any') like scopeAccessor.grantingEndpointName 
         
-        and (scopeAccessor.appName like authorizationAccessor.appName or scopeAccessor.appName = authorizationAccessor.appName)
-        and (scopeAccessor.platform like authorizationAccessor.platform or scopeAccessor.platform = authorizationAccessor.platform)
-        and (scopeAccessor.appVersion like authorizationAccessor.appVersion or scopeAccessor.appVersion = authorizationAccessor.appVersion)
-        and (scopeAccessor.fiid like authorizationAccessor.fiid or scopeAccessor.fiid = authorizationAccessor.fiid)
-        and (scopeAccessor.product like authorizationAccessor.product or scopeAccessor.product = authorizationAccessor.product)
-        and (scopeAccessor.productGroup like authorizationAccessor.productGroup or scopeAccessor.productGroup = authorizationAccessor.productGroup)
-        and (scopeAccessor.apiVersionName like authorizationAccessor.apiVersionName or scopeAccessor.apiVersionName = authorizationAccessor.apiVersionName)
-        and (scopeAccessor.endpointName like authorizationAccessor.endpointName or scopeAccessor.endpointName = authorizationAccessor.endpointName)
+        and (scopeAccessor.appName like authorizationAccessor.appName  or scopeAccessor.appName = authorizationAccessor.appName)
+        and (scopeAccessor.platform like authorizationAccessor.platform  or scopeAccessor.platform = authorizationAccessor.platform)
+        and (scopeAccessor.appVersion like authorizationAccessor.appVersion  or scopeAccessor.appVersion = authorizationAccessor.appVersion)
+        and (scopeAccessor.fiid like authorizationAccessor.fiid  or scopeAccessor.fiid = authorizationAccessor.fiid)
+        and (scopeAccessor.product like authorizationAccessor.product  or scopeAccessor.product = authorizationAccessor.product)
+        and (scopeAccessor.productGroup like authorizationAccessor.productGroup  or scopeAccessor.productGroup = authorizationAccessor.productGroup)
+        and (scopeAccessor.apiVersionName like authorizationAccessor.apiVersionName  or scopeAccessor.apiVersionName = authorizationAccessor.apiVersionName)
+        and (scopeAccessor.grantingEndpointName like authorizationAccessor.grantingEndpointName  or scopeAccessor.grantingEndpointName = authorizationAccessor.grantingEndpointName)
         
         order by authorizationAccessor.lookupPriority desc, scopeAccessor.lookupPriority desc""")
     Set<AuthorizationType> matchAuthorizations(
@@ -67,7 +67,7 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
             , @Param("product") String product
             , @Param("productGroup") String productGroup
             , @Param("apiVersionName") String apiVersionName
-            , @Param("endpointName") String endpointName
+            , @Param("grantingEndpointName") String endpointName
     )
 
 }

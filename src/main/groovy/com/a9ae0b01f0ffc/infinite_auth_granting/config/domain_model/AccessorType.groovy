@@ -1,7 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Accessor
-import com.a9ae0b01f0ffc.infinite_auth_granting.domain_model.Authorization
 import groovy.transform.CompileStatic
 
 import javax.persistence.*
@@ -14,8 +13,9 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 @Entity
 class AccessorType {
 
-    /** */
-    String resourceName = this.getClass().getSimpleName()
+    /**Defines the purpose of Accessor rule. Possible values: authorization control, scope control, access control*/
+    @ElementCollection(fetch = FetchType.EAGER)
+    Set<String> roleSet = new HashSet<String>()
 
     /** @ApiModelProperty ( e x a m p l e = "0", value = "Internal field. Priority for AccessorType identity provider matching. All accessor definitions are sorted with this field - and those with higher priority - matched first within AccessorType authentication provider") */
     Integer lookupPriority = GC_NULL_OBJ_REF as Integer
@@ -29,6 +29,9 @@ class AccessorType {
 
     /** @ApiModelProperty ( e x a m p l e = "React", value = "Matching field. Client software platform name (iOS, Android, React), hardcoded on the client side. E.g. name of the app. Supported wildcard value \"Any\".") */
     String platform = GC_EMPTY_STRING
+
+    /** @ApiModelProperty ( v a l u e = "Matching field. Operating system. */
+    String osName = GC_EMPTY_STRING
 
     /** @ApiModelProperty ( e x a m p l e = "0.6.1", value = "Matching field. Client software platform name (iOS, Android, React), hardcoded on the client side. E.g. name of the app. Supported wildcard value \"Any\".") */
     String appVersion = GC_EMPTY_STRING
@@ -45,10 +48,16 @@ class AccessorType {
     /** @ApiModelProperty ( e x a m p l e = "0", value = "Optional output field. Indicates that this specific accessor is banned - for AccessorType authentication provider. E.g. to restrict clients with outdated unsupported API versions") */
     Integer isForbidden = GC_NULL_OBJ_REF as Integer
 
-    /** @ApiModelProperty ( v a l u e = "Matching field. Endpoint ID/object as configured on web app instance (granting server). Allows overriding authorization rules level of specific endpointName. Supported wildcard value \"null\". Same value should be in AuthorizationType Validation web app endpointName configuration.") */
-    String endpointName = GC_EMPTY_STRING
+    /** @ApiModelProperty ( v a l u e = "Matching field. Endpoint ID/object as configured on web app instance (granting server). Allows overriding authorization rules level of specific grantingEndpointName. Supported wildcard value \"null\". Same value should be in AuthorizationType Validation web app grantingEndpointName configuration.") */
+    String grantingEndpointName = GC_EMPTY_STRING
 
-    /** @ApiModelProperty ( v a l u e = "Matching field. API version (combination of minor and major versions). Allows overriding authorization rules level of specific API version. Supported wildcard value \"null\". Same value should be in AuthorizationType Validation web app endpointName configuration.") */
+    /** @ApiModelProperty ( v a l u e = "Output field. Allows only usage at specific validation endpoints*/
+    String validationEndpointName = GC_EMPTY_STRING
+
+    /** @ApiModelProperty ( v a l u e = "Output field. Tells to validation endpoint to which resource server to route the request */
+    String resourceEndpointGroupName = GC_EMPTY_STRING
+
+    /** @ApiModelProperty ( v a l u e = "Matching field. API version (combination of minor and major versions). Allows overriding authorization rules level of specific API version. Supported wildcard value \"null\". Same value should be in AuthorizationType Validation web app grantingEndpointName configuration.") */
     String apiVersionName = GC_EMPTY_STRING
 
     /** @ApiModelProperty ( e x a m p l e = "1", value = "AccessorType id, generated field") */
@@ -66,7 +75,7 @@ class AccessorType {
         l_user_accessor.fiid = this.fiid
         l_user_accessor.product = this.product
         l_user_accessor.productGroup = this.productGroup
-        l_user_accessor.endpointName = this.endpointName
+        l_user_accessor.endpointName = this.grantingEndpointName
         l_user_accessor.apiVersionName = this.apiVersionName
         return l_user_accessor
     }

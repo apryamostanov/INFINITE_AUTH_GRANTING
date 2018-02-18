@@ -4,6 +4,10 @@ import base.T_common_base_3_utils
 
 class T_auth_grant_base_4_const extends T_common_base_3_utils {
 
+    static final String GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL = "Authorization control"
+    static final String GC_ACCESSOR_TYPE_SCOPE_CONTROL = "Scope control"
+    static final String GC_ACCESSOR_TYPE_ACCESS_CONTROL = "Access control"
+    static final String GC_ACCESSOR_TYPE_ROUTING_CONTROL = "Routing control"
     static final String GC_STATUS_NEW = "New"
     static final String GC_STATUS_FAILED = "Failed"
     static final String GC_STATUS_SUCCESSFUL = "Successful"

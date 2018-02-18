@@ -19,6 +19,9 @@ class G02_GrantTypeGenerator {
         l_entity_set.add(new GrantType(restResourceName: "ForgotUserId", method: "POST", keyFieldSet: ["CardNumber", "ProxyNumber"]))
         l_entity_set.add(new GrantType(restResourceName: "ForgotUserIdValidationParametersEnhanced", method: "GET", keyFieldSet: ["CardNumber", "ProxyNumber"]))
 
+        l_entity_set.add(new GrantType(restResourceName: "UpdateCustomerDetails", method: "POST", keyFieldSet: ["CardNumber", "ProxyNumber"]))
+        l_entity_set.add(new GrantType(restResourceName: "ListStatementDate", method: "GET", keyFieldSet: ["CardNumber", "ProxyNumber"]))
+
         l_entity_set.add(new GrantType(restResourceName: "GetCardDetailEnhanced", method: "GET", keyFieldSet: ["CardNumber", "ProxyNumber", "AccountNumber"]))
         l_entity_set.add(new GrantType(restResourceName: "GetCVC", method: "GET", keyFieldSet: ["CardNumber", "ProxyNumber"]))
         l_entity_set.add(new GrantType(restResourceName: "CardSearchEnhanced", method: "GET", keyFieldSet: ["CardNumber", "ProxyNumber"]))

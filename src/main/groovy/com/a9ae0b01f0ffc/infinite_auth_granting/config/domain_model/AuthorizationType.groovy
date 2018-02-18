@@ -12,8 +12,6 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 //@Table(uniqueConstraints = @UniqueConstraint(columnNames=["accessor", "authorizationType", "scope", "identity"]))
 class AuthorizationType {
 
-    String resourceName = this.getClass().getSimpleName()
-
     String authorizationName
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,8 +30,13 @@ class AuthorizationType {
 
     Integer maxUsageCount
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    AuthorizationType refreshAuthorization
+    Integer refreshDurationSeconds
+
+    Integer refreshMaxUsageCount
+
+    String refreshAuthorizationName
+
+    Boolean isRefreshAllowed
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn
@@ -66,9 +69,6 @@ class AuthorizationType {
                     l_user_authorizations.add(l_user_authorization)
                 }
             }
-        }
-        if (this.refreshAuthorization != null) {
-            l_user_authorizations.addAll(this.refreshAuthorization.to_user_authorizations(i_scope_name, i_identity_name))
         }
         return l_user_authorizations
     }

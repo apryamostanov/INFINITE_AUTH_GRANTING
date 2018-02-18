@@ -13,9 +13,6 @@ import static base.T_common_base_1_const.GC_EMPTY_STRING
 @Entity
 class AuthenticationType {
 
-    /***/
-    String resourceName = this.getClass().getSimpleName()
-
     /**@ApiModelProperty(example = "User_data", value = "Defines the Granting Server -> AuthenticationType Provider name")*/
     @Column(unique = true)
     String authenticationName = GC_EMPTY_STRING

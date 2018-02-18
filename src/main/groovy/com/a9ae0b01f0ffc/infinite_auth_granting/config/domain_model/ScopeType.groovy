@@ -14,8 +14,6 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 //@Table(uniqueConstraints = @UniqueConstraint(columnNames=["scopeName", "accessor"]))
 class ScopeType {
 
-    String resourceName = this.getClass().getSimpleName()
-
     String scopeName = GC_EMPTY_STRING
 
     @ManyToOne(fetch = FetchType.EAGER)

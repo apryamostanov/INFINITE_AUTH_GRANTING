@@ -82,7 +82,7 @@ class Authorization {
         this.errorCode = i_error_code
         this.functionalFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
         this.scope.keyFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
-        this.identity.authenticationSet.forEach{l_authentication->
+        this.identity.authenticationSet.forEach { l_authentication ->
             l_authentication.keyFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
             l_authentication.functionalFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
         }
@@ -209,14 +209,14 @@ class Authorization {
         l_user_authorization.refreshAuthorization = GC_NULL_OBJ_REF as Authorization
         l_user_authorization.authorizationType = "Access"
         success(i_context)
-        if (is_not_null(i_conf_authorization.refreshAuthorization)) {
+        if (i_conf_authorization.isRefreshAllowed) {
             l_user_authorization.refreshAuthorization = new Authorization()
-            l_user_authorization.refreshAuthorization.authorizationName = i_conf_authorization.refreshAuthorization.authorizationName
-            l_user_authorization.refreshAuthorization.authorizationType = i_conf_authorization.refreshAuthorization.authorizationType
+            l_user_authorization.refreshAuthorization.authorizationName = nvl(i_conf_authorization.refreshAuthorizationName, this.authorizationName)
+            l_user_authorization.refreshAuthorization.authorizationType = "Refresh"
             l_user_authorization.refreshAuthorization.identity = this.identity
             l_user_authorization.refreshAuthorization.scope = this.scope
-            l_user_authorization.refreshAuthorization.durationSeconds = i_conf_authorization.refreshAuthorization.durationSeconds
-            l_user_authorization.refreshAuthorization.maxUsageCount = i_conf_authorization.refreshAuthorization.maxUsageCount
+            l_user_authorization.refreshAuthorization.durationSeconds = i_conf_authorization.refreshDurationSeconds
+            l_user_authorization.refreshAuthorization.maxUsageCount = i_conf_authorization.refreshMaxUsageCount
             l_user_authorization.refreshAuthorization.scope?.keyFieldMap = l_user_authorization.scope?.keyFieldMap
             l_user_authorization.refreshAuthorization.functionalFieldMap = l_user_authorization.functionalFieldMap
             l_user_authorization.refreshAuthorization.success(i_context)
@@ -249,21 +249,27 @@ class Authorization {
 
     static Authorization access_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
-        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map)l_jwt.getBody()).get("token") as String), Authorization.class)
+        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map) l_jwt.getBody()).get("token") as String), Authorization.class)
         l_authorization.jwt = i_jwt_string
         return l_authorization
     }
 
     static Authorization refresh_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
         Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_refresh_key()).parse(i_jwt_string)
-        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map)l_jwt.getBody()).get("token") as String), Authorization.class)
+        Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map) l_jwt.getBody()).get("token") as String), Authorization.class)
         return l_authorization
     }
 
     void validate_authorization(T_auth_grant_base_5_context i_context) {
         String l_accessor_id = GC_EMPTY_STRING
         Authorization l_lookup_accessor_id_authorization = this
-        while (is_not_null(l_lookup_accessor_id_authorization) && is_null(l_accessor_id)) {
+        Authentication l_lookup_accessor_data_authentication = GC_NULL_OBJ_REF as Authentication
+        while (is_not_null(l_lookup_accessor_id_authorization) && is_null(l_accessor_id) && is_null(l_lookup_accessor_data_authentication)) {
+            l_lookup_accessor_id_authorization.identity.authenticationSet.each { l_lookup_authentication ->
+                if (l_lookup_authentication.authenticationName == "Accessor_data") {
+                    l_lookup_accessor_data_authentication = l_lookup_authentication
+                }
+            }
             if (is_not_null(l_lookup_accessor_id_authorization.jwt)) {
                 if (!is_invalid_access_jwt(l_lookup_accessor_id_authorization.jwt, i_context)) {
                     Authorization l_prerequisite_authorization = access_jwt2authorization(l_lookup_accessor_id_authorization.jwt, i_context)
@@ -283,7 +289,16 @@ class Authorization {
             return
         }
         AccessorType l_prerequisite_accessor = GC_NULL_OBJ_REF as AccessorType
-        if (is_not_null(l_accessor_id)) {
+        if (is_not_null(l_lookup_accessor_data_authentication)) {
+            l_prerequisite_accessor = new AccessorType()
+            l_prerequisite_accessor.appName = l_lookup_accessor_data_authentication.publicDataFieldSet.get("accessor_name")
+            l_prerequisite_accessor.platform = l_lookup_accessor_data_authentication.publicDataFieldSet.get("platform")
+            l_prerequisite_accessor.appVersion = l_lookup_accessor_data_authentication.publicDataFieldSet.get("app_version")
+            l_prerequisite_accessor.fiid = l_lookup_accessor_data_authentication.publicDataFieldSet.get("FIID")
+            l_prerequisite_accessor.product = l_lookup_accessor_data_authentication.publicDataFieldSet.get("product")
+            l_prerequisite_accessor.productGroup = l_lookup_accessor_data_authentication.publicDataFieldSet.get("product_group")
+            l_prerequisite_accessor.apiVersionName = l_lookup_accessor_data_authentication.publicDataFieldSet.get("api_major_version")
+        } else if (is_not_null(l_accessor_id)) {
             l_prerequisite_accessor = i_context.p_accessor_type_repository.findByAccessorName(l_accessor_id).first()
         }
         AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.matchAuthorizations(
@@ -296,7 +311,7 @@ class Authorization {
                 , l_prerequisite_accessor?.product
                 , l_prerequisite_accessor?.productGroup
                 , l_prerequisite_accessor?.apiVersionName
-                , i_context.p_app_conf.endpoint_name
+                , i_context.p_app_conf.granting_endpoint_name
         )[GC_FIRST_INDEX]
         if (is_null(l_config_authorization)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
@@ -377,7 +392,7 @@ class Authorization {
                     , i_AccessorProduct
                     , i_AccessorProductGroup
                     , i_AccessorApiVersionName
-                    , p_app_context.p_app_conf.endpoint_name
+                    , p_app_context.p_app_conf.granting_endpoint_name
             )[GC_FIRST_INDEX]
             Set<Authorization> l_user_authorizations
             if (is_not_null(l_authorization_type)) {

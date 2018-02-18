@@ -12,9 +12,6 @@ import static base.T_common_base_1_const.GC_EMPTY_STRING
 @Entity
 class GrantType {
 
-
-    String resourceName = this.getClass().getSimpleName()
-
     String restResourceName = GC_EMPTY_STRING
 
     String method = GC_EMPTY_STRING
