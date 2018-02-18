@@ -52,6 +52,8 @@ class Authentication {
             failure()
             return
         }
+        functionalFieldMap = new HashMap<>()
+        keyFieldMap = new HashMap<>()
         p_context = i_context
         p_parent_authorization = i_parent_authorization
         p_conf = p_context.get_authentication_config_holder().run(i_context.app_conf().authenticationConfigFileName + i_context.app_conf().authenticationModulesExtension, new Binding())

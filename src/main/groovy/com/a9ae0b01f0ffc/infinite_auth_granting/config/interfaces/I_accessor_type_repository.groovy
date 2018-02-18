@@ -16,17 +16,85 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
 
     Set<AccessorType> findByAccessorName(@Param("accessorName") String accessorName)
 
+    //Known H2 bug: https://github.com/h2database/h2database/issues/882
     @Query("""select a from AccessorType a where
          :appName like a.appName
      and :platform like a.platform
      and :appVersion like a.appVersion
      and :fiid like a.fiid
-     and nvl(:product, 'Any') like a.product
+     and coalesce(:product, 'Any') like a.product
      and :productGroup like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
+     and 'Access control' member of a.roleSet
      order by a.lookupPriority desc""")
-    Set<AccessorType> matchAccessors(
+    Set<AccessorType> match_accessors(
+            @Param("appName") String appName
+            , @Param("platform") String platform
+            , @Param("appVersion") String appVersion
+            , @Param("fiid") String fiid
+            , @Param("product") String product
+            , @Param("productGroup") String productGroup
+            , @Param("apiVersionName") String apiVersionName
+            , @Param("grantingEndpointName") String endpointName
+    )
+
+    @Query("""select a from AccessorType a where
+         :appName like a.appName
+     and :platform like a.platform
+     and :appVersion like a.appVersion
+     and :fiid like a.fiid
+     and coalesce(:product, 'Any') like a.product
+     and :productGroup like a.productGroup
+     and :apiVersionName like a.apiVersionName
+     and :grantingEndpointName like a.grantingEndpointName
+     and 'Scope control' member of a.roleSet
+     order by a.lookupPriority desc""")
+    Set<AccessorType> match_accessors_scope(
+            @Param("appName") String appName
+            , @Param("platform") String platform
+            , @Param("appVersion") String appVersion
+            , @Param("fiid") String fiid
+            , @Param("product") String product
+            , @Param("productGroup") String productGroup
+            , @Param("apiVersionName") String apiVersionName
+            , @Param("grantingEndpointName") String endpointName
+    )
+
+    @Query("""select a from AccessorType a where
+         :appName like a.appName
+     and :platform like a.platform
+     and :appVersion like a.appVersion
+     and :fiid like a.fiid
+     and coalesce(:product, 'Any') like a.product
+     and :productGroup like a.productGroup
+     and :apiVersionName like a.apiVersionName
+     and :grantingEndpointName like a.grantingEndpointName
+     and 'Authorization control' member of a.roleSet
+     order by a.lookupPriority desc""")
+    Set<AccessorType> match_accessors_authorization(
+            @Param("appName") String appName
+            , @Param("platform") String platform
+            , @Param("appVersion") String appVersion
+            , @Param("fiid") String fiid
+            , @Param("product") String product
+            , @Param("productGroup") String productGroup
+            , @Param("apiVersionName") String apiVersionName
+            , @Param("grantingEndpointName") String endpointName
+    )
+
+    @Query("""select a from AccessorType a where
+         :appName like a.appName
+     and :platform like a.platform
+     and :appVersion like a.appVersion
+     and :fiid like a.fiid
+     and coalesce(:product, 'Any') like a.product
+     and :productGroup like a.productGroup
+     and :apiVersionName like a.apiVersionName
+     and :grantingEndpointName like a.grantingEndpointName
+     and 'Routing control' member of a.roleSet 
+     order by a.lookupPriority desc""")
+    Set<AccessorType> match_accessors_routing(
             @Param("appName") String appName
             , @Param("platform") String platform
             , @Param("appVersion") String appVersion

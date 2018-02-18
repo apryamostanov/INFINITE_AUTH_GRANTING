@@ -23,8 +23,6 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.security.Key
 
-import static base.T_common_base_1_const.*
-import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
 @Path("/authorizations")
@@ -208,7 +206,7 @@ class Authorization {
         l_user_authorization.scope.keyFieldMap = l_key_field_map
         l_user_authorization.refreshAuthorization = GC_NULL_OBJ_REF as Authorization
         l_user_authorization.authorizationType = "Access"
-        success(i_context)
+        l_user_authorization.success(i_context)
         if (i_conf_authorization.isRefreshAllowed) {
             l_user_authorization.refreshAuthorization = new Authorization()
             l_user_authorization.refreshAuthorization.authorizationName = nvl(i_conf_authorization.refreshAuthorizationName, this.authorizationName)
@@ -261,26 +259,26 @@ class Authorization {
     }
 
     void validate_authorization(T_auth_grant_base_5_context i_context) {
-        String l_accessor_id = GC_EMPTY_STRING
+        functionalFieldMap = new HashMap<>()
+        scope?.keyFieldMap = new HashMap<>()
+        String l_accessor_id_scope = GC_EMPTY_STRING
+        String l_accessor_id_authorization = GC_EMPTY_STRING
         Authorization l_lookup_accessor_id_authorization = this
-        Authentication l_lookup_accessor_data_authentication = GC_NULL_OBJ_REF as Authentication
-        while (is_not_null(l_lookup_accessor_id_authorization) && is_null(l_accessor_id) && is_null(l_lookup_accessor_data_authentication)) {
-            l_lookup_accessor_id_authorization.identity.authenticationSet.each { l_lookup_authentication ->
-                if (l_lookup_authentication.authenticationName == "Accessor_data") {
-                    l_lookup_accessor_data_authentication = l_lookup_authentication
-                }
-            }
+        //if it is Anonymous authorization - force the Accessor_data authentication preliminary
+        while (is_not_null(l_lookup_accessor_id_authorization) && is_null(l_accessor_id_scope)) {
             if (is_not_null(l_lookup_accessor_id_authorization.jwt)) {
                 if (!is_invalid_access_jwt(l_lookup_accessor_id_authorization.jwt, i_context)) {
                     Authorization l_prerequisite_authorization = access_jwt2authorization(l_lookup_accessor_id_authorization.jwt, i_context)
-                    l_accessor_id = l_prerequisite_authorization.scope?.keyFieldMap?.get("accessor_id")
+                    l_accessor_id_scope = l_prerequisite_authorization.scope?.keyFieldMap?.get("accessor_id_scope")
+                    l_accessor_id_authorization = l_prerequisite_authorization.scope?.keyFieldMap?.get("accessor_id_authorization")
                 } else {
                     prerequisiteAuthorization.failure(GC_AUTHORIZATION_ERROR_CODE_01_INVALID_JWT)
                     failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9403_FAILED_PREREQUISITE)
                     return
                 }
             } else {
-                l_accessor_id = l_lookup_accessor_id_authorization.scope?.keyFieldMap?.get("accessor_id")
+                l_accessor_id_scope = l_lookup_accessor_id_authorization.scope?.keyFieldMap?.get("accessor_id_scope")
+                l_accessor_id_authorization = l_lookup_accessor_id_authorization.scope?.keyFieldMap?.get("accessor_id_authorization")
             }
             l_lookup_accessor_id_authorization = l_lookup_accessor_id_authorization.prerequisiteAuthorization
         }
@@ -288,30 +286,11 @@ class Authorization {
             failure(GC_AUTHORIZATION_ERROR_CODE_19_USER_SUPPLIED_JWT)
             return
         }
-        AccessorType l_prerequisite_accessor = GC_NULL_OBJ_REF as AccessorType
-        if (is_not_null(l_lookup_accessor_data_authentication)) {
-            l_prerequisite_accessor = new AccessorType()
-            l_prerequisite_accessor.appName = l_lookup_accessor_data_authentication.publicDataFieldSet.get("accessor_name")
-            l_prerequisite_accessor.platform = l_lookup_accessor_data_authentication.publicDataFieldSet.get("platform")
-            l_prerequisite_accessor.appVersion = l_lookup_accessor_data_authentication.publicDataFieldSet.get("app_version")
-            l_prerequisite_accessor.fiid = l_lookup_accessor_data_authentication.publicDataFieldSet.get("FIID")
-            l_prerequisite_accessor.product = l_lookup_accessor_data_authentication.publicDataFieldSet.get("product")
-            l_prerequisite_accessor.productGroup = l_lookup_accessor_data_authentication.publicDataFieldSet.get("product_group")
-            l_prerequisite_accessor.apiVersionName = l_lookup_accessor_data_authentication.publicDataFieldSet.get("api_major_version")
-        } else if (is_not_null(l_accessor_id)) {
-            l_prerequisite_accessor = i_context.p_accessor_type_repository.findByAccessorName(l_accessor_id).first()
-        }
-        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.matchAuthorizations(
+        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.match_authorizations_with_known_accessors(
                 scope?.scopeName
                 , identity?.identityName
-                , l_prerequisite_accessor?.appName
-                , l_prerequisite_accessor?.platform
-                , l_prerequisite_accessor?.appVersion
-                , l_prerequisite_accessor?.fiid
-                , l_prerequisite_accessor?.product
-                , l_prerequisite_accessor?.productGroup
-                , l_prerequisite_accessor?.apiVersionName
-                , i_context.p_app_conf.granting_endpoint_name
+                , l_accessor_id_authorization
+                , l_accessor_id_scope
         )[GC_FIRST_INDEX]
         if (is_null(l_config_authorization)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
@@ -382,9 +361,18 @@ class Authorization {
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
         } else {
-            AuthorizationType l_authorization_type = p_app_context.p_authorization_type_repository.matchAuthorizations(
+            AuthorizationType l_authorization_type = p_app_context.p_authorization_type_repository.match_authorizations(
                     i_scope_name
                     , i_identityName
+                    , i_AccessorAppName
+                    , i_AccessorPlatform
+                    , i_AccessorAppVersion
+                    , i_AccessorFiid
+                    , i_AccessorProduct
+                    , i_AccessorProductGroup
+                    , i_AccessorApiVersionName
+                    , p_app_context.p_app_conf.granting_endpoint_name
+
                     , i_AccessorAppName
                     , i_AccessorPlatform
                     , i_AccessorAppVersion
