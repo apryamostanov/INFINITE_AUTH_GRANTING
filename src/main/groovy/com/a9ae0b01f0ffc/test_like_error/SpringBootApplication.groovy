@@ -26,8 +26,16 @@ class SpringBootApplication implements CommandLineRunner {
     @Override
     void run(String... args) throws Exception {
         p_data_generator.generate_data()
-        Set<TestEntity> testEntitySet = testEntityRepository.find_by_like_column("z")
+        Set<TestEntity> testEntitySet = testEntityRepository.find_entities(
+                "appName",
+                "platform",
+                "appVersion",
+                "fiid",
+                "product",
+                "productGroup",
+                "apiVersionName",
+                "endpointName"
+        )
 
-        Set<TestEntity> testEntitySet2 = testEntityRepository.find_by_like_column("")
     }
 }
