@@ -11,7 +11,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 @RepositoryRestResource
 interface ITestEntityRepository extends PagingAndSortingRepository<TestEntity, Long> {
 
-    @Query("""select a from AccessorType a where
+    @Query("""select a from TestEntity a where
          :appName like a.appName
      and :platform like a.platform
      and :appVersion like a.appVersion
