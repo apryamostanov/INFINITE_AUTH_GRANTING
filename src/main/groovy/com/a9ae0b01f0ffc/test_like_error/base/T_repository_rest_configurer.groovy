@@ -1,4 +1,4 @@
-package com.a9ae0b01f0ffc.infinite_auth_granting.base
+package com.a9ae0b01f0ffc.test_like_error.base
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration
