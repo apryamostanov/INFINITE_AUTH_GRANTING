@@ -26,7 +26,7 @@ class SpringBootApplication implements CommandLineRunner {
     @Override
     void run(String... args) throws Exception {
         p_data_generator.generate_data()
-        Set<TestEntity> testEntitySet = testEntityRepository.find_entities(
+       /* Set<TestEntity> testEntitySet = testEntityRepository.find_entities(
                 "appName",
                 "platform",
                 "appVersion",
@@ -35,7 +35,7 @@ class SpringBootApplication implements CommandLineRunner {
                 "productGroup",
                 "apiVersionName",
                 "endpointName"
-        )
+        )*/
 
     }
 }
