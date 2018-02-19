@@ -1,12 +1,30 @@
 {
-  "ValidateOTPSMS": {
-    "requestData": {
-      "UniqueID": "MDWL170510150526021",
-      "UniqueIDFlag": "0",
-      "ProxyNumber": "35635",
-      "OTP": "123456",
-      "OTPUniqueId": 1234,
-      "PhoneNumber": "+971559307088"
-    }
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "1150",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
   }
 }

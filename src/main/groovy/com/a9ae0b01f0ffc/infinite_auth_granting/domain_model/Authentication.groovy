@@ -15,11 +15,8 @@ import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_
 class Authentication {
     String authenticationName
 
-    @JsonProperty("public_data")
-    HashMap<String, Object> publicDataFieldSet
-
-    @JsonProperty("private_data")
-    HashMap<String, Object> privateDataFieldSet
+    @JsonProperty("authentication_data")
+    Authentication_data authenticationData
 
     @JsonIgnore
     Authorization p_parent_authorization
@@ -60,7 +57,7 @@ class Authentication {
         Binding l_binding = new Binding()
         l_binding.setVariable("io_user_authentication", this)
         i_context.get_authentication_runner().run(authenticationName + i_context.app_conf().authenticationModulesExtension, l_binding)
-        privateDataFieldSet = GC_NULL_OBJ_REF as HashMap<String, String>
+        authenticationData?.privateDataFieldSet = GC_NULL_OBJ_REF as HashMap<String, String>
     }
 
 }

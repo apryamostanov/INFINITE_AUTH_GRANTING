@@ -23,7 +23,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and :appVersion like a.appVersion
      and :fiid like a.fiid
      and coalesce(:product, 'Any') like a.product
-     and :productGroup like a.productGroup
+     and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
      and 'Access control' member of a.roleSet
@@ -45,7 +45,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and :appVersion like a.appVersion
      and :fiid like a.fiid
      and coalesce(:product, 'Any') like a.product
-     and :productGroup like a.productGroup
+     and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
      and 'Scope control' member of a.roleSet
@@ -67,7 +67,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and :appVersion like a.appVersion
      and :fiid like a.fiid
      and coalesce(:product, 'Any') like a.product
-     and :productGroup like a.productGroup
+     and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
      and 'Authorization control' member of a.roleSet
@@ -89,7 +89,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and :appVersion like a.appVersion
      and :fiid like a.fiid
      and coalesce(:product, 'Any') like a.product
-     and :productGroup like a.productGroup
+     and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
      and 'Routing control' member of a.roleSet 

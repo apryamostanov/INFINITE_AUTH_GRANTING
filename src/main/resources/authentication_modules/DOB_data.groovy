@@ -9,18 +9,18 @@ System.out.println(this.getClass().getSimpleName())
 
 def io_user_authentication = binding.getVariable("io_user_authentication")
 
-if (is_null(io_user_authentication.publicDataFieldSet)) {
+if (is_null(io_user_authentication.authenticationData?.publicDataFieldSet)) {
     io_user_authentication.failure()
     return
 }
 
-if (is_null(io_user_authentication.privateDataFieldSet)) {
+if (is_null(io_user_authentication.authenticationData?.privateDataFieldSet)) {
     io_user_authentication.failure()
     return
 }
 
-if (io_user_authentication.publicDataFieldSet.get("proxy_number") == null ||
-        io_user_authentication.privateDataFieldSet.get("DOB") == null) {
+if (io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number") == null ||
+        io_user_authentication.authenticationData?.privateDataFieldSet?.get("DOB") == null) {
     io_user_authentication.failure()
     return
 }
@@ -48,7 +48,7 @@ if (io_user_authentication.publicDataFieldSet.get("proxy_number") == null ||
                 <d4p1:LoginUserLevel i:nil="true"/>
                 <d4p1:AccountNumber i:nil="true"/>
                 <d4p1:CardNumber i:nil="true"/>
-                <d4p1:ProxyNumber>${io_user_authentication.publicDataFieldSet.get("proxy_number")}</d4p1:ProxyNumber>
+                <d4p1:ProxyNumber>${io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number")}</d4p1:ProxyNumber>
               </requestData>
             </GetCardDetail>
           </s:Body>
@@ -77,7 +77,7 @@ if (io_user_authentication.publicDataFieldSet.get("proxy_number") == null ||
                 return
             } else {
                 def l_dob = l_slurped_get_card_details_response.Body.GetCardDetailResponse.GetCardDetailResult.CustomerDetail.DateofBirth
-                if (l_dob == io_user_authentication.privateDataFieldSet.get("DOB")) {
+                if (l_dob == io_user_authentication.authenticationData?.privateDataFieldSet?.get("DOB")) {
                     io_user_authentication.success()
                     return
                 } else {

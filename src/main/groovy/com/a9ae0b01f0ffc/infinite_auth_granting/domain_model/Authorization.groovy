@@ -1,7 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_5_context
-import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AccessorType
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthenticationType
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth_granting.server.ApiResponseMessage
@@ -23,15 +22,16 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.security.Key
 
+import static base.T_common_base_1_const.*
+import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth_granting.base.T_auth_grant_base_4_const.*
 
-@Path("/authorizations")
+@Path("/{parameter: authorizations|Authorizations}")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 class Authorization {
     String authorizationName
     Long authorizationId
-    //Accessor accessor
 
     Identity identity
 
@@ -264,17 +264,23 @@ class Authorization {
         jwt = GC_EMPTY_STRING
         Authorization l_lookup_accessor_authorization = this
         //if it is Anonymous authorization - force the Accessor_data authentication preliminary
-        Authentication l_accessor_authentication = identity?.authenticationSet?.find {it.authenticationName == "Accessor_data"}
+        Authentication l_accessor_authentication = identity?.authenticationSet?.find {
+            it.authenticationName == "Accessor_data"
+        }
         if (is_null(l_accessor_authentication)) {
             while (is_not_null(l_lookup_accessor_authorization) && is_null(l_accessor_authentication)) {
                 if (is_not_null(l_lookup_accessor_authorization.jwt)) {
                     if (!is_invalid_access_jwt(l_lookup_accessor_authorization.jwt, i_context)) {
                         Authorization l_prerequisite_authorization_unwrapped = access_jwt2authorization(l_lookup_accessor_authorization.jwt, i_context)
-                        l_accessor_authentication = l_prerequisite_authorization_unwrapped.identity?.authenticationSet?.find {it.authenticationName == "Accessor_data"}
+                        l_accessor_authentication = l_prerequisite_authorization_unwrapped.identity?.authenticationSet?.find {
+                            it.authenticationName == "Accessor_data"
+                        }
                         l_lookup_accessor_authorization = l_prerequisite_authorization_unwrapped.prerequisiteAuthorization
                     }
                 } else {
-                    l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {it.authenticationName == "Accessor_data"}
+                    l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {
+                        it.authenticationName == "Accessor_data"
+                    }
                     l_lookup_accessor_authorization = l_lookup_accessor_authorization.prerequisiteAuthorization
                 }
             }
@@ -282,22 +288,22 @@ class Authorization {
         AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.match_authorizations(
                 scope?.scopeName
                 , identity?.identityName
-                , l_accessor_authentication?.publicDataFieldSet?.get("accessor_name") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("platform") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("app_version") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("FIID") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("product") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("product_group") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("api_major_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("accessor_name") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("platform") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("app_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("FIID") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product_group") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
 
-                , l_accessor_authentication?.publicDataFieldSet?.get("accessor_name") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("platform") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("app_version") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("FIID") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("product") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("product_group") as String
-                , l_accessor_authentication?.publicDataFieldSet?.get("api_major_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("accessor_name") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("platform") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("app_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("FIID") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product_group") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
         )[GC_FIRST_INDEX]
         if (is_null(l_config_authorization)) {
@@ -336,11 +342,20 @@ class Authorization {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     Response post_list(String i_json_string) {
-        Object l_parsed_json_array = new JsonSlurper().parseText(i_json_string)
+        Object l_parsed_json = new JsonSlurper().parseText(i_json_string)
         Response l_granting_response
         Set<Authorization> l_authorization_set = new HashSet<Authorization>()
-        l_parsed_json_array.each { l_json_array_element ->
-            Authorization l_authorization = p_app_context.p_object_mapper.readValue(JsonOutput.toJson(l_json_array_element), Authorization.class) as Authorization
+        if (!(l_parsed_json instanceof Map)) {
+            l_parsed_json.each { l_json_array_element ->
+                Authorization l_authorization = p_app_context.p_object_mapper.readValue(JsonOutput.toJson(l_json_array_element), Authorization.class) as Authorization
+                l_authorization.validate_authorization(p_app_context)
+                l_authorization_set.add(l_authorization)
+                if (is_not_null(l_authorization.refreshAuthorization)) {
+                    l_authorization_set.add(l_authorization.refreshAuthorization)
+                }
+            }
+        } else {
+            Authorization l_authorization = p_app_context.p_object_mapper.readValue(JsonOutput.toJson(l_parsed_json), Authorization.class) as Authorization
             l_authorization.validate_authorization(p_app_context)
             l_authorization_set.add(l_authorization)
             if (is_not_null(l_authorization.refreshAuthorization)) {

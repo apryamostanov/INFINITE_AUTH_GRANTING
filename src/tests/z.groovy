@@ -31,7 +31,7 @@ String l_response_body="""{
     },
     "_links": {
         "self": {
-            "href": "https://localhost:8080/api/authentications/3/publicDataFieldSet"
+            "href": "https://localhost:8080/api/authentications/3/authenticationData?.publicDataFieldSet"
         }
     }
 }"""

@@ -17,13 +17,13 @@ class G01_AccessorTypeGenerator {
                 , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Any White Labeled", appName: "%White%", grantingEndpointName: "%", apiVersionName: "%"))
 
         l_entity_set.add(new AccessorType(roleSet: [GC_ACCESSOR_TYPE_SCOPE_CONTROL]
-                , lookupPriority: 1, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "Single Currency", accessorName: "Any White Labeled Single Currency", appName: "%White%", grantingEndpointName: "%", apiVersionName: "%"))
+                , lookupPriority: 1, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Any White Labeled Single Currency", appName: "%White%Single%", grantingEndpointName: "%", apiVersionName: "%"))
 
         l_entity_set.add(new AccessorType(roleSet: [GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL, GC_ACCESSOR_TYPE_SCOPE_CONTROL]
-                , lookupPriority: 1, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "Multi Currency", accessorName: "Any White Labeled Multi Currency", appName: "%White%", grantingEndpointName: "%", apiVersionName: "%"))
+                , lookupPriority: 1, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Any White Labeled Multi Currency", appName: "%White%Multi%", grantingEndpointName: "%", apiVersionName: "%"))
 
         l_entity_set.add(new AccessorType(roleSet: [GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL, GC_ACCESSOR_TYPE_SCOPE_CONTROL]
-                , lookupPriority: 2, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "Multi Currency", accessorName: "Any LMN", appName: "%LMN%", grantingEndpointName: "%", apiVersionName: "%"))
+                , lookupPriority: 2, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Any LMN", appName: "%LMN%", grantingEndpointName: "%", apiVersionName: "%"))
 
         l_entity_set.add(new AccessorType(roleSet: [GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL]
                 , lookupPriority: 3, osName: "%", platform: "%React%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Any React", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))

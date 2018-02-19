@@ -4,21 +4,24 @@ context.password = "Test@567"
 //context.username = "mobileapp6@wirecard.com"
 //context.password = "Wdp@1234"
 context.fiid = 1150
-context.DOB = "1991-01-01T00:00:00"</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous" id="ceca378a-b04b-44d9-b090-c9a2b90461d6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
-  {
-    "authorization_name": "Anonymous",
-    "identity": {
-      "identity_name": "Owner of Accessor Data",
-      "authentications": [
-        {
-          "authentication_name": "Accessor_data",
+context.DOB = "1991-01-01T00:00:00"</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous" id="ceca378a-b04b-44d9-b090-c9a2b90461d6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/Authorizations</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
           "public_data": {
-            "accessor_name": "LMN Multi Currency React (EMEA UAT)",
-            "platform": "React",
-            "app_version": "1.87",
-            "FIID": "${=context.fiid}",
-            "product_group": "Multi Currency",
-            "api_major_version": "2.0.x",
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "1150",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
             "specific_data": {
               "IMEI": "990000862471854",
               "manufacturer": "Apple",
@@ -27,30 +30,28 @@ context.DOB = "1991-01-01T00:00:00"</script></con:config></con:testStep><con:tes
           },
           "private_data": null
         }
-      ]
-    },
-    "scope": {
-      "scope_name": "Anonymous Services"
-    }
+      }
+    ]
   }
-]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="740682bb-f197-42b3-a012-3b1ad1a60a1b"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="740682bb-f197-42b3-a012-3b1ad1a60a1b"><con:settings/><con:config><script>import groovy.json.JsonSlurper
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
-context.anonymous_token = l_slurped_json[0].token</script></con:config></con:testStep><con:testStep type="httprequest" name="Read" id="4b750057-4ded-402f-83ed-8cb3b06bf5c4"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Read" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+context.anonymous_token = l_slurped_json[0].token
+assert l_slurped_json[0].token !=""</script></con:config></con:testStep><con:testStep type="httprequest" name="Read" id="4b750057-4ded-402f-83ed-8cb3b06bf5c4"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Read" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/Authorizations</con:endpoint><con:request>
   {
     "authorization_name": "Read",
     "identity": {
       "identity_name": "Owner of User Data",
       "authentications": [
         {
-          "authentication_name": "User_data",
+          "authentication_name": "User_data", "authentication_data": {
           "public_data": {
             "username": "${=context.username}"
           },
           "private_data": {
             "password": "${=context.password}"
-          }
+          }}
         }
       ]
     },
@@ -61,7 +62,7 @@ context.anonymous_token = l_slurped_json[0].token</script></con:config></con:tes
     	 "token": "${=context.anonymous_token}"
     }
   }
-]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Response" id="a5881d30-881f-4e8d-9c65-871f5d1213d2"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Response" id="a5881d30-881f-4e8d-9c65-871f5d1213d2"><con:settings/><con:config><script>import groovy.json.JsonSlurper
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
@@ -72,21 +73,21 @@ if (l_slurped_json[0].authorization_name=="Refresh") {
 	context.refresh_token = l_slurped_json[1].token
 	context.read_token = l_slurped_json[0].token
 }
-context.proxy_number = l_slurped_json[0].scope.data_scope.proxy_number</script></con:config></con:testStep><con:testStep type="httprequest" name="Read Refresh" id="a2ffcf0a-119f-4962-b58a-2c280c211acb"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Read Refresh" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+context.proxy_number = l_slurped_json[0].scope.data_scope.proxy_number</script></con:config></con:testStep><con:testStep type="httprequest" name="Read Refresh" id="a2ffcf0a-119f-4962-b58a-2c280c211acb"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Read Refresh" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/Authorizations</con:endpoint><con:request>
   {
     "authorization_name": "Read",
     "identity": {
       "identity_name": "Owner of Refresh Data",
       "authentications": [
         {
-          "authentication_name": "Refresh_data",
+          "authentication_name": "Refresh_data", "authentication_data": {
           "public_data": {
             "proxy_number": "${=context.proxy_number}",
             "old_access_token": "${=context.read_token}"
           },
           "private_data": {
             "refresh_token": "${=context.refresh_token}"
-          }
+          }}
         }
       ]
     },
@@ -97,7 +98,7 @@ context.proxy_number = l_slurped_json[0].scope.data_scope.proxy_number</script><
     	 "token": "${=context.anonymous_token}"
     }
   }
-]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Refresh Response" id="fa90b706-cfee-49c8-a52a-4f055a0ab7d5"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Refresh Response" id="fa90b706-cfee-49c8-a52a-4f055a0ab7d5"><con:settings/><con:config><script>import groovy.json.JsonSlurper
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
@@ -224,28 +225,28 @@ context.provisioning_unique_id = "MDWL"+new Date().format("yyMMddHHmmssSSS")
 String l_signature = new BASE64Encoder().encode(sign(l_private_key, (context.proxy_number + context.provisioning_unique_id)))
 context.provisioned_data_signature = l_signature
 log.info(context.provisioned_data_signature)
-log.info(verify(l_public_key, new BASE64Decoder().decodeBuffer(l_signature), (context.proxy_number + context.provisioning_unique_id)))</script></con:config></con:testStep><con:testStep type="httprequest" name="Provisioned User Data Usage" id="6b5b6d62-d8f2-4e51-8fdb-e61140ab6a20"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Provisioned User Data Usage" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+log.info(verify(l_public_key, new BASE64Decoder().decodeBuffer(l_signature), (context.proxy_number + context.provisioning_unique_id)))</script></con:config></con:testStep><con:testStep type="httprequest" name="Provisioned User Data Usage" id="6b5b6d62-d8f2-4e51-8fdb-e61140ab6a20"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Provisioned User Data Usage" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/Authorizations</con:endpoint><con:request>
   {
     "authorization_name": "Provisioned User Data Usage",
     "identity": {
       "identity_name": "Owner of User Data and Provisioning Data",
       "authentications": [
         {
-          "authentication_name": "User_data",
+          "authentication_name": "User_data", "authentication_data": {
           "public_data": {
             "username": "${=context.username}"
           },
           "private_data": {
             "password": "${=context.password}"
-          }
+          }}
         },
         {
-          "authentication_name": "Provisioning_data",
+          "authentication_name": "Provisioning_data", "authentication_data": {
           "public_data": {
             "proxy_number": "${=context.proxy_number}",
             "provisioning_public_key": "${=context.public_key}"
           },
-          "private_data": null
+          "private_data": null}
         }
       ]
     },
@@ -256,7 +257,7 @@ log.info(verify(l_public_key, new BASE64Decoder().decodeBuffer(l_signature), (co
     	 "token": "${=context.read_token}"
     }
   }
-]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Provisioned User Data Usage Response" id="06372060-c748-4d9b-8b65-9ba4c082ea64"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Provisioned User Data Usage Response" id="06372060-c748-4d9b-8b65-9ba4c082ea64"><con:settings/><con:config><script>import groovy.json.JsonSlurper
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
@@ -277,23 +278,23 @@ def l_slurped_json = new JsonSlurper().parseText(l_content)
 context.otp_id = l_slurped_json.SendOTPSMSResponse.SendOTPSMSResult.OTPUniqueId
 assert context.otp_id != null</script></con:config></con:testStep><con:testStep type="groovy" name="Enter OTP" id="60c0dde6-eee1-4e91-aa2c-e4085292fcb0"><con:settings/><con:config><script>import com.eviware.soapui.support.*
 def alert = com.eviware.soapui.support.UISupport
-context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates" id="05729bb2-e443-4c32-a18e-754d31c84ac2"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates" id="05729bb2-e443-4c32-a18e-754d31c84ac2"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/Authorizations</con:endpoint><con:request>
   {
     "authorization_name": "Secured Demographic Updates",
     "identity": {
       "identity_name": "Owner of OTP Data and User Data",
       "authentications": [
         {
-          "authentication_name": "User_data",
+          "authentication_name": "User_data", "authentication_data": {
           "public_data": {
             "username": "${=context.username}"
           },
           "private_data": {
             "password": "${=context.password}"
-          }
+          }}
         },
         {
-          "authentication_name": "OTP_data",
+          "authentication_name": "OTP_data", "authentication_data": {
           "public_data": {
             "proxy_number": "${=context.proxy_number}",
             "otp_id": "${=context.otp_id}",
@@ -301,7 +302,7 @@ context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:t
           },
           "private_data": {
           	"otp": "${=context.otp}"
-          }
+          }}
         }
       ]
     },
@@ -312,18 +313,18 @@ context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:t
     	 "token": "${=context.read_token}"
     }
   }
-]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Secured Demographic Updates Response" id="e2667957-b3a6-48a4-8246-e02d9ca70123"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Secured Demographic Updates Response" id="e2667957-b3a6-48a4-8246-e02d9ca70123"><con:settings/><con:config><script>import groovy.json.JsonSlurper
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
-assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates - Provisioned User Data" id="d7abeac2-b666-4fd5-a499-aa88fccb6278"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates - Provisioned User Data" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates - Provisioned User Data" id="d7abeac2-b666-4fd5-a499-aa88fccb6278"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates - Provisioned User Data" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/Authorizations</con:endpoint><con:request>
   {
     "authorization_name": "Secured Demographic Updates",
     "identity": {
       "identity_name": "Owner of OTP Data and Provisioned User Data",
       "authentications": [
         {
-          "authentication_name": "Provisioned_user_data",
+          "authentication_name": "Provisioned_user_data", "authentication_data": {
           "public_data": {
             "proxy_number": "${=context.proxy_number}",
             "provisioned_data_unique_id": "${=context.provisioning_unique_id}",
@@ -331,10 +332,10 @@ assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:t
           },
           "private_data": {
             "provisioned_data_signature": "${=context.provisioned_data_signature}"
-          }
+          }}
         },
         {
-          "authentication_name": "OTP_data",
+          "authentication_name": "OTP_data", "authentication_data": {
           "public_data": {
             "proxy_number": "${=context.proxy_number}",
             "otp_id": "${=context.otp_id}",
@@ -342,7 +343,7 @@ assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:t
           },
           "private_data": {
           	"otp": "${=context.otp}"
-          }
+          }}
         }
       ]
     },
@@ -353,33 +354,33 @@ assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:t
     	 "token": "${=context.read_token}"
     }
   }
-]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Secured Demographic Updates - Provisioned User Data Response" id="1a477bd6-567f-4755-9013-40a1c46d0f5c"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Secured Demographic Updates - Provisioned User Data Response" id="1a477bd6-567f-4755-9013-40a1c46d0f5c"><con:settings/><con:config><script>import groovy.json.JsonSlurper
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
-assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:testStep type="httprequest" name="Security Updates" id="c49ba5cb-b1ab-4e9c-a577-dac1820c65b9"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Security Updates" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:testStep type="httprequest" name="Security Updates" id="c49ba5cb-b1ab-4e9c-a577-dac1820c65b9"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Security Updates" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/Authorizations</con:endpoint><con:request>[
   {
     "authorization_name": "Security Updates",
     "identity": {
       "identity_name": "Owner of User Data and DOB Data",
       "authentications": [
         {
-          "authentication_name": "User_data",
+          "authentication_name": "User_data", "authentication_data": {
           "public_data": {
             "username": "${=context.username}"
           },
           "private_data": {
             "password": "${=context.password}"
-          }
+          }}
         },
         {
-          "authentication_name": "DOB_data",
+          "authentication_name": "DOB_data", "authentication_data": {
           "public_data": {
             "proxy_number": "${=context.proxy_number}"
           },
           "private_data": {
           	"DOB": "${=context.DOB}"
-          }
+          }}
         }
       ]
     },
@@ -396,4 +397,4 @@ assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:t
   "CurrentPassword": "Test@567",
   "InstitutionID": "1150",
   "UniqueIDFlag": "0"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>ResourceURL</con:name><con:value>https://10.10.99.190:8443/middleware_2_x_x/Rest</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>ResourceURL</con:name><con:value>https://10.10.99.190:8443/middleware_2_x_x/Rest</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI</con:name><con:value>https://10.10.99.190:8443/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_orig</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI2</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
