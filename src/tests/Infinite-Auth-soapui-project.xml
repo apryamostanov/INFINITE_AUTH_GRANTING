@@ -3,7 +3,8 @@
 context.password = "Test@567"
 //context.username = "mobileapp6@wirecard.com"
 //context.password = "Wdp@1234"
-context.fiid = 1150</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous" id="ceca378a-b04b-44d9-b090-c9a2b90461d6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+context.fiid = 1150
+context.DOB = "1991-01-01T00:00:00"</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous" id="ceca378a-b04b-44d9-b090-c9a2b90461d6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
   {
     "authorization_name": "Anonymous",
     "identity": {
@@ -347,6 +348,43 @@ assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:t
     },
     "scope": {
       "scope_name": "Update Phone"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=context.read_token}"
+    }
+  }
+]</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Secured Demographic Updates - Provisioned User Data Response" id="1a477bd6-567f-4755-9013-40a1c46d0f5c"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:testStep type="httprequest" name="Security Updates" id="c49ba5cb-b1ab-4e9c-a577-dac1820c65b9"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Security Updates" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+  {
+    "authorization_name": "Security Updates",
+    "identity": {
+      "identity_name": "Owner of User Data and DOB Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data",
+          "public_data": {
+            "username": "${=context.username}"
+          },
+          "private_data": {
+            "password": "${=context.password}"
+          }
+        },
+        {
+          "authentication_name": "DOB_data",
+          "public_data": {
+            "proxy_number": "${=context.proxy_number}"
+          },
+          "private_data": {
+          	"DOB": "${=context.DOB}"
+          }
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Change Password"
     },
     "prerequisite_authorization": {
     	 "token": "${=context.read_token}"
