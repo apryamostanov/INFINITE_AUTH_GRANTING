@@ -195,17 +195,35 @@ public static byte[] encrypt(PrivateKey privateKey, String message) throws Excep
     return cipher.doFinal(message.getBytes());
 }
 
+public static byte[] sign(PrivateKey privateKey, String message) throws Exception {
+    Signature signature = Signature.getInstance("SHA512withRSA");
+    signature.initSign(privateKey);
+    signature.update(message.getBytes("US-ASCII"))
+    return signature.sign()
+}
+
 public static byte[] decrypt(PublicKey publicKey, byte [] encrypted) throws Exception {
     Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
     cipher.init(Cipher.DECRYPT_MODE, publicKey);
 
     return cipher.doFinal(encrypted);
 }
+public static Boolean verify(PublicKey publicKey, byte[] bytes, String data) throws Exception {
+    Signature signature = Signature.getInstance("SHA512withRSA");
+    signature.initVerify(publicKey);
+    signature.update(data.getBytes("US-ASCII"))
+    return signature.verify(bytes)
+}
 def l_key_pair = buildKeyPair()
-context.private_key = savePrivateKey(l_key_pair.getPrivate())
+def l_private_key = l_key_pair.getPrivate()
+def l_public_key = l_key_pair.getPublic()
+context.private_key = savePrivateKey(l_private_key)
 context.public_key = savePublicKey(l_key_pair.getPublic())
 context.provisioning_unique_id = "MDWL"+new Date().format("yyMMddHHmmssSSS")
-context.provisioned_data_signature = new BASE64Encoder().encode(encrypt(l_key_pair.getPrivate(), (context.proxy_number + context.provisioning_unique_id)))</script></con:config></con:testStep><con:testStep type="httprequest" name="Provisioned User Data Usage" id="6b5b6d62-d8f2-4e51-8fdb-e61140ab6a20"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Provisioned User Data Usage" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+String l_signature = new BASE64Encoder().encode(sign(l_private_key, (context.proxy_number + context.provisioning_unique_id)))
+context.provisioned_data_signature = l_signature
+log.info(context.provisioned_data_signature)
+log.info(verify(l_public_key, new BASE64Decoder().decodeBuffer(l_signature), (context.proxy_number + context.provisioning_unique_id)))</script></con:config></con:testStep><con:testStep type="httprequest" name="Provisioned User Data Usage" id="6b5b6d62-d8f2-4e51-8fdb-e61140ab6a20"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Provisioned User Data Usage" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
   {
     "authorization_name": "Provisioned User Data Usage",
     "identity": {

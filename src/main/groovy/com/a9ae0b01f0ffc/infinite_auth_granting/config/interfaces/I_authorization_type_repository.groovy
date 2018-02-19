@@ -71,27 +71,5 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
             //
     )
 
-    @Query("""select a from AuthorizationType a
-        join a.identitySet identitySet
-        join a.scopeSet scopeSet
-        join a.accessor authorizationAccessor
-        join scopeSet.accessor scopeAccessor
-        where scopeSet.scopeName = coalesce(:scopeName, 'Any')
-        and (identitySet.identityName = :identityName or :identityName is null)
-        and a.authorizationType = 'Access'
-        
-        and :accessorName = authorizationAccessor.accessorName
-        
-        and :accessorName2 = scopeAccessor.accessorName 
-        
-        order by authorizationAccessor.lookupPriority desc, scopeAccessor.lookupPriority desc""")
-    Set<AuthorizationType> match_authorizations_with_known_accessors(
-            @Param("scopeName") String scopeName
-            , @Param("identityName") String identityName
-            //Authorization
-            , @Param("accessorName") String accessorName
-            //Scope
-            , @Param("accessorName2") String accessorName2
-    )
 
 }

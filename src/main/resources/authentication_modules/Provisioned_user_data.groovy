@@ -65,18 +65,18 @@ public static KeyPair buildKeyPair() throws NoSuchAlgorithmException {
     return keyPairGenerator.genKeyPair();
 }
 
-public static byte[] encrypt(PrivateKey privateKey, String message) throws Exception {
-    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-    cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-
-    return cipher.doFinal(message.getBytes());
+public static Boolean verify(PublicKey publicKey, byte[] bytes, String data) throws Exception {
+    Signature signature = Signature.getInstance("SHA512withRSA");
+    signature.initVerify(publicKey);
+    signature.update(data.getBytes("US-ASCII"))
+    return signature.verify(bytes)
 }
 
-public static byte[] decrypt(PublicKey publicKey, byte[] encrypted) throws Exception {
-    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-    cipher.init(Cipher.DECRYPT_MODE, publicKey);
-
-    return cipher.doFinal(encrypted);
+public static byte[] sign(PrivateKey privateKey, String message) throws Exception {
+    Signature signature = Signature.getInstance("SHA512withRSA");
+    signature.initSign(privateKey);
+    signature.update(message.getBytes("US-ASCII"))
+    return signature.sign()
 }
 
 savePrivateKey(buildKeyPair().getPrivate())
@@ -120,19 +120,20 @@ if (l_provisioned_user_data_usage_authorization.scope.keyFieldMap.get("proxy_num
     return
 }
 
-String l_decrypted_sig = new String(decrypt(
+Boolean is_valid_signature = verify(
         loadPublicKey(
                 l_provisioned_user_data_usage_authorization.functionalFieldMap.get("provisioning_public_key") as String
         ),
-        new BASE64Decoder().decodeBuffer(io_user_authentication.privateDataFieldSet.get("provisioned_data_signature") as String)
-))
+        new BASE64Decoder().decodeBuffer(io_user_authentication.privateDataFieldSet.get("provisioned_data_signature") as String),
+        (io_user_authentication.publicDataFieldSet.get("proxy_number") + io_user_authentication.publicDataFieldSet.get("provisioned_data_unique_id")) as String
+)
 
-String l_expected_check = (io_user_authentication.publicDataFieldSet.get("proxy_number") + io_user_authentication.publicDataFieldSet.get("provisioned_data_unique_id"))
+//String l_expected_check = (io_user_authentication.publicDataFieldSet.get("proxy_number") + io_user_authentication.publicDataFieldSet.get("provisioned_data_unique_id"))
 
-System.out.println(l_decrypted_sig)
-System.out.println(l_expected_check)
+//System.out.println(l_decrypted_sig)
+//System.out.println(l_expected_check)
 
-if (l_decrypted_sig != l_expected_check) {
+if (!is_valid_signature) {
     io_user_authentication.failure()
     return
 }
