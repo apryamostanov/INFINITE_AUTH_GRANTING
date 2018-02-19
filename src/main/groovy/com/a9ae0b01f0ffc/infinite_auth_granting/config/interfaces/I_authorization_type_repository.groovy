@@ -80,9 +80,9 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
         and (identitySet.identityName = :identityName or :identityName is null)
         and a.authorizationType = 'Access'
         
-        and (:accessorName = authorizationAccessor.accessorName or (:accessorName is null and authorizationAccessor.accessorName = 'Any accessor'))
+        and :accessorName = authorizationAccessor.accessorName
         
-        and (:accessorName2 = scopeAccessor.accessorName or (:accessorName2 is null and scopeAccessor.accessorName = 'Any accessor')) 
+        and :accessorName2 = scopeAccessor.accessorName 
         
         order by authorizationAccessor.lookupPriority desc, scopeAccessor.lookupPriority desc""")
     Set<AuthorizationType> match_authorizations_with_known_accessors(
