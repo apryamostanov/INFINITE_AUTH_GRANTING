@@ -5,6 +5,7 @@ System.out.println(this.getClass().getSimpleName())
 def io_user_authentication = binding.getVariable("io_user_authentication")
 
 if (io_user_authentication.publicDataFieldSet == null) {
+    System.out.println("1")
     io_user_authentication.failure()
     return
 }
@@ -17,6 +18,8 @@ if (io_user_authentication.publicDataFieldSet.get("accessor_name") == null ||
         io_user_authentication.publicDataFieldSet.get("api_major_version") == null ||
         io_user_authentication.publicDataFieldSet.get("specific_data") == null
 ) {
+    System.out.println("Input fields missing")
+    System.out.println("2")
     io_user_authentication.failure()
     return
 }
@@ -33,11 +36,13 @@ Set l_accessor_set_to_match = io_user_authentication.p_context.p_accessor_type_r
 ) as Set
 
 if (l_accessor_set_to_match.isEmpty()) {
+    System.out.println("3")
     io_user_authentication.failure()
     return
 }
 
 if (l_accessor_set_to_match.first().isForbidden == 1) {
+    System.out.println("4")
     io_user_authentication.failure()
     return
 }
@@ -55,11 +60,13 @@ Set l_accessor_set_to_match_scope = io_user_authentication.p_context.p_accessor_
 ) as Set
 
 if (l_accessor_set_to_match_scope.isEmpty()) {
+    System.out.println("5")
     io_user_authentication.failure()
     return
 }
 
 if (l_accessor_set_to_match_scope.first().isForbidden == 1) {
+    System.out.println("6")
     io_user_authentication.failure()
     return
 }
@@ -76,11 +83,13 @@ Set l_accessor_set_to_match_authorization = io_user_authentication.p_context.p_a
 ) as Set
 
 if (l_accessor_set_to_match_authorization.isEmpty()) {
+    System.out.println("7")
     io_user_authentication.failure()
     return
 }
 
 if (l_accessor_set_to_match_authorization.first().isForbidden == 1) {
+    System.out.println("8")
     io_user_authentication.failure()
     return
 }
@@ -97,11 +106,13 @@ Set l_accessor_set_to_match_routing = io_user_authentication.p_context.p_accesso
 ) as Set
 
 if (l_accessor_set_to_match_routing.isEmpty()) {
+    System.out.println("9")
     io_user_authentication.failure()
     return
 }
 
 if (l_accessor_set_to_match_routing.first().isForbidden == 1) {
+    System.out.println("10")
     io_user_authentication.failure()
     return
 }

@@ -262,58 +262,43 @@ class Authorization {
         functionalFieldMap = new HashMap<>()
         scope?.keyFieldMap = new HashMap<>()
         jwt = GC_EMPTY_STRING
-        String l_accessor_id_scope = GC_EMPTY_STRING
-        String l_accessor_id_authorization = GC_EMPTY_STRING
-        Authorization l_lookup_accessor_id_authorization = this
+        Authorization l_lookup_accessor_authorization = this
         //if it is Anonymous authorization - force the Accessor_data authentication preliminary
         Authentication l_accessor_authentication = identity?.authenticationSet?.find {it.authenticationName == "Accessor_data"}
-        if (is_not_null(l_accessor_authentication)) {
-            Set l_accessor_set_to_match_authorization = i_context.p_accessor_type_repository.match_accessors_authorization(
-                    l_accessor_authentication.publicDataFieldSet.get("accessor_name") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("platform") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("app_version") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("FIID") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("product") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("product_group") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("api_major_version") as String
-                    , i_context.p_app_conf.granting_endpoint_name
-            ) as Set
-            Set l_accessor_set_to_match_scope = i_context.p_accessor_type_repository.match_accessors_scope(
-                    l_accessor_authentication.publicDataFieldSet.get("accessor_name") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("platform") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("app_version") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("FIID") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("product") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("product_group") as String
-                    , l_accessor_authentication.publicDataFieldSet.get("api_major_version") as String
-                    , i_context.p_app_conf.granting_endpoint_name
-            ) as Set
-            l_accessor_id_scope = l_accessor_set_to_match_scope[GC_FIRST_INDEX]?.accessorName
-            l_accessor_id_authorization = l_accessor_set_to_match_authorization[GC_FIRST_INDEX]?.accessorName
-        } else {
-            while (is_not_null(l_lookup_accessor_id_authorization) && is_null(l_accessor_id_scope)) {
-                if (is_not_null(l_lookup_accessor_id_authorization.jwt)) {
-                    if (!is_invalid_access_jwt(l_lookup_accessor_id_authorization.jwt, i_context)) {
-                        Authorization l_prerequisite_authorization = access_jwt2authorization(l_lookup_accessor_id_authorization.jwt, i_context)
-                        l_accessor_id_scope = l_prerequisite_authorization.scope?.keyFieldMap?.get("accessor_id_scope")
-                        l_accessor_id_authorization = l_prerequisite_authorization.scope?.keyFieldMap?.get("accessor_id_authorization")
-                    } else {
-                        prerequisiteAuthorization.failure(GC_AUTHORIZATION_ERROR_CODE_01_INVALID_JWT)
-                        failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9403_FAILED_PREREQUISITE)
-                        return
+        if (is_null(l_accessor_authentication)) {
+            while (is_not_null(l_lookup_accessor_authorization) && is_null(l_accessor_authentication)) {
+                if (is_not_null(l_lookup_accessor_authorization.jwt)) {
+                    if (!is_invalid_access_jwt(l_lookup_accessor_authorization.jwt, i_context)) {
+                        Authorization l_prerequisite_authorization_unwrapped = access_jwt2authorization(l_lookup_accessor_authorization.jwt, i_context)
+                        l_accessor_authentication = l_prerequisite_authorization_unwrapped.identity?.authenticationSet?.find {it.authenticationName == "Accessor_data"}
+                        l_lookup_accessor_authorization = l_prerequisite_authorization_unwrapped.prerequisiteAuthorization
                     }
                 } else {
-                    l_accessor_id_scope = l_lookup_accessor_id_authorization.scope?.keyFieldMap?.get("accessor_id_scope")
-                    l_accessor_id_authorization = l_lookup_accessor_id_authorization.scope?.keyFieldMap?.get("accessor_id_authorization")
+                    l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {it.authenticationName == "Accessor_data"}
+                    l_lookup_accessor_authorization = l_lookup_accessor_authorization.prerequisiteAuthorization
                 }
-                l_lookup_accessor_id_authorization = l_lookup_accessor_id_authorization.prerequisiteAuthorization
             }
         }
-        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.match_authorizations_with_known_accessors(
+        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.match_authorizations(
                 scope?.scopeName
                 , identity?.identityName
-                , l_accessor_id_authorization
-                , l_accessor_id_scope
+                , l_accessor_authentication?.publicDataFieldSet?.get("accessor_name") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("platform") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("app_version") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("FIID") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("product") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("product_group") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("api_major_version") as String
+                , i_context.p_app_conf.granting_endpoint_name
+
+                , l_accessor_authentication?.publicDataFieldSet?.get("accessor_name") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("platform") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("app_version") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("FIID") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("product") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("product_group") as String
+                , l_accessor_authentication?.publicDataFieldSet?.get("api_major_version") as String
+                , i_context.p_app_conf.granting_endpoint_name
         )[GC_FIRST_INDEX]
         if (is_null(l_config_authorization)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)

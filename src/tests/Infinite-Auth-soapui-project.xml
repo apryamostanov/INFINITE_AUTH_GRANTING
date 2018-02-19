@@ -12,7 +12,7 @@ context.fiid = 1150</script></con:config></con:testStep><con:testStep type="http
         {
           "authentication_name": "Accessor_data",
           "public_data": {
-            "accessor_name": "LMN Multi Currency React (FT2 Development)",
+            "accessor_name": "LMN Multi Currency React (EMEA UAT)",
             "platform": "React",
             "app_version": "1.87",
             "FIID": "${=context.fiid}",
@@ -107,10 +107,8 @@ if (l_slurped_json[0].authorization_name=="Refresh") {
 	context.refresh_token = l_slurped_json[1].token
 	context.read_token = l_slurped_json[0].token
 }
-assert context.refresh_token != null
-assert context.read_token != null
-
-</script></con:config></con:testStep><con:testStep type="groovy" name="Prepare Provisioned User Data Usage" id="91ccae96-0552-4f32-af01-55aece405cc2"><con:settings/><con:config><script>package authentication_modules
+assert context.refresh_token != ""
+assert context.read_token != ""</script></con:config></con:testStep><con:testStep type="groovy" name="Prepare Provisioned User Data Usage" id="91ccae96-0552-4f32-af01-55aece405cc2"><con:settings/><con:config><script>package authentication_modules
 
 import sun.misc.BASE64Decoder
 import sun.misc.BASE64Encoder
@@ -243,7 +241,7 @@ context.provisioned_data_signature = new BASE64Encoder().encode(encrypt(l_key_pa
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
-assert l_slurped_json[0].token != null 
+assert l_slurped_json[0].token != "" 
 context.provisioned_user_data_usage_authorization = l_slurped_json[0].token</script></con:config></con:testStep><con:testStep type="httprequest" name="SendOTPSMS" id="9b981b6f-f694-4e09-862a-08fd20671523"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="SendOTPSMS" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#ResourceURL}/SendOTPSMS</con:endpoint><con:request>{
   "SendOTPSMS": {
     "requestData": {
@@ -299,7 +297,7 @@ context.otp = alert.prompt("Enter OTP","Enter OTP")</script></con:config></con:t
 
 def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
-assert l_slurped_json[0].token != null </script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates - Provisioned User Data" id="d7abeac2-b666-4fd5-a499-aa88fccb6278"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates - Provisioned User Data" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
+assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates - Provisioned User Data" id="d7abeac2-b666-4fd5-a499-aa88fccb6278"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="Secured Demographic Updates - Provisioned User Data" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/authorizations</con:endpoint><con:request>[
   {
     "authorization_name": "Secured Demographic Updates",
     "identity": {
