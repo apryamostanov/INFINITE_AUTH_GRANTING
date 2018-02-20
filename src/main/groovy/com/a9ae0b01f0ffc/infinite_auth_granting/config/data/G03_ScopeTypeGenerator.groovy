@@ -72,7 +72,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("GetSecretKey").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserId").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first(),
-                p_grant_repository.findByRestResourceName("SendOTPSMS").first(),
+                p_grant_repository.findByRestResourceName("SendOTPSMS").first(),//todo: should be without proxy
                 p_grant_repository.findByRestResourceName("ValidateOTPSMS").first()
         ]))
 
