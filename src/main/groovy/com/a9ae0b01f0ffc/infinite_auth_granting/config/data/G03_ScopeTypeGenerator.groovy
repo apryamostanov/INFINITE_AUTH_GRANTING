@@ -13,10 +13,10 @@ class G03_ScopeTypeGenerator {
     void generate_data(I_scope_type_repository p_scope_repository, I_grant_type_repository p_grant_repository, I_accessor_type_repository p_accessor_repository) {
         Set<ScopeType> l_entity_set = new HashSet<ScopeType>()
 
-        l_entity_set.add(new ScopeType(scopeName: "Prerequisite Usage Only", accessor: p_accessor_repository.find_scope_accessor_by_name("Any accessor").first()
+        l_entity_set.add(new ScopeType(scopeName: "Prerequisite Usage Only", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any accessor").first()
         ))
 
-        l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Any White Labeled").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any White Labeled").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("UserRegistration").first(),
                 p_grant_repository.findByRestResourceName("UserRegistrationValidationParametersEnhanced").first(),
                 p_grant_repository.findByRestResourceName("CardActivationSS").first(),
@@ -28,7 +28,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "User Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Any White Labeled Single Currency").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "User Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any White Labeled Single Currency").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("CardLockUnlockRequest").first(),
                 p_grant_repository.findByRestResourceName("CardSearchEnhanced").first(),
                 p_grant_repository.findByRestResourceName("ChangePassword").first(),
@@ -42,7 +42,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("VirtualCardUpdate").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "User Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Any White Labeled Multi Currency").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "User Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any White Labeled Multi Currency").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("CardLockUnlockRequest").first(),
                 p_grant_repository.findByRestResourceName("CardSearchEnhanced").first(),
                 p_grant_repository.findByRestResourceName("ChangePassword").first(),
@@ -62,7 +62,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("W2WTransferInitiateEnhanced").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Any LMN").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("UserRegistration").first(),
                 p_grant_repository.findByRestResourceName("UserRegistrationValidationParametersEnhanced").first(),
                 p_grant_repository.findByRestResourceName("CardActivationSS").first(),
@@ -76,7 +76,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("ValidateOTPSMS").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "Main Screen", accessor: p_accessor_repository.find_scope_accessor_by_name("Any LMN").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "Main Screen", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("GetCardDetailEnhanced").first(),
                 p_grant_repository.findByRestResourceName("GetCVC").first(),
                 p_grant_repository.findByRestResourceName("CardActivationSS").first(),
@@ -113,19 +113,19 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("GetProductParametersEnhanced").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "Update Profile", accessor: p_accessor_repository.find_scope_accessor_by_name("Any LMN").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "Update Profile", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("UpdateProfileWithoutPhone").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "Update Phone", accessor: p_accessor_repository.find_scope_accessor_by_name("Any LMN").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "Update Phone", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("UpdateProfileWithPhone").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "Change Password", accessor: p_accessor_repository.find_scope_accessor_by_name("Any LMN").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "Change Password", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("ChangePassword").first()
         ]))
 
-        l_entity_set.add(new ScopeType(scopeName: "Change Security Answers", accessor: p_accessor_repository.find_scope_accessor_by_name("Any LMN").first(), grantSet: [
+        l_entity_set.add(new ScopeType(scopeName: "Change Security Answers", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("SetAnswers").first()
         ]))
 

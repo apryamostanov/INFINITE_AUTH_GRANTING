@@ -16,7 +16,7 @@ class Grant {
     String urlMask
 
     @JsonProperty("data_authorization_keys")
-    Set<String> keyFieldSet
+    String keyFieldSetJson
 
     boolean equals(o) {
         if (this.is(o)) return true
@@ -24,7 +24,7 @@ class Grant {
 
         Grant grant = (Grant) o
 
-        if (keyFieldSet != grant.keyFieldSet) return false
+        if (keyFieldSetJson != grant.keyFieldSetJson) return false
         if (method != grant.method) return false
         if (restResourceName != grant.restResourceName) return false
         if (urlMask != grant.urlMask) return false
@@ -37,7 +37,7 @@ class Grant {
         result = restResourceName.hashCode()
         result = 31 * result + method.hashCode()
         result = 31 * result + (urlMask != null ? urlMask.hashCode() : 0)
-        result = 31 * result + (keyFieldSet != null ? keyFieldSet.hashCode() : 0)
+        result = 31 * result + (keyFieldSetJson != null ? keyFieldSetJson.hashCode() : 0)
         return result
     }
 }

@@ -11,6 +11,7 @@ import static base.T_common_base_1_const.GC_EMPTY_STRING
 import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 
 @Entity
+@Table(name="ScopeTypes")
 //@Table(uniqueConstraints = @UniqueConstraint(columnNames=["scopeName", "accessor"]))
 class ScopeType {
 
@@ -26,6 +27,7 @@ class ScopeType {
     Long id
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="Scope2service")
     Set<GrantType> grantSet = new HashSet<GrantType>()
 
 

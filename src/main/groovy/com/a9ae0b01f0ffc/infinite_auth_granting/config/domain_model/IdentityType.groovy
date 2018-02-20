@@ -8,6 +8,7 @@ import groovy.transform.CompileStatic
 import javax.persistence.*
 
 @Entity
+@Table(name="IdentityTypes")
 class IdentityType {
 
     @Column(unique = true)
@@ -15,6 +16,7 @@ class IdentityType {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn
+    @JoinTable(name="Authentication2identity")
     Set<AuthenticationType> authenticationSet = new HashSet<AuthenticationType>()
 
     @Id

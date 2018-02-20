@@ -26,7 +26,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
-     and 'Access control' member of a.roleSet
+     and 'Access control' = a.accessorRole
      order by a.lookupPriority desc""")
     Set<AccessorType> match_accessors(
             @Param("appName") String appName
@@ -48,7 +48,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
-     and 'Scope control' member of a.roleSet
+     and 'Scope control' = a.accessorRole
      order by a.lookupPriority desc""")
     Set<AccessorType> match_accessors_scope(
             @Param("appName") String appName
@@ -70,7 +70,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
-     and 'Authorization control' member of a.roleSet
+     and 'Authorization control' = a.accessorRole
      order by a.lookupPriority desc""")
     Set<AccessorType> match_accessors_authorization(
             @Param("appName") String appName
@@ -92,7 +92,7 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
      and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
-     and 'Routing control' member of a.roleSet 
+     and 'Routing control' = a.accessorRole 
      order by a.lookupPriority desc""")
     Set<AccessorType> match_accessors_routing(
             @Param("appName") String appName
@@ -105,16 +105,16 @@ interface I_accessor_type_repository extends PagingAndSortingRepository<Accessor
             , @Param("grantingEndpointName") String endpointName
     )
 
-    @Query("""select a from AccessorType a where 'Scope control' member of a.roleSet and a.accessorName = :accessorName""")
+    @Query("""select a from AccessorType a where 'Scope control' = a.accessorRole and a.accessorName = :accessorName""")
     Set<AccessorType> find_scope_accessor_by_name(@Param("accessorName") String accessorName)
 
-    @Query("""select a from AccessorType a where 'Authorization control' member of a.roleSet and a.accessorName = :accessorName""")
+    @Query("""select a from AccessorType a where 'Authorization control' = a.accessorRole and a.accessorName = :accessorName""")
     Set<AccessorType> find_authorization_accessor_by_name(@Param("accessorName") String accessorName)
 
-    @Query("""select a from AccessorType a where 'Access control' member of a.roleSet and a.accessorName = :accessorName""")
+    @Query("""select a from AccessorType a where 'Access control' = a.accessorRole and a.accessorName = :accessorName""")
     Set<AccessorType> find_access_accessor_by_name(@Param("accessorName") String accessorName)
 
-    @Query("""select a from AccessorType a where 'Routing control' member of a.roleSet and a.accessorName = :accessorName""")
+    @Query("""select a from AccessorType a where 'Routing control' = a.accessorRole and a.accessorName = :accessorName""")
     Set<AccessorType> find_routing_accessor_by_name(@Param("accessorName") String accessorName)
 
 }

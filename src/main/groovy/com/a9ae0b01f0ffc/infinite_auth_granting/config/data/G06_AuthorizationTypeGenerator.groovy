@@ -18,7 +18,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: p_identity_repository.findByIdentityName("Owner of Accessor Data"),
                 durationSeconds: 1800,
                 maxUsageCount: null,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Any accessor").first(),
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any accessor").first(),
                 authorizationType: "Access"
         ))
         p_authorization_repository.save(l_entity_set)
@@ -32,7 +32,7 @@ class G06_AuthorizationTypeGenerator {
                 refreshDurationSeconds: 2592000,
                 isRefreshAllowed: true,
                 refreshAuthorizationName: "Refresh",
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Any accessor").first(),
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any accessor").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
@@ -45,7 +45,7 @@ class G06_AuthorizationTypeGenerator {
                 refreshDurationSeconds: 1800,
                 isRefreshAllowed: true,
                 refreshAuthorizationName: "Refresh",
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Any React").first(),
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any React").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
@@ -57,7 +57,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: [p_identity_repository.findByIdentityName("Owner of User Data").first(), p_identity_repository.findByIdentityName("Owner of Provisioned User Data").first()],
                 durationSeconds: 30,
                 maxUsageCount: 1,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Any LMN").first(),
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
@@ -67,7 +67,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: p_identity_repository.findByIdentityName("Owner of User Data and Provisioning Data"),
                 durationSeconds: 2592000,
                 maxUsageCount: 20,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Any LMN").first(),
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
@@ -77,7 +77,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: p_identity_repository.findByIdentityName("Owner of User Data and DOB Data"),
                 durationSeconds: 30,
                 maxUsageCount: 1,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Any LMN").first(),
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
@@ -87,7 +87,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: [p_identity_repository.findByIdentityName("Owner of OTP Data and User Data").first(), p_identity_repository.findByIdentityName("Owner of OTP Data and Provisioned User Data").first()],
                 durationSeconds: 30,
                 maxUsageCount: 1,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Any LMN").first(),
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
                 authorizationType: "Access",
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))

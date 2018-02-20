@@ -9,6 +9,7 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 
 @CompileStatic
 @Entity
+@Table(name="AuthorizationTypes")
 //@Table(uniqueConstraints = @UniqueConstraint(columnNames=["accessor", "authorizationType", "scope", "identity"]))
 class AuthorizationType {
 
@@ -20,10 +21,12 @@ class AuthorizationType {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn
+    @JoinTable(name="Identity2authorization")
     Set<IdentityType> identitySet = new HashSet<IdentityType>()
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn
+    @JoinTable(name="Authorization2scope")
     Set<ScopeType> scopeSet = new HashSet<ScopeType>()
 
     Integer durationSeconds
@@ -40,6 +43,7 @@ class AuthorizationType {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn
+    @JoinTable(name="Authorization2prerequisite")
     /**
      * Any of these
      */

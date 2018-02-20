@@ -11,11 +11,11 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 /** @ApiModel ( d e s c r i p t i o n = "Consumed by AccessorType AuthenticationType Provider (e.g. Accessor_data module). Groups authorization rules (AuthorizationType, IdentityType, ScopeType definitions). Defines Set of client software allowed (or restricted) for accessing the API - and their corresponding identification mappings.") */
 @CompileStatic
 @Entity
+@Table(name="AccessorTypes")
 class AccessorType {
 
     /**Defines the purpose of Accessor rule. Possible values: authorization control, scope control, access control*/
-    @ElementCollection(fetch = FetchType.EAGER)
-    Set<String> roleSet = new HashSet<String>()
+    String accessorRole = GC_EMPTY_STRING
 
     /** @ApiModelProperty ( e x a m p l e = "0", value = "Internal field. Priority for AccessorType identity provider matching. All accessor definitions are sorted with this field - and those with higher priority - matched first within AccessorType authentication provider") */
     Integer lookupPriority = GC_NULL_OBJ_REF as Integer

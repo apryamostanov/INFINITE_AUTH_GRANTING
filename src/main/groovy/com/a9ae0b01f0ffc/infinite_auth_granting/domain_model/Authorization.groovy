@@ -42,6 +42,7 @@ class Authorization {
     @JsonProperty("usage_limit")
     Integer maxUsageCount
 
+    @JsonProperty("functional_data")
     HashMap<String, String> functionalFieldMap
 
     Authorization prerequisiteAuthorization

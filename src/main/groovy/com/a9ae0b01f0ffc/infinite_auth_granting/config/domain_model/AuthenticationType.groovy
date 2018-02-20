@@ -11,6 +11,7 @@ import static base.T_common_base_1_const.GC_EMPTY_STRING
 /**@ApiModel(description = "Defines a set of input (public, private) and output (keys, functional) data as well as the Granting Server -> AuthenticationType Provider name")*/
 @CompileStatic
 @Entity
+@Table(name="AuthenticationTypes")
 class AuthenticationType {
 
     /**@ApiModelProperty(example = "User_data", value = "Defines the Granting Server -> AuthenticationType Provider name")*/
