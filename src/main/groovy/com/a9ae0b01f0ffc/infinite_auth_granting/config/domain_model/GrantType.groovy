@@ -21,7 +21,7 @@ class GrantType {
     String urlMask = GC_EMPTY_STRING
 
     /*Priority 3*/
-    String keyFieldSetJson = GC_EMPTY_STRING
+    String keyFieldRuleName = GC_EMPTY_STRING
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ class GrantType {
         l_user_grant.method = this.method
         l_user_grant.urlMask = this.urlMask
         l_user_grant.keyFieldSetJson = new HashSet<String>()
-        l_user_grant.keyFieldSetJson = this.keyFieldSetJson
+        l_user_grant.keyFieldSetJson = this.keyFieldRuleName
         return l_user_grant
     }
 

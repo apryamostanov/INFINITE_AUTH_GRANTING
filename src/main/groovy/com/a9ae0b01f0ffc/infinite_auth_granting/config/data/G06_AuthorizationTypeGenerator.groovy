@@ -24,6 +24,15 @@ class G06_AuthorizationTypeGenerator {
         p_authorization_repository.save(l_entity_set)
         l_entity_set.clear()
         l_entity_set.add(new AuthorizationType(
+                authorizationName: "Anonymous Updates",
+                scopeSet: p_scope_repository.findByScopeName("Customer Onboarding"),
+                identitySet: p_identity_repository.findByIdentityName("Owner of OTP Data"),
+                durationSeconds: 1800,
+                maxUsageCount: null,
+                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
+                authorizationType: "Access"
+        ))
+        l_entity_set.add(new AuthorizationType(
                 authorizationName: "Read",
                 scopeSet: p_scope_repository.findByScopeName("Main Screen") + p_scope_repository.findByScopeName("User Services"),
                 identitySet: [p_identity_repository.findByIdentityName("Owner of User Data").first(), p_identity_repository.findByIdentityName("Owner of Refresh Data").first()],

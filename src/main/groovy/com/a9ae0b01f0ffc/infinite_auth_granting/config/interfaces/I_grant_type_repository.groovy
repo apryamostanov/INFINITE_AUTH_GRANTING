@@ -12,4 +12,6 @@ interface I_grant_type_repository extends PagingAndSortingRepository<GrantType, 
 
     Set<GrantType> findByRestResourceName(@Param("restResourceName") String restResourceName)
 
+    Set<GrantType> findByRestResourceNameAndKeyFieldRuleName(@Param("restResourceName") String restResourceName, @Param("keyFieldRuleName") String keyFieldRuleName)
+
 }

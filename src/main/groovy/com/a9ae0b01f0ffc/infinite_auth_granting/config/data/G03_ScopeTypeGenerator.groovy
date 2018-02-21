@@ -1,6 +1,5 @@
 package com.a9ae0b01f0ffc.infinite_auth_granting.config.data
 
-import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.GrantType
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.domain_model.ScopeType
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_accessor_type_repository
 import com.a9ae0b01f0ffc.infinite_auth_granting.config.interfaces.I_grant_type_repository
@@ -46,7 +45,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("CardLockUnlockRequest").first(),
                 p_grant_repository.findByRestResourceName("CardSearchEnhanced").first(),
                 p_grant_repository.findByRestResourceName("ChangePassword").first(),
-                p_grant_repository.findByRestResourceName("FXRateSearch").first(),
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("FXRateSearch", "[ProductID]").first(),
                 p_grant_repository.findByRestResourceName("GetCardDetailEnhanced").first(),
                 p_grant_repository.findByRestResourceName("GetCVC").first(),
                 p_grant_repository.findByRestResourceName("GetTransactionDetail").first(),
@@ -72,8 +71,8 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("GetSecretKey").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserId").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first(),
-                p_grant_repository.findByRestResourceName("SendOTPSMS").first(),//todo: should be without proxy
-                p_grant_repository.findByRestResourceName("ValidateOTPSMS").first()
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("SendOTPSMS", "").first(),
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("ValidateOTPSMS", "").first()
         ]))
 
         l_entity_set.add(new ScopeType(scopeName: "Main Screen", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
@@ -103,9 +102,9 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("ForgotPIN").first(),
                 p_grant_repository.findByRestResourceName("ForgotPINValidationParameters").first(),
                 p_grant_repository.findByRestResourceName("GenerateOTP").first(),
-                p_grant_repository.findByRestResourceName("SendOTPSMS").first(),
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("SendOTPSMS", "[CardNumber, ProxyNumber]").first(),
                 p_grant_repository.findByRestResourceName("ValidateOTP").first(),
-                p_grant_repository.findByRestResourceName("ValidateOTPSMS").first(),
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("ValidateOTPSMS", "[CardNumber, ProxyNumber]").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserId").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first(),
                 p_grant_repository.findByRestResourceName("Document").first(),
@@ -127,6 +126,18 @@ class G03_ScopeTypeGenerator {
 
         l_entity_set.add(new ScopeType(scopeName: "Change Security Answers", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
                 p_grant_repository.findByRestResourceName("SetAnswers").first()
+        ]))
+
+        l_entity_set.add(new ScopeType(scopeName: "Customer Onboarding", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
+                p_grant_repository.findByRestResourceName("AccountCreation").first(),
+                p_grant_repository.findByRestResourceName("ValidateIDDocument").first(),
+                p_grant_repository.findByRestResourceName("CheckIDDocumentValidation").first(),
+                p_grant_repository.findByRestResourceName("GetFee").first(),
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("FXRateSearch", "").first(),
+                p_grant_repository.findByRestResourceName("ValidateLoad").first(),
+                p_grant_repository.findByRestResourceName("FundingAmountInquiry").first(),
+                p_grant_repository.findByRestResourceName("CreateEEPaymentRequest").first(),
+                p_grant_repository.findByRestResourceName("UpdateEEPaymentResponse").first()
         ]))
 
 
