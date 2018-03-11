@@ -24,7 +24,7 @@ import java.security.Key
 
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 
-@Path("/{parameter: authorizations|Authorizations}")
+@Path("/{resource: authorizations|Authorizations}")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 class Authorization {

@@ -27,5 +27,8 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_AUTHORIZATION_ERROR_CODE_17 = "17"
     static final String GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY = "18"
     static final String GC_AUTHORIZATION_ERROR_CODE_19_USER_SUPPLIED_JWT = "19"
+    static final Integer GC_JWT_VALIDITY_OK = 1
+    static final Integer GC_JWT_VALIDITY_EXPIRED = 2
+    static final Integer GC_JWT_VALIDITY_INVALID = 3
 
 }
