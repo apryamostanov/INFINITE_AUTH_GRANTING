@@ -35,12 +35,13 @@ String l_validate_otp_sms_request_body_string = """{
       "ProxyNumber": "${io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number")}",
       "OTP": "${io_user_authentication.authenticationData?.privateDataFieldSet?.get("otp")}",
       "OTPUniqueId": ${io_user_authentication.authenticationData?.publicDataFieldSet?.get("otp_id")},
-      "PhoneNumber": "${io_user_authentication.authenticationData?.publicDataFieldSet?.get("phone_number")}"
+      "PhoneNumber": "${io_user_authentication.authenticationData?.publicDataFieldSet?.get("phone_number")}",
+      "AccessorId": "4"
     }
   }
 }
 """
-
+//TODO AccessorId is for WDI compatibility only
 System.out.println(l_validate_otp_sms_request_body_string)
 
 Proxy l_proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(io_user_authentication.p_conf.GC_PROXY_ADDRESS as String, io_user_authentication.p_conf.GC_PROXY_PORT as Integer))

@@ -1,5 +1,5 @@
 return new Object() {
-    String GC_RESOURCE_SERVER_URL = "https://wp1wmwb01t4.wdprocessing.pvt/emea/middleware_2_x_x/Rest/"//"https://10.10.99.190:8443/middleware_2_x_x/Rest"
+    String GC_RESOURCE_SERVER_URL = "https://10.10.99.190:8443/whitelabelft2_middleware_2_x_x/Rest/"//"https://wp1wmwb01t4.wdprocessing.pvt/emea/middleware_2_x_x/Rest/"//"https://10.10.99.190:8443/middleware_2_x_x/Rest"
     //String GC_RESOURCE_SERVER_URL = "https://wp1wmwb01t4.wdprocessing.pvt/emea/middleware_2_x_x/Rest/"//"https://10.10.99.190:8443/middleware_2_x_x/Rest"
     String GC_RESOURCE_AUTHENTICATE = "/Authenticate"
     Integer GC_PROXY_PORT = 8080
