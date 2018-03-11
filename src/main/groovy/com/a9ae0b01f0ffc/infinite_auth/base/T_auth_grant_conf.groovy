@@ -22,29 +22,29 @@ class T_auth_grant_conf {
     @Value('${authenticationModulesExtension}')
     public String authenticationModulesExtension
 
-    @Value('${infinite.auth.server.jwt.access.keystore.path}')
-    public String infiniteAuthGrantingJwtAccessKeystorePath
+    @Value('${infinite.auth.jwt.access.keystore.path}')
+    public String infiniteAuthJwtAccessKeystorePath
 
-    @Value('${infinite.auth.server.jwt.access.keystore.type}')
-    public String infiniteAuthGrantingJwtAccessKeystoreType
+    @Value('${infinite.auth.jwt.access.keystore.type}')
+    public String infiniteAuthJwtAccessKeystoreType
 
-    @Value('${infinite.auth.server.jwt.access.keystore.password}')
-    public String infiniteAuthGrantingJwtAccessKeystorePassword
+    @Value('${infinite.auth.jwt.access.keystore.password}')
+    public String infiniteAuthJwtAccessKeystorePassword
 
-    @Value('${infinite.auth.server.jwt.access.keystore.alias}')
-    public String infiniteAuthGrantingJwtAccessKeystoreAlias
+    @Value('${infinite.auth.jwt.access.keystore.alias}')
+    public String infiniteAuthJwtAccessKeystoreAlias
 
-    @Value('${infinite.auth.server.jwt.refresh.keystore.path}')
-    public String infiniteAuthGrantingJwtRefreshKeystorePath
+    @Value('${infinite.auth.jwt.refresh.keystore.path}')
+    public String infiniteAuthJwtRefreshKeystorePath
 
-    @Value('${infinite.auth.server.jwt.refresh.keystore.type}')
-    public String infiniteAuthGrantingJwtRefreshKeystoreType
+    @Value('${infinite.auth.jwt.refresh.keystore.type}')
+    public String infiniteAuthJwtRefreshKeystoreType
 
-    @Value('${infinite.auth.server.jwt.refresh.keystore.password}')
-    public String infiniteAuthGrantingJwtRefreshKeystorePassword
+    @Value('${infinite.auth.jwt.refresh.keystore.password}')
+    public String infiniteAuthJwtRefreshKeystorePassword
 
-    @Value('${infinite.auth.server.jwt.refresh.keystore.alias}')
-    public String infiniteAuthGrantingJwtRefreshKeystoreAlias
+    @Value('${infinite.auth.jwt.refresh.keystore.alias}')
+    public String infiniteAuthJwtRefreshKeystoreAlias
 
     @Value('${granting_endpoint_name}')
     public String granting_endpoint_name

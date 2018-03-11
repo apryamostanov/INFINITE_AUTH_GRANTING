@@ -1,33 +1,32 @@
-<RECORD>
-    <EXTID>1000159291</EXTID>
-    <PRODUCTIDENT>594</PRODUCTIDENT>
-    <CURRENCYNO>840</CURRENCYNO>
-    <PAN>4187592011199117</PAN>
-    <MBR>001</MBR>
-    <CARDEXTID>CITI567CBC0F400D6876E05324F3840AEAew</CARDEXTID>
-    <CANCELDATE>30/11/2018</CANCELDATE>
-    <CRDSTAT>1</CRDSTAT>
-    <ORDERDATE>09/12/2015</ORDERDATE>
-    <NAMEONCARD>Deepa1 M Katageri55</NAMEONCARD>
-    <EXTACCOUNT>1653F55CECFBF5E05323F3840A77ff</EXTACCOUNT>
-    <ACCTTYPE>01</ACCTTYPE>
-    <ACCTSTAT>3</ACCTSTAT>
-    <ACCOUNTTP>2</ACCOUNTTP>
-    <CARDPROP>
-        <PROP ID="BRANDNAME" VALSTR="10050001"/>
-        <PROP ID="DLCARDREFID" VALSTR="22450067009539"/>
-        <PROP ID="PERSOCODE" VALSTR="124999000000001251000000"/>
-        <PROP ID="DLADDRESSLINE1" VALSTR="DEEPA1 KATAGERI55 MIDDLE"/>
-        <PROP ID="DLADDRESSLINE2" VALSTR="555 North Lane"/>
-        <PROP ID="DLADDRESSLINE3" VALSTR="Suite 5040"/>
-        <PROP ID="DLADDRESSLINE4" VALSTR="19428 Conshohocken"/>
-        <PROP ID="DLADDRESSLINE5" VALSTR="PA"/>
-        <PROP ID="DLADDRESSLINE6" VALSTR="US"/>
-        <PROP ID="DLADDRESSLINE7" VALSTR="null"/>
-        <PROP ID="DLCARDCARRIERGREETING" VALSTR="MISTER"/>
-        <PROP ID="DLISOCOUNTRYCODE" VALSTR="US"/>
-        <PROP ID="MOBILEPHONENUMBER" VALSTR="0"/>
-        <PROP ID="CARDATC" VALNUM="0"/>
-        <PROP ID="CITIMIGRATION" VALSTR="Y"/>
-    </CARDPROP>
-</RECORD>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Body>
+        <SelfServiceLoginResponse xmlns="www.corecard.com">
+            <SelfServiceLoginResult xmlns:a="http://schemas.datacontract.org/2004/07/CoreCardServices.DTO"
+                                    xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+                <ErrorFound xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">No</ErrorFound>
+                <ErrorNumber xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">0</ErrorNumber>
+                <ErrorMessage xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">Processed successfully.
+                </ErrorMessage>
+                <UniqueIDFlag xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">0</UniqueIDFlag>
+                <UniqueID xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">MDWL180223002910172
+                </UniqueID>
+                <a:AccountNumber>1003000000000000029</a:AccountNumber>
+                <a:ProxyNumber>1789121880857</a:ProxyNumber>
+                <a:FirstName>Mobile</a:FirstName>
+                <a:MiddleName i:nil="true"/>
+                <a:LastName>App</a:LastName>
+                <a:AddressLine1>77 Hatton Garden</a:AddressLine1>
+                <a:AddressLine2 i:nil="true"/>
+                <a:City>London</a:City>
+                <a:State>ENG</a:State>
+                <a:PostalCode>123456</a:PostalCode>
+                <a:Country>GB</a:Country>
+                <a:HomePhoneNumber>2785271</a:HomePhoneNumber>
+                <a:EmailAddress1>daniyal.saleem@wirecard.com</a:EmailAddress1>
+                <a:LastLoginDate>2018-02-22T20:19:20</a:LastLoginDate>
+                <a:AccountCreationDate>2018-02-22T00:00:00</a:AccountCreationDate>
+                <a:LoginFlag>2</a:LoginFlag>
+            </SelfServiceLoginResult>
+        </SelfServiceLoginResponse>
+    </s:Body>
+</s:Envelope>

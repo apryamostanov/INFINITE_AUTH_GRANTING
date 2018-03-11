@@ -28,15 +28,15 @@ class T_jwt_manager {
 
     @PostConstruct
     void init() {
-        FileInputStream l_access_keystore_file_input_stream = new FileInputStream(p_app_conf.infiniteAuthGrantingJwtAccessKeystorePath)
-        KeyStore l_access_key_store = KeyStore.getInstance(p_app_conf.infiniteAuthGrantingJwtAccessKeystoreType)
-        l_access_key_store.load(l_access_keystore_file_input_stream, p_app_conf.infiniteAuthGrantingJwtAccessKeystorePassword.toCharArray())
-        p_jwt_access_key = l_access_key_store.getKey(p_app_conf.infiniteAuthGrantingJwtAccessKeystoreAlias, p_app_conf.infiniteAuthGrantingJwtAccessKeystorePassword.toCharArray())
+        FileInputStream l_access_keystore_file_input_stream = new FileInputStream(p_app_conf.infiniteAuthJwtAccessKeystorePath)
+        KeyStore l_access_key_store = KeyStore.getInstance(p_app_conf.infiniteAuthJwtAccessKeystoreType)
+        l_access_key_store.load(l_access_keystore_file_input_stream, p_app_conf.infiniteAuthJwtAccessKeystorePassword.toCharArray())
+        p_jwt_access_key = l_access_key_store.getKey(p_app_conf.infiniteAuthJwtAccessKeystoreAlias, p_app_conf.infiniteAuthJwtAccessKeystorePassword.toCharArray())
 
-        FileInputStream l_refresh_keystore_file_input_stream = new FileInputStream(p_app_conf.infiniteAuthGrantingJwtRefreshKeystorePath)
-        KeyStore l_refresh_key_store = KeyStore.getInstance(p_app_conf.infiniteAuthGrantingJwtRefreshKeystoreType)
-        l_refresh_key_store.load(l_refresh_keystore_file_input_stream, p_app_conf.infiniteAuthGrantingJwtRefreshKeystorePassword.toCharArray())
-        p_jwt_refresh_key = l_refresh_key_store.getKey(p_app_conf.infiniteAuthGrantingJwtRefreshKeystoreAlias, p_app_conf.infiniteAuthGrantingJwtRefreshKeystorePassword.toCharArray())
+        FileInputStream l_refresh_keystore_file_input_stream = new FileInputStream(p_app_conf.infiniteAuthJwtRefreshKeystorePath)
+        KeyStore l_refresh_key_store = KeyStore.getInstance(p_app_conf.infiniteAuthJwtRefreshKeystoreType)
+        l_refresh_key_store.load(l_refresh_keystore_file_input_stream, p_app_conf.infiniteAuthJwtRefreshKeystorePassword.toCharArray())
+        p_jwt_refresh_key = l_refresh_key_store.getKey(p_app_conf.infiniteAuthJwtRefreshKeystoreAlias, p_app_conf.infiniteAuthJwtRefreshKeystorePassword.toCharArray())
     }
 
 }
