@@ -2,6 +2,7 @@ package com.a9ae0b01f0ffc.infinite_auth.validation
 
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth.granting.Authorization
+import com.a9ae0b01f0ffc.infinite_auth.server.ApiException
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import groovy.json.JsonSlurper
@@ -30,11 +31,13 @@ class Validation {
     Response post(@Context UriInfo i_uri_info, @HeaderParam("Authorization") String i_jwt, String i_json_string) {
         Response l_granting_response
         if (validate_token(i_uri_info.getQueryParameters(), "POST", i_json_string, i_jwt, p_app_context) == GC_JWT_VALIDITY_EXPIRED) {
-            l_granting_response = Response.status(Response.Status.UNAUTHORIZED).build()
+            throw new ApiException(Response.Status.UNAUTHORIZED.getStatusCode(), 401, "Expired jwt",
+                    "Expired jwt", i_uri_info.getRequestUri().toString())
         } else if (validate_token(i_uri_info.getQueryParameters(), "POST", i_json_string, i_jwt, p_app_context) == GC_JWT_VALIDITY_INVALID) {
-            l_granting_response = Response.status(Response.Status.FORBIDDEN).build()
+            throw new ApiException(Response.Status.FORBIDDEN.getStatusCode(), 403, "Invalid jwt",
+                    "Invalid jwt", i_uri_info.getRequestUri().toString())
         } else {
-            l_granting_response = Response.ok().build()
+            l_granting_response = Response.noContent().build()
         }
         l_granting_response.close()
         return l_granting_response
@@ -43,18 +46,18 @@ class Validation {
     @GET
     Response get(@Context UriInfo i_uri_info, @HeaderParam("Authorization") String i_jwt) {
         Response l_granting_response
-        Integer l_token_status = validate_token(i_uri_info.getQueryParameters(), "GET", GC_EMPTY_STRING, i_jwt, p_app_context)
-        if (l_token_status == GC_JWT_VALIDITY_EXPIRED) {
-            l_granting_response = Response.status(Response.Status.UNAUTHORIZED).build()
-        } else if (l_token_status == GC_JWT_VALIDITY_INVALID) {
-            l_granting_response = Response.status(Response.Status.FORBIDDEN).build()
+        if (validate_token(i_uri_info.getQueryParameters(), "GET", i_json_string, i_jwt, p_app_context) == GC_JWT_VALIDITY_EXPIRED) {
+            throw new ApiException(Response.Status.UNAUTHORIZED.getStatusCode(), 401, "Expired jwt",
+                    "Expired jwt", i_uri_info.getRequestUri().toString())
+        } else if (validate_token(i_uri_info.getQueryParameters(), "POST", i_json_string, i_jwt, p_app_context) == GC_JWT_VALIDITY_INVALID) {
+            throw new ApiException(Response.Status.FORBIDDEN.getStatusCode(), 403, "Invalid jwt",
+                    "Invalid jwt", i_uri_info.getRequestUri().toString())
         } else {
             l_granting_response = Response.noContent().build()
         }
         l_granting_response.close()
         return l_granting_response
     }
-
 
     static Integer validate_token(MultivaluedMap<String, String> i_query_parameters, String i_method, String i_body, String i_jwt, T_auth_grant_base_5_context i_context) {
         if (is_null(i_jwt)) {

@@ -395,7 +395,36 @@ assert l_slurped_json[0].token != "" </script></con:config></con:testStep><con:t
     "prerequisite_authorization": {
     	 "token": "${=context.read_token}"
     }
-  }</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d935b7a9-3ec6-4edb-a3b2-4ef57d9d9908" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Misc" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Authenticate" id="60e53d7e-347b-48c0-a2ed-b378fda1cc88" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="90cdf065-0f65-4788-9608-28d00d0709cb" name="Authenticate" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://10.10.99.190:8443/middleware_2_x_x/Rest/Authenticate</con:endpoint><con:request>{"Authenticate": {"requestData": {
+  }</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d935b7a9-3ec6-4edb-a3b2-4ef57d9d9908" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Misc" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Validations" id="f094d8fc-255c-4ec4-90ed-e67c88934ac7"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Validations" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/GetCardDetails</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "${=context.fiid}",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Authenticate" id="60e53d7e-347b-48c0-a2ed-b378fda1cc88" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="90cdf065-0f65-4788-9608-28d00d0709cb" name="Authenticate" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://10.10.99.190:8443/middleware_2_x_x/Rest/Authenticate</con:endpoint><con:request>{"Authenticate": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yyMMddHHmmssSSS")}",
   "CardUserId": "Daniyal@wirecard.com",
   "CurrentPassword": "Test@567",
