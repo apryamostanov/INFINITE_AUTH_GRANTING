@@ -4,6 +4,8 @@ import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiResponseMessage
+import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.RevocationRepository
+import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.UsageRepository
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -137,6 +139,14 @@ class Authorization {
                 Authorization l_prerequisite_user_auth = l_user_authorization.prerequisiteAuthorization
                 if (l_prerequisite_user_auth.jwt != null) {
                     l_prerequisite_user_auth = access_jwt2authorization(l_prerequisite_user_auth.jwt, i_context)
+                }
+                if (p_app_context.p_revocation_repository.findByAuthorizationId(l_prerequisite_user_auth.authorizationId).size() > GC_EMPTY_SIZE) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9403A_REVOKED_PREREQUISITE)
+                    return
+                }
+                if (p_app_context.p_usage_repository.findByAuthorizationId(l_prerequisite_user_auth.authorizationId).size() > l_prerequisite_user_auth.maxUsageCount) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9403B_EXCEEDED_PREREQUISITE)
+                    return
                 }
                 for (AuthorizationType l_prerequisite_conf_authorization in i_conf_authorization.prerequisiteAuthorizationSet) {
                     l_prerequisite_user_auth.common_authorization_granting(l_prerequisite_conf_authorization, i_context)

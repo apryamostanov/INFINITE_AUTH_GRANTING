@@ -7,6 +7,8 @@ import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authorization_type_re
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_grant_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_identity_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_scope_type_repository
+import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.RevocationRepository
+import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.UsageRepository
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.OkHttpClient
@@ -35,6 +37,14 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     @Autowired
     @JsonIgnore
     T_auth_grant_conf p_app_conf
+
+
+    @JsonIgnore
+    @Autowired
+    RevocationRepository p_revocation_repository
+    @Autowired
+    @JsonIgnore
+    UsageRepository p_usage_repository
 
     @Autowired
     @JsonIgnore

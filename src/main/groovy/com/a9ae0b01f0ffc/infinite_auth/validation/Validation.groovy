@@ -3,6 +3,8 @@ package com.a9ae0b01f0ffc.infinite_auth.validation
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth.granting.Authorization
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiException
+import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.RevocationRepository
+import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.UsageRepository
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import groovy.json.JsonSlurper
@@ -59,7 +61,7 @@ class Validation {
         return l_granting_response
     }
 
-    static Integer validate_token(MultivaluedMap<String, String> i_query_parameters, String i_method, String i_body, String i_jwt, T_auth_grant_base_5_context i_context) {
+    Integer validate_token(MultivaluedMap<String, String> i_query_parameters, String i_method, String i_body, String i_jwt, T_auth_grant_base_5_context i_context) {
         if (is_null(i_jwt)) {
             return GC_JWT_VALIDITY_INVALID
         }
@@ -69,6 +71,12 @@ class Validation {
         Authorization l_authorization = Authorization.access_jwt2authorization(i_jwt, i_context)
         if (l_authorization.expiryDate.before(new Date())) {
             return GC_JWT_VALIDITY_EXPIRED
+        }
+        if (p_app_context.p_revocation_repository.findByAuthorizationId(l_authorization.authorizationId).size() > GC_EMPTY_SIZE) {
+            return GC_JWT_VALIDITY_INVALID
+        }
+        if (p_app_context.p_usage_repository.findByAuthorizationId(l_authorization.authorizationId).size() > l_authorization.maxUsageCount) {
+            return GC_JWT_VALIDITY_INVALID
         }
         return GC_JWT_VALIDITY_OK
     }
