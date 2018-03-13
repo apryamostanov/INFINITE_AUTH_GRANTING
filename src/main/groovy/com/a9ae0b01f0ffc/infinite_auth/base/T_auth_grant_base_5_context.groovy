@@ -25,6 +25,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
 
 
     GroovyScriptEngine p_authentication_runner
+    GroovyScriptEngine p_validation_runner
     GroovyScriptEngine p_authentication_config_holder
     OkHttpClient p_ok_http_client = new OkHttpClient.Builder().hostnameVerifier(get_unsecure_host_name_verifier()).build()
 
@@ -74,6 +75,13 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
             p_authentication_runner = new GroovyScriptEngine(app_conf().authenticationModulesPath)
         }
         return p_authentication_runner
+    }
+
+    GroovyScriptEngine get_validation_runner() {
+        if (is_null(p_validation_runner)) {
+            p_validation_runner = new GroovyScriptEngine(app_conf().validationModulesPath)
+        }
+        return p_validation_runner
     }
 
     GroovyScriptEngine get_authentication_config_holder() {

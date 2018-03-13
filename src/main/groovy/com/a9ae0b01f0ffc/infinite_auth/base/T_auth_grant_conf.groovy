@@ -13,6 +13,9 @@ class T_auth_grant_conf {
     @Value('${authenticationModulesPath}')
     public String authenticationModulesPath
 
+    @Value('${validationModulesPath}')
+    public String validationModulesPath
+
     @Value('${authenticationConfigPath}')
     public String authenticationConfigPath
 
@@ -21,6 +24,9 @@ class T_auth_grant_conf {
 
     @Value('${authenticationModulesExtension}')
     public String authenticationModulesExtension
+
+    @Value('${validationModulesExtension}')
+    public String validationModulesExtension
 
     @Value('${infinite.auth.jwt.access.keystore.path}')
     public String infiniteAuthJwtAccessKeystorePath

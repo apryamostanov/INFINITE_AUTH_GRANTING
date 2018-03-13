@@ -33,8 +33,8 @@ class GrantType {
         l_user_grant.restResourceName = this.restResourceName
         l_user_grant.method = this.method
         l_user_grant.urlMask = this.urlMask
-        l_user_grant.keyFieldSetJson = new HashSet<String>()
-        l_user_grant.keyFieldSetJson = this.keyFieldRuleName
+        l_user_grant.validationModuleName = new HashSet<String>()
+        l_user_grant.validationModuleName = this.keyFieldRuleName
         return l_user_grant
     }
 
