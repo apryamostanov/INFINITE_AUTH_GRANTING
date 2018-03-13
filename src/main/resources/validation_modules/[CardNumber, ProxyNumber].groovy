@@ -8,3 +8,5 @@ def i_body = binding.getVariable("i_body")
 def i_jwt = binding.getVariable("i_jwt")
 def i_context = binding.getVariable("i_context")
 def i_url_path = binding.getVariable("i_url_path")
+
+return true

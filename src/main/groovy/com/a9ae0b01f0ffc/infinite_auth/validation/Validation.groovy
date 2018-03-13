@@ -72,7 +72,7 @@ class Validation {
         if (p_app_context.p_revocation_repository.findByAuthorizationId(l_authorization.authorizationId).size() > GC_EMPTY_SIZE) {
             return GC_JWT_VALIDITY_INVALID
         }
-        if (p_app_context.p_usage_repository.findByAuthorizationId(l_authorization.authorizationId).size() > l_authorization.maxUsageCount) {
+        if (p_app_context.p_usage_repository.findByAuthorizationId(l_authorization.authorizationId).size() > (nvl(l_authorization.maxUsageCount, GC_ZERO) as Integer)) {
             return GC_JWT_VALIDITY_INVALID
         }
         Boolean l_is_matched_resource_grant = GC_FALSE
@@ -94,7 +94,11 @@ class Validation {
                 l_binding.setVariable("i_jwt", i_jwt)
                 l_binding.setVariable("i_context", i_context)
                 l_binding.setVariable("i_url_path", i_url_path)
-                i_context.get_validation_runner().run(l_grant.validationModuleName + i_context.app_conf().validationModulesExtension, l_binding)
+                if (i_context.get_validation_runner().run(l_grant.validationModuleName + i_context.app_conf().validationModulesExtension, l_binding)) {
+                    return GC_JWT_VALIDITY_OK
+                } else {
+                    return GC_JWT_VALIDITY_INVALID
+                }
             }
             l_is_matched_resource_grant = GC_FALSE
         }
