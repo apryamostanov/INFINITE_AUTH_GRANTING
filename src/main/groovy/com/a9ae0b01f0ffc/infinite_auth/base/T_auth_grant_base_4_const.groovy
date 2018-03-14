@@ -33,5 +33,10 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final Integer GC_JWT_VALIDITY_OK = 1
     static final Integer GC_JWT_VALIDITY_EXPIRED = 2
     static final Integer GC_JWT_VALIDITY_INVALID = 3
+    static final String GC_DATA_TYPE_STRING = "AN"
+    static final String GC_DATA_TYPE_NUMBER = "N"
+    static final String GC_DATA_TYPE_BOOLEAN = "B"
+    static final String GC_DATA_TYPE_DATETIME = "DT"
+    static final String GC_JSON_NULL = "null"
 
 }

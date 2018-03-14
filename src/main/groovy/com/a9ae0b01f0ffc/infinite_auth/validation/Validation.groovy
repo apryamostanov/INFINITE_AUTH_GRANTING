@@ -5,6 +5,8 @@ import com.a9ae0b01f0ffc.infinite_auth.granting.Authorization
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiException
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.json.JSONObject
+import org.json.XML
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -94,6 +96,7 @@ class Validation {
                 l_binding.setVariable("i_jwt", i_jwt)
                 l_binding.setVariable("i_context", i_context)
                 l_binding.setVariable("i_url_path", i_url_path)
+                l_binding.setVariable("i_authorization", l_authorization)
                 if (i_context.get_validation_runner().run(l_grant.validationModuleName + i_context.app_conf().validationModulesExtension, l_binding)) {
                     return GC_JWT_VALIDITY_OK
                 } else {

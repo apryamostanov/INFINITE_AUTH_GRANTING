@@ -11,6 +11,8 @@ import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.RevocationRepositor
 import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.UsageRepository
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
+import groovy.util.slurpersupport.GPathResult
+import groovy.util.slurpersupport.NodeChild
 import okhttp3.OkHttpClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
