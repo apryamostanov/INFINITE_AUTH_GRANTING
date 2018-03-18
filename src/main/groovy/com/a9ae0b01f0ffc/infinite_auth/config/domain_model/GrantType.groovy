@@ -23,6 +23,8 @@ class GrantType {
     /*Priority 3*/
     String keyFieldRuleName = GC_EMPTY_STRING
 
+    Integer maxUsageCountWithinScope
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)

@@ -21,4 +21,6 @@ class Usage {
 
     Date usageDate
 
+    String restResourceName
+
 }

@@ -4,8 +4,6 @@ import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiResponseMessage
-import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.RevocationRepository
-import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.UsageRepository
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -24,6 +22,8 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.security.Key
 
+import static base.T_common_base_1_const.*
+import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 
 @Path("/{resource: authorizations|Authorizations}")

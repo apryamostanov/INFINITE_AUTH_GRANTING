@@ -12,4 +12,6 @@ interface UsageRepository extends PagingAndSortingRepository<Usage, Long> {
 
     Set<Usage> findByAuthorizationId(@Param("authorizationId") Long authorizationId)
 
+    Set<Usage> findByAuthorizationIdAndRestResourceName(@Param("authorizationId") Long authorizationId, @Param("restResourceName") String restResourceName)
+
 }

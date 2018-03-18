@@ -34,6 +34,7 @@ class Validation {
             throw new ApiException(Response.Status.UNAUTHORIZED.getStatusCode(), 401, "Expired jwt",
                     "Expired jwt", i_uri_info.getRequestUri().toString())
         } else if (validate_token(i_uri_info.getQueryParameters(), "POST", i_json_string, i_jwt, p_app_context, i_uri_info.getPath()) == GC_JWT_VALIDITY_INVALID) {
+            System.out.println(8)
             throw new ApiException(Response.Status.FORBIDDEN.getStatusCode(), 403, "Invalid jwt",
                     "Invalid jwt", i_uri_info.getRequestUri().toString())
         } else {
@@ -50,6 +51,7 @@ class Validation {
             throw new ApiException(Response.Status.UNAUTHORIZED.getStatusCode(), 401, "Expired jwt",
                     "Expired jwt", i_uri_info.getRequestUri().toString())
         } else if (validate_token(i_uri_info.getQueryParameters(), "POST", i_json_string, i_jwt, p_app_context, i_uri_info.getPath()) == GC_JWT_VALIDITY_INVALID) {
+            System.out.println(8)
             throw new ApiException(Response.Status.FORBIDDEN.getStatusCode(), 403, "Invalid jwt",
                     "Invalid jwt", i_uri_info.getRequestUri().toString())
         } else {
@@ -62,19 +64,24 @@ class Validation {
     Integer validate_token(MultivaluedMap<String, String> i_query_parameters, String i_method, String i_body, String i_jwt, T_auth_grant_base_5_context i_context, String i_url_path) {
         System.out.println(i_url_path)
         if (is_null(i_jwt)) {
+            System.out.println(1)
             return GC_JWT_VALIDITY_INVALID
         }
         if (Authorization.is_invalid_access_jwt(i_jwt, i_context)) {
+            System.out.println(2)
             return GC_JWT_VALIDITY_INVALID
         }
         Authorization l_authorization = Authorization.access_jwt2authorization(i_jwt, i_context)
         if (l_authorization.expiryDate.before(new Date())) {
+            System.out.println(3)
             return GC_JWT_VALIDITY_EXPIRED
         }
         if (p_app_context.p_revocation_repository.findByAuthorizationId(l_authorization.authorizationId).size() > GC_EMPTY_SIZE) {
+            System.out.println(4)
             return GC_JWT_VALIDITY_INVALID
         }
         if (p_app_context.p_usage_repository.findByAuthorizationId(l_authorization.authorizationId).size() > (nvl(l_authorization.maxUsageCount, GC_ZERO) as Integer)) {
+            System.out.println(5)
             return GC_JWT_VALIDITY_INVALID
         }
         Boolean l_is_matched_resource_grant = GC_FALSE
@@ -98,13 +105,17 @@ class Validation {
                 l_binding.setVariable("i_url_path", i_url_path)
                 l_binding.setVariable("i_authorization", l_authorization)
                 if (i_context.get_validation_runner().run(l_grant.validationModuleName + i_context.app_conf().validationModulesExtension, l_binding)) {
+                    Usage l_usage = new Usage(authorizationId: l_authorization.authorizationId, usageDate: new Date(), restResourceName: l_grant.restResourceName)
+                    p_app_context.p_usage_repository.save([l_usage])
                     return GC_JWT_VALIDITY_OK
                 } else {
+                    System.out.println(6)
                     return GC_JWT_VALIDITY_INVALID
                 }
             }
             l_is_matched_resource_grant = GC_FALSE
         }
+        System.out.println(7)
         return GC_JWT_VALIDITY_INVALID
     }
 
