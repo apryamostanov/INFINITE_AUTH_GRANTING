@@ -7,6 +7,7 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.OrderColumn
 import javax.persistence.Table
 
 @CompileStatic
@@ -16,7 +17,7 @@ class Revocation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @OrderColumn(nullable = false)
     Long authorizationId
 
 }

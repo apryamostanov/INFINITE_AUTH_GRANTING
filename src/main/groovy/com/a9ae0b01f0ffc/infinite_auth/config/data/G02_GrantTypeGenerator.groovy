@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 class G02_GrantTypeGenerator {
 
     void generate_data(I_grant_type_repository p_grant_repository) {
+        Thread.currentThread()
         Set<GrantType> l_entity_set = new HashSet<GrantType>()
         l_entity_set.add(new GrantType(restResourceName: "UserRegistration", method: "POST", keyFieldRuleName: "NA"))
         l_entity_set.add(new GrantType(restResourceName: "UserRegistrationValidationParametersEnhanced", method: "GET", keyFieldRuleName: "NA"))
