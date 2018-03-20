@@ -16,7 +16,6 @@ import javax.persistence.Table
 class Usage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OrderColumn(nullable = false)
     Long authorizationId
 
