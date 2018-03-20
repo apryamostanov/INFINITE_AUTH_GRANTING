@@ -89,9 +89,11 @@ class Validation {
             System.out.println(4)
             return GC_JWT_VALIDITY_INVALID
         }
-        if (p_app_context.p_usage_repository.findByAuthorizationId(l_authorization.authorizationId).size() > (nvl(l_authorization.maxUsageCount, GC_ZERO) as Integer)) {
-            System.out.println(5)
-            return GC_JWT_VALIDITY_INVALID
+        if (is_not_null(l_authorization.maxUsageCount)) {
+            if (p_app_context.p_usage_repository.findByAuthorizationId(l_authorization.authorizationId).size() > l_authorization.maxUsageCount) {
+                System.out.println(5)
+                return GC_JWT_VALIDITY_INVALID
+            }
         }
         Boolean l_is_matched_resource_grant = GC_FALSE
         for (l_grant in l_authorization.scope.grantSet) {

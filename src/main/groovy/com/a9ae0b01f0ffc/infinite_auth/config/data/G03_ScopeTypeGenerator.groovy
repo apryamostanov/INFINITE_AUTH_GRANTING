@@ -71,8 +71,8 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("GetSecretKey").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserId").first(),
                 p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first(),
-                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("SendOTPSMS", "").first(),
-                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("ValidateOTPSMS", "").first()
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("SendOTPSMS", "NA").first(),
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("ValidateOTPSMS", "NA").first()
         ]))
 
         l_entity_set.add(new ScopeType(scopeName: "Main Screen", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
@@ -133,7 +133,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("ValidateIDDocument").first(),
                 p_grant_repository.findByRestResourceName("CheckIDDocumentValidation").first(),
                 p_grant_repository.findByRestResourceName("GetFee").first(),
-                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("FXRateSearch", "").first(),
+                p_grant_repository.findByRestResourceNameAndKeyFieldRuleName("FXRateSearch", "NA").first(),
                 p_grant_repository.findByRestResourceName("ValidateLoad").first(),
                 p_grant_repository.findByRestResourceName("FundingAmountInquiry").first(),
                 p_grant_repository.findByRestResourceName("CreateEEPaymentRequest").first(),
