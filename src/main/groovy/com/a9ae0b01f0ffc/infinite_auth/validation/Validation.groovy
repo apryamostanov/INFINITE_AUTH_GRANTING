@@ -47,10 +47,10 @@ class Validation {
     @GET
     Response get(@Context UriInfo i_uri_info, @HeaderParam("Authorization") String i_jwt) {
         Response l_granting_response
-        if (validate_token(i_uri_info.getQueryParameters(), "GET", i_json_string, i_jwt, p_app_context, i_uri_info.getPath()) == GC_JWT_VALIDITY_EXPIRED) {
+        if (validate_token(i_uri_info.getQueryParameters(), "GET", GC_EMPTY_STRING, i_jwt, p_app_context, i_uri_info.getPath()) == GC_JWT_VALIDITY_EXPIRED) {
             throw new ApiException(Response.Status.UNAUTHORIZED.getStatusCode(), 401, "Expired jwt",
                     "Expired jwt", i_uri_info.getRequestUri().toString())
-        } else if (validate_token(i_uri_info.getQueryParameters(), "POST", i_json_string, i_jwt, p_app_context, i_uri_info.getPath()) == GC_JWT_VALIDITY_INVALID) {
+        } else if (validate_token(i_uri_info.getQueryParameters(), "GET", GC_EMPTY_STRING, i_jwt, p_app_context, i_uri_info.getPath()) == GC_JWT_VALIDITY_INVALID) {
             System.out.println(8)
             throw new ApiException(Response.Status.FORBIDDEN.getStatusCode(), 403, "Invalid jwt",
                     "Invalid jwt", i_uri_info.getRequestUri().toString())
@@ -61,17 +61,26 @@ class Validation {
         return l_granting_response
     }
 
+    static String remove_jwt_bearer(String i_jwt) {
+        if (i_jwt.indexOf("Bearer") != GC_CHAR_INDEX_NOT_EXISTING) {
+            return i_jwt.substring(i_jwt.indexOf(GC_SPACE) + GC_ONE_CHAR)
+        } else {
+            return i_jwt
+        }
+    }
+
     Integer validate_token(MultivaluedMap<String, String> i_query_parameters, String i_method, String i_body, String i_jwt, T_auth_grant_base_5_context i_context, String i_url_path) {
         System.out.println(i_url_path)
-        if (is_null(i_jwt)) {
+        String l_jwt = remove_jwt_bearer(i_jwt)
+        if (is_null(l_jwt)) {
             System.out.println(1)
             return GC_JWT_VALIDITY_INVALID
         }
-        if (Authorization.is_invalid_access_jwt(i_jwt, i_context)) {
+        if (Authorization.is_invalid_access_jwt(l_jwt, i_context)) {
             System.out.println(2)
             return GC_JWT_VALIDITY_INVALID
         }
-        Authorization l_authorization = Authorization.access_jwt2authorization(i_jwt, i_context)
+        Authorization l_authorization = Authorization.access_jwt2authorization(l_jwt, i_context)
         if (l_authorization.expiryDate.before(new Date())) {
             System.out.println(3)
             return GC_JWT_VALIDITY_EXPIRED
@@ -100,7 +109,7 @@ class Validation {
                 l_binding.setVariable("i_query_parameters", i_query_parameters)
                 l_binding.setVariable("i_method", i_method)
                 l_binding.setVariable("i_body", i_body)
-                l_binding.setVariable("i_jwt", i_jwt)
+                l_binding.setVariable("i_jwt", l_jwt)
                 l_binding.setVariable("i_context", i_context)
                 l_binding.setVariable("i_url_path", i_url_path)
                 l_binding.setVariable("i_authorization", l_authorization)
