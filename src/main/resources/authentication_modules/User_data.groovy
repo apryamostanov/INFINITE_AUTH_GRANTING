@@ -129,6 +129,7 @@ if (!l_self_service_login_response.isSuccessful()) {
                 io_user_authentication.failure()
                 return
             } else {
+                def l_product_id = l_slurped_get_card_details_response.Body.GetCardDetailResponse.GetCardDetailResult.ProductDetail.ProductID
                 def l_status_type_description = l_slurped_get_card_details_response.Body.GetCardDetailResponse.GetCardDetailResult.CardDetail.CardTypeDescription
                 def l_card_type_id_enhanced
                 if (l_status_type_description == "Primary Card") {
@@ -149,6 +150,7 @@ if (!l_self_service_login_response.isSuccessful()) {
                 io_user_authentication.keyFieldMap.put("proxy_number", l_slurped_self_service_login_response.Body.SelfServiceLoginResponse.SelfServiceLoginResult.ProxyNumber.toString())
                 io_user_authentication.keyFieldMap.put("account_number", l_slurped_self_service_login_response.Body.SelfServiceLoginResponse.SelfServiceLoginResult.AccountNumber.toString())
                 io_user_authentication.keyFieldMap.put("user_name", io_user_authentication.authenticationData?.publicDataFieldSet?.get("username") as String)
+                io_user_authentication.keyFieldMap.put("product_id", l_product_id.toString())
                 io_user_authentication.functionalFieldMap.put("card_type_id_enhanced", l_card_type_id_enhanced.toString())
                 io_user_authentication.functionalFieldMap.put("login_flag", l_slurped_self_service_login_response.Body.SelfServiceLoginResponse.SelfServiceLoginResult.LoginFlag.toString())
                 io_user_authentication.functionalFieldMap.put("error_number", l_slurped_self_service_login_response.Body.SelfServiceLoginResponse.SelfServiceLoginResult.ErrorNumber.toString())

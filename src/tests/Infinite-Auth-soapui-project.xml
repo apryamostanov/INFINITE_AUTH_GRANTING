@@ -803,6 +803,8 @@ def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
 Object.mixin GlobalContext
 new Object().global_context["current_token"]="Bearer " + l_slurped_json[0].token
+new Object().global_context["proxy_number"]=l_slurped_json[0].scope.data_scope.proxy_number
+new Object().global_context["product_id"]=l_slurped_json[0].scope.data_scope.product_id
 log.info (new Object().global_context["current_token"])
 log.info("Bearer " + l_slurped_json[0].token)
 assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="f3f361b9-a947-4b53-b65d-0eb07c691a2d"><con:settings/><con:config><script>import groovy.json.JsonSlurper
@@ -821,40 +823,40 @@ l_content = context.httpResponse.responseContent
 log.info(new Object().global_context["current_service"].padRight(100) + " : " + context.httpResponse.getStatusCode().toString())
 }
 
-run_service("GetCardDetailEnhanced", "GET", "?ProxyNumber=1789605043337")
-run_service("GetCVC", "GET", "?ProxyNumber=1789605043337")
-run_service("CardActivationSS", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("CardActivationValidationParameterSSEnhanced", "GET", "?ProxyNumber=1789605043337")
-run_service("CardSearchEnhanced", "GET", "?ProxyNumber=1789605043337")
-run_service("UserRegistration", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("UserRegistrationValidationParametersEnhanced", "GET", "?ProxyNumber=1789605043337")
-run_service("ForgotPassword", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("ForgotPasswordValidationParameterEnhanced", "GET", "?ProxyNumber=1789605043337")
-run_service("W2WTransferInitiateEnhanced", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("GetTransactionHistory", "GET", "?ProxyNumber=1789605043337")
-run_service("CardLockUnlockRequest", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("FXRateSearch", "GET", "?ProxyNumber=1789605043337")
-run_service("GetSecretKey", "GET", "?ProxyNumber=1789605043337")
-run_service("GetTransactionDetail", "GET", "?ProxyNumber=1789605043337")
-run_service("GetStatementDate", "GET", "?ProxyNumber=1789605043337")
-run_service("SearchWalletAccount", "GET", "?ProxyNumber=1789605043337")
-run_service("StatementInformationMultiCurrency", "GET", "?ProxyNumber=1789605043337")
-run_service("StatementsInformation", "GET", "?ProxyNumber=1789605043337")
-run_service("UpdateWalletPriority", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("VirtualCardCreate", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("VirtualCardUpdate", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("W2WTransferConfirm", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("ForgotPIN", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("ForgotPINValidationParameters", "GET", "?ProxyNumber=1789605043337")
-run_service("GenerateOTP", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("SendOTPSMS", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("ValidateOTP", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("ValidateOTPSMS", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("ForgotUserId", "POST", ", \"ProxyNumber\": \"1789605043337\"")
-run_service("ForgotUserIdValidationParametersEnhanced", "GET", "?ProxyNumber=1789605043337")
-run_service("Document", "GET", "?ProxyNumber=1789605043337")
-run_service("Document_metadata", "GET", "?ProxyNumber=1789605043337")
-run_service("GetProductParametersEnhanced", "GET", "?ProxyNumber=1789605043337")</script></con:config></con:testStep><con:testStep type="httprequest" name="Sample POST" id="9e11cdc3-1c7f-458c-bf22-a2aab4e79c91"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+run_service("GetCardDetailEnhanced", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("GetCVC", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("CardActivationSS", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("CardActivationValidationParameterSSEnhanced", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("CardSearchEnhanced", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("UserRegistration", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("UserRegistrationValidationParametersEnhanced", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("ForgotPassword", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("ForgotPasswordValidationParameterEnhanced", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("W2WTransferInitiateEnhanced", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("GetTransactionHistory", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("CardLockUnlockRequest", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("FXRateSearch", "GET", "?ProductID=" + new Object().global_context["product_id"] + "")
+run_service("GetSecretKey", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("GetTransactionDetail", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("SetStatementDate", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("SearchWalletAccount", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("StatementInformationMultiCurrency", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("StatementsInformation", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("UpdateWalletPriority", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("VirtualCardCreate", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("VirtualCardUpdate", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("W2WTransferConfirm", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("ForgotPIN", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("ForgotPINValidationParameters", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("GenerateOTP", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("SendOTPSMS", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("ValidateOTP", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("ValidateOTPSMS", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("ForgotUserId", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+run_service("ForgotUserIdValidationParametersEnhanced", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("Document", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("Document_metadata", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("GetProductParametersEnhanced", "GET", "?ProductID=" + new Object().global_context["product_id"] + "")</script></con:config></con:testStep><con:testStep type="httprequest" name="Sample POST" id="9e11cdc3-1c7f-458c-bf22-a2aab4e79c91"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
   ${=new Object().global_context["params"]}
@@ -862,34 +864,15 @@ run_service("GetProductParametersEnhanced", "GET", "?ProxyNumber=1789605043337")
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
   ${=new Object().global_context["params"]}
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample GET" id="4171cb6d-107d-451f-9599-34ca1838548c"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/GetProductParametersEnhanced?ProxyNumber=1789605043337</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample GET" id="4171cb6d-107d-451f-9599-34ca1838548c" disabled="true"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/GetProductParametersEnhanced?ProxyNumber=1789605043337</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
   ${=new Object().global_context["params"]}
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample POST" id="6997d78a-325d-4dce-9ac4-967c6ebae7c6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/Authorizations</con:endpoint><con:request> {
-    "authorization_name": "Read",
-    "identity": {
-      "identity_name": "Owner of User Data",
-      "authentications": [
-        {
-          "authentication_name": "User_data", "authentication_data": {
-          "public_data": {
-            "username": "daniyalmobile@wirecard.com"
-          },
-          "private_data": {
-            "password": "Wdp@01234"
-          }}
-        }
-      ]
-    },
-    "scope": {
-      "scope_name": "Main Screen"
-    },
-    "prerequisite_authorization": {
-    	 "token": "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6Ikg0c0lBQUFBQUFBQUFMVlZXMC9iTUJUK0s1R2ZOZzBxcDZHczVDM2lwbW9EQ21GN21WQmtrdFBpa2RpWkw2VVo2bi9mY1pPR05vczBhYUpWcE5ybjhwMWpmOVozWGdtejVra3EvcHNaTGtVaVdBRWtKSkdRb2lxazFlU2dFOEF6RXZwakdneDlQd2pvaUFhajRJRHdESVRocGlMaGE3dmVRTjI4Q0ZDZW5IbFJtb0xXVW5sbnpMQUcxNFdtYTJCTndoK3ZIVnZiVFpPWlpIMlp0UlVybC9ZeDUybTdaWnVzQnVYcjFiVjNaWFBEdlZPckZJaTA4cTRSWUFFZmJxT1BEclhrU2NGK1lzSUNsRVpnekJrT2xvTWwrblFKS1o5dGdVK3V6aWZvUHptaCtCc2ZENDgrKytQUkVVWVdUTmdaUzQxVm9GenJaWm1ETThzTWNyZjNSK05qc25MVnlxMDZkT0RqaDNFNUUzUEw1cTVmRUhNMGxEa3pNNmtLTlBDYkdBMFhrOGtaYnZ6Z2lEcWNVdkVGTTlBMEpteWVvMUViWnBDN2tNUjJmUWt6bTVQVmczT2tzZ1RYLzNyeEY5dGVER3JCTWNNZHVWNG1UUXFTVXdBK0JLU2ZYSjdmYndVMElKZGdZa2dWbUM5UW9kY3FkNXY2R1QyNGM5MGx1dy9wR1NyWDRYV0VwL2dYOW9WVWMybStvWFdTZldjNXo5WVFVNmJRYmZBU3o4VVRFeWxrKzZrN1pWcS9TTlZYZVYrRjNWSHZZTTYxVWV2a1BSMTZlaFAzRkQ5bEtvdFM0OTRWNXNieHV4ZllwdlBkd2J0WHQ2ZnVONC9pdlpuZnZmd2UzdVA0UDRsL2FBSmFEV2dGMG1sNkk3S2hGNG5LMjNqNkJHa3JhN2VXdzlqZTExQ291cDBrSmEzaENCV1N1M3BWQjBiVDZOUzdqZG94MGNscXVpYXgrMytEWHFHb1piWm1PdEdRU3BIcDlZQ2lUaHBCd1MvTE5VZDk3TFRxaFBLQW9GeTFJOFNCRDZrL1BxVEI0ZEMvcHlkaFFNTVJIZUNBKytSRUh2dUJaY2xWMVJQczA1QjJnM2Q1TUZYNU5za2NjUnJ2Tk1sNXdjMm1tWmtWcVl0bGVUdGxPbHJmSitzNFdyS1hQQUdsM0tTenhhTWJPelhnbHNQQXNxMWo1RE00c3NqcUQwMTRyNVA5QndBQSJ9.2mXqc5ssQsU3T9UEDi_5hS3QZrVzDpli3zLxvOk9SCzRB2XiboarLR1aMjNNkyggxd34R6Hgbj_KzZN7y_4YGg"
-    }
-  }
-</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="4535c446-085f-4ef7-9ca8-8b383a55b2ca" name="Services - Anonymous Services - Any White Labeled - Any LMN"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="861e699e-4c9e-4e22-b2d0-eaa5ef7b62d4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="UserRegistration" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="e899a690-f360-48d7-8d6b-f02797430712"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample POST" id="6997d78a-325d-4dce-9ac4-967c6ebae7c6" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/W2WTransferInitiateEnhanced</con:endpoint><con:request>{"W2WTransferInitiateEnhanced": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0,
+  "ProxyNumber": "1789605043337"
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="4535c446-085f-4ef7-9ca8-8b383a55b2ca" name="Services - Anonymous Services - Any White Labeled - Any LMN"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="861e699e-4c9e-4e22-b2d0-eaa5ef7b62d4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="UserRegistration" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="e899a690-f360-48d7-8d6b-f02797430712"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0,
   "ProxyNumber": "123456"

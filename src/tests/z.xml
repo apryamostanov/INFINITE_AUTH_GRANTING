@@ -1,32 +1,242 @@
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
     <s:Body>
-        <SelfServiceLoginResponse xmlns="www.corecard.com">
-            <SelfServiceLoginResult xmlns:a="http://schemas.datacontract.org/2004/07/CoreCardServices.DTO"
-                                    xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <GetCardDetailResponse xmlns="www.corecard.com">
+            <GetCardDetailResult xmlns:a="http://schemas.datacontract.org/2004/07/CoreCardServices.DTO"
+                                 xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
                 <ErrorFound xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">No</ErrorFound>
                 <ErrorNumber xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">0</ErrorNumber>
                 <ErrorMessage xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">Processed successfully.
                 </ErrorMessage>
                 <UniqueIDFlag xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">0</UniqueIDFlag>
-                <UniqueID xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">MDWL180223002910172
+                <UniqueID xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices">MDWL180321143812585
                 </UniqueID>
-                <a:AccountNumber>1003000000000000029</a:AccountNumber>
-                <a:ProxyNumber>1789121880857</a:ProxyNumber>
-                <a:FirstName>Mobile</a:FirstName>
-                <a:MiddleName i:nil="true"/>
-                <a:LastName>App</a:LastName>
-                <a:AddressLine1>77 Hatton Garden</a:AddressLine1>
-                <a:AddressLine2 i:nil="true"/>
-                <a:City>London</a:City>
-                <a:State>ENG</a:State>
-                <a:PostalCode>123456</a:PostalCode>
-                <a:Country>GB</a:Country>
-                <a:HomePhoneNumber>2785271</a:HomePhoneNumber>
-                <a:EmailAddress1>daniyal.saleem@wirecard.com</a:EmailAddress1>
-                <a:LastLoginDate>2018-02-22T20:19:20</a:LastLoginDate>
-                <a:AccountCreationDate>2018-02-22T00:00:00</a:AccountCreationDate>
-                <a:LoginFlag>2</a:LoginFlag>
-            </SelfServiceLoginResult>
-        </SelfServiceLoginResponse>
+                <a:AdditionalCard>
+                    <a:CardDispatchDate i:nil="true"/>
+                    <a:LastPlasticShipDate i:nil="true"/>
+                    <a:NameOnCard>FDS</a:NameOnCard>
+                </a:AdditionalCard>
+                <a:Address>
+                    <a:AddressLine1>London</a:AddressLine1>
+                    <a:AddressLine2 i:nil="true"/>
+                    <a:City>London</a:City>
+                    <a:State>NBL</a:State>
+                    <a:PostalCode>123487</a:PostalCode>
+                    <a:Country>GB</a:Country>
+                </a:Address>
+                <a:AccountDetail>
+                    <a:InstitutionID>1340</a:InstitutionID>
+                    <a:BusinessID>0</a:BusinessID>
+                    <a:BusinessName i:nil="true"/>
+                    <a:AgentID i:nil="true"/>
+                    <a:ClientID>1150</a:ClientID>
+                    <a:StoreID>1151</a:StoreID>
+                    <a:AccountNumber>1003000000000000573</a:AccountNumber>
+                    <a:AccountType>4</a:AccountType>
+                    <a:AccountID>7759</a:AccountID>
+                    <a:CurrentBalance i:nil="true"/>
+                    <a:AvailableBalance i:nil="true"/>
+                    <a:AccountManualStatusID>2</a:AccountManualStatusID>
+                    <a:AccountManualStatusName>Active</a:AccountManualStatusName>
+                    <a:AccountGeneratedStatusID>2</a:AccountGeneratedStatusID>
+                    <a:AccountGeneratedStatusName>Active</a:AccountGeneratedStatusName>
+                    <a:LastCreditAmount i:nil="true"/>
+                    <a:LastCreditDate i:nil="true"/>
+                    <a:LastTransferAmount i:nil="true"/>
+                    <a:LastTransactionDate i:nil="true"/>
+                    <a:NextStatementDate>2018-03-31T00:00:00</a:NextStatementDate>
+                    <a:DisputesAmountNS i:nil="true"/>
+                    <a:TotalOutStgAuthAmt i:nil="true"/>
+                    <a:GenerateNewCardAllowed>false</a:GenerateNewCardAllowed>
+                    <a:LastBulkOFACCheckDate i:nil="true"/>
+                    <a:OFACInquiryDate i:nil="true"/>
+                    <a:OFACScore i:nil="true"/>
+                    <a:LexisNexisInquiryDate i:nil="true"/>
+                    <a:MTDCardExpense>0.000</a:MTDCardExpense>
+                    <a:RevertLostStolenAllowed>false</a:RevertLostStolenAllowed>
+                    <a:UserField1 i:nil="true"/>
+                    <a:UserField2 i:nil="true"/>
+                    <a:UserField3 i:nil="true"/>
+                    <a:UserField4 i:nil="true"/>
+                    <a:UserField5 i:nil="true"/>
+                    <a:UserField6 i:nil="true"/>
+                    <a:UserField7 i:nil="true"/>
+                    <a:UserField8 i:nil="true"/>
+                    <a:UserField9 i:nil="true"/>
+                    <a:UserField10 i:nil="true"/>
+                    <a:UserField11 i:nil="true"/>
+                    <a:UserField12 i:nil="true"/>
+                    <a:UserField13 i:nil="true"/>
+                    <a:UserField14 i:nil="true"/>
+                    <a:UserField15 i:nil="true"/>
+                    <a:OverDraftLimit i:nil="true"/>
+                    <a:AvailableOverDraftLimit i:nil="true"/>
+                    <a:BillingCycle>31</a:BillingCycle>
+                </a:AccountDetail>
+                <a:CustomerDetail>
+                    <a:CustomerID>10179</a:CustomerID>
+                    <a:WelcomePackReferenceNumber>18179</a:WelcomePackReferenceNumber>
+                    <a:Title i:nil="true"/>
+                    <a:FirstName>NB</a:FirstName>
+                    <a:MiddleName i:nil="true"/>
+                    <a:LastName>POIU</a:LastName>
+                    <a:SecondLastName i:nil="true"/>
+                    <a:DateofBirth>1991-01-01T00:00:00</a:DateofBirth>
+                    <a:MotherMaidenName i:nil="true"/>
+                    <a:EmailAddress1>daniyal.saleem@wirecard.com</a:EmailAddress1>
+                    <a:EmailAddress2 i:nil="true"/>
+                    <a:AlertEmailAddress i:nil="true"/>
+                    <a:HomePhoneCountryCode i:nil="true"/>
+                    <a:HomePhoneNumber i:nil="true"/>
+                    <a:HomePhoneExtension i:nil="true"/>
+                    <a:WorkPhoneCountryCode i:nil="true"/>
+                    <a:WorkPhoneNumber i:nil="true"/>
+                    <a:WorkPhoneExtension i:nil="true"/>
+                    <a:MobilePhoneCountryCode>971</a:MobilePhoneCountryCode>
+                    <a:MobileNumber>0522785271</a:MobileNumber>
+                    <a:HomeFaxCountryCode i:nil="true"/>
+                    <a:HomeFaxNumber i:nil="true"/>
+                    <a:WorkFaxCountryCode i:nil="true"/>
+                    <a:WorkFaxNumber i:nil="true"/>
+                    <a:InstantIssued>1</a:InstantIssued>
+                    <a:Language i:nil="true"/>
+                    <a:CustomerIDDetails i:nil="true"/>
+                </a:CustomerDetail>
+                <a:CardDetail>
+                    <a:ProxyNumber>1789605043337</a:ProxyNumber>
+                    <a:CardActivationDate>2018-03-01T10:46:28</a:CardActivationDate>
+                    <a:CardExpiryDate>0221</a:CardExpiryDate>
+                    <a:CardHandoverDate i:nil="true"/>
+                    <a:CardHandoverToCH i:nil="true"/>
+                    <a:CardTypeDescription>Primary Card</a:CardTypeDescription>
+                    <a:LastPlasticIssueDate>2018-02-26T20:00:00</a:LastPlasticIssueDate>
+                    <a:DecryptedCardNumber i:nil="true"/>
+                    <a:DecryptedDDANumber>1003000000000000573</a:DecryptedDDANumber>
+                    <a:CardType>
+                        <a:CardTypeID>0</a:CardTypeID>
+                        <a:CardTypeName>Primary</a:CardTypeName>
+                    </a:CardType>
+                    <a:UnusedBalanceVirtualCard>0.000</a:UnusedBalanceVirtualCard>
+                    <a:AllocatedBalanceVirtualCard>0.000</a:AllocatedBalanceVirtualCard>
+                    <a:AvailableToAllocateVirtualCard>0.000</a:AvailableToAllocateVirtualCard>
+                    <a:CardStatusID>1</a:CardStatusID>
+                    <a:CardStatusName>Active</a:CardStatusName>
+                    <a:FraudSuspicious>0</a:FraudSuspicious>
+                    <a:CardManualStatusID>2</a:CardManualStatusID>
+                    <a:CardManualStatusName>Active</a:CardManualStatusName>
+                    <a:MaskedCardNumber>434577******6660</a:MaskedCardNumber>
+                    <a:NumberOfActiveVirtualCard>0</a:NumberOfActiveVirtualCard>
+                    <a:PINAttempts>0</a:PINAttempts>
+                    <a:RemainingAllowedCardHolder>0</a:RemainingAllowedCardHolder>
+                    <a:AllowedTxnsOnVirtualCard>0</a:AllowedTxnsOnVirtualCard>
+                    <a:RemainingAllowedTxnOnVirtualCard>0</a:RemainingAllowedTxnOnVirtualCard>
+                    <a:RemainingAllowedVirtualCard>0</a:RemainingAllowedVirtualCard>
+                    <a:SecondaryCardType i:nil="true"/>
+                    <a:CardGeneratedStatusID>2</a:CardGeneratedStatusID>
+                    <a:CardGeneratedStatusName>Active</a:CardGeneratedStatusName>
+                    <a:VirtualCardExpiryOption i:nil="true"/>
+                    <a:AvailableLimitSecondaryCard>0.000</a:AvailableLimitSecondaryCard>
+                    <a:CardLimitSecondaryCard>0.000</a:CardLimitSecondaryCard>
+                    <a:ResetAllowedOnVirtualCard>false</a:ResetAllowedOnVirtualCard>
+                    <a:VirtualCardResetLimitAllowed>false</a:VirtualCardResetLimitAllowed>
+                    <a:VirtualCardResetTxnAllowed>false</a:VirtualCardResetTxnAllowed>
+                    <a:WaiveNewCardFee>false</a:WaiveNewCardFee>
+                    <a:WaiveVirtualCardFee>false</a:WaiveVirtualCardFee>
+                    <a:CardLockUnlockStatusID>0</a:CardLockUnlockStatusID>
+                    <a:CardLockUnlockStatusName>No</a:CardLockUnlockStatusName>
+                    <a:CardUserField1 i:nil="true"/>
+                    <a:CardUserField2 i:nil="true"/>
+                    <a:CardUserField3 i:nil="true"/>
+                    <a:CardUserField4 i:nil="true"/>
+                    <a:CardUserField5 i:nil="true"/>
+                    <a:MaskedSACCode i:nil="true"/>
+                    <a:SACCode>85466912</a:SACCode>
+                </a:CardDetail>
+                <a:ProductDetail>
+                    <a:ProductID>1789</a:ProductID>
+                    <a:ProductName>009 – LMN – MCY Travel PRD – 434577 – MA_SIT</a:ProductName>
+                    <a:AccountStructure>5</a:AccountStructure>
+                    <a:PlanStructure>3</a:PlanStructure>
+                    <a:BillingCurrencyCodeNumeric>826</a:BillingCurrencyCodeNumeric>
+                    <a:PrimaryCurrencyCodeNumeric>826</a:PrimaryCurrencyCodeNumeric>
+                    <a:ProgramManager>1020</a:ProgramManager>
+                    <a:CurrencySymbolType>2</a:CurrencySymbolType>
+                    <a:DateFormat>dd/MM/yyyy</a:DateFormat>
+                    <a:MinimumThresholdAmountForDispute>0.000</a:MinimumThresholdAmountForDispute>
+                    <a:NameOnCardLength>23</a:NameOnCardLength>
+                    <a:NumberOfCardholdersAllowed i:nil="true"/>
+                    <a:NumberOfVirtualCardAllowed>0</a:NumberOfVirtualCardAllowed>
+                    <a:SubProductType>16</a:SubProductType>
+                    <a:VirtualCardAllow>false</a:VirtualCardAllow>
+                    <a:UserFieldTitle1 i:nil="true"/>
+                    <a:UserFieldTitle2 i:nil="true"/>
+                    <a:UserFieldTitle3 i:nil="true"/>
+                    <a:UserFieldTitle4 i:nil="true"/>
+                    <a:UserFieldTitle5 i:nil="true"/>
+                    <a:UserFieldTitle6 i:nil="true"/>
+                    <a:UserFieldTitle7 i:nil="true"/>
+                    <a:UserFieldTitle8 i:nil="true"/>
+                    <a:UserFieldTitle9 i:nil="true"/>
+                    <a:UserFieldTitle10 i:nil="true"/>
+                    <a:UserFieldTitle11 i:nil="true"/>
+                    <a:UserFieldTitle12 i:nil="true"/>
+                    <a:UserFieldTitle13 i:nil="true"/>
+                    <a:UserFieldTitle14 i:nil="true"/>
+                    <a:UserFieldTitle15 i:nil="true"/>
+                    <a:CardUserFieldTitle1 i:nil="true"/>
+                    <a:CardUserFieldTitle2 i:nil="true"/>
+                    <a:CardUserFieldTitle3 i:nil="true"/>
+                    <a:CardUserFieldTitle4 i:nil="true"/>
+                    <a:CardUserFieldTitle5 i:nil="true"/>
+                    <a:UserFieldType1 i:nil="true"/>
+                    <a:UserFieldType2 i:nil="true"/>
+                    <a:UserFieldType3 i:nil="true"/>
+                    <a:UserFieldType4 i:nil="true"/>
+                    <a:UserFieldType5 i:nil="true"/>
+                    <a:UserFieldType6 i:nil="true"/>
+                    <a:UserFieldType7 i:nil="true"/>
+                    <a:UserFieldType8 i:nil="true"/>
+                    <a:UserFieldType9 i:nil="true"/>
+                    <a:UserFieldType10 i:nil="true"/>
+                    <a:UserFieldType11 i:nil="true"/>
+                    <a:UserFieldType12 i:nil="true"/>
+                    <a:UserFieldType13 i:nil="true"/>
+                    <a:UserFieldType14 i:nil="true"/>
+                    <a:UserFieldType15 i:nil="true"/>
+                    <a:CardUserFieldType1 i:nil="true"/>
+                    <a:CardUserFieldType2 i:nil="true"/>
+                    <a:CardUserFieldType3 i:nil="true"/>
+                    <a:CardUserFieldType4 i:nil="true"/>
+                    <a:CardUserFieldType5 i:nil="true"/>
+                    <a:UserFieldStatus1>1</a:UserFieldStatus1>
+                    <a:UserFieldStatus2>1</a:UserFieldStatus2>
+                    <a:UserFieldStatus3>1</a:UserFieldStatus3>
+                    <a:UserFieldStatus4>1</a:UserFieldStatus4>
+                    <a:UserFieldStatus5>1</a:UserFieldStatus5>
+                    <a:UserFieldStatus6>1</a:UserFieldStatus6>
+                    <a:UserFieldStatus7>1</a:UserFieldStatus7>
+                    <a:UserFieldStatus8>1</a:UserFieldStatus8>
+                    <a:UserFieldStatus9>1</a:UserFieldStatus9>
+                    <a:UserFieldStatus10>1</a:UserFieldStatus10>
+                    <a:UserFieldStatus11>1</a:UserFieldStatus11>
+                    <a:UserFieldStatus12>1</a:UserFieldStatus12>
+                    <a:UserFieldStatus13>1</a:UserFieldStatus13>
+                    <a:UserFieldStatus14>1</a:UserFieldStatus14>
+                    <a:UserFieldStatus15>1</a:UserFieldStatus15>
+                    <a:CardUserFieldStatus1>1</a:CardUserFieldStatus1>
+                    <a:CardUserFieldStatus2>1</a:CardUserFieldStatus2>
+                    <a:CardUserFieldStatus3>1</a:CardUserFieldStatus3>
+                    <a:CardUserFieldStatus4>1</a:CardUserFieldStatus4>
+                    <a:CardUserFieldStatus5>1</a:CardUserFieldStatus5>
+                </a:ProductDetail>
+                <a:UserInformation>
+                    <a:FailedAccessCodeChangeAttempts>0</a:FailedAccessCodeChangeAttempts>
+                    <a:LastLoginDate>2018-03-21T10:38:12</a:LastLoginDate>
+                    <a:PasswordPolicy>3</a:PasswordPolicy>
+                    <a:UserLoginFailedAttempt>0</a:UserLoginFailedAttempt>
+                    <a:UserID>daniyalmobile@wirecard.com</a:UserID>
+                    <a:UserStatusID>0</a:UserStatusID>
+                </a:UserInformation>
+            </GetCardDetailResult>
+        </GetCardDetailResponse>
     </s:Body>
 </s:Envelope>

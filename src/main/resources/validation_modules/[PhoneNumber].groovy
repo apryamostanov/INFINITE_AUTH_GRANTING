@@ -7,6 +7,7 @@ import org.json.XML
 
 import javax.ws.rs.core.MultivaluedMap
 
+import static base.T_common_base_1_const.GC_FIRST_INDEX
 import static base.T_common_base_1_const.GC_ONE_ONLY
 import static base.T_common_base_3_utils.is_not_null
 import static base.T_common_base_3_utils.is_not_null
@@ -31,7 +32,7 @@ if (i_method == "POST") {
     }
     try {
         GPathResult l_gpath_result = new XmlSlurper().parseText("<root>" + XML.toString(new JSONObject(i_body)) + "</root>")
-        l_phone_number = l_gpath_result.depthFirst().findAll { l_element -> l_element.name() == "PhoneNumber" }
+        l_phone_number = l_gpath_result.depthFirst().findAll( { l_element -> l_element.name() == "PhoneNumber" }).getAt(GC_FIRST_INDEX)
     } catch (Exception ignored) {
         return false
     }
