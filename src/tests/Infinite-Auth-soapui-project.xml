@@ -805,6 +805,7 @@ Object.mixin GlobalContext
 new Object().global_context["current_token"]="Bearer " + l_slurped_json[0].token
 new Object().global_context["proxy_number"]=l_slurped_json[0].scope.data_scope.proxy_number
 new Object().global_context["product_id"]=l_slurped_json[0].scope.data_scope.product_id
+new Object().global_context["accessor_id"]=l_slurped_json[0].scope.data_scope.accessor_id
 log.info (new Object().global_context["current_token"])
 log.info("Bearer " + l_slurped_json[0].token)
 assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="f3f361b9-a947-4b53-b65d-0eb07c691a2d"><con:settings/><con:config><script>import groovy.json.JsonSlurper
@@ -854,8 +855,8 @@ run_service("ValidateOTP", "POST", ", \"ProxyNumber\": \"" + new Object().global
 run_service("ValidateOTPSMS", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
 run_service("ForgotUserId", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
 run_service("ForgotUserIdValidationParametersEnhanced", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
-run_service("Document", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
-run_service("Document_metadata", "GET", "?ProxyNumber=" + new Object().global_context["proxy_number"] + "")
+run_service("Document", "GET", "/${new Object().global_context["accessor_id"]}/ENG/1.x.x")
+run_service("Document_metadata", "GET", "/${new Object().global_context["accessor_id"]}/ENG/1.x.x")
 run_service("GetProductParametersEnhanced", "GET", "?ProductID=" + new Object().global_context["product_id"] + "")</script></con:config></con:testStep><con:testStep type="httprequest" name="Sample POST" id="9e11cdc3-1c7f-458c-bf22-a2aab4e79c91"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
@@ -864,7 +865,7 @@ run_service("GetProductParametersEnhanced", "GET", "?ProductID=" + new Object().
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
   ${=new Object().global_context["params"]}
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample GET" id="4171cb6d-107d-451f-9599-34ca1838548c" disabled="true"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/GetProductParametersEnhanced?ProxyNumber=1789605043337</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample GET" id="4171cb6d-107d-451f-9599-34ca1838548c" disabled="true"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/Document/${=new Object().global_context["accessor_id"]}/ENG/1.x.x</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
   ${=new Object().global_context["params"]}

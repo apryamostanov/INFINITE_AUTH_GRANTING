@@ -47,8 +47,8 @@ class G02_GrantTypeGenerator {
         l_entity_set.add(new GrantType(restResourceName: "ValidateOTP", method: "POST", keyFieldRuleName: "[CardNumber, ProxyNumber]"))
         l_entity_set.add(new GrantType(restResourceName: "ValidateOTPSMS", method: "POST", keyFieldRuleName: "[CardNumber, ProxyNumber]"))
         l_entity_set.add(new GrantType(restResourceName: "ValidateOTPSMS", method: "POST", keyFieldRuleName: "NA", maxUsageCountWithinScope: 9))
-        l_entity_set.add(new GrantType(restResourceName: "Document", method: "GET", keyFieldRuleName: "NA", urlMask: "/%ACCESSORID%/*/*/*"))
-        l_entity_set.add(new GrantType(restResourceName: "Document_metadata", method: "GET", keyFieldRuleName: "NA", urlMask: "/%ACCESSORID%/*/*/*"))
+        l_entity_set.add(new GrantType(restResourceName: "Document", method: "GET", keyFieldRuleName: "NA", urlMask: ".*?\\/%accessor_id%\\/.*?\\/.*"))
+        l_entity_set.add(new GrantType(restResourceName: "Document_metadata", method: "GET", keyFieldRuleName: "NA", urlMask: ".*?\\/%accessor_id%\\/.*?\\/.*"))
         l_entity_set.add(new GrantType(restResourceName: "GetProductParametersEnhanced", method: "GET", keyFieldRuleName: "[ProductID]"))
 
         l_entity_set.add(new GrantType(restResourceName: "UpdateProfileWithoutPhone", method: "POST", keyFieldRuleName: "[CardNumber, ProxyNumber]"))

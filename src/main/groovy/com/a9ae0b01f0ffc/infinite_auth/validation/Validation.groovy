@@ -98,7 +98,8 @@ class Validation {
         Boolean l_is_matched_resource_grant = GC_FALSE
         for (l_grant in l_authorization.scope.grantSet) {
             if (is_not_null(l_grant.urlMask)) {
-                if (l_grant.urlMask.matches(i_url_path)) {
+                String l_parsed_url_mask = parse_url_mask(l_grant.urlMask, l_authorization)
+                if (i_url_path.matches(l_parsed_url_mask)) {
                     l_is_matched_resource_grant = GC_TRUE
                 }
             } else {
@@ -130,4 +131,11 @@ class Validation {
         return GC_JWT_VALIDITY_INVALID
     }
 
+    static String parse_url_mask(String i_unparsed_url_mask, Authorization i_authorization) {
+        String l_parsed_url_mask = i_unparsed_url_mask
+        for (l_key in i_authorization.scope.keyFieldMap.keySet()) {
+            l_parsed_url_mask = l_parsed_url_mask.replace("%" + l_key + "%", i_authorization.scope.keyFieldMap.get(l_key))
+        }
+        return l_parsed_url_mask
+    }
 }
