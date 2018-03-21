@@ -91,7 +91,7 @@ class G03_ScopeTypeGenerator {
                 p_grant_repository.findByRestResourceName("FXRateSearch").first(),
                 p_grant_repository.findByRestResourceName("GetSecretKey").first(),
                 p_grant_repository.findByRestResourceName("GetTransactionDetail").first(),
-                p_grant_repository.findByRestResourceName("GetStatementDate").first(),
+                p_grant_repository.findByRestResourceName("SetStatementDate").first(),
                 p_grant_repository.findByRestResourceName("SearchWalletAccount").first(),
                 p_grant_repository.findByRestResourceName("StatementInformationMultiCurrency").first(),
                 p_grant_repository.findByRestResourceName("StatementsInformation").first(),
