@@ -2,6 +2,8 @@ package com.a9ae0b01f0ffc.infinite_auth.config.domain_model
 
 import com.a9ae0b01f0ffc.infinite_auth.granting.Authorization
 import groovy.transform.CompileStatic
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 
 import javax.persistence.*
 

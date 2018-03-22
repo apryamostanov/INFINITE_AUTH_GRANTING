@@ -3,6 +3,7 @@ package com.a9ae0b01f0ffc.infinite_auth.config.interfaces
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AccessorType
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthorizationType
 import groovy.transform.CompileStatic
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.data.repository.query.Param
@@ -10,7 +11,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 @CompileStatic
 @RepositoryRestResource
-interface I_authorization_type_repository extends PagingAndSortingRepository<AuthorizationType, Long> {
+interface I_authorization_type_repository extends JpaRepository<AuthorizationType, Long> {
 
 
     Set<AuthorizationType> findByAuthorizationName(@Param("authorizationName") String authorizationName)
@@ -18,12 +19,12 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
     Set<AuthorizationType> findByAuthorizationNameAndAccessor(
             @Param("authorizationName") String authorizationName, @Param("accessor") AccessorType accessor)
 
-
-    @Query("""select a from AuthorizationType a
+    @Query("""select a, scopeSet, identitySet from AuthorizationType a
         join a.identitySet identitySet
         join a.scopeSet scopeSet
         join a.accessor authorizationAccessor
         join scopeSet.accessor scopeAccessor
+        
         where scopeSet.scopeName = coalesce(:scopeName, 'Any')
         and (identitySet.identityName = :identityName or :identityName is null)
         and a.authorizationType = 'Access'
@@ -35,7 +36,7 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
         and coalesce(:product, 'Any') like authorizationAccessor.product 
         and coalesce(:productGroup, 'Any') like authorizationAccessor.productGroup 
         and coalesce(:apiVersionName, 'Any') like authorizationAccessor.apiVersionName 
-        and coalesce(:grantingEndpointName, 'Any') like authorizationAccessor.grantingEndpointName 
+        and coalesce(:grantingEndpointName, 'Any') like authorizationAccessor.grantingEndpointName
         
         and coalesce(:appName2, 'Any') like scopeAccessor.appName 
         and coalesce(:platform2, 'Any') like scopeAccessor.platform 
@@ -47,7 +48,7 @@ interface I_authorization_type_repository extends PagingAndSortingRepository<Aut
         and coalesce(:grantingEndpointName2, 'Any') like scopeAccessor.grantingEndpointName 
         
         order by authorizationAccessor.lookupPriority desc, scopeAccessor.lookupPriority desc""")
-    Set<AuthorizationType> match_authorizations(
+    Set<Object[]> match_authorizations(
             @Param("scopeName") String scopeName
             , @Param("identityName") String identityName
             //Authorization

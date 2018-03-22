@@ -3,6 +3,8 @@ package com.a9ae0b01f0ffc.infinite_auth.granting
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthorizationType
+import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.IdentityType
+import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.ScopeType
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -296,7 +298,7 @@ class Authorization {
                 }
             }
         }
-        AuthorizationType l_config_authorization = i_context.p_authorization_type_repository.match_authorizations(
+        Object[] l_auth_and_scopes = i_context.p_authorization_type_repository.match_authorizations(
                 scope?.scopeName
                 , identity?.identityName
                 , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("accessor_name") as String
@@ -317,11 +319,13 @@ class Authorization {
                 , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
         )[GC_FIRST_INDEX]
+        AuthorizationType l_config_authorization = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
+        l_config_authorization.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
+        l_config_authorization.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
         if (is_null(l_config_authorization)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
             return
         }
-        filter_identities_and_scopes(l_config_authorization, identity?.identityName, scope?.scopeName)
         System.out.println("Start validation!!!")
         common_authorization_granting(l_config_authorization, i_context)
         if (this.getAuthorizationStatus() == GC_STATUS_SUCCESSFUL) {
@@ -396,7 +400,7 @@ class Authorization {
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
         } else {
-            AuthorizationType l_authorization_type = p_app_context.p_authorization_type_repository.match_authorizations(
+            Object[] l_auth_and_scopes = p_app_context.p_authorization_type_repository.match_authorizations(
                     i_scope_name
                     , i_identityName
                     , i_AccessorAppName
@@ -417,9 +421,11 @@ class Authorization {
                     , i_AccessorApiVersionName
                     , p_app_context.p_app_conf.granting_endpoint_name
             )[GC_FIRST_INDEX]
+            AuthorizationType l_authorization_type = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
+            l_authorization_type.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
+            l_authorization_type.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
             Set<Authorization> l_user_authorizations
             if (is_not_null(l_authorization_type)) {
-                filter_identities_and_scopes(l_authorization_type, i_identityName, i_scope_name)
                 l_user_authorizations = l_authorization_type.to_user_authorizations(i_scope_name, i_identityName)
             } else {
                 l_user_authorizations = new HashSet<Authorization>()
@@ -429,24 +435,4 @@ class Authorization {
         return l_granting_response
     }
 
-    static void filter_identities_and_scopes(AuthorizationType i_authorization_type, String i_identity_name, String i_scope_name) {
-        if (is_not_null(i_identity_name)) {
-            ArrayList l_items_to_remove = new ArrayList()
-            for (l_identity_to_check in i_authorization_type.identitySet) {
-                if (l_identity_to_check.identityName != i_identity_name) {
-                    l_items_to_remove.add(l_identity_to_check)
-                }
-            }
-            i_authorization_type.identitySet.removeAll(l_items_to_remove)
-        }
-        if (is_not_null(i_scope_name)) {
-            ArrayList l_items_to_remove = new ArrayList()
-            for (l_scope_to_check in i_authorization_type.scopeSet) {
-                if (l_scope_to_check.scopeName != i_scope_name) {
-                    l_items_to_remove.add(l_scope_to_check)
-                }
-            }
-            i_authorization_type.scopeSet.removeAll(l_items_to_remove)
-        }
-    }
 }

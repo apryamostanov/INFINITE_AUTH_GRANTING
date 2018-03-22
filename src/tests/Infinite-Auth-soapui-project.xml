@@ -728,7 +728,81 @@ def l_content = context.httpResponse.responseContent
 def l_slurped_json = new JsonSlurper().parseText(l_content)
 Object.mixin GlobalContext
 new Object().global_context["current_token"]="Bearer " + l_slurped_json[0].token
-assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="calltestcase" name="GetCardDetailEnhanced" id="29e97def-a7d5-481b-b99a-362b478c9cb5"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>d67996bc-4ecc-40f9-8b22-a307b148e6a8</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>SINGLETON_AND_FAIL</con:runMode></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0fb80e33-8ccd-4dee-8f79-6924bc86532c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Positive - Read - Main Screen - Any LMN" searchProperties="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="25119dfe-e98d-4cd2-8a32-0ea6fff73801"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="a85b98f6-dae1-470f-a746-b25af48c896b"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="8954f23f-6b65-4c68-8b32-2ac03a5736ce"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>{
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="calltestcase" name="GetCardDetailEnhanced" id="29e97def-a7d5-481b-b99a-362b478c9cb5"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>d67996bc-4ecc-40f9-8b22-a307b148e6a8</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>SINGLETON_AND_FAIL</con:runMode></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="1ee9e361-2e46-4b80-9963-71150d030146" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Positive - Anonymous - Anonymous Services - Any LMN" searchProperties="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="02fbc202-a989-4d3c-9382-e2fc45332a64"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="76b59431-b1fe-42fe-913f-9edacebbef25"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="d5916867-6a98-4801-9dfc-0e5d903501a1"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "${=new Object().global_context["fiid"]}",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="747b6dd4-5093-4f36-8c53-f8919bf49762"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+new Object().global_context["current_token"]=l_slurped_json[0].token
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="bd4bf517-d7f0-439b-91a4-7952e6359558"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+
+
+void run_service(String i_service_name, String i_method, String i_params) {
+def project = testRunner.testCase.testSuite.project
+def l_content
+def l_slurped_json
+new Object().global_context["current_service"]=i_service_name
+new Object().global_context["params"]=i_params
+testRunner.runTestStep( project.testSuites['Services - Generic'].testCases['GenericService'].testSteps[i_method] )
+l_content = context.httpResponse.responseContent
+//l_slurped_json = new JsonSlurper().parseText(l_content)
+log.info(new Object().global_context["current_service"].padRight(100) + " : " + context.httpResponse.getStatusCode().toString())
+}
+
+run_service("UserRegistration", "POST", null)
+run_service("UserRegistrationValidationParametersEnhanced", "GET", null)
+run_service("CardActivationSS", "POST", null)
+run_service("CardActivationValidationParameterSSEnhanced", "GET", null)
+run_service("ForgotPassword", "POST", null)
+run_service("ForgotPasswordValidationParameterEnhanced", "GET", null)
+run_service("GetSecretKey", "GET", null)
+run_service("ForgotUserId", "POST", null)
+run_service("ForgotUserIdValidationParametersEnhanced", "GET", null)
+run_service("SendOTPSMS", "POST", null)
+run_service("ValidateOTPSMS", "POST", null)</script></con:config></con:testStep><con:testStep type="httprequest" name="Sample POST" id="ae706101-96ec-4243-9bdf-38d9fbb39ce8"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Sample GET" id="a273e19f-c69f-4395-a8d5-dd811ede8cef"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}${=new Object().global_context["params"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0fb80e33-8ccd-4dee-8f79-6924bc86532c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Positive - Read - Main Screen - Any LMN" searchProperties="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="25119dfe-e98d-4cd2-8a32-0ea6fff73801"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="a85b98f6-dae1-470f-a746-b25af48c896b"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="8954f23f-6b65-4c68-8b32-2ac03a5736ce"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>{
   "authorization_name": "Anonymous",
   "scope": {
     "scope_name": "Anonymous Services"
