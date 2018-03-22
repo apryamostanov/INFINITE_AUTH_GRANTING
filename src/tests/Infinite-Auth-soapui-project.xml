@@ -419,8 +419,8 @@ WorkingConfiguration wdi_configuration = new WorkingConfiguration(fiid: 1340, gr
 WorkingConfiguration wdp_configuration = new WorkingConfiguration(fiid: 1340, granting_url: "http://localhost:8089", resource_url: "http://localhost:8089"
 , expired_token: "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6Ikg0c0lBQUFBQUFBQUFMVlZXVS9iUUJEK0s5WSt0U3BFUGppQzN5d3VSVzFJd0xRdkZiSVdleEsyMkx2dUhpRXU0cjkzTm5aTTRsb3F0QkJGeXU0YzM4ek9UT1o3Sk5Ub095SFpMNnFaNEFtbkJaQ1FSRnp3cWhCR2taMk9BY3RJNkEzZHdIZTlJRGowQTgvemR3akxnR3VtS3hJK3R1YzExT1NCZzNURXpJblNGSlFTMGptaG1qYTQxalJkQVNzU2ZuL3N5TnBzR3M4azYvT3NwUmk1TkxjNVM5c3JYWHMxS0YvR0Y4N1k1Sm81eDBaSzRHbmxYQ0RBQWo1Y1JoOHRhc21TZ3Y1QWh3VkloY0RvNHcrV2d5WHFWQWtwbTIyQWo4YW5JOVFmSGJuNEdSNzRlNGZlY0g4UExRdkt6WXltMmtpUU52V3l6TUdLUlFhNXZYdjd3d1B5WktPVkczSGNnWWRmdE1zcG54czZ0L2tDbjZPZ3pLbWVDVm1nZ0UxaUZKeU5SaWQ0OFlJOTErS1VraTJvaGlZeGJ2SWNoVXBUamIwTFNXeFdSWmlabkR6ZFdFVXFTckQ1cnc1L2ROdUpRUzRZZXRnbjE4ZWtjY0htRklDRGdPMG41NmZYR3dZTnlEbm9HRklKK2pOVXFEWFNWbFBkb3dadk5ydGtlNUR1b2JJWlhrVDRpcjlobndrNUYvb3JTa2ZaTjVxemJBVXhwUkxWR290NHl1OG9UeUY3bjdoVHF0U0RrSDJSM3lEd2RCTDNSSTZCWjVQcmFUeU9Yd0g5Z2hmWkdsN0JuQ2t0VjY3dlZNMytSeDFUbVVXcHRnT0x2dkZybnZheUFKdHo4dGF6MEZRSy9yTXIvWWwzMi9KT2xWbFA4bHZYWnJ1eFBUTVZ4Lzg0VkRlTlFidTQycTF1aWFoaGh0Q0plT1dzTlgxYmRNTnJPNWJGMkx6WFVFZ1ZIU2NwakdZSUZaS3IrbFFiUnRQbzJMbU1XbTdyZURWWms5aitQa00vNFNiT1ROM3BSRUVxZUtaV3JPcmFmUTRTZmhxbUdDNzFUcXAydSs4UTNMRXQ3MWx3Wk9MaHJodnMrdTYxZXhRR2g2RWZERHd2K0dTWkNmT0JaY2xrMVdQc3VhSGJOZDd1ZzY3S1ovcTFqVk5ZMHlSbkJkUHJaR2FHcDlhVzVpMDFkZ2lxajR1UUQ3T0hQQUVwTFQyYjR0WnlaUTI0b2RDd2JPTm9jUTk4OVdmNkRTWWhseU95Q0FBQSJ9.qWQARZyVgO-UJhLOgvxciSc2C3Dk7-rVIQd-OU-v9UBWVdrnA887LROzVFAbunsGn58NBSabiS4nEpTdn_9xcQ"
 , revoked_token: "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6Ikg0c0lBQUFBQUFBQUFMVlYyMDdiUUJEOUZXdWZXaFVpSnpFUS9HWnhVOVNHQkV6N1VpRnJzU2RoaTczcjdpWEVJUDY5czdGakhOZFNvU0pScE96TzVjenN6R1RPTTZGRzN3dkpucWhtZ2tlY1prQjhFbkRCaTB3WVJmWmFCaXdoZm4va0RnZHVmemc4OHJ5RHdXaVBzQVM0WnJvZy9uTjkza0JOSHpsSVI4eWRJSTVCS1NHZFU2cHBoV3RONHpXd0l2N1A1NWFzenFieWpKSXV6MUtLa1hOemw3SzR2dEtOVjRYeWJYTHBURXlxbVhOaXBBUWVGODRsQWl6aDAxWHcyYUxtTE1yb0wzUllnbFFJakQ2RDNxcTNRcDNLSVdiekJ2aDRjalpHL2ZHeGk1L1I0Y0E3Nm84T1BMVE1LRGR6R21zalFkclU4endGS3hZSnBQYmVQeGdka2hjYkxXL0VjWHQ5L0tKZFN2bkMwSVhORi9nQ0JYbEs5VnpJREFWc0dxTGdmRHcreFV0LzZMa1dKNWRzU1RWVWlYR1RwaWhVbW1yc25VOUNzeTdDM0tUazVkWXFZcEdEelg5OStLdmJUZ2h5eWRERFByazhScFVMTmljREhBUnNQN2s0dTJrWVZDQVhvRU9JSmVpdlVLRFdTRnROOVlBYXZObnNvdTFCZW9EQ1puZ1o0Q3YraFgwdTVFTG83eWdkSno5b3lwSTF4SXhLVkdzczRobS9wenlHWkRkeFoxU3BSeUc3SW45QTROazA3SWdjQWsrbU43TndFcjREK2kzQUoxUW1RYXp0MEtCbitCNzRONVhNTnVrYUZreHB1WGJlVWJ1Nkg5ZWNrNDkrV1BVUTJFbFgybFhiVVdVMmsvelJ0ZGtlcW82V2grRi85dnkyTXFnWFY3M1ZMUkZWek9BN0FTK2NqYVpyaXphOHRtTlpqT2E5aEVLcWFEbEpZVFJES0o5Y2w2ZlNNSmdGSjg1VlVITmJ5NnZLbW9UMjl4WDZCVGR4WXNwT1J3cGl3Uk8xWmxYWDduT1E4TnN3eFhDcHQxSzEyMzJQNEk2dGVjK0NJeE9QOXQzaC9zQzljWS85NFpIdmVUMWs1UytXbVRBZldPVk1GaDNHZmRkMzI4YmJmZEJGL2txL3RuRUtheHFsTEdONms4emM4TmphMHJTbXhoWkJkWEVSOG1IeW1FWWdwYVZuazkxWnJpd0JHd29OcXpxT0ZnL0ExMyttUC83N0dRMnlDQUFBIn0.KK5UUNMQ-6B0a_EC-LClfeuLfe2lSy01RKKtMOim92Vg1lpfrmiv9Nq2EWJ1CWVTNlHk4-LBlmOADdMIJ_ynpw")
-//def current_config = wdi_configuration
-def current_config = wdp_configuration
+def current_config = wdi_configuration
+//def current_config = wdp_configuration
 new Object().global_context["fiid"]=current_config.fiid
 new Object().global_context["granting_url"]=current_config.granting_url
 new Object().global_context["resource_url"]=current_config.resource_url
@@ -428,6 +428,7 @@ new Object().global_context["expired_token"]=current_config.expired_token
 new Object().global_context["revoked_token"]=current_config.revoked_token
 new Object().global_context["username"]="daniyalmobile@wirecard.com"
 new Object().global_context["password"]="Wdp@01234"
+new Object().global_context["DOB"]="1991-01-01T00:00:00"
 context.username="daniyalmobile@wirecard.com"
 context.password="Wdp@01234"
 context.DOB = "1991-01-01T00:00:00"</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d935b7a9-3ec6-4edb-a3b2-4ef57d9d9908" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Misc" searchProperties="true" disabled="true"><con:settings/><con:testStep type="httprequest" name="Validations" id="f094d8fc-255c-4ec4-90ed-e67c88934ac7"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Validations" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6Ikg0c0lBQUFBQUFBQUFNMVcyMjdhUUJEOUZXdWZXcFVnRzV5VStNM0tUYWdsa0RqdFN4UlpHM3NnMjlpNzdsNElUcFIvN3l3MmpxSDBncXFtUlVqc3pNNmNQVE96K1BpSlVLUHZoR1NQVkRQQlkwNXpJQUVKdWVCbExvd2luWTBBbHBMQUc3aDl6L2Y4WHQvdmU1N2JJU3dGcnBrdVNmRFVyRmRRNHdjTzBoRlRKMHdTVUVwSTU1aHFXdVBhMEdRSnJFaHcvYlRoYTlqVW1YRzZMYlB5NHNtRnVjMVkwcGgwbFZXamZCeWRPeU9UYWVZY0dTbUJKNlZ6amdCemVITVJ2cldvQll0eitnVVQ1aUFWQW1OT3I3dm9MbkJQRlpDd2FRdDhPRG9aNHY3aG9ZdWZ3VUhQZis4TjluMk16Q2szVTVwb0kwRmE2a1dSZ1hXTEZESnJlL3VEQS9Kc1R5dGE1N2hkRDc4WWwxRStNM1JtK1FLZm9hUElxSjRLbWFPRGpTTjBuQTZIeDJoWWpFS3lPZFZRaytJbXk5Q3BOTlU0dDRCRVp0bUFxY25JODQzZFNFUUJsdnR5OGQya25RamtuR0dHTGJkYXhuVUtEaVlIdkFRNGVuSjJjdFVLcUVHT3FFekRSRnMyV005bm1yRjB1WnBRaVFFYVpCU2Q4RHZLRTBneDJVamJhSFZ2cStnUVN6NWV2MlAzVU5vQ3JpM3N1Y2x2UVhhY2lSU0xzakp1c1BaZk1mcUU5aVhNbU5MeVI1elUzNk0wR1VkYk9KMEtPUlBhTWh1K1ZodmFSLzRQTFlpQXArT3JTVFNLZGpqeGQ0QTM1LzJxL1oxUXBSNkUzTmJoZjNQSFZvUmVxUXQxM2ZDSGs5MktmUVk2Z2tTQy9nRGxMdVhzMnJqMVIxaTBTeFUvYWQxTm5kYzhleHRSc2pwYUMxdmdoTHgwVmp2YlJLQ1Z0VTdCWXJUdENncVZiaU5KQ3FNWlFnWGtzbHBWZ2VFa1BISXV3a2FhTjdKcTFpU3l2eS9RenlnbXFhbitaN0dDUlBCVUxWOEtYQ3RKSU9HcllZcWhMbTFRdFFMVklUakxScll0ZU0vMUJudHVmOC96cnp3MzZQVUR2OS8xdk1FN0s2eklCeFlGaytYMjRQM040UFh4NkxKNGVYdXc4MVRZMHpoak9kTXJNbFBERXh0THMwYlpXL3E2VFVwUnl0T0hMQVlwN1p2RmNzNHJzTmFHaGtWemhoYjN3SmVJM3dEKzF4NThiUWtBQUE9PSJ9.nZpETjGFVHth9e6clWanYwyIVIqpOVPV-JdNOvMH1N0AqxnO8hpeP6Ur3smUV9RpBEYd89nCRfyDIt9sX-s35Q" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${#Project#InfiniteAuthURL}/UserRegistration</con:endpoint><con:request>{
@@ -1100,75 +1101,169 @@ run_service("UpdateProfileWithoutPhone", "POST", ", \"ProxyNumber\": \"" + new O
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0,
   "ProxyNumber": "1789605043337"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="4535c446-085f-4ef7-9ca8-8b383a55b2ca" name="Services - Anonymous Services - Any White Labeled - Any LMN"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="861e699e-4c9e-4e22-b2d0-eaa5ef7b62d4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="UserRegistration" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="e899a690-f360-48d7-8d6b-f02797430712"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6e1b2499-acd7-48d4-b67b-5d0b1f98f791" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Positive - Security Updates - Change Password - Any LMN" searchProperties="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="02201b67-fe6a-4bf0-bd1b-83367a484ffe"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="9f332a36-ad4d-4e21-89c9-1211313f1665"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="02a16eee-4218-4568-8396-6b815c2c0b48"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "${=new Object().global_context["fiid"]}",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="42c99893-0cb3-4b52-9cc6-3ee5555ca969"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+new Object().global_context["current_token"]=l_slurped_json[0].token
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Read - Main Screen - Any LMN" id="0104214c-09b2-4800-86b6-c5cc0220c137"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Read - Main Screen - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Read",
+    "identity": {
+      "identity_name": "Owner of User Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=new Object().global_context["username"]}"
+          },
+          "private_data": {
+            "password": "${=new Object().global_context["password"]}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Main Screen"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=new Object().global_context["current_token"]}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Response" id="77aaa5e2-a082-4376-bb32-ec25450d6230"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+new Object().global_context["current_token"]=l_slurped_json[0].token
+new Object().global_context["proxy_number"]=l_slurped_json[0].scope.data_scope.proxy_number
+new Object().global_context["product_id"]=l_slurped_json[0].scope.data_scope.product_id
+new Object().global_context["accessor_id"]=l_slurped_json[0].scope.data_scope.accessor_id
+log.info (new Object().global_context["current_token"])
+log.info(l_slurped_json[0].token)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Security Updates - Change Password - Any LMN" id="be96f6c5-ba50-4fee-8704-6d80e384b064"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Security Updates - Change Password - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Security Updates",
+    "identity": {
+      "identity_name": "Owner of User Data and DOB Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=new Object().global_context["username"]}"
+          },
+          "private_data": {
+            "password": "${=new Object().global_context["password"]}"
+          }}
+        },
+        {
+          "authentication_name": "DOB_data", "authentication_data": {
+          "public_data": {
+            "proxy_number": "${=new Object().global_context["proxy_number"]}"
+          },
+          "private_data": {
+          	"DOB": "${=new Object().global_context["DOB"]}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Change Password"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=new Object().global_context["current_token"]}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Demographic Updates Response" id="00876526-d506-4e38-a430-77706a971ea0"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+new Object().global_context["current_token"]=l_slurped_json[0].token
+new Object().global_context["proxy_number"]=l_slurped_json[0].scope.data_scope.proxy_number
+new Object().global_context["product_id"]=l_slurped_json[0].scope.data_scope.product_id
+new Object().global_context["accessor_id"]=l_slurped_json[0].scope.data_scope.accessor_id
+log.info (new Object().global_context["current_token"])
+log.info("Bearer " + l_slurped_json[0].token)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="3f001271-528e-4858-a742-7c424aa98fb8"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+
+
+void run_service(String i_service_name, String i_method, String i_params) {
+def project = testRunner.testCase.testSuite.project
+def l_content
+def l_slurped_json
+new Object().global_context["current_service"]=i_service_name
+new Object().global_context["params"]=i_params
+testRunner.runTestStep( project.testSuites['Services - Generic'].testCases['GenericService'].testSteps[i_method] )
+l_content = context.httpResponse.responseContent
+//l_slurped_json = new JsonSlurper().parseText(l_content)
+log.info(new Object().global_context["current_service"].padRight(100) + " : " + context.httpResponse.getStatusCode().toString())
+}
+
+run_service("ChangePassword", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+</script></con:config></con:testStep><con:testStep type="httprequest" name="Sample POST" id="a43cc96d-51f0-4d4e-a08d-8d7b1bb378a2"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Sample GET" id="3e7561a0-f035-4e01-814d-459c5e9fc7db"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}${=new Object().global_context["params"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample GET" id="cc98e1d3-b707-4325-9318-4aeb591c9df3" disabled="true"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/Document/${=new Object().global_context["accessor_id"]}/ENG/1.x.x</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample POST" id="5333f7f6-18f8-43a7-9d5d-cda25d0e3763" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/W2WTransferInitiateEnhanced</con:endpoint><con:request>{"W2WTransferInitiateEnhanced": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="958c5e32-a89f-4ad1-b8b9-308af6ac45d1"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="51d83b25-ca4c-4d8b-a3f1-9cd3a10cab7a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="UserRegistrationValidationParametersEnhanced" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="e87cd587-0440-42b4-9a9a-4479d2a33c56"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}?ProxyNumber=123456</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="65a86aff-f073-4c35-82ee-bd40e4061683"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="4f53b01b-ddd6-4227-9eac-e687690af826" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CardActivationSS" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="44d75b25-9441-4872-899d-553acc21f56b"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="6181b959-8674-4867-a11f-f5bbcde6fd83"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="1bca2fd1-0d2c-4c54-8281-72459ffddc2c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CardActivationValidationParameterSSEnhanced" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="0a389618-a741-4234-bfa8-f07d014717b2"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}?ProxyNumber=123456</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="ae39e9a6-c744-44f5-9144-85913c22c3af"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d9191ef6-5846-49ae-95ff-bf030709dca6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ForgotPassword" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="8f913f3f-42cf-4c03-8da0-8e0b634a07af"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="e4939987-a2f8-40fe-a7c5-19f2f704132a"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b9e9db55-8039-43ad-aaac-e5c2ad0ea4da" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ForgotPasswordValidationParameterEnhanced" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="ed0c4acd-8608-445c-8f33-0c0cd006fcfc"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}?ProxyNumber=123456</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="6c3d2202-a695-4339-8346-0de75a0d87cd"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="02eb4554-6f59-4aae-8cf5-5eea28aa2b27" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetSecretKey" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="e8cbf568-58d8-409f-98ef-08e740949a70"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}?ProxyNumber=123456</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="7857354b-da7a-4b1f-9ae9-8921aefa5150"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="c21e8a70-1500-4035-9421-07302261af6f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ForgotUserId" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="181fa0d6-723f-47db-9b61-18d3ccd6e924"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="8d983ddd-3c09-4cc1-be64-c1819865038d"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="2ffccaea-a45d-4b1e-b1a0-0a075eebfdbe" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ForgotUserIdValidationParametersEnhanced" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="61a2da65-ace5-47eb-be72-2b9f3819ca73"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}?ProxyNumber=123456</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="639a2735-7437-4e27-8e97-ba3a0c805e5b"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f200eb06-a428-41d4-875a-9bb7a442107b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="SendOTPSMS" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="60316f58-afc9-4ac5-b196-cd9636ebc07b"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456",
-  "PhoneNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="95a16047-711b-47e4-a60b-7e5ebdf352f0"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="20ea13d4-2fb2-4c30-9272-a3f42f354c81" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ValidateOTPSMS" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Req" id="8fe5a355-4e7b-49b2-b935-0f6f75021a49"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Req" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=testRunner.testCase.getName()}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
-  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
-  "UniqueIDFlag": 0,
-  "ProxyNumber": "123456",
-  "PhoneNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Validate" id="875b52e9-7c53-44a8-b12e-91c843455b3c"><con:settings/><con:config><script>
-import groovy.json.JsonSlurper
-log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpResponse.getStatusCode().toString())</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="1e11a76b-0ffb-4a86-8d0c-0f8086ea8275" name="Services - Generic"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="5c6b11c7-71f8-4f9e-a8aa-88f6a2b4d8c9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GenericService" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="POST" id="491c462f-ba07-4283-b144-b4cee16cec21"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "ProxyNumber": "1789605043337"
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="1e11a76b-0ffb-4a86-8d0c-0f8086ea8275" name="Services - Generic"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="5c6b11c7-71f8-4f9e-a8aa-88f6a2b4d8c9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GenericService" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="POST" id="491c462f-ba07-4283-b144-b4cee16cec21"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
   ${=new Object().global_context["params"]}
@@ -1176,4 +1271,4 @@ log.info(testRunner.testCase.getName().padRight(100) + " : " + context.httpRespo
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0,
   "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>ResourceURL</con:name><con:value>https://wp1.wirecard.com/emea/middleware_validation</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI</con:name><con:value>https://10.10.99.190:8443/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_orig</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI2</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI_EMEA</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>ResourceURL</con:name><con:value>https://wp1.wirecard.com/emea/middleware_validation</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI</con:name><con:value>https://10.10.99.190:8443/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_orig</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI2</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI_EMEA</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

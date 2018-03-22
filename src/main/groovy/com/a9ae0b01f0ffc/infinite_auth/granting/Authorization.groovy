@@ -321,13 +321,13 @@ class Authorization {
                 , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
         )[GC_FIRST_INDEX]
-        AuthorizationType l_config_authorization = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
-        l_config_authorization.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
-        l_config_authorization.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
-        if (is_null(l_config_authorization)) {
+        if (is_null(l_auth_and_scopes) || l_auth_and_scopes?.size() == GC_EMPTY_SIZE) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
             return
         }
+        AuthorizationType l_config_authorization = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
+        l_config_authorization.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
+        l_config_authorization.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
         System.out.println("Start validation!!!")
         common_authorization_granting(l_config_authorization, i_context)
         if (this.getAuthorizationStatus() == GC_STATUS_SUCCESSFUL) {
@@ -423,12 +423,12 @@ class Authorization {
                     , i_AccessorApiVersionName
                     , p_app_context.p_app_conf.granting_endpoint_name
             )[GC_FIRST_INDEX]
-            AuthorizationType l_authorization_type = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
-            l_authorization_type.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
-            l_authorization_type.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
             Set<Authorization> l_user_authorizations
-            if (is_not_null(l_authorization_type)) {
+            if (is_not_null(l_auth_and_scopes) && l_auth_and_scopes?.size() != GC_EMPTY_SIZE) {
+                AuthorizationType l_authorization_type = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
                 l_user_authorizations = l_authorization_type.to_user_authorizations(i_scope_name, i_identityName)
+                l_authorization_type.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
+                l_authorization_type.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
             } else {
                 l_user_authorizations = new HashSet<Authorization>()
             }
