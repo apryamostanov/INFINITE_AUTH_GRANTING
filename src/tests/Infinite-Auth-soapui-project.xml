@@ -419,8 +419,8 @@ WorkingConfiguration wdi_configuration = new WorkingConfiguration(fiid: 1340, gr
 WorkingConfiguration wdp_configuration = new WorkingConfiguration(fiid: 1340, granting_url: "http://localhost:8089", resource_url: "http://localhost:8089"
 , expired_token: "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6Ikg0c0lBQUFBQUFBQUFMVlZXVS9iUUJEK0s5WSt0U3BFUGppQzN5d3VSVzFJd0xRdkZiSVdleEsyMkx2dUhpRXU0cjkzTm5aTTRsb3F0QkJGeXU0YzM4ek9UT1o3Sk5Ub095SFpMNnFaNEFtbkJaQ1FSRnp3cWhCR2taMk9BY3RJNkEzZHdIZTlJRGowQTgvemR3akxnR3VtS3hJK3R1YzExT1NCZzNURXpJblNGSlFTMGptaG1qYTQxalJkQVNzU2ZuL3N5TnBzR3M4azYvT3NwUmk1TkxjNVM5c3JYWHMxS0YvR0Y4N1k1Sm81eDBaSzRHbmxYQ0RBQWo1Y1JoOHRhc21TZ3Y1QWh3VkloY0RvNHcrV2d5WHFWQWtwbTIyQWo4YW5JOVFmSGJuNEdSNzRlNGZlY0g4UExRdkt6WXltMmtpUU52V3l6TUdLUlFhNXZYdjd3d1B5WktPVkczSGNnWWRmdE1zcG54czZ0L2tDbjZPZ3pLbWVDVm1nZ0UxaUZKeU5SaWQ0OFlJOTErS1VraTJvaGlZeGJ2SWNoVXBUamIwTFNXeFdSWmlabkR6ZFdFVXFTckQ1cnc1L2ROdUpRUzRZZXRnbjE4ZWtjY0htRklDRGdPMG41NmZYR3dZTnlEbm9HRklKK2pOVXFEWFNWbFBkb3dadk5ydGtlNUR1b2JJWlhrVDRpcjlobndrNUYvb3JTa2ZaTjVxemJBVXhwUkxWR290NHl1OG9UeUY3bjdoVHF0U0RrSDJSM3lEd2RCTDNSSTZCWjVQcmFUeU9Yd0g5Z2hmWkdsN0JuQ2t0VjY3dlZNMytSeDFUbVVXcHRnT0x2dkZybnZheUFKdHo4dGF6MEZRSy9yTXIvWWwzMi9KT2xWbFA4bHZYWnJ1eFBUTVZ4Lzg0VkRlTlFidTQycTF1aWFoaGh0Q0plT1dzTlgxYmRNTnJPNWJGMkx6WFVFZ1ZIU2NwakdZSUZaS3IrbFFiUnRQbzJMbU1XbTdyZURWWms5aitQa00vNFNiT1ROM3BSRUVxZUtaV3JPcmFmUTRTZmhxbUdDNzFUcXAydSs4UTNMRXQ3MWx3Wk9MaHJodnMrdTYxZXhRR2g2RWZERHd2K0dTWkNmT0JaY2xrMVdQc3VhSGJOZDd1ZzY3S1ovcTFqVk5ZMHlSbkJkUHJaR2FHcDlhVzVpMDFkZ2lxajR1UUQ3T0hQQUVwTFQyYjR0WnlaUTI0b2RDd2JPTm9jUTk4OVdmNkRTWWhseU95Q0FBQSJ9.qWQARZyVgO-UJhLOgvxciSc2C3Dk7-rVIQd-OU-v9UBWVdrnA887LROzVFAbunsGn58NBSabiS4nEpTdn_9xcQ"
 , revoked_token: "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6Ikg0c0lBQUFBQUFBQUFMVlYyMDdiUUJEOUZXdWZXaFVpSnpFUS9HWnhVOVNHQkV6N1VpRnJzU2RoaTczcjdpWEVJUDY5czdGakhOZFNvU0pScE96TzVjenN6R1RPTTZGRzN3dkpucWhtZ2tlY1prQjhFbkRCaTB3WVJmWmFCaXdoZm4va0RnZHVmemc4OHJ5RHdXaVBzQVM0WnJvZy9uTjkza0JOSHpsSVI4eWRJSTVCS1NHZFU2cHBoV3RONHpXd0l2N1A1NWFzenFieWpKSXV6MUtLa1hOemw3SzR2dEtOVjRYeWJYTHBURXlxbVhOaXBBUWVGODRsQWl6aDAxWHcyYUxtTE1yb0wzUllnbFFJakQ2RDNxcTNRcDNLSVdiekJ2aDRjalpHL2ZHeGk1L1I0Y0E3Nm84T1BMVE1LRGR6R21zalFkclU4endGS3hZSnBQYmVQeGdka2hjYkxXL0VjWHQ5L0tKZFN2bkMwSVhORi9nQ0JYbEs5VnpJREFWc0dxTGdmRHcreFV0LzZMa1dKNWRzU1RWVWlYR1RwaWhVbW1yc25VOUNzeTdDM0tUazVkWXFZcEdEelg5OStLdmJUZ2h5eWRERFByazhScFVMTmljREhBUnNQN2s0dTJrWVZDQVhvRU9JSmVpdlVLRFdTRnROOVlBYXZObnNvdTFCZW9EQ1puZ1o0Q3YraFgwdTVFTG83eWdkSno5b3lwSTF4SXhLVkdzczRobS9wenlHWkRkeFoxU3BSeUc3SW45QTROazA3SWdjQWsrbU43TndFcjREK2kzQUoxUW1RYXp0MEtCbitCNzRONVhNTnVrYUZreHB1WGJlVWJ1Nkg5ZWNrNDkrV1BVUTJFbFgybFhiVVdVMmsvelJ0ZGtlcW82V2grRi85dnkyTXFnWFY3M1ZMUkZWek9BN0FTK2NqYVpyaXphOHRtTlpqT2E5aEVLcWFEbEpZVFJES0o5Y2w2ZlNNSmdGSjg1VlVITmJ5NnZLbW9UMjl4WDZCVGR4WXNwT1J3cGl3Uk8xWmxYWDduT1E4TnN3eFhDcHQxSzEyMzJQNEk2dGVjK0NJeE9QOXQzaC9zQzljWS85NFpIdmVUMWs1UytXbVRBZldPVk1GaDNHZmRkMzI4YmJmZEJGL2txL3RuRUtheHFsTEdONms4emM4TmphMHJTbXhoWkJkWEVSOG1IeW1FWWdwYVZuazkxWnJpd0JHd29OcXpxT0ZnL0ExMyttUC83N0dRMnlDQUFBIn0.KK5UUNMQ-6B0a_EC-LClfeuLfe2lSy01RKKtMOim92Vg1lpfrmiv9Nq2EWJ1CWVTNlHk4-LBlmOADdMIJ_ynpw")
-def current_config = wdi_configuration
-//def current_config = wdp_configuration
+//def current_config = wdi_configuration
+def current_config = wdp_configuration
 new Object().global_context["fiid"]=current_config.fiid
 new Object().global_context["granting_url"]=current_config.granting_url
 new Object().global_context["resource_url"]=current_config.resource_url
@@ -1260,6 +1260,164 @@ run_service("ChangePassword", "POST", ", \"ProxyNumber\": \"" + new Object().glo
   "UniqueIDFlag": 0
   ${=new Object().global_context["params"]}
 }}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample POST" id="5333f7f6-18f8-43a7-9d5d-cda25d0e3763" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/W2WTransferInitiateEnhanced</con:endpoint><con:request>{"W2WTransferInitiateEnhanced": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0,
+  "ProxyNumber": "1789605043337"
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="899427bd-acab-4398-aea2-e68f9986332f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Positive - Security Updates - Change Security Answers - Any LMN" searchProperties="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="5b271f07-1954-4605-88da-768dac0a3a17"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="99451f64-9c5f-426e-a795-c1cc88374082"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="f3ff1b08-5c85-4144-9541-97e904a3af45"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "${=new Object().global_context["fiid"]}",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="05331066-5989-4827-8c90-66ced6b180c5"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+new Object().global_context["current_token"]=l_slurped_json[0].token
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null
+log.info ("1:"+new Object().global_context["current_token"])
+log.info("2:"+l_slurped_json[0].token)</script></con:config></con:testStep><con:testStep type="httprequest" name="Read - Main Screen - Any LMN" id="c42ee7e2-c047-4f43-ac28-63e7a25c6ada"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Read - Main Screen - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Read",
+    "identity": {
+      "identity_name": "Owner of User Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=new Object().global_context["username"]}"
+          },
+          "private_data": {
+            "password": "${=new Object().global_context["password"]}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Main Screen"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=new Object().global_context["current_token"]}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Response" id="303deb9d-7eea-4adc-9bb3-0ffc26c6fe77"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+new Object().global_context["current_token"]=l_slurped_json[0].token
+new Object().global_context["proxy_number"]=l_slurped_json[0].scope.data_scope.proxy_number
+new Object().global_context["product_id"]=l_slurped_json[0].scope.data_scope.product_id
+new Object().global_context["accessor_id"]=l_slurped_json[0].scope.data_scope.accessor_id
+log.info ("3:"+new Object().global_context["current_token"])
+log.info("4:"+l_slurped_json[0].token)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Security Updates - Change Security Answers - Any LMN" id="a0683ff0-b4e8-46b4-b670-6ecba75f3774"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Security Updates - Change Security Answers - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=new Object().global_context["granting_url"]}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Security Updates",
+    "identity": {
+      "identity_name": "Owner of User Data and DOB Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=new Object().global_context["username"]}"
+          },
+          "private_data": {
+            "password": "${=new Object().global_context["password"]}"
+          }}
+        },
+        {
+          "authentication_name": "DOB_data", "authentication_data": {
+          "public_data": {
+            "proxy_number": "${=new Object().global_context["proxy_number"]}"
+          },
+          "private_data": {
+          	"DOB": "${=new Object().global_context["DOB"]}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Change Security Answers"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=new Object().global_context["current_token"]}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Demographic Updates Response" id="3551a3b4-72c0-41e4-bd2c-86182496647b"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+new Object().global_context["current_token"]=l_slurped_json[0].token
+new Object().global_context["proxy_number"]=l_slurped_json[0].scope.data_scope.proxy_number
+new Object().global_context["product_id"]=l_slurped_json[0].scope.data_scope.product_id
+new Object().global_context["accessor_id"]=l_slurped_json[0].scope.data_scope.accessor_id
+log.info (new Object().global_context["current_token"])
+log.info(l_slurped_json[0].token)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="03e898b0-c7ac-4a96-83c7-2af17cca860c"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+
+
+void run_service(String i_service_name, String i_method, String i_params) {
+def project = testRunner.testCase.testSuite.project
+def l_content
+def l_slurped_json
+new Object().global_context["current_service"]=i_service_name
+new Object().global_context["params"]=i_params
+testRunner.runTestStep( project.testSuites['Services - Generic'].testCases['GenericService'].testSteps[i_method] )
+l_content = context.httpResponse.responseContent
+//l_slurped_json = new JsonSlurper().parseText(l_content)
+log.info(new Object().global_context["current_service"].padRight(100) + " : " + context.httpResponse.getStatusCode().toString())
+}
+
+run_service("UpdateSecurityQuestionAnswer", "POST", ", \"ProxyNumber\": \"" + new Object().global_context["proxy_number"] + "\"")
+</script></con:config></con:testStep><con:testStep type="httprequest" name="Sample POST" id="9e47f440-7114-4f26-9bd4-818f9b1cc3df"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Sample GET" id="39d6f39f-58ed-4177-849a-fdc7dd18c322"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=new Object().global_context["resource_url"]}/${=new Object().global_context["current_service"]}${=new Object().global_context["params"]}</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample GET" id="9a27cd29-89a4-46a8-aa1e-cb29ec545ab2" disabled="true"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/Document/${=new Object().global_context["accessor_id"]}/ENG/1.x.x</con:endpoint><con:request>{"${=new Object().global_context["current_service"]}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=new Object().global_context["params"]}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Copy of Sample POST" id="5225fb67-a83c-49bd-a46d-71af734e58ab" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Copy of Sample POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="${=new Object().global_context[&amp;quot;current_token&amp;quot;]}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8089/W2WTransferInitiateEnhanced</con:endpoint><con:request>{"W2WTransferInitiateEnhanced": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0,
   "ProxyNumber": "1789605043337"

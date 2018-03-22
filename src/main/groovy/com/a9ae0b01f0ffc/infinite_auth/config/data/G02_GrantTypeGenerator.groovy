@@ -57,7 +57,7 @@ class G02_GrantTypeGenerator {
 
         l_entity_set.add(new GrantType(restResourceName: "ChangePassword", method: "POST", keyFieldRuleName: "[CardNumber, ProxyNumber]"))
 
-        l_entity_set.add(new GrantType(restResourceName: "SetAnswers", method: "POST", keyFieldRuleName: "[CardNumber, ProxyNumber]"))
+        l_entity_set.add(new GrantType(restResourceName: "UpdateSecurityQuestionAnswer", method: "POST", keyFieldRuleName: "[CardNumber, ProxyNumber]"))
 
         //
         l_entity_set.add(new GrantType(restResourceName: "AccountCreation", method: "POST", keyFieldRuleName: "[PhoneNumber]", maxUsageCountWithinScope: 1))

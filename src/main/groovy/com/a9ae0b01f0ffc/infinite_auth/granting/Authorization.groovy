@@ -300,6 +300,10 @@ class Authorization {
                 }
             }
         }
+        if (is_null(l_accessor_authentication)) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_20_MISSING_ACCESSOR_DATA)
+            return
+        }
         Object[] l_auth_and_scopes = i_context.p_authorization_type_repository.match_authorizations(
                 scope?.scopeName
                 , identity?.identityName

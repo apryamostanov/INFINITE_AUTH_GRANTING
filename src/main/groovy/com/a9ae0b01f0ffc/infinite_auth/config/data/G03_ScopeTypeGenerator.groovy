@@ -125,7 +125,7 @@ class G03_ScopeTypeGenerator {
         ]))
 
         l_entity_set.add(new ScopeType(scopeName: "Change Security Answers", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
-                p_grant_repository.findByRestResourceName("SetAnswers").first()
+                p_grant_repository.findByRestResourceName("UpdateSecurityQuestionAnswer").first()
         ]))
 
         l_entity_set.add(new ScopeType(scopeName: "Customer Onboarding", accessor: p_accessor_repository.find_scope_accessor_by_name("Scope: Any LMN").first(), grantSet: [
