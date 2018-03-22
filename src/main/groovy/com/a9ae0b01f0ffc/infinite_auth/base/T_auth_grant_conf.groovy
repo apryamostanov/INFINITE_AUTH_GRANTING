@@ -55,6 +55,10 @@ class T_auth_grant_conf {
     @Value('${granting_endpoint_name}')
     public String granting_endpoint_name
 
+
+    @Value('${max_number_of_step_ups}')
+    public Integer max_number_of_step_ups
+
     @PostConstruct
     void init() {
         System.out.println("================== " + authenticationModulesPath + "================== ");

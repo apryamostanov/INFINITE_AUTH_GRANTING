@@ -71,7 +71,7 @@ class Validation {
 
     Integer validate_token(MultivaluedMap<String, String> i_query_parameters, String i_method, String i_body, String i_jwt, T_auth_grant_base_5_context i_context, String i_url_path) {
         System.out.println(i_url_path)
-        String l_jwt = remove_jwt_bearer(i_jwt)
+        String l_jwt = i_jwt
         if (is_null(l_jwt)) {
             System.out.println(1)
             return GC_JWT_VALIDITY_INVALID

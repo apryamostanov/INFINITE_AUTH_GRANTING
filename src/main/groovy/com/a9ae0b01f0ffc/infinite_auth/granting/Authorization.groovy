@@ -27,6 +27,7 @@ import java.security.Key
 import static base.T_common_base_1_const.*
 import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
+import static com.a9ae0b01f0ffc.infinite_auth.validation.Validation.remove_jwt_bearer
 
 @Path("/{resource: authorizations|Authorizations}")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -259,14 +260,14 @@ class Authorization {
     }
 
     static Authorization access_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
-        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(i_jwt_string)
+        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_access_key()).parse(remove_jwt_bearer(i_jwt_string))
         Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map) l_jwt.getBody()).get("token") as String), Authorization.class)
         l_authorization.jwt = i_jwt_string
         return l_authorization
     }
 
     static Authorization refresh_jwt2authorization(String i_jwt_string, T_auth_grant_base_5_context i_context) {
-        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_refresh_key()).parse(i_jwt_string)
+        Jwt l_jwt = Jwts.parser().setSigningKey(i_context.p_jwt_manager.get_jwt_refresh_key()).parse(remove_jwt_bearer(i_jwt_string))
         Authorization l_authorization = i_context.p_object_mapper.readValue(i_context.unzip(((Map) l_jwt.getBody()).get("token") as String), Authorization.class)
         return l_authorization
     }
@@ -281,7 +282,8 @@ class Authorization {
             it.authenticationName == "Accessor_data"
         }
         if (is_null(l_accessor_authentication)) {
-            while (is_not_null(l_lookup_accessor_authorization) && is_null(l_accessor_authentication)) {
+            Integer l_number_of_step_ups = GC_ZERO
+            while (is_not_null(l_lookup_accessor_authorization) && is_null(l_accessor_authentication) && l_number_of_step_ups < i_context.p_app_conf.max_number_of_step_ups) {
                 if (is_not_null(l_lookup_accessor_authorization.jwt)) {
                     if (!is_invalid_access_jwt(l_lookup_accessor_authorization.jwt, i_context)) {
                         Authorization l_prerequisite_authorization_unwrapped = access_jwt2authorization(l_lookup_accessor_authorization.jwt, i_context)
