@@ -231,6 +231,7 @@ class Authorization {
             l_user_authorization.refreshAuthorization.maxUsageCount = i_conf_authorization.refreshMaxUsageCount
             l_user_authorization.refreshAuthorization.scope?.keyFieldMap = l_user_authorization.scope?.keyFieldMap
             l_user_authorization.refreshAuthorization.functionalFieldMap = l_user_authorization.functionalFieldMap
+            l_user_authorization.refreshAuthorization.prerequisiteAuthorization = l_user_authorization.prerequisiteAuthorization
             l_user_authorization.refreshAuthorization.success(i_context)
         }
     }
@@ -298,6 +299,7 @@ class Authorization {
                     }
                     l_lookup_accessor_authorization = l_lookup_accessor_authorization.prerequisiteAuthorization
                 }
+                l_number_of_step_ups ++
             }
         }
         if (is_null(l_accessor_authentication)) {

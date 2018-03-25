@@ -44,6 +44,16 @@ String l_validate_otp_sms_request_body_string = """{
 //TODO AccessorId is for WDI compatibility only
 System.out.println(l_validate_otp_sms_request_body_string)
 
+
+////////////////
+io_user_authentication.keyFieldMap = new HashMap<String, String>()
+io_user_authentication.functionalFieldMap = new HashMap<String, String>()
+io_user_authentication.keyFieldMap.put("proxy_number", io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number"))
+io_user_authentication.keyFieldMap.put("phone_number", io_user_authentication.authenticationData?.publicDataFieldSet?.get("phone_number"))
+io_user_authentication.success()
+return
+////////////////
+
 Proxy l_proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(io_user_authentication.p_conf.GC_PROXY_ADDRESS as String, io_user_authentication.p_conf.GC_PROXY_PORT as Integer))
 
 Request l_validate_otp_sms_request = new Request.Builder().post(RequestBody.create(MediaType.parse(io_user_authentication.p_conf.GC_CONTENT_TYPE as String), l_validate_otp_sms_request_body_string)).url(io_user_authentication.p_conf.GC_RESOURCE_SERVER_URL + "/ValidateOTPSMS" as String).build()

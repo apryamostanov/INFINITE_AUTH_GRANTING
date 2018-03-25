@@ -17,7 +17,7 @@ import static base.T_common_base_1_const.GC_EMPTY_SIZE
 import static base.T_common_base_3_utils.is_null
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 
-@Path("/{resource: (?!(authorizations|Authorizations)).*}")
+@Path("/{resource: (?!(authorizations|Authorizations|introspection)).*}")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 class Validation {
@@ -81,6 +81,7 @@ class Validation {
             return GC_JWT_VALIDITY_INVALID
         }
         Authorization l_authorization = Authorization.access_jwt2authorization(l_jwt, i_context)
+        System.out.println(l_authorization.authorizationName)
         if (l_authorization.expiryDate.before(new Date())) {
             System.out.println(3)
             return GC_JWT_VALIDITY_EXPIRED

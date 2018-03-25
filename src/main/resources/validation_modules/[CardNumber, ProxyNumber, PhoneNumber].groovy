@@ -47,7 +47,7 @@ if (i_method == "POST") {
 } else {
     return false
 }
-if (is_null(l_card_number) && is_null(l_proxy_number) && is_null(l_phone_number)) {
+if ((is_null(l_card_number) && is_null(l_proxy_number)) || is_null(l_phone_number)) {
     return false
 }
 
@@ -60,7 +60,7 @@ l_expected_proxy_number = i_authorization.scope.keyFieldMap.get("proxy_number")
 l_expected_phone_number = i_authorization.scope.keyFieldMap.get("phone_number")
 
 
-if (is_null(l_expected_card_number) && is_null(l_expected_proxy_number) && is_null(l_expected_phone_number)) {
+if ((is_null(l_expected_card_number) && is_null(l_expected_proxy_number)) || is_null(l_expected_phone_number)) {
     return false
 }
 
