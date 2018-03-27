@@ -3,6 +3,12 @@ package authentication_modules
 import groovy.json.JsonSlurper
 import okhttp3.*
 
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
+
 import static base.T_common_base_3_utils.is_null
 
 System.out.println(this.getClass().getSimpleName())
@@ -55,7 +61,37 @@ if (io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_nu
         </s:Envelope>
         """
         System.out.println(l_get_card_details_request_body_string)
-        OkHttpClient.Builder l_builder = new OkHttpClient.Builder().hostnameVerifier(io_user_authentication.p_context.get_unsecure_host_name_verifier())//.proxy(l_proxy)
+SSLContext sslContext = SSLContext.getInstance("TLS");
+sslContext.init(null, [new X509TrustManager() {
+    @Override
+    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    }
+
+    @Override
+    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    }
+
+    @Override
+    public X509Certificate[] getAcceptedIssuers() {
+        return new ArrayList<X509Certificate>().toArray() as X509Certificate[];
+    }
+}] as TrustManager[], null);
+Proxy l_proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(io_user_authentication.p_conf.GC_PROXY_ADDRESS as String, io_user_authentication.p_conf.GC_PROXY_PORT as Integer))
+OkHttpClient.Builder l_builder = new OkHttpClient.Builder().hostnameVerifier(io_user_authentication.p_context.get_unsecure_host_name_verifier()).sslSocketFactory(sslContext.getSocketFactory(),
+        new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new ArrayList<X509Certificate>().toArray() as X509Certificate[];
+            }
+        }).proxy(l_proxy)
         OkHttpClient l_client = l_builder.build()
         Request l_get_card_details_request = new Request.Builder().post(RequestBody.create(MediaType.parse(io_user_authentication.p_conf.GC_CORECARD_API_CONTENT_TYPE as String), l_get_card_details_request_body_string)).url(io_user_authentication.p_conf.GC_CORECARD_API_URL as String).addHeader("SOAPAction", "www.corecard.com/ICoreCardServices/GetCardDetail").build()
         Response l_get_card_details_response = l_client.newCall(l_get_card_details_request).execute()
