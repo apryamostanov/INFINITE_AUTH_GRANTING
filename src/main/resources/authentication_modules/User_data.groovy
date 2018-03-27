@@ -3,6 +3,12 @@ package authentication_modules
 import groovy.json.JsonSlurper
 import okhttp3.*
 
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
+
 import static base.T_common_base_3_utils.is_null
 
 System.out.println(this.getClass().getSimpleName())
@@ -58,8 +64,37 @@ System.out.println(l_self_service_login_request_body_string)
 Proxy l_proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(io_user_authentication.p_conf.GC_PROXY_ADDRESS as String, io_user_authentication.p_conf.GC_PROXY_PORT as Integer))
 
 Request l_self_service_login_request = new Request.Builder().post(RequestBody.create(MediaType.parse(io_user_authentication.p_conf.GC_CORECARD_API_CONTENT_TYPE as String), l_self_service_login_request_body_string)).url(io_user_authentication.p_conf.GC_CORECARD_API_URL as String).addHeader("SOAPAction", "www.corecard.com/ICoreCardServices/SelfServiceLogin").build()
+SSLContext sslContext = SSLContext.getInstance("TLS");
+sslContext.init(null, [new X509TrustManager() {
+    @Override
+    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    }
 
-OkHttpClient.Builder l_builder = new OkHttpClient.Builder().hostnameVerifier(io_user_authentication.p_context.get_unsecure_host_name_verifier())//.proxy(l_proxy)
+    @Override
+    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    }
+
+    @Override
+    public X509Certificate[] getAcceptedIssuers() {
+        return new ArrayList<X509Certificate>().toArray() as X509Certificate[];
+    }
+}] as TrustManager[], null);
+
+OkHttpClient.Builder l_builder = new OkHttpClient.Builder().hostnameVerifier(io_user_authentication.p_context.get_unsecure_host_name_verifier()).sslSocketFactory(sslContext.getSocketFactory(),
+        new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new ArrayList<X509Certificate>().toArray() as X509Certificate[];
+            }
+        }).proxy(l_proxy)
 OkHttpClient l_client = l_builder.build()
 
 Response l_self_service_login_response = l_client.newCall(l_self_service_login_request).execute()

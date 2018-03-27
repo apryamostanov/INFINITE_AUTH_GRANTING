@@ -30,7 +30,8 @@ class G06_AuthorizationTypeGenerator {
                 durationSeconds: 1800,
                 maxUsageCount: null,
                 accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
-                authorizationType: "Access"
+                authorizationType: "Access",
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Read",

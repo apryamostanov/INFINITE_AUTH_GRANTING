@@ -62,8 +62,8 @@ class G02_GrantTypeGenerator {
         //
         l_entity_set.add(new GrantType(restResourceName: "AccountCreation", method: "POST", keyFieldRuleName: "[PhoneNumber]", maxUsageCountWithinScope: 1))
         l_entity_set.add(new GrantType(restResourceName: "ValidateIDDocument", method: "POST", keyFieldRuleName: "NA", maxUsageCountWithinScope: 5))
-        l_entity_set.add(new GrantType(restResourceName: "CheckIDDocumentValidation", method: "POST", keyFieldRuleName: "NA"))
-        l_entity_set.add(new GrantType(restResourceName: "GetFee", method: "POST", keyFieldRuleName: "NA"))
+        l_entity_set.add(new GrantType(restResourceName: "CheckIDDocumentValidation", method: "GET", keyFieldRuleName: "NA"))
+        l_entity_set.add(new GrantType(restResourceName: "GetFee", method: "GET", keyFieldRuleName: "NA"))
         l_entity_set.add(new GrantType(restResourceName: "FXRateSearch", method: "GET", keyFieldRuleName: "NA"))
         l_entity_set.add(new GrantType(restResourceName: "ValidateLoad", method: "POST", keyFieldRuleName: "NA"))
         l_entity_set.add(new GrantType(restResourceName: "FundingAmountInquiry", method: "POST", keyFieldRuleName: "NA"))

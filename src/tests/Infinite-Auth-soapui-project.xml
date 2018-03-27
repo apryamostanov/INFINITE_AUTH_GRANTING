@@ -1506,7 +1506,472 @@ run_service("UpdateProfileWithPhone", "POST", ", \"ProxyNumber\": \"" + testRunn
 </script></con:config></con:testStep><con:testStep type="httprequest" name="Introspection" id="f6d37dbb-aef8-497f-8f7d-5c69c0307529" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Introspection" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8089/introspection</con:endpoint><con:request>{
 	"token": "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6Ikg0c0lBQUFBQUFBQUFNVlo2WE9qT2hML1YxS3VlbC9lenN4eTJKazRYM1o5Z1M5a2MwZ2M3MDJsQkNnR0l3VEJFQjlUODcrdnNKM0V5WHFPekpzalZZNHRxZFg5NjBQZG92bll3RlVaWlVXOHcyV2NzUnVHVTlLNGJoamt0aUNycVBIbXhYSWNOcTdGSzBHV1dtSzdLVW50eXl2NVRTTU9DU3ZqY3R1NC92ajQrNEhSYk0xSWNaSGRYc0FWLys3akVoOTUxbVRCbnVtcWNmM1h4eGR6RDl2clhUZmh1VjJIV1M0eHIzd2FCNC9EaXU4NGJnNHhpN2VZcHBrZlUvTGZkVnlRQUJmaHV5QkxHNS9lTlBJaXZzY2xPVzVrRmFWOGNsWGlzdUtBR21ZVkJHUzF1cTFvNDlPSGVpSEljbEx6My85NGdLZmhtRjJZUVVFSTR3QzU1UHM0SURkSFdxNVVTcmp4dU1rYTZzQTZJVGp1VmtrNUw3S3dDc281THZoVVNZclZnRVdZQlNUazFGVVIzNlI0bFhCS1BxcGgzangzUmtLMk5kUy9qa3hHL1E5Y3I2OEpWYkppa1pYekVVQ1l4dUdlMFpQMDEwanRjVnVDS3ZWSjhlYUNJOWhzRDRNWEdPWXo4d3dJRkJkbGhXbk5vbGNRN29VZkwvaXM4djBzcUZJZVF6ZWNEQi9ENmtUdXV6Ly84L2ZmLy80RDcxMmZGVHphLytEancreTdQNytJQ25TK1FieEpTcE1IR0traDlIK0sxdWZOWGUvdEJHVWQ3NXlsYWI1QzdqZnBwVGdHMThZa3VBaWlIODM3MFdBamRwc1Y2WjZCVnRFeTdsVkZRVml3L1FGR2ZIUFJDWUtzWXVVcmJGcG5Kb01zNGxWWjdHWDhBNzNQQ3pnZVZMeGFyYlBpTmZuZ204ejZjQkorN1FIZ0djOHFNRnZob040NjVNYkxpcC92d0Mva3dkcUxvL0JjS3Z5T1JQeHRaK1daVzg5SS9sbUN1ZTE3cVBlTEV1MGhGOWlZVWxJZVhmTjczUHlZUGxZbitlUDNRSG1aTVg1UzFIMm00aDZFa1prMU43WFhGSUIvVkhoT0Q5a1BWOGtrTFB4WjZuejJCUEhkZlg1M2lPbjNYTlIrWVBtcFdVMnpJSUdNOHY4R3Vhdkk2a2Njc2RkZTMyQWUvc0tMakMzWisvcHhTNHBleG03akl2MU41ajg1VHI4dStFNUs1eUVHZjA4ZTQwaE13cDk1eWdsNVRlMyt0a045aUtkRDRaZ1hNZWRTL3E0YjN1T1QwcStLYnBYd1orV2ZGVlJmUFZBakZwY3hsLzdMRXR2WjRLbzVIUzRQdngvSDB5UFRtVkp0bXQ5WnF6OGNDUjQ3Q3ZpQTdZYnR3WEVxVVJCazRlU3Y5VjZ1Mng5UGwzSk8wOW1Qcmk4NmJIdnhzRklEcWZzbFgyOS8xTjJQZmMvZ3dFeDhmOVUrekcyMkp6RDQ3S1hRRXBxeUxML255eFN6UllVWE5XdkNGczhSUFZlM3huYzZQc0NjYXVERnBpS3J5cGl6dW00WWgxOEh3czY4MDd2UU94ZWRKNzFPZHgwTjF6RHI3eWZXbno1eHcxYUhxOVhOaWdRWkM3bkpwVlpiNGlhc2xTTUZyNUx4S2k3SlM3UWZ6emJCNnBiUXVmN1hZZjZwNlhVWUgxRWRCditQNHpEL0pSQUhpcUJ1aHh6Ylc0L3N5Q2FQaSsyenFlZXd5dTJUN0dyRmZYUkQ0elF1SDZadUs3YXZHcGllZEx0T21sMkFyTG1OMDNCTmIwaFJjQ3MveE1DQjdtU2hKSnRIcm1XV2tOclZaRHVPZkRXSVovRjRCSGR3bzhYajlqcytLZmhTU2YxNGREbEtGa0lnMEs0T2xZZVBocWpuYUhFN3N1QVlUb1NWYUVqZUxMQVVGWXJLdmRkSGZVMVdJSkxvblRZb1k1Y2xHNWg0c1orVXpGWWpBSFlMQVluQTlsaTJNeFUwTTVIU3RGbG43Zkc5aHVORmZHWHVVVnBwWWxCWXkrN1VTcjNNUmRxOWF5dVJMbzVFa29yTWdybGwyYUZxOWNFTUQ3eUJQK3oyM0FRZ1BXbktFSFZUQ3k1MmdaMUxFNW5PdE4xNE1GTWpUVWVoNkNOTk5KZVI2anBlb2tFREloYklVRUN1WmJlZ251UUdsTW83UHkzTFFCMEkzbkJzMklreUQwU2dHMnErUldLNERTMnZJSll1UTJlODFKaW5FcnR0QTRldXNBTGlpVlNLZ2RYVkFHeHYvYjR5d2ZZWWttUlRoQ0ppSnUxYUlhZlVVUjZITzhNQ3V5Z3lFcVFaREtYYUlHL1pEdUN5MndwUm85WlUxb3ZBMGRlbUJLWlFhT1d6Z1FKQmlselRBaVljUmh0Z2xyM1Foc1YwQjNSTmFnMmdzMmhpR3l4eDBxNHdNandvZDRmYWtrNk5RU25ickt2cVlpNTVLZkpNTlpwcnpoaTdWamZDYWRiQ0xHdGFVSk53NmcxTnRTMkhsR3BlUW9lR1FEZlcwdE44Qk9aNm1rZmNCeVBkb2lPLzE4Nkpta3NCUTAzWGJoV0dIRTBzNmxsV0NyQ1ZiaUtEZ3NoMWtCRkNPakdWM0xYZ1pta25JWnpaU2s5TDhxa0Y5VzI0VktyWk1JcHR4RFZuWVl2YnAyZjJRUTZrZk9xSjBZUWdSZkVTUmVEMmlnUExvSVlVS29qUnJpYTErM3BDSnhPSlc5UHlCcmFpN1FLVVNSQU43a043UFBMWTRoNExUY21UakltV29sNlkwcW0zOUZTUGFqc3NLaUllZXBHK0hGYzhGaXBqMTJXYWdPNE1wN04ycmZEU2dLdDdBRVVLNFdidFNtaHJ5WXBxeXA3aDA5eUc2Z1pqRmJiZ01uU01BVmdCQkdMK0dYczJnaTVzejRFYUpjanBsb2FVeUM3eitwb0FHUGNWRHh5eGdqWVlCVXRYTU9VdW04aDVaQTdXZ2lZYmtnV2pTYkNFOTY3c1NXQ2diMDBwTDl6bDR0NVBoSHRMaUdRRGRYVnQ2Tm00NzIwOUlWcURwUkpCMWRqNEE3UXkrb2FDK3BGZ0tUbDFXWGZvSWpBTG1DdTZpUmRaTzNlSElEOWp3N0VGbmU2ZElkS3hRZk1CMklXT0w0MkhsaFgyOVczSk5SbDNrWXhXaUxvYnBBQU5iTnN5V05LbW40UkwzNEZybk5JTTJTVUxiR05qV3U0MmhCSDFwVUN3VXlQRERsS3hOSklSVTh5cEhFNjROMVEzVGNUWndHMXBsaUo1c0wzeDdGWWFRS09uTFNOamhqbzdIUzd1RVZWS3ZLVFlzOEZrSWxJVk9hRmpLMVQxV1poNDhHcUhiYStuV1YwSHlORTZrS2h0TFkyMUprUkRWMWF3SnVmTFVHaEJqWVU3UXNQMXpCNVBmUVd0Q0FTWktaUlJTRU9ES01EeGQ1M3RSTXdCWW5sZnMwTVpKRjZHVWlPRlN4NXJEbkNRcUxkMEZ1eDRuS21USGVqWHVXekVoSGVic3BlTjVXV2xHNzFlSEdYcHJabUtpdWtQTGtPdDUwMVlLbDdLdDJMWk43cGFjOWRPTG0wRjBXcEtndHVXay9hbTh6c0F5Wld6MldtcVAzeDdHMFpERDAycTlyMWV2Nk40VVEwYWtpQmV2UlhrdDFMTEVsdlhUZWxhYXIrN3ZKTC9WZDhTR2kvcXhKRzQrVlpxbmlVK1YwRk8zdnQ4U3huNTJLRFpJbVkzdHhUWFJieFpRM2hXUHhxMUlHVTA2dGZYQ2JsWmorbzd5RjVhWGNySnd4V0tMemMrOC9ybHV3dlQvcFhPL3dBVmV6QWc0Qm9BQUE9PSJ9.Lpc_0KMqrfpbD32f5Ko28RI8XfXL5eGPdgpgfDjmbspnRcFXlpCxEmfYy2gAo2JZ-Ap4kL6MDx1DxwM6HyQWAw"
 }
-</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="1e11a76b-0ffb-4a86-8d0c-0f8086ea8275" name="Services - Generic"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="5c6b11c7-71f8-4f9e-a8aa-88f6a2b4d8c9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GenericService" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="POST" id="491c462f-ba07-4283-b144-b4cee16cec21"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=testRunner.testCase.testSuite.project.getPropertyValue(&amp;quot;current_token&amp;quot;)}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("resource_url")}/${=testRunner.testCase.testSuite.project.getPropertyValue("current_service")}</con:endpoint><con:request>{"${=testRunner.testCase.testSuite.project.getPropertyValue("current_service")}": {"requestData": {
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="4b235137-cdd5-4149-8376-df5fc4ab3d21" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Positive - Anonymous Updates - Customer Onboarding - Any LMN" searchProperties="true" disabled="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="54905547-9c76-4855-9c5b-3d38652690c6"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="72e3ba44-d922-4660-9e7d-1088b0eb8d72"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="449c0b68-f9c9-48c8-ad64-684273ef945f"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "${=testRunner.testCase.testSuite.project.getPropertyValue("fiid")}",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="6508cc73-ebde-4d30-93e0-ee755cf58b42"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="SendOTPSMS" id="9249d5cc-f0ce-4a9e-8067-8485539a2bed"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d79a0ccd-68d5-403f-809e-fc13c8512afc" name="SendOTPSMS" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=testRunner.testCase.testSuite.project.getPropertyValue(&amp;quot;current_token&amp;quot;)}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("resource_url")}/SendOTPSMS</con:endpoint><con:request>{
+  "SendOTPSMS": {
+    "requestData": {
+      "UniqueID": "${="MDWL" + new Date().format("yyMMddHHmmssSSS")}",
+      "UniqueIDFlag": "0",
+      "ProxyNumber": "${=testRunner.testCase.testSuite.project.getPropertyValue("proxy_number")}",
+      "PhoneNumber": "+971559307088"
+    }
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process SendOTPSMS Response" id="a414aa54-d63c-4e9e-9f02-bbed8cd251c6"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+def l_content = context.httpResponse.responseContent
+if (l_content==null) l_content="{}"
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+
+testRunner.testCase.testSuite.project.setPropertyValue("otp_id",l_slurped_json?.SendOTPSMSResponse?.SendOTPSMSResult?.OTPUniqueId)
+//assert context.otp_id != null</script></con:config></con:testStep><con:testStep type="groovy" name="Enter OTP" id="48e8051d-edff-4ee8-af3d-8f42c6854385"><con:settings/><con:config><script>import com.eviware.soapui.support.*
+def alert = com.eviware.soapui.support.UISupport
+def l_otp=alert.prompt("Enter OTP","Enter OTP")
+testRunner.testCase.testSuite.project.setPropertyValue("otp", l_otp)</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous Updates - Customer Onboarding - Any LMN" id="6aeaf542-7bd9-41b4-beea-8e935b10cfed"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous Updates - Customer Onboarding - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Anonymous Updates",
+    "identity": {
+      "identity_name": "Owner of OTP Data",
+      "authentications": [
+        {
+          "authentication_name": "OTP_data", "authentication_data": {
+          "public_data": {
+            "proxy_number": "${=testRunner.testCase.testSuite.project.getPropertyValue("proxy_number")}",
+            "otp_id": "${=testRunner.testCase.testSuite.project.getPropertyValue("otp_id")}",
+            "phone_number": "+971559307088"
+          },
+          "private_data": {
+          	"otp": "${=testRunner.testCase.testSuite.project.getPropertyValue("otp")}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Customer Onboarding"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=testRunner.testCase.testSuite.project.getPropertyValue("current_token")}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Updates Response" id="b3c34a28-bfb7-41f7-bafb-41b60b6150c9"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+testRunner.testCase.testSuite.project.setPropertyValue("proxy_number",l_slurped_json[0].scope.data_scope.proxy_number)
+testRunner.testCase.testSuite.project.setPropertyValue("product_id",l_slurped_json[0].scope.data_scope.product_id)
+testRunner.testCase.testSuite.project.setPropertyValue("accessor_id",l_slurped_json[0].scope.data_scope.accessor_id)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="34a95615-493e-474d-a1a5-5a4401800e4f"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+
+
+void run_service(String i_service_name, String i_method, String i_params) {
+def project = testRunner.testCase.testSuite.project
+def l_content
+def l_slurped_json
+testRunner.testCase.testSuite.project.setPropertyValue("current_service", i_service_name)
+testRunner.testCase.testSuite.project.setPropertyValue("params", i_params)
+testRunner.runTestStep( project.testSuites['Services - Generic'].testCases['GenericService'].testSteps[i_method] )
+l_content = context.httpResponse.responseContent
+//l_slurped_json = new JsonSlurper().parseText(l_content)
+log.info(testRunner.testCase.testSuite.project.getPropertyValue("current_service").padRight(100) + " : " + context.httpResponse.getStatusCode().toString())
+}
+
+run_service("AccountCreation", "POST", ", \"PhoneNumber\": \"+971559307088\"")
+return
+run_service("ValidateIDDocument", "POST", null)
+run_service("CheckIDDocumentValidation", "GET", null)
+run_service("GetFee", "GET", null)
+run_service("FXRateSearch", "GET", , null)
+run_service("ValidateLoad", "POST", null)
+run_service("FundingAmountInquiry", "POST", null)
+run_service("CreateEEPaymentRequest", "POST", null)
+run_service("UpdateEEPaymentResponse", "POST", null)</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="322d110c-ebed-49ba-bd08-f441afd91cd0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Negative - Anonymous - Anonymous Services - Any LMN - Missing JWT" searchProperties="true" disabled="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="13df39f6-02ff-4a97-9f8e-c5ffb1ea3bcc"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="19255cc9-1f99-4511-865d-eaf9c11126a6"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="d278be4f-6f34-43d0-8cb8-533946f90607"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "${=testRunner.testCase.testSuite.project.getPropertyValue("fiid")}",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="e12a8227-e7a9-4e2b-a6c8-74f547f6275e"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",null)//l_slurped_json[0].token)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="948d7a2a-c18d-4f1e-8ec4-4f5bcd91dff2"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+
+
+void run_service(String i_service_name, String i_method, String i_params) {
+def project = testRunner.testCase.testSuite.project
+def l_content
+def l_slurped_json
+testRunner.testCase.testSuite.project.setPropertyValue("current_service", i_service_name)
+testRunner.testCase.testSuite.project.setPropertyValue("params", i_params)
+testRunner.runTestStep( project.testSuites['Services - Generic'].testCases['GenericService - No JWT'].testSteps[i_method] )
+l_content = context.httpResponse.responseContent
+//l_slurped_json = new JsonSlurper().parseText(l_content)
+log.info(testRunner.testCase.testSuite.project.getPropertyValue("current_service").padRight(100) + " : " + context.httpResponse.getStatusCode().toString())
+}
+log.info("Known issue exists (key fields):")
+run_service("UserRegistration", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UserRegistrationValidationParametersEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("CardActivationSS", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("CardActivationValidationParameterSSEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("ForgotPassword", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("ForgotPasswordValidationParameterEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetSecretKey", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("ForgotUserId", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("ForgotUserIdValidationParametersEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("SendOTPSMS", "POST", ", \"PhoneNumber\": \"+971559307088\"")
+run_service("ValidateOTPSMS", "POST", ", \"PhoneNumber\": \"+971559307088\"")
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d15e0994-ae5b-494f-928b-54efe108d22f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Validation - Negative - All - All - Any LMN - Missing JWT" searchProperties="true"><con:settings/><con:testStep type="calltestcase" name="Run Init Data" id="6cfe90f4-bbd2-4fe7-ad46-2d5741cef35a"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>967f8ba9-2256-4778-aa23-801fa6dd19f7</con:targetTestCase><con:properties/><con:returnProperties/><con:runMode>PARALLELL</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="Log" id="e8dc1042-da0e-4101-8f69-1fc6440833b4"><con:settings/><con:config><script>log.info(testRunner.testCase.getName())</script></con:config></con:testStep><con:testStep type="httprequest" name="Anonymous - Anonymous Services" id="e893ab5f-c1d5-4197-973e-013ebd8a9102"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Anonymous - Anonymous Services" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>{
+  "authorization_name": "Anonymous",
+  "scope": {
+    "scope_name": "Anonymous Services"
+  },
+  "identity": {
+    "identity_name": "Owner of Accessor Data",
+    "authentications": [
+      {
+        "authentication_name": "Accessor_data",
+        "authentication_data": {
+          "public_data": {
+            "accessor_name": "LMN Multi Currency Native(QA)",
+            "platform": "iOS",
+            "FIID": "${=testRunner.testCase.testSuite.project.getPropertyValue("fiid")}",
+            "api_major_version": "2.x.x",
+            "app_version": "0.10.1",
+            "language": "eng",
+            "specific_data": {
+              "IMEI": "990000862471854",
+              "manufacturer": "Apple",
+              "model": "A1586"
+            }
+          },
+          "private_data": null
+        }
+      }
+    ]
+  }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Anonymous Response" id="f0706261-85a5-4957-b4d6-610667846337"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Read - Main Screen - Any LMN" id="84843244-b343-41a4-aa7f-56ce4a0c619b"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Read - Main Screen - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Read",
+    "identity": {
+      "identity_name": "Owner of User Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=testRunner.testCase.testSuite.project.getPropertyValue("username")}"
+          },
+          "private_data": {
+            "password": "${=testRunner.testCase.testSuite.project.getPropertyValue("password")}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Main Screen"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=testRunner.testCase.testSuite.project.getPropertyValue("current_token")}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Read Response" id="e833e681-0b14-46b0-b688-435a88927cb8"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+
+if (l_slurped_json[0].authorization_name=="Refresh") {
+	testRunner.testCase.testSuite.project.setPropertyValue("refresh_token",l_slurped_json[0].token)
+	testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[1].token)
+} else {
+	testRunner.testCase.testSuite.project.setPropertyValue("refresh_token",l_slurped_json[1].token)
+	testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+}
+testRunner.testCase.testSuite.project.setPropertyValue("proxy_number",l_slurped_json[0].scope.data_scope.proxy_number)
+testRunner.testCase.testSuite.project.setPropertyValue("product_id",l_slurped_json[0].scope.data_scope.product_id)
+testRunner.testCase.testSuite.project.setPropertyValue("accessor_id",l_slurped_json[0].scope.data_scope.accessor_id)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Demographic Updates - Update Profile - Any LMN" id="7083fe75-abef-4a04-9fcb-f5a0d0254dfe"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Demographic Updates - Update Profile - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Demographic Updates",
+    "identity": {
+      "identity_name": "Owner of User Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=testRunner.testCase.testSuite.project.getPropertyValue("username")}"
+          },
+          "private_data": {
+            "password": "${=testRunner.testCase.testSuite.project.getPropertyValue("password")}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Update Profile"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=testRunner.testCase.testSuite.project.getPropertyValue("current_token")}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Demographic Updates - Update Profile Response" id="226e69df-7253-44b0-9868-48e29ac7ecd6"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+testRunner.testCase.testSuite.project.setPropertyValue("proxy_number",l_slurped_json[0].scope.data_scope.proxy_number)
+testRunner.testCase.testSuite.project.setPropertyValue("product_id",l_slurped_json[0].scope.data_scope.product_id)
+testRunner.testCase.testSuite.project.setPropertyValue("accessor_id",l_slurped_json[0].scope.data_scope.accessor_id)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Security Updates - Change Password - Any LMN" id="8c77dbc3-a4f9-4e43-af63-8393b3ac460f"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Security Updates - Change Password - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Security Updates",
+    "identity": {
+      "identity_name": "Owner of User Data and DOB Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=testRunner.testCase.testSuite.project.getPropertyValue("username")}"
+          },
+          "private_data": {
+            "password": "${=testRunner.testCase.testSuite.project.getPropertyValue("password")}"
+          }}
+        },
+        {
+          "authentication_name": "DOB_data", "authentication_data": {
+          "public_data": {
+            "proxy_number": "${=testRunner.testCase.testSuite.project.getPropertyValue("proxy_number")}"
+          },
+          "private_data": {
+          	"DOB": "${=testRunner.testCase.testSuite.project.getPropertyValue("DOB")}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Change Password"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=testRunner.testCase.testSuite.project.getPropertyValue("current_token")}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Security Updates - Change Password Response" id="a1a2a0b9-ea4b-4f66-a6d3-5e42cca3a3ab"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+testRunner.testCase.testSuite.project.setPropertyValue("proxy_number",l_slurped_json[0].scope.data_scope.proxy_number)
+testRunner.testCase.testSuite.project.setPropertyValue("product_id",l_slurped_json[0].scope.data_scope.product_id)
+testRunner.testCase.testSuite.project.setPropertyValue("accessor_id",l_slurped_json[0].scope.data_scope.accessor_id)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Security Updates - Change Security Answers - Any LMN" id="5e6912c2-16a0-42f2-9deb-bf39ae4d3dbd"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Security Updates - Change Security Answers - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Security Updates",
+    "identity": {
+      "identity_name": "Owner of User Data and DOB Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=testRunner.testCase.testSuite.project.getPropertyValue("username")}"
+          },
+          "private_data": {
+            "password": "${=testRunner.testCase.testSuite.project.getPropertyValue("password")}"
+          }}
+        },
+        {
+          "authentication_name": "DOB_data", "authentication_data": {
+          "public_data": {
+            "proxy_number": "${=testRunner.testCase.testSuite.project.getPropertyValue("proxy_number")}"
+          },
+          "private_data": {
+          	"DOB": "${=testRunner.testCase.testSuite.project.getPropertyValue("DOB")}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Change Security Answers"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=testRunner.testCase.testSuite.project.getPropertyValue("current_token")}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Demographic Updates - Change Security Answers Response" id="9a4bb787-5086-4af2-b3e5-ac430c3889a1"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+testRunner.testCase.testSuite.project.setPropertyValue("proxy_number",l_slurped_json[0].scope.data_scope.proxy_number)
+testRunner.testCase.testSuite.project.setPropertyValue("product_id",l_slurped_json[0].scope.data_scope.product_id)
+testRunner.testCase.testSuite.project.setPropertyValue("accessor_id",l_slurped_json[0].scope.data_scope.accessor_id)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="httprequest" name="Secured Demographic Updates - Update Phone - Any LMN" id="10604c28-85b2-49db-ae5c-b8f34f191901"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="Secured Demographic Updates - Update Phone - Any LMN" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("granting_url")}/Authorizations</con:endpoint><con:request>
+  {
+    "authorization_name": "Security Updates",
+    "identity": {
+      "identity_name": "Owner of User Data and DOB Data",
+      "authentications": [
+        {
+          "authentication_name": "User_data", "authentication_data": {
+          "public_data": {
+            "username": "${=testRunner.testCase.testSuite.project.getPropertyValue("username")}"
+          },
+          "private_data": {
+            "password": "${=testRunner.testCase.testSuite.project.getPropertyValue("password")}"
+          }}
+        },
+        {
+          "authentication_name": "DOB_data", "authentication_data": {
+          "public_data": {
+            "proxy_number": "${=testRunner.testCase.testSuite.project.getPropertyValue("proxy_number")}"
+          },
+          "private_data": {
+          	"DOB": "${=testRunner.testCase.testSuite.project.getPropertyValue("DOB")}"
+          }}
+        }
+      ]
+    },
+    "scope": {
+      "scope_name": "Change Security Answers"
+    },
+    "prerequisite_authorization": {
+    	 "token": "${=testRunner.testCase.testSuite.project.getPropertyValue("current_token")}"
+    }
+  }
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Process Secured Demographic Updates - Update Phone Response" id="970c83ea-744b-4aab-b8a5-e077db293ca9"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+class GlobalContext {
+   def static global_context = [:]
+}
+
+
+def l_content = context.httpResponse.responseContent
+def l_slurped_json = new JsonSlurper().parseText(l_content)
+Object.mixin GlobalContext
+testRunner.testCase.testSuite.project.setPropertyValue("current_token",l_slurped_json[0].token)
+testRunner.testCase.testSuite.project.setPropertyValue("proxy_number",l_slurped_json[0].scope.data_scope.proxy_number)
+testRunner.testCase.testSuite.project.setPropertyValue("product_id",l_slurped_json[0].scope.data_scope.product_id)
+testRunner.testCase.testSuite.project.setPropertyValue("accessor_id",l_slurped_json[0].scope.data_scope.accessor_id)
+assert l_slurped_json[0].token !="" &amp;&amp; l_slurped_json[0].token != null</script></con:config></con:testStep><con:testStep type="groovy" name="Run All Services" id="33551876-b24b-4c9d-9699-ef80e6b906a1" disabled="true"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+
+
+void run_service(String i_service_name, String i_method, String i_params) {
+def project = testRunner.testCase.testSuite.project
+def l_content
+def l_slurped_json
+testRunner.testCase.testSuite.project.setPropertyValue("current_service", i_service_name)
+testRunner.testCase.testSuite.project.setPropertyValue("params", i_params)
+testRunner.runTestStep( project.testSuites['Services - Generic'].testCases['GenericService - No JWT'].testSteps[i_method] )
+l_content = context.httpResponse.responseContent
+//l_slurped_json = new JsonSlurper().parseText(l_content)
+log.info(testRunner.testCase.testSuite.project.getPropertyValue("current_service").padRight(100) + " : " + context.httpResponse.getStatusCode().toString())
+}
+
+run_service("ChangePassword", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="1e11a76b-0ffb-4a86-8d0c-0f8086ea8275" name="Services - Generic"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="5c6b11c7-71f8-4f9e-a8aa-88f6a2b4d8c9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GenericService" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="POST" id="491c462f-ba07-4283-b144-b4cee16cec21"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${=testRunner.testCase.testSuite.project.getPropertyValue(&amp;quot;current_token&amp;quot;)}" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("resource_url")}/${=testRunner.testCase.testSuite.project.getPropertyValue("current_service")}</con:endpoint><con:request>{"${=testRunner.testCase.testSuite.project.getPropertyValue("current_service")}": {"requestData": {
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0
   ${=testRunner.testCase.testSuite.project.getPropertyValue("params")}
@@ -1514,4 +1979,12 @@ run_service("UpdateProfileWithPhone", "POST", ", \"ProxyNumber\": \"" + testRunn
   "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
   "UniqueIDFlag": 0,
   "ProxyNumber": "123456"
-}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>ResourceURL</con:name><con:value>https://wp1.wirecard.com/emea/middleware_validation</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI</con:name><con:value>https://10.10.99.190:8443/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_orig</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI2</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI_EMEA</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>fiid</con:name><con:value>1340</con:value></con:property><con:property><con:name>granting_url</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>resource_url</con:name><con:value>https://wp1.wirecard.com/emea/middleware_validation</con:value></con:property><con:property><con:name>expired_token</con:name><con:value>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</con:value></con:property><con:property><con:name>revoked_token</con:name><con:value/></con:property><con:property><con:name>username</con:name><con:value>daniyalmobile@wirecard.com</con:value></con:property><con:property><con:name>password</con:name><con:value>Wdp@01234</con:value></con:property><con:property><con:name>DOB</con:name><con:value>1991-01-01T00:00:00</con:value></con:property><con:property><con:name>current_token</con:name><con:value>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</con:value></con:property><con:property><con:name>proxy_number</con:name><con:value>1789605043337</con:value></con:property><con:property><con:name>product_id</con:name><con:value>1789</con:value></con:property><con:property><con:name>accessor_id</con:name><con:value>6</con:value></con:property><con:property><con:name>otp_id</con:name><con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2550</con:value></con:property><con:property><con:name>otp</con:name><con:value>515296</con:value></con:property><con:property><con:name>current_service</con:name><con:value>ValidateOTPSMS</con:value></con:property><con:property><con:name>params</con:name><con:value>, "PhoneNumber": "+971559307088"</con:value></con:property><con:property><con:name>refresh_token</con:name><con:value>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</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="7d1b38a1-4da4-482d-988d-3efb7d0499c8" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GenericService - No JWT" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="POST" id="c4473601-465d-4356-941f-ad36cea5e6ab"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="POST" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("resource_url")}/${=testRunner.testCase.testSuite.project.getPropertyValue("current_service")}</con:endpoint><con:request>{"${=testRunner.testCase.testSuite.project.getPropertyValue("current_service")}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0
+  ${=testRunner.testCase.testSuite.project.getPropertyValue("params")}
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="GET" id="c0f0aa74-832e-415c-8657-84c9161a32fd"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="a6c04d1e-2b26-47d1-b326-6e2ed95d6165" name="GET" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${=testRunner.testCase.testSuite.project.getPropertyValue("resource_url")}/${=testRunner.testCase.testSuite.project.getPropertyValue("current_service")}${=testRunner.testCase.testSuite.project.getPropertyValue("params")}</con:endpoint><con:request>{"${=testRunner.testCase.getName()}": {"requestData": {
+  "UniqueID": "${="MDWL"+new Date().format("yymmddHHmmssSSS")}",
+  "UniqueIDFlag": 0,
+  "ProxyNumber": "123456"
+}}}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>InfiniteAuthURL</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>ResourceURL</con:name><con:value>https://wp1.wirecard.com/emea/middleware_validation</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI</con:name><con:value>https://10.10.99.190:8443/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_orig</con:name><con:value>http://localhost:8089</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI2</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>InfiniteAuthURL_WDI_EMEA</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>fiid</con:name><con:value>1340</con:value></con:property><con:property><con:name>granting_url</con:name><con:value>https://wp1.wirecard.com/emea/middleware_security</con:value></con:property><con:property><con:name>resource_url</con:name><con:value>https://wp1.wirecard.com/emea/middleware_validation</con:value></con:property><con:property><con:name>expired_token</con:name><con:value>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</con:value></con:property><con:property><con:name>revoked_token</con:name><con:value/></con:property><con:property><con:name>username</con:name><con:value>daniyalmobile@wirecard.com</con:value></con:property><con:property><con:name>password</con:name><con:value>Wdp@01234</con:value></con:property><con:property><con:name>DOB</con:name><con:value>1991-01-01T00:00:00</con:value></con:property><con:property><con:name>current_token</con:name><con:value>X/B6RaE20jQKRLaDz1echDMtjrCenC8432E1VifGBiZ+4aLe4n1///Al/mFSdWYN4PeSblhailmjfIhXI6oTxwbLOFCqYNkmZadfnXO0IkXFyl+GsTwUhVNDM0BuOzH+u0XzFxg4fZ/8phDm7odbXBlJUPLB3BosRUtsnz7mvdUIhhm51OLu+rX3UG34jTiS/5yjZwJ16e170U4AsfrmBd78UWwiHkrb95aNx+4Px/z9/AHvH/pvmPBQe2NH8Pur3j1dmtlD2GVVcXnCrbayyGEmmUiBxF8+iFc369MOcvrw/nRhxIbEIhDrMFoNlu85cpLL7GPFTPSQFMnGOuN4xzZY2RPkcxw9jebZ1gFEX2wi0/wficLcMGCd1lYo4KQfRmnyoYDBg/SsCk1tADlfaDHfxOPt2wzvStfJTs4+IvWeuEYBGwtccbsDfE0YePlhrjj0MUeznLjN0b2y0Rccz7/9wGZ1CZQngpxwlFnV0M+H3ul2e6CvHpind18OqysRmseU2gFpPLUv0i85GMXGvo3gcP09sjweSbi2WZI5PEnUz9aluF2uPJ0CnDX849KUfHst1sDuQ0ueUI1L3lej9jBQnJ5kxrCYhPPDxWmuf8gSNUTDwbjpHjyR5BrFgKTB84AhjaAEBbjfuoWT25PqNPZkAJ4L0fZnmD0wLA0lTAuCXkzGflCrqfl9tQF2cWFLGXLSGMog2VH0gHKy64Aq9fT49CWq/+S0gmmIHgQwsKzUNpjmC3QDl1aYIgxoldFQ6JyTe2CwvKwMeEUDOHBK/71Qm/pK4SGxTZl7snfdyseZXpUhTxI9mJOWi7StsyS0cmrzj8lDacfbUcN13frxo69izIf3W9Y68DYzxi1Ju1s1mkNSoXImB+ys9rLF3+c6UaLGeSDEQcwFGe1l3YsDtusgVsWiAXYYttERKmAQHrT+C/iyryxPwIY09FC6N6JqOqFChOdF8FACvINQyU6Ovs9UEk+hS3AJJMC1GXc7/uEC4y8Tot1t8hQm8CNTRH/0cymIXIAjsWlzQHcQo3ntnBxSSkt4z/RkCfW/hKNWkKxRLBWT/cIzuZSGs0RFTMG1H47RyTQ4wNfdSMZNoYIgVjN/oT/nByqtMcKGbRRcXeqDXXW00Xe+inDv9THgH4HvqvRuFgVFIDPHEmUKfR2WwWzOAkc0jS5+7QNNzWO+uJizUGvWHNav0VRJGJweFAfAQwlKp1WBer9NzxdvwRUzi/vlV2CfN1Mx40tBuw+2h5GeJQrEa5exoldG1FAiic98ZieeQnMqg6M5gViOJv4qtWxm5HG3NJDiwrhR1LT+3Jjr/xfmD4bf56ZVfBdKnBdSwFl3oSjOxjJsFxvOGzC7MtglvzfGcN889ZyIUEgdaL83taVeMD3xrFGm8n+6VfsLVbei4ooa8MclGiEjpqBCa0aCAuRECJKEU1Ea6Rp+flKLQpaQycEGQBjqrLEWXvKfC5fLPEzJyRgHvyAQp8rWn6wLNQpOrSi2tke5WqEnsfBTjPIPDnMHq1kai6UiMgIjeaUAbRaHP2uyRqK/vhoMohdO8sZZ5cVS+Wn6nYC/DH1JJwNDWYbmfpIkUahUo35XXC66qeMujA2g2r7xr8pOfyhUl0C2tUsiFM1NkZVIw6RzZEqiM3YYwVL9E+5sC91sSPBGBIjYaFGOgZqbkS1afpivAkJ9MByNTSf6mAMQxls=</con:value></con:property><con:property><con:name>proxy_number</con:name><con:value>1789605043337</con:value></con:property><con:property><con:name>product_id</con:name><con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1789</con:value></con:property><con:property><con:name>accessor_id</con:name><con:value>6</con:value></con:property><con:property><con:name>otp_id</con:name><con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2575</con:value></con:property><con:property><con:name>otp</con:name><con:value>1</con:value></con:property><con:property><con:name>current_service</con:name><con:value>UpdateSecurityQuestionAnswer</con:value></con:property><con:property><con:name>params</con:name><con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">, "ProxyNumber": "1789605043337"</con:value></con:property><con:property><con:name>refresh_token</con:name><con:value>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</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
