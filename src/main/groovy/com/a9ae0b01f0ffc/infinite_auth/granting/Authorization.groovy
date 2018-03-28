@@ -148,7 +148,7 @@ class Authorization {
                     return
                 }
                 if (is_not_null(l_prerequisite_user_auth.maxUsageCount)) {
-                    if (i_context.p_usage_repository.findByAuthorizationId(l_prerequisite_user_auth.authorizationId).size() > l_prerequisite_user_auth.maxUsageCount) {
+                    if (i_context.p_usage_repository.findByAuthorizationId(l_prerequisite_user_auth.authorizationId).size() >= l_prerequisite_user_auth.maxUsageCount) {
                         failure(GC_AUTHORIZATION_ERROR_CODE_MDWL9403B_EXCEEDED_PREREQUISITE)
                         return
                     }

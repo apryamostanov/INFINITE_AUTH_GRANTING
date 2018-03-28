@@ -37,6 +37,8 @@ class GrantType {
         l_user_grant.urlMask = this.urlMask
         l_user_grant.validationModuleName = new HashSet<String>()
         l_user_grant.validationModuleName = this.keyFieldRuleName
+        l_user_grant.maxUsageCountWithinScope = this.maxUsageCountWithinScope
+        l_user_grant.grantTypeId = this.id
         return l_user_grant
     }
 

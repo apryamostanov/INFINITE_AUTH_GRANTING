@@ -11,6 +11,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 @RepositoryRestResource
 interface I_grant_type_repository extends JpaRepository<GrantType, Long> {
 
+    Set<GrantType> findById(@Param("id") Long id)
+
     Set<GrantType> findByRestResourceName(@Param("restResourceName") String restResourceName)
 
     Set<GrantType> findByRestResourceNameAndKeyFieldRuleName(@Param("restResourceName") String restResourceName, @Param("keyFieldRuleName") String keyFieldRuleName)

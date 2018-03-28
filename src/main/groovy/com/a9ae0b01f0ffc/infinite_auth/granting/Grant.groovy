@@ -18,6 +18,12 @@ class Grant {
     @JsonProperty("data_authorization_keys")
     String validationModuleName
 
+    @JsonProperty("max_count")
+    Integer maxUsageCountWithinScope
+
+    @JsonProperty("grant_type_id")
+    Long grantTypeId
+
     boolean equals(o) {
         if (this.is(o)) return true
         if (getClass() != o.class) return false
