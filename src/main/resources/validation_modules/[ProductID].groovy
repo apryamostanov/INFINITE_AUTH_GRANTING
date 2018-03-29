@@ -53,7 +53,7 @@ if (is_null(l_expected_product_id)) {
 }
 
 if (is_not_null(l_product_id)) {
-    if (l_product_id == l_product_id) {
+    if (l_product_id == l_expected_product_id) {
         return true
     }
 }
