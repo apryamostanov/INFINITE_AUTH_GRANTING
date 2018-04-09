@@ -44,7 +44,7 @@ class G06_AuthorizationTypeGenerator {
                 refreshAuthorizationName: "Refresh",
                 accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any accessor").first(),
                 authorizationType: "Access",
-                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
+                prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous").asList()
         ))
         l_entity_set.add(new AuthorizationType(
                 authorizationName: "Read",

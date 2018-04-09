@@ -11,7 +11,7 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 
 @CompileStatic
 @Entity
-@Table(name="AuthorizationTypes")
+@Table(name="TokenTemplates")
 //@Table(uniqueConstraints = @UniqueConstraint(columnNames=["accessor", "authorizationType", "scope", "identity"]))
 class AuthorizationType {
 
@@ -45,7 +45,7 @@ class AuthorizationType {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn
-    @JoinTable(name="Authorization2prerequisite")
+    @JoinTable(name="Authorizations2prerequisites")
     /**
      * Any of these
      */
