@@ -46,19 +46,19 @@ class AccessorType {
     String productGroup = GC_EMPTY_STRING
 
     /** @ApiModelProperty ( e x a m p l e = "0", value = "Optional output field. Indicates that this specific accessor is banned - for AccessorType authentication provider. E.g. to restrict clients with outdated unsupported API versions") */
-    Integer isForbidden = GC_NULL_OBJ_REF as Integer
+    Boolean isForbidden
 
     /** @ApiModelProperty ( v a l u e = "Matching field. Endpoint ID/object as configured on web app instance (server server). Allows overriding authorization rules level of specific grantingEndpointName. Supported wildcard value \"null\". Same value should be in AuthorizationType Validation web app grantingEndpointName configuration.") */
     String grantingEndpointName = GC_EMPTY_STRING
 
-    /** @ApiModelProperty ( v a l u e = "Output field. Allows only usage at specific validation endpoints*/
-    String validationEndpointName = GC_EMPTY_STRING
-
-    /** @ApiModelProperty ( v a l u e = "Output field. Tells to validation endpoint to which resource server to route the request */
-    String resourceEndpointGroupName = GC_EMPTY_STRING
-
     /** @ApiModelProperty ( v a l u e = "Matching field. API version (combination of minor and major versions). Allows overriding authorization rules level of specific API version. Supported wildcard value \"null\". Same value should be in AuthorizationType Validation web app grantingEndpointName configuration.") */
     String apiVersionName = GC_EMPTY_STRING
+
+    /** @ApiModelProperty ( v a l u e = "Output field. Allows only usage at specific validation endpoints*/
+    String validationEndpointGroupName = GC_EMPTY_STRING
+
+    /** @ApiModelProperty ( v a l u e = "Output field. Tells to validation endpoint to which resource server to route the request */
+    String resourceEndpointName = GC_EMPTY_STRING
 
     /** @ApiModelProperty ( e x a m p l e = "1", value = "AccessorType id, generated field") */
     @Id
@@ -75,7 +75,6 @@ class AccessorType {
         l_user_accessor.fiid = this.fiid
         l_user_accessor.product = this.product
         l_user_accessor.productGroup = this.productGroup
-        l_user_accessor.endpointName = this.grantingEndpointName
         l_user_accessor.apiVersionName = this.apiVersionName
         return l_user_accessor
     }

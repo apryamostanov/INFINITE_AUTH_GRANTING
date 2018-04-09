@@ -52,9 +52,11 @@ class T_auth_grant_conf {
     @Value('${infinite.auth.jwt.refresh.keystore.alias}')
     public String infiniteAuthJwtRefreshKeystoreAlias
 
-    @Value('${granting_endpoint_name}')
-    public String granting_endpoint_name
+    @Value('${infinite.auth.validation.validation_endpoint_group_name}')
+    public String validation_endpoint_group_name
 
+    @Value('${infinite.auth.validation.granting_endpoint_name}')
+    public String granting_endpoint_name
 
     @Value('${max_number_of_step_ups}')
     public Integer max_number_of_step_ups

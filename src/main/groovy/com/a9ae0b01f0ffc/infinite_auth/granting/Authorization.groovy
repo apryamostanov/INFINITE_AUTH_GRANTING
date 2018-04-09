@@ -279,29 +279,7 @@ class Authorization {
         jwt = GC_EMPTY_STRING
         Authorization l_lookup_accessor_authorization = this
         //if it is Anonymous authorization - force the Accessor_data authentication preliminary
-        Authentication l_accessor_authentication = identity?.authenticationSet?.find {
-            it.authenticationName == "Accessor_data"
-        }
-        if (is_null(l_accessor_authentication)) {
-            Integer l_number_of_step_ups = GC_ZERO
-            while (is_not_null(l_lookup_accessor_authorization) && is_null(l_accessor_authentication) && l_number_of_step_ups < i_context.p_app_conf.max_number_of_step_ups) {
-                if (is_not_null(l_lookup_accessor_authorization.jwt)) {
-                    if (!is_invalid_access_jwt(l_lookup_accessor_authorization.jwt, i_context)) {
-                        Authorization l_prerequisite_authorization_unwrapped = access_jwt2authorization(l_lookup_accessor_authorization.jwt, i_context)
-                        l_accessor_authentication = l_prerequisite_authorization_unwrapped.identity?.authenticationSet?.find {
-                            it.authenticationName == "Accessor_data"
-                        }
-                        l_lookup_accessor_authorization = l_prerequisite_authorization_unwrapped.prerequisiteAuthorization
-                    }
-                } else {
-                    l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {
-                        it.authenticationName == "Accessor_data"
-                    }
-                    l_lookup_accessor_authorization = l_lookup_accessor_authorization.prerequisiteAuthorization
-                }
-                l_number_of_step_ups ++
-            }
-        }
+        Authentication l_accessor_authentication = find_accessor_authentication(l_lookup_accessor_authorization, i_context)
         if (is_null(l_accessor_authentication)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_20_MISSING_ACCESSOR_DATA)
             return
@@ -342,6 +320,33 @@ class Authorization {
         if (authorizationStatus == GC_STATUS_NEW) {
             authorizationStatus = GC_STATUS_FAILED
         }
+    }
+
+    static Authentication find_accessor_authentication(Authorization l_lookup_accessor_authorization, T_auth_grant_base_5_context i_context) {
+        Authentication l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {
+            it.authenticationName == "Accessor_data"
+        }
+        if (is_null(l_accessor_authentication)) {
+            Integer l_number_of_step_ups = GC_ZERO
+            while (is_not_null(l_lookup_accessor_authorization) && is_null(l_accessor_authentication) && l_number_of_step_ups < i_context.p_app_conf.max_number_of_step_ups) {
+                if (is_not_null(l_lookup_accessor_authorization.jwt)) {
+                    if (!is_invalid_access_jwt(l_lookup_accessor_authorization.jwt, i_context)) {
+                        Authorization l_prerequisite_authorization_unwrapped = access_jwt2authorization(l_lookup_accessor_authorization.jwt, i_context)
+                        l_accessor_authentication = l_prerequisite_authorization_unwrapped.identity?.authenticationSet?.find {
+                            it.authenticationName == "Accessor_data"
+                        }
+                        l_lookup_accessor_authorization = l_prerequisite_authorization_unwrapped.prerequisiteAuthorization
+                    }
+                } else {
+                    l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {
+                        it.authenticationName == "Accessor_data"
+                    }
+                    l_lookup_accessor_authorization = l_lookup_accessor_authorization.prerequisiteAuthorization
+                }
+                l_number_of_step_ups++
+            }
+        }
+        return l_accessor_authentication
     }
 
     void set_validity() {

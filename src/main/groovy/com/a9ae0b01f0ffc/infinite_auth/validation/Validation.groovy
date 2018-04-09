@@ -2,6 +2,7 @@ package com.a9ae0b01f0ffc.infinite_auth.validation
 
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.GrantType
+import com.a9ae0b01f0ffc.infinite_auth.granting.Authentication
 import com.a9ae0b01f0ffc.infinite_auth.granting.Authorization
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiException
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -105,11 +106,24 @@ class Validation {
                 return GC_JWT_VALIDITY_INVALID
             }
         }
+        if (is_null(l_authorization.scope.keyFieldMap)) {
+            System.out.println(34)
+            return GC_JWT_VALIDITY_INVALID
+        }
+        if (not(l_authorization.scope.keyFieldMap.containsKey("validation_endpoint_group_name"))) {
+            System.out.println(33)
+            return GC_JWT_VALIDITY_INVALID
+        }
+        if (not(i_context.app_conf().validation_endpoint_group_name.matches(l_authorization.scope.keyFieldMap.get("validation_endpoint_group_name")))
+        && not(i_context.app_conf().validation_endpoint_group_name == l_authorization.scope.keyFieldMap.get("validation_endpoint_group_name"))) {
+            System.out.println(31)
+            return GC_JWT_VALIDITY_INVALID
+        }
         Boolean l_is_matched_resource_grant = GC_FALSE
         for (l_grant in l_authorization.scope.grantSet) {
             if (is_not_null(l_grant.urlMask)) {
                 String l_parsed_url_mask = parse_url_mask(l_grant.urlMask, l_authorization)
-                if (i_url_path.matches(l_parsed_url_mask)) {
+                if (i_url_path.matches(l_parsed_url_mask) || i_url_path == l_parsed_url_mask) {
                     l_is_matched_resource_grant = GC_TRUE
                 }
             } else {

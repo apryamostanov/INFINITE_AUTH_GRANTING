@@ -42,13 +42,13 @@ class G01_AccessorTypeGenerator {
                 , lookupPriority: 2, osName: "%", platform: "%React%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Authorization: Any React", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
 
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_ROUTING_CONTROL
-                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Routing: Any APAC QA Accessor", appName: "%QA%", apiVersionName: "%", grantingEndpointName: "%", validationEndpointName: "%", resourceEndpointGroupName: "QA"))
+                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Routing: Any APAC QA Accessor", appName: "%QA%", apiVersionName: "%", grantingEndpointName: "%", validationEndpointGroupName: ".*", resourceEndpointName: "QA"))
 
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_ROUTING_CONTROL
-                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Routing: Any EMEA UAT Accessor", appName: "%EMEA UAT%", apiVersionName: "%", grantingEndpointName: "%", validationEndpointName: "%", resourceEndpointGroupName: "EMEA UAT"))
+                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Routing: Any EMEA UAT Accessor", appName: "%EMEA UAT%", apiVersionName: "%", grantingEndpointName: "%", validationEndpointGroupName: ".*", resourceEndpointName: "EMEA UAT"))
 
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_ROUTING_CONTROL
-                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Routing: Any Sandbox Accessor", appName: "%Sandbox%", apiVersionName: "%", grantingEndpointName: "%", validationEndpointName: "%", resourceEndpointGroupName: "Sandbox"))
+                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Routing: Any Sandbox Accessor", appName: "%Sandbox%", apiVersionName: "%", grantingEndpointName: "%", validationEndpointGroupName: ".*", resourceEndpointName: "Sandbox"))
 
         p_accessor_repository.save(l_entity_set)
     }

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Accessor {
 
-
     String appName
 
     @JsonProperty("accessor_id")
@@ -16,7 +15,6 @@ class Accessor {
     String fiid
     String product
     String productGroup
-    String endpointName
     String apiVersionName
 
     boolean equals(o) {
@@ -29,7 +27,6 @@ class Accessor {
         if (apiVersionName != accessor.apiVersionName) return false
         if (appName != accessor.appName) return false
         if (appVersion != accessor.appVersion) return false
-        if (endpointName != accessor.endpointName) return false
         if (fiid != accessor.fiid) return false
         if (platform != accessor.platform) return false
         if (product != accessor.product) return false
