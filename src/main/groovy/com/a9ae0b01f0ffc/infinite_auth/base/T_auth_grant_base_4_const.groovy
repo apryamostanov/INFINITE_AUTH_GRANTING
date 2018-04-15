@@ -39,5 +39,8 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_DATA_TYPE_BOOLEAN = "B"
     static final String GC_DATA_TYPE_DATETIME = "DT"
     static final String GC_JSON_NULL = "null"
+    static final String GC_MODE_CONFIGURATION = "CONFIGURATION"
+    static final String GC_MODE_GRANTING = "GRANTING"
+    static final String GC_MODE_VALIDATION = "VALIDATION"
 
 }

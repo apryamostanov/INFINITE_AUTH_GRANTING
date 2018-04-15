@@ -61,6 +61,9 @@ class T_auth_grant_conf {
     @Value('${max_number_of_step_ups}')
     public Integer max_number_of_step_ups
 
+    @Value('${infinite.auth.mode}')
+    public String mode
+
     @PostConstruct
     void init() {
         System.out.println("================== " + authenticationModulesPath + "================== ");
