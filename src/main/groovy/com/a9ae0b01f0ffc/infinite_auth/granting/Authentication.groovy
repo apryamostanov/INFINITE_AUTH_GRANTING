@@ -75,7 +75,7 @@ class Authentication {
         authenticationData?.privateDataFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
         if (authenticationStatus == GC_STATUS_FAILED) {
             l_new_attempt.status = GC_STATUS_FAILED
-            l_new_attempt.currentAttemptCount = l_new_attempt.previousAttemptCount + GC_ONE_ONLY
+            l_new_attempt.currentAttemptCount = nvl(l_new_attempt.previousAttemptCount, GC_ZERO) + GC_ONE_ONLY
         } else if (authenticationStatus == GC_STATUS_SUCCESSFUL) {
             l_new_attempt.status = GC_STATUS_SUCCESSFUL
             l_new_attempt.currentAttemptCount = GC_ZERO
