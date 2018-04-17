@@ -16,7 +16,7 @@ import javax.persistence.Table
 class Revocation {
 
     @Id
-    @OrderColumn(nullable = false)
+    @Column(nullable = false)
     Long authorizationId
 
 }

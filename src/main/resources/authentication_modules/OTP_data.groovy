@@ -9,20 +9,20 @@ System.out.println(this.getClass().getSimpleName())
 
 def io_user_authentication = binding.getVariable("io_user_authentication")
 
-if (is_null(io_user_authentication.authenticationData?.publicDataFieldSet)) {
+if (is_null(io_user_authentication.authenticationData?.publicDataFieldMap)) {
     io_user_authentication.failure()
     return
 }
 
-if (is_null(io_user_authentication.authenticationData?.privateDataFieldSet)) {
+if (is_null(io_user_authentication.authenticationData?.privateDataFieldMap)) {
     io_user_authentication.failure()
     return
 }
 
-if (io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number") == null ||
-        io_user_authentication.authenticationData?.publicDataFieldSet?.get("otp_id") == null ||
-        io_user_authentication.authenticationData?.publicDataFieldSet?.get("phone_number") == null ||
-        io_user_authentication.authenticationData?.privateDataFieldSet?.get("otp") == null) {
+if (io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number") == null ||
+        io_user_authentication.authenticationData?.publicDataFieldMap?.get("otp_id") == null ||
+        io_user_authentication.authenticationData?.publicDataFieldMap?.get("phone_number") == null ||
+        io_user_authentication.authenticationData?.privateDataFieldMap?.get("otp") == null) {
     io_user_authentication.failure()
     return
 }
@@ -32,10 +32,10 @@ String l_validate_otp_sms_request_body_string = """{
     "requestData": {
       "UniqueID": "${"MDWL"+new Date().format("yyMMddHHmmssSSS")}",
       "UniqueIDFlag": "0",
-      "ProxyNumber": "${io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number")}",
-      "OTP": "${io_user_authentication.authenticationData?.privateDataFieldSet?.get("otp")}",
-      "OTPUniqueId": ${io_user_authentication.authenticationData?.publicDataFieldSet?.get("otp_id")},
-      "PhoneNumber": "${io_user_authentication.authenticationData?.publicDataFieldSet?.get("phone_number")}",
+      "ProxyNumber": "${io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number")}",
+      "OTP": "${io_user_authentication.authenticationData?.privateDataFieldMap?.get("otp")}",
+      "OTPUniqueId": ${io_user_authentication.authenticationData?.publicDataFieldMap?.get("otp_id")},
+      "PhoneNumber": "${io_user_authentication.authenticationData?.publicDataFieldMap?.get("phone_number")}",
       "AccessorId": "4"
     }
   }
@@ -48,8 +48,8 @@ System.out.println(l_validate_otp_sms_request_body_string)
 ////////////////
 io_user_authentication.keyFieldMap = new HashMap<String, String>()
 io_user_authentication.functionalFieldMap = new HashMap<String, String>()
-io_user_authentication.keyFieldMap.put("proxy_number", io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number"))
-io_user_authentication.keyFieldMap.put("phone_number", io_user_authentication.authenticationData?.publicDataFieldSet?.get("phone_number"))
+io_user_authentication.keyFieldMap.put("proxy_number", io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number"))
+io_user_authentication.keyFieldMap.put("phone_number", io_user_authentication.authenticationData?.publicDataFieldMap?.get("phone_number"))
 io_user_authentication.success()
 return
 ////////////////
@@ -84,8 +84,8 @@ if (!l_validate_otp_sms_response.isSuccessful()) {
 
                 io_user_authentication.keyFieldMap = new HashMap<String, String>()
                 io_user_authentication.functionalFieldMap = new HashMap<String, String>()
-                io_user_authentication.keyFieldMap.put("proxy_number", io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number"))
-                io_user_authentication.keyFieldMap.put("phone_number", io_user_authentication.authenticationData?.publicDataFieldSet?.get("phone_number"))
+                io_user_authentication.keyFieldMap.put("proxy_number", io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number"))
+                io_user_authentication.keyFieldMap.put("phone_number", io_user_authentication.authenticationData?.publicDataFieldMap?.get("phone_number"))
                     io_user_authentication.success()
                     return
     }

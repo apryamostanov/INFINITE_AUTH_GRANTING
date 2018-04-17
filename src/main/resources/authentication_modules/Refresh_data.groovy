@@ -6,41 +6,27 @@ System.out.println(this.getClass().getSimpleName())
 
 def io_user_authentication = binding.getVariable("io_user_authentication")
 
-if (is_null(io_user_authentication.authenticationData?.publicDataFieldSet)) {
+
+//TODO: check for revocation
+
+if (io_user_authentication.p_parent_authorization.is_invalid_refresh_jwt(io_user_authentication.authenticationData?.privateDataFieldMap?.get("refresh_token") as String, io_user_authentication.p_context)) {
     io_user_authentication.failure()
     return
 }
 
-if (is_null(io_user_authentication.authenticationData?.privateDataFieldSet)) {
-    io_user_authentication.failure()
-    return
-}
-
-if (io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number") == null ||
-        io_user_authentication.authenticationData?.publicDataFieldSet?.get("old_access_token") == null ||
-        io_user_authentication.authenticationData?.privateDataFieldSet?.get("refresh_token") == null) {
-    io_user_authentication.failure()
-    return
-}
-
-if (io_user_authentication.p_parent_authorization.is_invalid_refresh_jwt(io_user_authentication.authenticationData?.privateDataFieldSet?.get("refresh_token") as String, io_user_authentication.p_context)) {
-    io_user_authentication.failure()
-    return
-}
-
-def l_refresh_authorization = io_user_authentication.p_parent_authorization.refresh_jwt2authorization(io_user_authentication.authenticationData?.privateDataFieldSet?.get("refresh_token") as String, io_user_authentication.p_context)
+def l_refresh_authorization = io_user_authentication.p_parent_authorization.refresh_jwt2authorization(io_user_authentication.authenticationData?.privateDataFieldMap?.get("refresh_token") as String, io_user_authentication.p_context)
 
 if (l_refresh_authorization.expiryDate.before(new Date())) {
     io_user_authentication.failure()
     return
 }
 
-if (io_user_authentication.p_parent_authorization.is_invalid_access_jwt(io_user_authentication.authenticationData?.publicDataFieldSet?.get("old_access_token") as String, io_user_authentication.p_context)) {
+if (io_user_authentication.p_parent_authorization.is_invalid_access_jwt(io_user_authentication.authenticationData?.publicDataFieldMap?.get("old_access_token") as String, io_user_authentication.p_context)) {
     io_user_authentication.failure()
     return
 }
 
-def l_old_access_authorization = io_user_authentication.p_parent_authorization.access_jwt2authorization(io_user_authentication.authenticationData?.publicDataFieldSet?.get("old_access_token") as String, io_user_authentication.p_context)
+def l_old_access_authorization = io_user_authentication.p_parent_authorization.access_jwt2authorization(io_user_authentication.authenticationData?.publicDataFieldMap?.get("old_access_token") as String, io_user_authentication.p_context)
 
 if (l_old_access_authorization.scope != l_refresh_authorization.scope) {
     io_user_authentication.failure()
@@ -57,7 +43,7 @@ if (!l_refresh_authorization.scope.keyFieldMap.containsKey("proxy_number")) {
     return
 }
 
-if (l_refresh_authorization.scope.keyFieldMap.get("proxy_number") != io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number")) {
+if (l_refresh_authorization.scope.keyFieldMap.get("proxy_number") != io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number")) {
     io_user_authentication.failure()
     return
 }

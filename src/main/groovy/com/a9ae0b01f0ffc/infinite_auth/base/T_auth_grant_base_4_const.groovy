@@ -42,5 +42,7 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_MODE_CONFIGURATION = "CONFIGURATION"
     static final String GC_MODE_GRANTING = "GRANTING"
     static final String GC_MODE_VALIDATION = "VALIDATION"
+    static final Integer GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER = 0
+    static final Integer GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO = 0
 
 }

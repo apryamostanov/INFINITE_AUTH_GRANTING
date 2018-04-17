@@ -64,6 +64,9 @@ class T_auth_grant_conf {
     @Value('${infinite.auth.mode}')
     public String mode
 
+    @Value('${infinite.auth.granting.authentication_hash_type}')
+    public String authentication_hash_type
+
     @PostConstruct
     void init() {
         System.out.println("================== " + authenticationModulesPath + "================== ");

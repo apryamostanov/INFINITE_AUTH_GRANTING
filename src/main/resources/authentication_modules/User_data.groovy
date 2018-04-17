@@ -15,22 +15,6 @@ System.out.println(this.getClass().getSimpleName())
 
 def io_user_authentication = binding.getVariable("io_user_authentication")
 
-if (is_null(io_user_authentication.authenticationData?.publicDataFieldSet)) {
-    io_user_authentication.failure()
-    return
-}
-
-if (is_null(io_user_authentication.authenticationData?.privateDataFieldSet)) {
-    io_user_authentication.failure()
-    return
-}
-
-if (io_user_authentication.authenticationData?.publicDataFieldSet?.get("username") == null ||
-        io_user_authentication.authenticationData?.privateDataFieldSet?.get("password") == null) {
-    io_user_authentication.failure()
-    return
-}
-
 String l_self_service_login_request_body_string = """<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
   <s:Body>
     <SelfServiceLogin xmlns="www.corecard.com">
@@ -51,8 +35,8 @@ String l_self_service_login_request_body_string = """<s:Envelope xmlns:s="http:/
         <Language i:nil="true" xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices" />
         <RequestDate i:nil="true" xmlns="http://schemas.datacontract.org/2004/07/CoreCardServices" />
         <d4p1:InstitutionID>${io_user_authentication.p_parent_authorization.functionalFieldMap.get("FIID")}</d4p1:InstitutionID>
-        <d4p1:CardUserId>${io_user_authentication.authenticationData?.publicDataFieldSet?.get("username")}</d4p1:CardUserId>
-        <d4p1:CurrentPassword>${io_user_authentication.authenticationData?.privateDataFieldSet?.get("password")}</d4p1:CurrentPassword>
+        <d4p1:CardUserId>${io_user_authentication.authenticationData?.publicDataFieldMap?.get("username")}</d4p1:CardUserId>
+        <d4p1:CurrentPassword>${io_user_authentication.authenticationData?.privateDataFieldMap?.get("password")}</d4p1:CurrentPassword>
       </requestData>
     </SelfServiceLogin>
   </s:Body>
@@ -184,7 +168,7 @@ if (!l_self_service_login_response.isSuccessful()) {
                 io_user_authentication.functionalFieldMap = new HashMap<String, String>()
                 io_user_authentication.keyFieldMap.put("proxy_number", l_slurped_self_service_login_response.Body.SelfServiceLoginResponse.SelfServiceLoginResult.ProxyNumber.toString())
                 io_user_authentication.keyFieldMap.put("account_number", l_slurped_self_service_login_response.Body.SelfServiceLoginResponse.SelfServiceLoginResult.AccountNumber.toString())
-                io_user_authentication.keyFieldMap.put("user_name", io_user_authentication.authenticationData?.publicDataFieldSet?.get("username") as String)
+                io_user_authentication.keyFieldMap.put("user_name", io_user_authentication.authenticationData?.publicDataFieldMap?.get("username") as String)
                 io_user_authentication.keyFieldMap.put("product_id", l_product_id.toString())
                 io_user_authentication.functionalFieldMap.put("card_type_id_enhanced", l_card_type_id_enhanced.toString())
                 io_user_authentication.functionalFieldMap.put("login_flag", l_slurped_self_service_login_response.Body.SelfServiceLoginResponse.SelfServiceLoginResult.LoginFlag.toString())

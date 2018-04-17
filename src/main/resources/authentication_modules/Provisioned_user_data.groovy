@@ -85,25 +85,12 @@ System.out.println(this.getClass().getSimpleName())
 
 def io_user_authentication = binding.getVariable("io_user_authentication")
 
-if (io_user_authentication.authenticationData?.publicDataFieldSet == null) {
+if (io_user_authentication.p_parent_authorization.is_invalid_access_jwt(io_user_authentication.authenticationData?.publicDataFieldMap?.get("provisioned_user_data_usage_authorization") as String, io_user_authentication.p_context)) {
     io_user_authentication.failure()
     return
 }
 
-if (io_user_authentication.authenticationData?.publicDataFieldSet?.get("provisioned_data_unique_id") == null ||
-        io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number") == null ||
-        io_user_authentication.authenticationData?.publicDataFieldSet?.get("provisioned_user_data_usage_authorization") == null ||
-        io_user_authentication.authenticationData?.privateDataFieldSet?.get("provisioned_data_signature") == null) {
-    io_user_authentication.failure()
-    return
-}
-
-if (io_user_authentication.p_parent_authorization.is_invalid_access_jwt(io_user_authentication.authenticationData?.publicDataFieldSet?.get("provisioned_user_data_usage_authorization") as String, io_user_authentication.p_context)) {
-    io_user_authentication.failure()
-    return
-}
-
-def l_provisioned_user_data_usage_authorization = io_user_authentication.p_parent_authorization.access_jwt2authorization(io_user_authentication.authenticationData?.publicDataFieldSet?.get("provisioned_user_data_usage_authorization") as String, io_user_authentication.p_context)
+def l_provisioned_user_data_usage_authorization = io_user_authentication.p_parent_authorization.access_jwt2authorization(io_user_authentication.authenticationData?.publicDataFieldMap?.get("provisioned_user_data_usage_authorization") as String, io_user_authentication.p_context)
 
 if (l_provisioned_user_data_usage_authorization.expiryDate.before(new Date())) {
     io_user_authentication.failure()
@@ -115,7 +102,7 @@ if (!l_provisioned_user_data_usage_authorization.scope.keyFieldMap.containsKey("
     return
 }
 
-if (l_provisioned_user_data_usage_authorization.scope.keyFieldMap.get("proxy_number") != io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number")) {
+if (l_provisioned_user_data_usage_authorization.scope.keyFieldMap.get("proxy_number") != io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number")) {
     io_user_authentication.failure()
     return
 }
@@ -124,11 +111,11 @@ Boolean is_valid_signature = verify(
         loadPublicKey(
                 l_provisioned_user_data_usage_authorization.functionalFieldMap.get("provisioning_public_key") as String
         ),
-        new BASE64Decoder().decodeBuffer(io_user_authentication.authenticationData?.privateDataFieldSet?.get("provisioned_data_signature") as String),
-        (io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number") + io_user_authentication.authenticationData?.publicDataFieldSet?.get("provisioned_data_unique_id")) as String
+        new BASE64Decoder().decodeBuffer(io_user_authentication.authenticationData?.privateDataFieldMap?.get("provisioned_data_signature") as String),
+        (io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number") + io_user_authentication.authenticationData?.publicDataFieldMap?.get("provisioned_data_unique_id")) as String
 )
 
-//String l_expected_check = (io_user_authentication.authenticationData?.publicDataFieldSet.get("proxy_number") + io_user_authentication.authenticationData?.publicDataFieldSet.get("provisioned_data_unique_id"))
+//String l_expected_check = (io_user_authentication.authenticationData?.publicDataFieldMap.get("proxy_number") + io_user_authentication.authenticationData?.publicDataFieldMap.get("provisioned_data_unique_id"))
 
 //System.out.println(l_decrypted_sig)
 //System.out.println(l_expected_check)
@@ -140,5 +127,5 @@ if (!is_valid_signature) {
 
 io_user_authentication.keyFieldMap = new HashMap<String, String>()
 io_user_authentication.functionalFieldMap = new HashMap<String, String>()
-io_user_authentication.keyFieldMap.put("proxy_number", io_user_authentication.authenticationData?.publicDataFieldSet?.get("proxy_number") as String)
+io_user_authentication.keyFieldMap.put("proxy_number", io_user_authentication.authenticationData?.publicDataFieldMap?.get("proxy_number") as String)
 io_user_authentication.success()

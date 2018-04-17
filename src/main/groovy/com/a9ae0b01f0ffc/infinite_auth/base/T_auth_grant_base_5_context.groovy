@@ -2,6 +2,7 @@ package com.a9ae0b01f0ffc.infinite_auth.base
 
 import com.a9ae0b01f0ffc.infinite_auth.client.*
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_accessor_type_repository
+import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authentication_attempt_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authentication_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authorization_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_grant_type_repository
@@ -11,13 +12,12 @@ import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.RevocationRepositor
 import com.a9ae0b01f0ffc.infinite_auth.validation.interfaces.UsageRepository
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.ObjectMapper
-import groovy.util.slurpersupport.GPathResult
-import groovy.util.slurpersupport.NodeChild
 import okhttp3.OkHttpClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import javax.net.ssl.HostnameVerifier
+import javax.persistence.EntityManager
 import java.nio.charset.StandardCharsets
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
@@ -34,6 +34,9 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     @JsonIgnore
     @Autowired
     ObjectMapper p_object_mapper
+
+    @Autowired
+    EntityManager p_entity_manager
 
     @Autowired
     T_jwt_manager p_jwt_manager
@@ -67,6 +70,9 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     @Autowired
     @JsonIgnore
     I_authorization_type_repository p_authorization_type_repository
+    @Autowired
+    @JsonIgnore
+    I_authentication_attempt_repository p_authentication_attempt_repository
 
     static HostnameVerifier get_unsecure_host_name_verifier() {
         return new T_host_name_verifier()

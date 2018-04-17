@@ -18,7 +18,6 @@ class AuthorizationType {
     String authorizationName
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @OrderColumn
     AccessorType accessor = GC_NULL_OBJ_REF as AccessorType
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -287,22 +287,22 @@ class Authorization {
         Object[] l_auth_and_scopes = i_context.p_authorization_type_repository.match_authorizations(
                 scope?.scopeName
                 , identity?.identityName
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("accessor_name") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("platform") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("app_version") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("FIID") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product_group") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("api_major_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("accessor_name") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("platform") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("app_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("FIID") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product_group") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
 
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("accessor_name") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("platform") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("app_version") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("FIID") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("product_group") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldSet?.get("api_major_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("accessor_name") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("platform") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("app_version") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("FIID") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product_group") as String
+                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
         )[GC_FIRST_INDEX]
         if (is_null(l_auth_and_scopes) || l_auth_and_scopes?.size() == GC_EMPTY_SIZE) {

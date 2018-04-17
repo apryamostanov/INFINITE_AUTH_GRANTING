@@ -23,13 +23,12 @@ class Usage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long authorizationUsageId
 
-    @OrderColumn(nullable = false)
+    @Column(nullable = false)
     Long authorizationId
 
     Date usageDate
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @OrderColumn
     GrantType usedGrantType
 
 }

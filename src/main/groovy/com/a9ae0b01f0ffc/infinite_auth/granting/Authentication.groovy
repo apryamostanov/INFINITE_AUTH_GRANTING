@@ -1,15 +1,21 @@
 package com.a9ae0b01f0ffc.infinite_auth.granting
 
-import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
+import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationAttempt
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import groovy.time.TimeCategory
+import groovy.transform.Memoized
 
-import static base.T_common_base_1_const.GC_NULL_OBJ_REF
-import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.GC_STATUS_FAILED
-import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.GC_STATUS_SUCCESSFUL
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
+
+import static base.T_common_base_1_const.*
+import static base.T_common_base_3_utils.is_null
+import static base.T_common_base_3_utils.not
+import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Authentication {
@@ -28,7 +34,7 @@ class Authentication {
     HashMap<String, String> functionalFieldMap
 
     @JsonProperty("status")
-    String authenticationStatus = T_auth_grant_base_4_const.GC_STATUS_NEW
+    String authenticationStatus = GC_STATUS_NEW
 
     @JsonIgnore
     def p_conf
@@ -49,6 +55,15 @@ class Authentication {
             failure()
             return
         }
+        if (is_mandatory_fields_missing(i_conf_authentication)) {
+            failure()
+            return
+        }
+        AuthenticationAttempt l_new_attempt = create_authentication_attempt(i_conf_authentication, i_context)
+        if (l_new_attempt.status == GC_STATUS_FAILED) {
+            failure()
+            return
+        }
         functionalFieldMap = new HashMap<>()
         keyFieldMap = new HashMap<>()
         p_context = i_context
@@ -57,7 +72,86 @@ class Authentication {
         Binding l_binding = new Binding()
         l_binding.setVariable("io_user_authentication", this)
         i_context.get_authentication_runner().run(authenticationName + i_context.app_conf().authenticationModulesExtension, l_binding)
-        authenticationData?.privateDataFieldSet = GC_NULL_OBJ_REF as HashMap<String, String>
+        authenticationData?.privateDataFieldMap = GC_NULL_OBJ_REF as HashMap<String, String>
+        if (authenticationStatus == GC_STATUS_FAILED) {
+            l_new_attempt.status = GC_STATUS_FAILED
+            l_new_attempt.currentAttemptCount = l_new_attempt.previousAttemptCount + GC_ONE_ONLY
+        } else if (authenticationStatus == GC_STATUS_SUCCESSFUL) {
+            l_new_attempt.status = GC_STATUS_SUCCESSFUL
+            l_new_attempt.currentAttemptCount = GC_ZERO
+        }
+        i_context.p_authentication_attempt_repository.save([l_new_attempt])
+    }
+
+    Boolean is_mandatory_fields_missing(AuthenticationType i_conf_authentication) {
+        if ((not(i_conf_authentication.mandatoryPublicFieldNames.isEmpty()) && authenticationData.publicDataFieldMap == null)
+                || (not(i_conf_authentication.mandatoryPrivateFieldNames.isEmpty()) && authenticationData.privateDataFieldMap == null)) {
+            return true
+        }
+        if ((not(i_conf_authentication.mandatoryPublicFieldNames.isEmpty()) && authenticationData.publicDataFieldMap.isEmpty())
+                || (not(i_conf_authentication.mandatoryPrivateFieldNames.isEmpty()) && authenticationData.privateDataFieldMap.isEmpty())) {
+            return true
+        }
+        for (l_field_name in i_conf_authentication.mandatoryPublicFieldNames) {
+            if (not(authenticationData.publicDataFieldMap.containsKey(l_field_name))
+                    || is_null(authenticationData.publicDataFieldMap.get(l_field_name))) {
+                return true
+            }
+        }
+        for (l_field_name in i_conf_authentication.mandatoryPrivateFieldNames) {
+            if (not(authenticationData.privateDataFieldMap.containsKey(l_field_name))
+                    || is_null(authenticationData.privateDataFieldMap.get(l_field_name))) {
+                return true
+            }
+        }
+        return false
+    }
+
+    String hash_code(T_auth_grant_base_5_context i_context) {
+        String l_unhashed_authentication_string = GC_EMPTY_STRING
+        LinkedList<String> l_sorted_field_names = authenticationData.publicDataFieldMap.keySet().sort()
+        l_sorted_field_names.each {
+            l_unhashed_authentication_string += authenticationData.publicDataFieldMap.get(it)
+        }
+        MessageDigest l_message_digest = MessageDigest.getInstance(i_context.p_app_conf.authentication_hash_type)
+        byte[] l_authentication_hash_bytes = l_message_digest.digest(l_unhashed_authentication_string.getBytes(StandardCharsets.UTF_8))
+        String l_authentication_hash = new String(l_authentication_hash_bytes)
+        return l_authentication_hash
+    }
+
+    AuthenticationAttempt create_authentication_attempt(AuthenticationType i_conf_authentication, T_auth_grant_base_5_context i_context) {
+        Date l_current_date = new Date()
+        AuthenticationAttempt l_new_authentication_attempt = new AuthenticationAttempt(
+                authenticationName: authenticationName,
+                status: GC_STATUS_NEW,
+                authenticationHash: hash_code(i_context),
+                attemptDate: l_current_date
+        )
+        if (i_conf_authentication.lockoutMaxAttemptCount == GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER) {
+            return l_new_authentication_attempt
+        }
+        Date l_start_search_date = l_current_date
+        use(TimeCategory) {
+            l_start_search_date = l_current_date - i_conf_authentication.lockoutDurationSeconds.seconds
+        }
+        Set<AuthenticationAttempt> l_search_attempts = i_context.p_authentication_attempt_repository.find_attempt(authenticationName, hash_code(i_context), l_start_search_date)
+        if (l_search_attempts.isEmpty()) {
+            return l_new_authentication_attempt
+        }
+        AuthenticationAttempt l_previous_attempt = l_search_attempts.first()
+        if (l_previous_attempt.currentAttemptCount >= i_conf_authentication.lockoutMaxAttemptCount) {
+            //lockout
+            use(TimeCategory) {
+                if (l_current_date < l_previous_attempt.attemptDate + i_conf_authentication.lockoutDurationSeconds.seconds) {
+                    //still locked
+                    l_new_authentication_attempt.status = GC_STATUS_FAILED
+                }
+            }
+        }
+        //not locked out or already unlocked
+        l_new_authentication_attempt.previousAttemptCount = l_previous_attempt.currentAttemptCount
+        l_new_authentication_attempt.previousAttemptDate = l_previous_attempt.attemptDate
+        return l_new_authentication_attempt
     }
 
 }

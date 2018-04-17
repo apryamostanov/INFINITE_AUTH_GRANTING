@@ -16,7 +16,6 @@ class ScopeType {
     String scopeName = GC_EMPTY_STRING
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @OrderColumn
     AccessorType accessor = GC_NULL_OBJ_REF as AccessorType
 
     @Id

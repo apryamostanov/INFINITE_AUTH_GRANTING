@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 class Authentication_data {
 
     @JsonProperty("public_data")
-    HashMap<String, Object> publicDataFieldSet
+    HashMap<String, Object> publicDataFieldMap
 
     @JsonProperty("private_data")
-    HashMap<String, Object> privateDataFieldSet
+    HashMap<String, Object> privateDataFieldMap
 
 }
