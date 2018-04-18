@@ -49,7 +49,7 @@ class G04_AuthenticationTypeGenerator {
         l_entity_set.add(new AuthenticationType(authenticationName: "OTP_data",
                 mandatoryPublicFieldNames: [
                         "proxy_number",
-                        "otp_id",
+                        //"otp_id", //todo: this is needed
                         "phone_number"
                 ],
                 mandatoryPrivateFieldNames: [

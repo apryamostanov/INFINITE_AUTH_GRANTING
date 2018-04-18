@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.time.TimeCategory
 import groovy.transform.Memoized
+import sun.misc.BASE64Encoder
 
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -80,7 +81,9 @@ class Authentication {
             l_new_attempt.status = GC_STATUS_SUCCESSFUL
             l_new_attempt.currentAttemptCount = GC_ZERO
         }
-        i_context.p_authentication_attempt_repository.save([l_new_attempt])
+        if (i_conf_authentication.lockoutMaxAttemptCount != GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER) {
+            i_context.p_authentication_attempt_repository.save([l_new_attempt])
+        }
     }
 
     Boolean is_mandatory_fields_missing(AuthenticationType i_conf_authentication) {
@@ -115,8 +118,8 @@ class Authentication {
         }
         MessageDigest l_message_digest = MessageDigest.getInstance(i_context.p_app_conf.authentication_hash_type)
         byte[] l_authentication_hash_bytes = l_message_digest.digest(l_unhashed_authentication_string.getBytes(StandardCharsets.UTF_8))
-        String l_authentication_hash = new String(l_authentication_hash_bytes)
-        return l_authentication_hash
+        String l_authentication_hash_base64_encoded = new BASE64Encoder().encode(l_authentication_hash_bytes)
+        return l_authentication_hash_base64_encoded
     }
 
     AuthenticationAttempt create_authentication_attempt(AuthenticationType i_conf_authentication, T_auth_grant_base_5_context i_context) {
@@ -150,7 +153,6 @@ class Authentication {
         }
         //not locked out or already unlocked
         l_new_authentication_attempt.previousAttemptCount = l_previous_attempt.currentAttemptCount
-        l_new_authentication_attempt.previousAttemptDate = l_previous_attempt.attemptDate
         return l_new_authentication_attempt
     }
 
