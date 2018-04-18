@@ -30,7 +30,6 @@ interface I_authorization_type_repository extends JpaRepository<AuthorizationTyp
         
         where scopeSet.scopeName = coalesce(:scopeName, 'Any')
         and (identitySet.identityName = :identityName or :identityName is null)
-        and a.authorizationType = 'Access'
         
         and coalesce(:appName, 'Any') like authorizationAccessor.appName 
         and coalesce(:platform, 'Any') like authorizationAccessor.platform 

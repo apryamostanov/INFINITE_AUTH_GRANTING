@@ -50,8 +50,6 @@ class AuthorizationType {
      */
     Set<AuthorizationType> prerequisiteAuthorizationSet
 
-    String authorizationType
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -65,7 +63,7 @@ class AuthorizationType {
                 if (i_identity_name == null || i_identity_name == l_identity_type.identityName) {
                     Authorization l_user_authorization = new Authorization()
                     l_user_authorization.authorizationName = this.authorizationName
-                    l_user_authorization.authorizationType = this.authorizationType
+                    l_user_authorization.authorizationType = "Access"
                     //l_user_authorization.accessor = this.accessor.to_user_accessor()
                     l_user_authorization.identity = l_identity_type.to_user_identity()
                     l_user_authorization.scope = l_scope_type.to_user_scope()
