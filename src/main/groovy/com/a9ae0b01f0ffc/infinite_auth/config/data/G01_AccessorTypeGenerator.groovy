@@ -4,6 +4,8 @@ import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AccessorType
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_accessor_type_repository
 import org.springframework.stereotype.Component
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
+import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL
+import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_IDENTITY_CONTROL
 
 @Component
 class G01_AccessorTypeGenerator {
@@ -13,6 +15,12 @@ class G01_AccessorTypeGenerator {
 
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_ACCESS_CONTROL
                 , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Access: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
+
+        l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL
+                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Authentication: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
+
+        l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_IDENTITY_CONTROL
+                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Identity: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
 
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_SCOPE_CONTROL
                 , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Scope: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))

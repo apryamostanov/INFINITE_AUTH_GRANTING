@@ -46,6 +46,50 @@ interface I_accessor_type_repository extends JpaRepository<AccessorType, Long> {
      and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
+     and 'Identity control' = a.accessorRole
+     order by a.lookupPriority desc""")
+    Set<AccessorType> match_accessors_identity(
+            @Param("appName") String appName
+            , @Param("platform") String platform
+            , @Param("appVersion") String appVersion
+            , @Param("fiid") String fiid
+            , @Param("product") String product
+            , @Param("productGroup") String productGroup
+            , @Param("apiVersionName") String apiVersionName
+            , @Param("grantingEndpointName") String endpointName
+    )
+
+    @Query("""select a from AccessorType a where
+         :appName like a.appName
+     and :platform like a.platform
+     and :appVersion like a.appVersion
+     and :fiid like a.fiid
+     and coalesce(:product, 'Any') like a.product
+     and coalesce(:productGroup, 'Any') like a.productGroup
+     and :apiVersionName like a.apiVersionName
+     and :grantingEndpointName like a.grantingEndpointName
+     and 'Authentication control' = a.accessorRole
+     order by a.lookupPriority desc""")
+    Set<AccessorType> match_accessors_authentication(
+            @Param("appName") String appName
+            , @Param("platform") String platform
+            , @Param("appVersion") String appVersion
+            , @Param("fiid") String fiid
+            , @Param("product") String product
+            , @Param("productGroup") String productGroup
+            , @Param("apiVersionName") String apiVersionName
+            , @Param("grantingEndpointName") String endpointName
+    )
+
+    @Query("""select a from AccessorType a where
+         :appName like a.appName
+     and :platform like a.platform
+     and :appVersion like a.appVersion
+     and :fiid like a.fiid
+     and coalesce(:product, 'Any') like a.product
+     and coalesce(:productGroup, 'Any') like a.productGroup
+     and :apiVersionName like a.apiVersionName
+     and :grantingEndpointName like a.grantingEndpointName
      and 'Scope control' = a.accessorRole
      order by a.lookupPriority desc""")
     Set<AccessorType> match_accessors_scope(
@@ -111,6 +155,12 @@ interface I_accessor_type_repository extends JpaRepository<AccessorType, Long> {
 
     @Query("""select a from AccessorType a where 'Access control' = a.accessorRole and a.accessorName = :accessorName""")
     Set<AccessorType> find_access_accessor_by_name(@Param("accessorName") String accessorName)
+
+    @Query("""select a from AccessorType a where 'Identity control' = a.accessorRole and a.accessorName = :accessorName""")
+    Set<AccessorType> find_identity_accessor_by_name(@Param("accessorName") String accessorName)
+
+    @Query("""select a from AccessorType a where 'Authentication control' = a.accessorRole and a.accessorName = :accessorName""")
+    Set<AccessorType> find_authentication_accessor_by_name(@Param("accessorName") String accessorName)
 
     @Query("""select a from AccessorType a where 'Routing control' = a.accessorRole and a.accessorName = :accessorName""")
     Set<AccessorType> find_routing_accessor_by_name(@Param("accessorName") String accessorName)

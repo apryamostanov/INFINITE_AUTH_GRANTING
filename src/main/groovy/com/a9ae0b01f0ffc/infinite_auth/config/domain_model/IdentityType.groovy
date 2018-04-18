@@ -5,12 +5,17 @@ import com.a9ae0b01f0ffc.infinite_auth.granting.Identity
 
 import javax.persistence.*
 
+import static base.T_common_base_1_const.GC_NULL_OBJ_REF
+
 @Entity
 @Table(name="IdentityTypes")
 class IdentityType {
 
-    @Column(unique = true)
+    @Column(unique = false)
     String identityName
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    AccessorType accessor = GC_NULL_OBJ_REF as AccessorType
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn

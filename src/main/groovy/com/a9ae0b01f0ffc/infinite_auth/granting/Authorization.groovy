@@ -1,6 +1,7 @@
 package com.a9ae0b01f0ffc.infinite_auth.granting
 
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
+import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AccessorType
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.IdentityType
@@ -295,23 +296,25 @@ class Authorization {
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product_group") as String
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
-
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("accessor_name") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("platform") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("app_version") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("FIID") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product_group") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("api_major_version") as String
-                , i_context.p_app_conf.granting_endpoint_name
         )[GC_FIRST_INDEX]
         if (is_null(l_auth_and_scopes) || l_auth_and_scopes?.size() == GC_EMPTY_SIZE) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
             return
         }
-        AuthorizationType l_config_authorization = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
-        l_config_authorization.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
+        AuthorizationType l_config_authorization = l_auth_and_scopes[0] as AuthorizationType
+        l_config_authorization.scopeSet = l_auth_and_scopes[1] as Set<ScopeType>
         l_config_authorization.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
+        AccessorType l_authentication_accessor = (l_auth_and_scopes[3] as Set<AccessorType>).first()
+        l_config_authorization.identitySet.each {l_identity_it->
+            Set l_accessor_authentication_set = new HashSet()
+            l_accessor_authentication_set.addAll(l_identity_it.authenticationSet)
+            l_identity_it.authenticationSet.each {l_authentication_it->
+                if (l_authentication_it.accessor == l_authentication_accessor) {
+                    l_accessor_authentication_set.add(l_authentication_it)
+                }
+            }
+            l_identity_it.authenticationSet = l_accessor_authentication_set
+        }
         System.out.println("Start validation!!!")
         common_authorization_granting(l_config_authorization, i_context)
         if (this.getAuthorizationStatus() == GC_STATUS_SUCCESSFUL) {
@@ -424,15 +427,6 @@ class Authorization {
                     , i_AccessorProductGroup
                     , i_AccessorApiVersionName
                     , p_app_context.p_app_conf.granting_endpoint_name
-
-                    , i_AccessorAppName
-                    , i_AccessorPlatform
-                    , i_AccessorAppVersion
-                    , i_AccessorFiid
-                    , i_AccessorProduct
-                    , i_AccessorProductGroup
-                    , i_AccessorApiVersionName
-                    , p_app_context.p_app_conf.granting_endpoint_name
             )[GC_FIRST_INDEX]
             Set<Authorization> l_user_authorizations
             if (is_not_null(l_auth_and_scopes) && l_auth_and_scopes?.size() != GC_EMPTY_SIZE) {
@@ -440,6 +434,17 @@ class Authorization {
                 l_user_authorizations = l_authorization_type.to_user_authorizations(i_scope_name, i_identityName)
                 l_authorization_type.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
                 l_authorization_type.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
+                AccessorType l_authentication_accessor = (l_auth_and_scopes[3] as Set<AccessorType>).first()
+                l_authorization_type.identitySet.each {l_identity_it->
+                    Set l_accessor_authentication_set = new HashSet()
+                    l_accessor_authentication_set.addAll(l_identity_it.authenticationSet)
+                    l_identity_it.authenticationSet.each {l_authentication_it->
+                        if (l_authentication_it.accessor == l_authentication_accessor) {
+                            l_accessor_authentication_set.add(l_authentication_it)
+                        }
+                    }
+                    l_identity_it.authenticationSet = l_accessor_authentication_set
+                }
             } else {
                 l_user_authorizations = new HashSet<Authorization>()
             }

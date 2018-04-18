@@ -15,8 +15,11 @@ import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 class AuthenticationType {
 
     /**@ApiModelProperty(example = "User_data", value = "Defines the Granting Server -> AuthenticationType Provider name")*/
-    @Column(unique = true)
+    @Column(unique = false)
     String authenticationName = GC_EMPTY_STRING
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    AccessorType accessor = GC_NULL_OBJ_REF as AccessorType
 
     @Column(nullable = false)
     Integer lockoutMaxAttemptCount = GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER
