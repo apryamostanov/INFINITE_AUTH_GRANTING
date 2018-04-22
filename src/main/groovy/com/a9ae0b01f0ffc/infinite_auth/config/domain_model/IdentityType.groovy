@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth.config.domain_model
 
+import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_overridable_by_accessor
 import com.a9ae0b01f0ffc.infinite_auth.granting.Authentication
 import com.a9ae0b01f0ffc.infinite_auth.granting.Identity
 
@@ -9,7 +10,7 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 
 @Entity
 @Table(name="IdentityTypes")
-class IdentityType {
+class IdentityType implements I_overridable_by_accessor {
 
     @Column(unique = false)
     String identityName
@@ -35,6 +36,16 @@ class IdentityType {
             l_user_identity.authenticationSet.add(l_conf_authentication.to_user_authentication())
         }
         return l_user_identity
+    }
+
+    @Override
+    AccessorType get_accessor_type() {
+        return accessor
+    }
+
+    @Override
+    String get_name() {
+        return identityName
     }
 
 }

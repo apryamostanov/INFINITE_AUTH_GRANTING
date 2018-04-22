@@ -22,6 +22,9 @@ class G01_AccessorTypeGenerator {
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_IDENTITY_CONTROL
                 , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Identity: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
 
+        l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_GRANT_CONTROL
+                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Grant: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
+
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_SCOPE_CONTROL
                 , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Scope: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
 

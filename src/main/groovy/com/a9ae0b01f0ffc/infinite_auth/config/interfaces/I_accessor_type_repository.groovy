@@ -12,8 +12,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 @RepositoryRestResource
 interface I_accessor_type_repository extends JpaRepository<AccessorType, Long> {
 
-    Set<AccessorType> findByAccessorName(@Param("accessorName") String accessorName)
-
     //Known H2 bug: https://github.com/h2database/h2database/issues/882
     @Query("""select a from AccessorType a where
          :appName like a.appName
@@ -24,9 +22,9 @@ interface I_accessor_type_repository extends JpaRepository<AccessorType, Long> {
      and coalesce(:productGroup, 'Any') like a.productGroup
      and :apiVersionName like a.apiVersionName
      and :grantingEndpointName like a.grantingEndpointName
-     and 'Access control' = a.accessorRole
+     and :accessorRole = a.accessorRole
      order by a.lookupPriority desc""")
-    Set<AccessorType> match_accessors(
+    LinkedHashSet<AccessorType> match_accessors(
             @Param("appName") String appName
             , @Param("platform") String platform
             , @Param("appVersion") String appVersion
@@ -35,134 +33,10 @@ interface I_accessor_type_repository extends JpaRepository<AccessorType, Long> {
             , @Param("productGroup") String productGroup
             , @Param("apiVersionName") String apiVersionName
             , @Param("grantingEndpointName") String endpointName
+            , @Param("accessorRole") String accessorRole
     )
 
-    @Query("""select a from AccessorType a where
-         :appName like a.appName
-     and :platform like a.platform
-     and :appVersion like a.appVersion
-     and :fiid like a.fiid
-     and coalesce(:product, 'Any') like a.product
-     and coalesce(:productGroup, 'Any') like a.productGroup
-     and :apiVersionName like a.apiVersionName
-     and :grantingEndpointName like a.grantingEndpointName
-     and 'Identity control' = a.accessorRole
-     order by a.lookupPriority desc""")
-    Set<AccessorType> match_accessors_identity(
-            @Param("appName") String appName
-            , @Param("platform") String platform
-            , @Param("appVersion") String appVersion
-            , @Param("fiid") String fiid
-            , @Param("product") String product
-            , @Param("productGroup") String productGroup
-            , @Param("apiVersionName") String apiVersionName
-            , @Param("grantingEndpointName") String endpointName
-    )
-
-    @Query("""select a from AccessorType a where
-         :appName like a.appName
-     and :platform like a.platform
-     and :appVersion like a.appVersion
-     and :fiid like a.fiid
-     and coalesce(:product, 'Any') like a.product
-     and coalesce(:productGroup, 'Any') like a.productGroup
-     and :apiVersionName like a.apiVersionName
-     and :grantingEndpointName like a.grantingEndpointName
-     and 'Authentication control' = a.accessorRole
-     order by a.lookupPriority desc""")
-    Set<AccessorType> match_accessors_authentication(
-            @Param("appName") String appName
-            , @Param("platform") String platform
-            , @Param("appVersion") String appVersion
-            , @Param("fiid") String fiid
-            , @Param("product") String product
-            , @Param("productGroup") String productGroup
-            , @Param("apiVersionName") String apiVersionName
-            , @Param("grantingEndpointName") String endpointName
-    )
-
-    @Query("""select a from AccessorType a where
-         :appName like a.appName
-     and :platform like a.platform
-     and :appVersion like a.appVersion
-     and :fiid like a.fiid
-     and coalesce(:product, 'Any') like a.product
-     and coalesce(:productGroup, 'Any') like a.productGroup
-     and :apiVersionName like a.apiVersionName
-     and :grantingEndpointName like a.grantingEndpointName
-     and 'Scope control' = a.accessorRole
-     order by a.lookupPriority desc""")
-    Set<AccessorType> match_accessors_scope(
-            @Param("appName") String appName
-            , @Param("platform") String platform
-            , @Param("appVersion") String appVersion
-            , @Param("fiid") String fiid
-            , @Param("product") String product
-            , @Param("productGroup") String productGroup
-            , @Param("apiVersionName") String apiVersionName
-            , @Param("grantingEndpointName") String endpointName
-    )
-
-    @Query("""select a from AccessorType a where
-         :appName like a.appName
-     and :platform like a.platform
-     and :appVersion like a.appVersion
-     and :fiid like a.fiid
-     and coalesce(:product, 'Any') like a.product
-     and coalesce(:productGroup, 'Any') like a.productGroup
-     and :apiVersionName like a.apiVersionName
-     and :grantingEndpointName like a.grantingEndpointName
-     and 'Authorization control' = a.accessorRole
-     order by a.lookupPriority desc""")
-    Set<AccessorType> match_accessors_authorization(
-            @Param("appName") String appName
-            , @Param("platform") String platform
-            , @Param("appVersion") String appVersion
-            , @Param("fiid") String fiid
-            , @Param("product") String product
-            , @Param("productGroup") String productGroup
-            , @Param("apiVersionName") String apiVersionName
-            , @Param("grantingEndpointName") String endpointName
-    )
-
-    @Query("""select a from AccessorType a where
-         :appName like a.appName
-     and :platform like a.platform
-     and :appVersion like a.appVersion
-     and :fiid like a.fiid
-     and coalesce(:product, 'Any') like a.product
-     and coalesce(:productGroup, 'Any') like a.productGroup
-     and :apiVersionName like a.apiVersionName
-     and :grantingEndpointName like a.grantingEndpointName
-     and 'Routing control' = a.accessorRole 
-     order by a.lookupPriority desc""")
-    Set<AccessorType> match_accessors_routing(
-            @Param("appName") String appName
-            , @Param("platform") String platform
-            , @Param("appVersion") String appVersion
-            , @Param("fiid") String fiid
-            , @Param("product") String product
-            , @Param("productGroup") String productGroup
-            , @Param("apiVersionName") String apiVersionName
-            , @Param("grantingEndpointName") String endpointName
-    )
-
-    @Query("""select a from AccessorType a where 'Scope control' = a.accessorRole and a.accessorName = :accessorName""")
-    Set<AccessorType> find_scope_accessor_by_name(@Param("accessorName") String accessorName)
-
-    @Query("""select a from AccessorType a where 'Authorization control' = a.accessorRole and a.accessorName = :accessorName""")
-    Set<AccessorType> find_authorization_accessor_by_name(@Param("accessorName") String accessorName)
-
-    @Query("""select a from AccessorType a where 'Access control' = a.accessorRole and a.accessorName = :accessorName""")
-    Set<AccessorType> find_access_accessor_by_name(@Param("accessorName") String accessorName)
-
-    @Query("""select a from AccessorType a where 'Identity control' = a.accessorRole and a.accessorName = :accessorName""")
-    Set<AccessorType> find_identity_accessor_by_name(@Param("accessorName") String accessorName)
-
-    @Query("""select a from AccessorType a where 'Authentication control' = a.accessorRole and a.accessorName = :accessorName""")
-    Set<AccessorType> find_authentication_accessor_by_name(@Param("accessorName") String accessorName)
-
-    @Query("""select a from AccessorType a where 'Routing control' = a.accessorRole and a.accessorName = :accessorName""")
-    Set<AccessorType> find_routing_accessor_by_name(@Param("accessorName") String accessorName)
+    @Query("""select a from AccessorType a where :accessorRole = a.accessorRole and a.accessorName = :accessorName""")
+    Set<AccessorType> find_accessor_by_name(@Param("accessorName") String accessorName, @Param("accessorRole") String accessorRole)
 
 }

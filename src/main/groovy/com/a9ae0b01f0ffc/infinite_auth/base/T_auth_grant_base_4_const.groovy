@@ -6,6 +6,7 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
 
     static final String GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL = "Authorization control"
     static final String GC_ACCESSOR_TYPE_SCOPE_CONTROL = "Scope control"
+    static final String GC_ACCESSOR_TYPE_GRANT_CONTROL = "Grant control"
     static final String GC_ACCESSOR_TYPE_IDENTITY_CONTROL = "Identity control"
     static final String GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL = "Authentication control"
     static final String GC_ACCESSOR_TYPE_ACCESS_CONTROL = "Access control"
@@ -30,6 +31,7 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_AUTHORIZATION_ERROR_CODE_15_WRONG_AUTHENTICATIONS_NUMBER = "15"
     static final String GC_AUTHORIZATION_ERROR_CODE_MDWL8001_FAILED_AUTHENTICATION = "mdwl8001"
     static final String GC_AUTHORIZATION_ERROR_CODE_17 = "17"
+    static final String GC_AUTHORIZATION_ERROR_CODE_17A = "17A"
     static final String GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY = "18"
     static final String GC_AUTHORIZATION_ERROR_CODE_19_USER_SUPPLIED_JWT = "19"
     static final String GC_AUTHORIZATION_ERROR_CODE_20_MISSING_ACCESSOR_DATA = "20"

@@ -1,5 +1,7 @@
 package authentication_modules
 
+import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const
+
 //import com.a9ae0b01f0ffc.infinite_auth.granting.Authentication
 
 System.out.println(this.getClass().getSimpleName())
@@ -16,6 +18,7 @@ Set l_accessor_set_to_match = io_user_authentication.p_context.p_accessor_type_r
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("product_group")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("api_major_version")
         , io_user_authentication.p_context.p_app_conf.granting_endpoint_name
+        , T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_ACCESS_CONTROL
 ) as Set
 
 if (l_accessor_set_to_match.isEmpty()) {
@@ -31,7 +34,7 @@ if (l_accessor_set_to_match.first().isForbidden) {
 }
 
 
-Set l_accessor_set_to_match_scope = io_user_authentication.p_context.p_accessor_type_repository.match_accessors_scope(
+Set l_accessor_set_to_match_scope = io_user_authentication.p_context.p_accessor_type_repository.match_accessors(
         io_user_authentication.authenticationData?.publicDataFieldMap?.get("accessor_name")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("platform")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("app_version")
@@ -40,6 +43,7 @@ Set l_accessor_set_to_match_scope = io_user_authentication.p_context.p_accessor_
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("product_group")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("api_major_version")
         , io_user_authentication.p_context.p_app_conf.granting_endpoint_name
+        , T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_SCOPE_CONTROL
 ) as Set
 
 if (l_accessor_set_to_match_scope.isEmpty()) {
@@ -54,7 +58,7 @@ if (l_accessor_set_to_match_scope.first().isForbidden) {
     return
 }
 
-Set l_accessor_set_to_match_authorization = io_user_authentication.p_context.p_accessor_type_repository.match_accessors_authorization(
+Set l_accessor_set_to_match_authorization = io_user_authentication.p_context.p_accessor_type_repository.match_accessors(
         io_user_authentication.authenticationData?.publicDataFieldMap?.get("accessor_name")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("platform")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("app_version")
@@ -63,6 +67,7 @@ Set l_accessor_set_to_match_authorization = io_user_authentication.p_context.p_a
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("product_group")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("api_major_version")
         , io_user_authentication.p_context.p_app_conf.granting_endpoint_name
+        , T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL
 ) as Set
 
 if (l_accessor_set_to_match_authorization.isEmpty()) {
@@ -77,7 +82,7 @@ if (l_accessor_set_to_match_authorization.first().isForbidden) {
     return
 }
 
-Set l_accessor_set_to_match_routing = io_user_authentication.p_context.p_accessor_type_repository.match_accessors_routing(
+Set l_accessor_set_to_match_routing = io_user_authentication.p_context.p_accessor_type_repository.match_accessors(
         io_user_authentication.authenticationData?.publicDataFieldMap?.get("accessor_name")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("platform")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("app_version")
@@ -86,6 +91,7 @@ Set l_accessor_set_to_match_routing = io_user_authentication.p_context.p_accesso
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("product_group")
         , io_user_authentication.authenticationData?.publicDataFieldMap?.get("api_major_version")
         , io_user_authentication.p_context.p_app_conf.granting_endpoint_name
+        , T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_ROUTING_CONTROL
 ) as Set
 
 if (l_accessor_set_to_match_routing.isEmpty()) {

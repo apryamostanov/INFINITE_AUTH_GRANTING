@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth.config.domain_model
 
+import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_overridable_by_accessor
 import com.a9ae0b01f0ffc.infinite_auth.granting.Authentication
 import groovy.transform.CompileStatic
 
@@ -12,7 +13,7 @@ import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 @CompileStatic
 @Entity
 @Table(name="AuthenticationTypes")
-class AuthenticationType {
+class AuthenticationType implements I_overridable_by_accessor{
 
     /**@ApiModelProperty(example = "User_data", value = "Defines the Granting Server -> AuthenticationType Provider name")*/
     @Column(unique = false)
@@ -47,4 +48,13 @@ class AuthenticationType {
         return l_user_authentication
     }
 
+    @Override
+    AccessorType get_accessor_type() {
+        return accessor
+    }
+
+    @Override
+    String get_name() {
+        return authenticationName
+    }
 }

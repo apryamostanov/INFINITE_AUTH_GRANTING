@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth.config.data
 
+import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthorizationType
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_accessor_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authorization_type_repository
@@ -18,7 +19,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: p_identity_repository.findByIdentityName("Owner of Accessor Data"),
                 durationSeconds: 1800,
                 maxUsageCount: null,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any accessor").first()
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any accessor", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first()
         ))
         p_authorization_repository.save(l_entity_set)
         l_entity_set.clear()
@@ -28,7 +29,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: p_identity_repository.findByIdentityName("Owner of OTP Data"),
                 durationSeconds: 1800,
                 maxUsageCount: null,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first(),
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
         l_entity_set.add(new AuthorizationType(
@@ -40,7 +41,7 @@ class G06_AuthorizationTypeGenerator {
                 refreshDurationSeconds: 2592000,
                 isRefreshAllowed: true,
                 refreshAuthorizationName: "Refresh",
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any accessor").first(),
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any accessor", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first(),
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous").asList()
         ))
         l_entity_set.add(new AuthorizationType(
@@ -52,7 +53,7 @@ class G06_AuthorizationTypeGenerator {
                 refreshDurationSeconds: 1800,
                 isRefreshAllowed: true,
                 refreshAuthorizationName: "Refresh",
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any React").first(),
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any React", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first(),
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Anonymous")
         ))
         p_authorization_repository.save(l_entity_set)
@@ -63,7 +64,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: [p_identity_repository.findByIdentityName("Owner of User Data").first(), p_identity_repository.findByIdentityName("Owner of Provisioned User Data").first()],
                 durationSeconds: 30,
                 maxUsageCount: 1,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first(),
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
@@ -72,7 +73,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: p_identity_repository.findByIdentityName("Owner of User Data and Provisioning Data"),
                 durationSeconds: 2592000,
                 maxUsageCount: 20,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first(),
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
@@ -81,7 +82,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: p_identity_repository.findByIdentityName("Owner of User Data and DOB Data"),
                 durationSeconds: 30,
                 maxUsageCount: 1,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first(),
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         l_entity_set.add(new AuthorizationType(
@@ -90,7 +91,7 @@ class G06_AuthorizationTypeGenerator {
                 identitySet: [p_identity_repository.findByIdentityName("Owner of OTP Data and User Data").first(), p_identity_repository.findByIdentityName("Owner of OTP Data and Provisioned User Data").first()],
                 durationSeconds: 30,
                 maxUsageCount: 1,
-                accessor: p_accessor_repository.find_authorization_accessor_by_name("Authorization: Any LMN").first(),
+                accessor: p_accessor_repository.find_accessor_by_name("Authorization: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL).first(),
                 prerequisiteAuthorizationSet: p_authorization_repository.findByAuthorizationName("Read")
         ))
         p_authorization_repository.save(l_entity_set)

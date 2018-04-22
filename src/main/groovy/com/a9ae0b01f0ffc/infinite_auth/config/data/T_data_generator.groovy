@@ -39,7 +39,7 @@ class T_data_generator {
 
     void generate_data() {
         p_AccessorGenerator.generate_data(p_accessor_repository)
-        p_GrantGenerator.generate_data(p_grant_repository)
+        p_GrantGenerator.generate_data(p_grant_repository, p_accessor_repository)
         p_ScopeGenerator.generate_data(p_scope_repository, p_grant_repository, p_accessor_repository)
         p_AuthenticationGenerator.generate_data(p_authentication_repository, p_accessor_repository)
         p_IdentityGenerator.generate_data(p_identity_repository, p_authentication_repository, p_accessor_repository)

@@ -1,11 +1,8 @@
 package com.a9ae0b01f0ffc.infinite_auth.granting
 
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
-import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AccessorType
-import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
-import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthorizationType
-import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.IdentityType
-import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.ScopeType
+import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.*
+import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_overridable_by_accessor
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiResponseMessage
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -285,9 +282,8 @@ class Authorization {
             failure(GC_AUTHORIZATION_ERROR_CODE_20_MISSING_ACCESSOR_DATA)
             return
         }
-        Object[] l_auth_and_scopes = i_context.p_authorization_type_repository.match_authorizations(
+        Set<AuthorizationType> l_authorization_types = get_authorization_types(
                 scope?.scopeName
-                , identity?.identityName
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("accessor_name") as String
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("platform") as String
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("app_version") as String
@@ -296,24 +292,24 @@ class Authorization {
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product_group") as String
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
-        )[GC_FIRST_INDEX]
-        if (is_null(l_auth_and_scopes) || l_auth_and_scopes?.size() == GC_EMPTY_SIZE) {
+                , i_context
+        )
+        if (is_null(l_authorization_types) || l_authorization_types?.size() == GC_EMPTY_SIZE) {
             failure(GC_AUTHORIZATION_ERROR_CODE_17)
             return
         }
-        AuthorizationType l_config_authorization = l_auth_and_scopes[0] as AuthorizationType
-        l_config_authorization.scopeSet = l_auth_and_scopes[1] as Set<ScopeType>
-        l_config_authorization.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
-        AccessorType l_authentication_accessor = (l_auth_and_scopes[3] as Set<AccessorType>).first()
-        l_config_authorization.identitySet.each {l_identity_it->
-            Set l_accessor_authentication_set = new HashSet()
-            l_accessor_authentication_set.addAll(l_identity_it.authenticationSet)
-            l_identity_it.authenticationSet.each {l_authentication_it->
-                if (l_authentication_it.accessor == l_authentication_accessor) {
-                    l_accessor_authentication_set.add(l_authentication_it)
+        AuthorizationType l_config_authorization
+        for (l_authorization_type in l_authorization_types) {
+            for (l_identity in l_authorization_type.identitySet) {
+                if (l_identity.identityName == identity?.identityName) {
+                    l_config_authorization = l_authorization_type
+                    break
                 }
             }
-            l_identity_it.authenticationSet = l_accessor_authentication_set
+        }
+        if (l_config_authorization == null) {
+            failure(GC_AUTHORIZATION_ERROR_CODE_17A)
+            return
         }
         System.out.println("Start validation!!!")
         common_authorization_granting(l_config_authorization, i_context)
@@ -410,15 +406,13 @@ class Authorization {
             , @QueryParam("accessorProduct") String i_AccessorProduct
             , @QueryParam("accessorProductGroup") String i_AccessorProductGroup
             , @QueryParam("accessorApiVersionName") String i_AccessorApiVersionName
-            , @QueryParam("identityName") String i_identityName
     ) {
         Response l_granting_response
         if (is_null(i_scope_name)) {
             l_granting_response = Response.serverError().entity(new ApiResponseMessage(ApiResponseMessage.ERROR, "Mandatory parameter 'scopeName' is missing")).build()
         } else {
-            Object[] l_auth_and_scopes = p_app_context.p_authorization_type_repository.match_authorizations(
+            Collection<AuthorizationType> l_authorization_types = get_authorization_types(
                     i_scope_name
-                    , i_identityName
                     , i_AccessorAppName
                     , i_AccessorPlatform
                     , i_AccessorAppVersion
@@ -427,23 +421,14 @@ class Authorization {
                     , i_AccessorProductGroup
                     , i_AccessorApiVersionName
                     , p_app_context.p_app_conf.granting_endpoint_name
-            )[GC_FIRST_INDEX]
-            Set<Authorization> l_user_authorizations
-            if (is_not_null(l_auth_and_scopes) && l_auth_and_scopes?.size() != GC_EMPTY_SIZE) {
-                AuthorizationType l_authorization_type = l_auth_and_scopes[GC_FIRST_INDEX] as AuthorizationType
-                l_user_authorizations = l_authorization_type.to_user_authorizations(i_scope_name, i_identityName)
-                l_authorization_type.scopeSet = l_auth_and_scopes[GC_SECOND_INDEX] as Set<ScopeType>
-                l_authorization_type.identitySet = l_auth_and_scopes[2] as Set<IdentityType>
-                AccessorType l_authentication_accessor = (l_auth_and_scopes[3] as Set<AccessorType>).first()
-                l_authorization_type.identitySet.each {l_identity_it->
-                    Set l_accessor_authentication_set = new HashSet()
-                    l_accessor_authentication_set.addAll(l_identity_it.authenticationSet)
-                    l_identity_it.authenticationSet.each {l_authentication_it->
-                        if (l_authentication_it.accessor == l_authentication_accessor) {
-                            l_accessor_authentication_set.add(l_authentication_it)
-                        }
-                    }
-                    l_identity_it.authenticationSet = l_accessor_authentication_set
+                    , p_app_context
+            )
+            Set<Authorization> l_final_user_authorizations = new HashSet<Authorization>()
+            Set<Authorization> l_user_authorizations = new HashSet<Authorization>()
+            if (is_not_null(l_authorization_types) && l_authorization_types?.size() != GC_EMPTY_SIZE) {
+                for (l_authorization_type in l_authorization_types) {
+                    l_user_authorizations = l_authorization_type.to_user_authorizations(i_scope_name)
+                    l_final_user_authorizations.addAll(l_user_authorizations)
                 }
             } else {
                 l_user_authorizations = new HashSet<Authorization>()
@@ -451,6 +436,77 @@ class Authorization {
             l_granting_response = Response.ok().entity(p_app_context.p_object_mapper.writeValueAsString(l_user_authorizations)).build()
         }
         return l_granting_response
+    }
+
+    static Collection<I_overridable_by_accessor> override_by_accessor(Set<I_overridable_by_accessor> i_items_to_override, Set<AccessorType> i_accessors_for_overriding) {
+        HashMap<String, I_overridable_by_accessor> l_overriden_items = new HashMap<String, I_overridable_by_accessor>()
+        for (l_item_to_override in i_items_to_override) {
+            if (not(l_overriden_items.containsKey(l_item_to_override.get_name()))) {
+                for (l_accessor in i_accessors_for_overriding) {
+                    if (l_accessor.id == l_item_to_override.get_accessor_type().id) {
+                        l_overriden_items.put(l_item_to_override.get_name(), l_item_to_override)
+                        break
+                    }
+                }
+            }
+        }
+        return l_overriden_items.values()
+    }
+
+    static Collection<AuthorizationType> get_authorization_types(
+            String scopeName
+            , String appName
+            , String platform
+            , String appVersion
+            , String fiid
+            , String product
+            , String productGroup
+            , String apiVersionName
+            , String grantingEndpointName
+            , T_auth_grant_base_5_context i_context
+    ) {
+        Set<AccessorType> l_scope_accessor_types = i_context.p_accessor_type_repository.match_accessors(appName, platform, appVersion, fiid, product, productGroup, apiVersionName, grantingEndpointName, GC_ACCESSOR_TYPE_SCOPE_CONTROL)
+        Set<AccessorType> l_grant_accessor_types = i_context.p_accessor_type_repository.match_accessors(appName, platform, appVersion, fiid, product, productGroup, apiVersionName, grantingEndpointName, GC_ACCESSOR_TYPE_GRANT_CONTROL)
+        Set<AccessorType> l_authorization_accessor_types = i_context.p_accessor_type_repository.match_accessors(appName, platform, appVersion, fiid, product, productGroup, apiVersionName, grantingEndpointName, GC_ACCESSOR_TYPE_AUTHORIZATION_CONTROL)
+        Set<AccessorType> l_identity_accessor_types = i_context.p_accessor_type_repository.match_accessors(appName, platform, appVersion, fiid, product, productGroup, apiVersionName, grantingEndpointName, GC_ACCESSOR_TYPE_IDENTITY_CONTROL)
+        Set<AccessorType> l_authentication_accessor_types = i_context.p_accessor_type_repository.match_accessors(appName, platform, appVersion, fiid, product, productGroup, apiVersionName, grantingEndpointName, GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL)
+        Set<AuthorizationType> l_authorization_types = i_context.p_authorization_type_repository.match_authorizations(scopeName)
+        Collection<AuthorizationType> l_final_authorization_types = override_by_accessor(l_authorization_types, l_authorization_accessor_types) as Collection<AuthorizationType>
+        process_authorization_overriding(scopeName, l_final_authorization_types, l_scope_accessor_types, l_grant_accessor_types, l_identity_accessor_types, l_authentication_accessor_types)
+        return l_final_authorization_types
+    }
+
+    static void process_authorization_overriding(String i_scope_name, Collection<AuthorizationType> i_items
+                                                 , Set<AccessorType> i_scope_accessor_types
+                                                 , Set<AccessorType> i_grant_accessor_types
+                                                 , Set<AccessorType> i_identity_accessor_types
+                                                 , Set<AccessorType> i_authentication_accessor_types
+    ) {
+        for (int i = 0; i < i_items.size(); i++) {
+            i_items[i].identitySet = override_by_accessor(i_items[i].identitySet, i_identity_accessor_types) as Set<IdentityType>
+            i_items[i].scopeSet = override_by_accessor(i_items[i].scopeSet, i_scope_accessor_types) as Set<ScopeType>
+            Set<ScopeType> l_scopes_with_target_name = new LinkedHashSet<ScopeType>()
+            for (l_scope_type in i_items[i].scopeSet) {
+                if (l_scope_type.scopeName == i_scope_name) {
+                    l_scopes_with_target_name.add(l_scope_type)
+                }
+            }
+            i_items[i].scopeSet = l_scopes_with_target_name
+            process_identity_overriding(i_items[i].identitySet, i_authentication_accessor_types)
+            process_scope_overriding(i_items[i].scopeSet, i_grant_accessor_types)
+        }
+    }
+
+    static void process_identity_overriding(Collection<IdentityType> l_items, Set<AccessorType> l_accessors) {
+        for (int i = 0; i < l_items.size(); i++) {
+            l_items[i].authenticationSet = override_by_accessor(l_items[i].authenticationSet, l_accessors) as Set<AuthenticationType>
+        }
+    }
+
+    static void process_scope_overriding(Collection<ScopeType> l_items, Set<AccessorType> l_accessors) {
+        for (int i = 0; i < l_items.size(); i++) {
+            l_items[i].grantSet = override_by_accessor(l_items[i].grantSet, l_accessors) as Set<GrantType>
+        }
     }
 
 }

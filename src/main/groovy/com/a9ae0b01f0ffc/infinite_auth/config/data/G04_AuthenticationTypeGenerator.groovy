@@ -1,5 +1,6 @@
 package com.a9ae0b01f0ffc.infinite_auth.config.data
 
+import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_accessor_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authentication_type_repository
@@ -12,7 +13,7 @@ class G04_AuthenticationTypeGenerator {
 
     void generate_data(I_authentication_type_repository p_authentication_repository, I_accessor_type_repository i_accessor_type_repository) {
         Set<AuthenticationType> l_entity_set = new HashSet<AuthenticationType>()
-        l_entity_set.add(new AuthenticationType(authenticationName: "Accessor_data", accessor: i_accessor_type_repository.find_authentication_accessor_by_name("Authentication: Any accessor").first(),
+        l_entity_set.add(new AuthenticationType(authenticationName: "Accessor_data", accessor: i_accessor_type_repository.find_accessor_by_name("Authentication: Any accessor", GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL).first(),
                 mandatoryPublicFieldNames: [
                         "accessor_name",
                         "platform",
@@ -26,7 +27,7 @@ class G04_AuthenticationTypeGenerator {
                 lockoutMaxAttemptCount: GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER,
                 lockoutDurationSeconds: GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO
         ))
-        l_entity_set.add(new AuthenticationType(authenticationName: "User_data", accessor: i_accessor_type_repository.find_authentication_accessor_by_name("Authentication: Any accessor").first(),
+        l_entity_set.add(new AuthenticationType(authenticationName: "User_data", accessor: i_accessor_type_repository.find_accessor_by_name("Authentication: Any accessor", GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL).first(),
                 mandatoryPublicFieldNames: [
                         "username"
                 ],
@@ -36,7 +37,7 @@ class G04_AuthenticationTypeGenerator {
                 lockoutMaxAttemptCount: GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER,
                 lockoutDurationSeconds: GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO
         ))
-        l_entity_set.add(new AuthenticationType(authenticationName: "Refresh_data", accessor: i_accessor_type_repository.find_authentication_accessor_by_name("Authentication: Any accessor").first(),
+        l_entity_set.add(new AuthenticationType(authenticationName: "Refresh_data", accessor: i_accessor_type_repository.find_accessor_by_name("Authentication: Any accessor", GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL).first(),
                 mandatoryPublicFieldNames: [
                         "proxy_number",
                         "old_access_token"
@@ -47,7 +48,7 @@ class G04_AuthenticationTypeGenerator {
                 lockoutMaxAttemptCount: GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER,
                 lockoutDurationSeconds: GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO
         ))
-        l_entity_set.add(new AuthenticationType(authenticationName: "OTP_data", accessor: i_accessor_type_repository.find_authentication_accessor_by_name("Authentication: Any accessor").first(),
+        l_entity_set.add(new AuthenticationType(authenticationName: "OTP_data", accessor: i_accessor_type_repository.find_accessor_by_name("Authentication: Any accessor", GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL).first(),
                 mandatoryPublicFieldNames: [
                         "proxy_number",
                         //"otp_id", //todo: this is needed
@@ -59,7 +60,7 @@ class G04_AuthenticationTypeGenerator {
                 lockoutMaxAttemptCount: GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER,
                 lockoutDurationSeconds: GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO
         ))
-        l_entity_set.add(new AuthenticationType(authenticationName: "Provisioned_user_data", accessor: i_accessor_type_repository.find_authentication_accessor_by_name("Authentication: Any accessor").first(),
+        l_entity_set.add(new AuthenticationType(authenticationName: "Provisioned_user_data", accessor: i_accessor_type_repository.find_accessor_by_name("Authentication: Any accessor", GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL).first(),
                 mandatoryPublicFieldNames: [
                         "provisioned_data_unique_id",
                         "proxy_number",
@@ -71,7 +72,7 @@ class G04_AuthenticationTypeGenerator {
                 lockoutMaxAttemptCount: GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER,
                 lockoutDurationSeconds: GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO
         ))
-        l_entity_set.add(new AuthenticationType(authenticationName: "Provisioning_data", accessor: i_accessor_type_repository.find_authentication_accessor_by_name("Authentication: Any accessor").first(),
+        l_entity_set.add(new AuthenticationType(authenticationName: "Provisioning_data", accessor: i_accessor_type_repository.find_accessor_by_name("Authentication: Any accessor", GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL).first(),
                 mandatoryPublicFieldNames: [
                         "provisioning_public_key",
                         "proxy_number"
@@ -82,7 +83,7 @@ class G04_AuthenticationTypeGenerator {
                 lockoutMaxAttemptCount: GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER,
                 lockoutDurationSeconds: GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO
         ))
-        l_entity_set.add(new AuthenticationType(authenticationName: "DOB_data", accessor: i_accessor_type_repository.find_authentication_accessor_by_name("Authentication: Any accessor").first(),
+        l_entity_set.add(new AuthenticationType(authenticationName: "DOB_data", accessor: i_accessor_type_repository.find_accessor_by_name("Authentication: Any accessor", GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL).first(),
                 mandatoryPublicFieldNames: [
                         "proxy_number"
                 ],
