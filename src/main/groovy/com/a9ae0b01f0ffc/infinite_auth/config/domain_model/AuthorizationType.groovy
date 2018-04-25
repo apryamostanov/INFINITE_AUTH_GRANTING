@@ -62,7 +62,6 @@ class AuthorizationType implements I_overridable_by_accessor {
                     Authorization l_user_authorization = new Authorization()
                     l_user_authorization.authorizationName = this.authorizationName
                     l_user_authorization.authorizationType = "Access"
-                    //l_user_authorization.accessor = this.accessor.to_user_accessor()
                     l_user_authorization.identity = l_identity_type.to_user_identity()
                     l_user_authorization.scope = l_scope_type.to_user_scope()
                     l_user_authorization.durationSeconds = this.durationSeconds
