@@ -24,7 +24,9 @@ class AuthenticationType implements I_overridable_by_accessor{
 
     /**
      *  Identifies Authentication Module Name to be used for validating Public and Private Data.<p>
-     *  Authentication Module is a custom script in certain location, containing business logic of validating Private and Public data.<p><p>
+     *  Authentication Module is a custom script in certain location, containing business logic of validating Private and Public data.<p>
+     *  Naming convention: <b>{name under which Public Data Fields can be grouped}_data</b><p>
+     *  Non-unique field - there can be more than 1 Authentication Type with the same name, but with different Accessor Type (overriding by Accessor Type)<p><p>
      *
      * Example: "User_data"
      *
