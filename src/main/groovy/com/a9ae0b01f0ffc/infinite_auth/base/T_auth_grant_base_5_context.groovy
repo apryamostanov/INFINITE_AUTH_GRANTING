@@ -2,7 +2,7 @@ package com.a9ae0b01f0ffc.infinite_auth.base
 
 import com.a9ae0b01f0ffc.infinite_auth.client.*
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_accessor_type_repository
-import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authentication_attempt_repository
+import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_failed_authentication_attempt_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authentication_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_authorization_type_repository
 import com.a9ae0b01f0ffc.infinite_auth.config.interfaces.I_grant_type_repository
@@ -72,7 +72,7 @@ class T_auth_grant_base_5_context extends T_auth_grant_base_4_const {
     I_authorization_type_repository p_authorization_type_repository
     @Autowired
     @JsonIgnore
-    I_authentication_attempt_repository p_authentication_attempt_repository
+    I_failed_authentication_attempt_repository p_authentication_attempt_repository
 
     static HostnameVerifier get_unsecure_host_name_verifier() {
         return new T_host_name_verifier()

@@ -1,13 +1,12 @@
 package com.a9ae0b01f0ffc.infinite_auth.granting
 
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
-import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationAttempt
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.AuthenticationType
+import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.FailedAuthenticationAttempt
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.time.TimeCategory
-import groovy.transform.Memoized
 import sun.misc.BASE64Encoder
 
 import java.nio.charset.StandardCharsets
@@ -60,7 +59,7 @@ class Authentication {
             failure()
             return
         }
-        AuthenticationAttempt l_new_attempt = create_authentication_attempt(i_conf_authentication, i_context)
+        FailedAuthenticationAttempt l_new_attempt = create_authentication_attempt(i_conf_authentication, i_context)
         if (l_new_attempt.status == GC_STATUS_FAILED) {
             failure()
             return
@@ -81,7 +80,7 @@ class Authentication {
             l_new_attempt.status = GC_STATUS_SUCCESSFUL
             l_new_attempt.currentAttemptCount = GC_ZERO
         }
-        if (i_conf_authentication.lockoutMaxAttemptCount != GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER) {
+        if (i_conf_authentication.lockoutMaxAttemptCount != GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER && authenticationStatus == GC_STATUS_FAILED) {
             i_context.p_authentication_attempt_repository.save([l_new_attempt])
         }
     }
@@ -115,16 +114,16 @@ class Authentication {
         LinkedList<String> l_sorted_field_names = authenticationData.publicDataFieldMap.keySet().sort()
         l_sorted_field_names.each {
             l_unhashed_authentication_string += authenticationData.publicDataFieldMap.get(it)
-        }
+        }//todo: add keys and delimiters
         MessageDigest l_message_digest = MessageDigest.getInstance(i_context.p_app_conf.authentication_hash_type)
         byte[] l_authentication_hash_bytes = l_message_digest.digest(l_unhashed_authentication_string.getBytes(StandardCharsets.UTF_8))
         String l_authentication_hash_base64_encoded = new BASE64Encoder().encode(l_authentication_hash_bytes)
         return l_authentication_hash_base64_encoded
     }
 
-    AuthenticationAttempt create_authentication_attempt(AuthenticationType i_conf_authentication, T_auth_grant_base_5_context i_context) {
+    FailedAuthenticationAttempt create_authentication_attempt(AuthenticationType i_conf_authentication, T_auth_grant_base_5_context i_context) {
         Date l_current_date = new Date()
-        AuthenticationAttempt l_new_authentication_attempt = new AuthenticationAttempt(
+        FailedAuthenticationAttempt l_new_authentication_attempt = new FailedAuthenticationAttempt(
                 authenticationName: authenticationName,
                 status: GC_STATUS_NEW,
                 authenticationHash: hash_code(i_context),
@@ -137,11 +136,11 @@ class Authentication {
         use(TimeCategory) {
             l_start_search_date = l_current_date - i_conf_authentication.lockoutDurationSeconds.seconds
         }
-        Set<AuthenticationAttempt> l_search_attempts = i_context.p_authentication_attempt_repository.find_attempt(authenticationName, hash_code(i_context), l_start_search_date)
+        Set<FailedAuthenticationAttempt> l_search_attempts = i_context.p_authentication_attempt_repository.find_attempt(authenticationName, hash_code(i_context), l_start_search_date)
         if (l_search_attempts.isEmpty()) {
             return l_new_authentication_attempt
         }
-        AuthenticationAttempt l_previous_attempt = l_search_attempts.first()
+        FailedAuthenticationAttempt l_previous_attempt = l_search_attempts.first()
         if (l_previous_attempt.currentAttemptCount >= i_conf_authentication.lockoutMaxAttemptCount) {
             //lockout
             use(TimeCategory) {
