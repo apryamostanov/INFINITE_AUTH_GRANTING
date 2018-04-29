@@ -25,42 +25,115 @@ import java.security.Key
 import static base.T_common_base_1_const.*
 import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
+import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.GC_AUTHORIZATION_ERROR_CODE_18A_AUTHENTICATION_PREVALIDATION
 import static com.a9ae0b01f0ffc.infinite_auth.validation.Validation.remove_jwt_bearer
 
+/**
+ *
+ * The parent Authorization object.<p>
+ * Authorization is the primary object in the Authorization Granting process.<p>
+ * Represents a single point of entry for the Authorization Granting API - the "Authorizations" REST Resource Endpoint with a paths:<p>
+ * - {base url}/authorizations<p>
+ * - {base url}/Authorizations<p>
+ * The "application/json" format object structure is uniformed accross the Request and Response payloads - which is
+ * the same specification and classes being used to support both Client input (request) and Server output (response).<p><p>
+ *
+ * Supports 2 methods:<p>
+ * - GET - to query how access can be requested<p>
+ * - POST - to perform actual Authorization Granting process<p>
+ * As an input data object, Authorization specifies what type of access is requested (Scope) and what are the provided means to get grant of such access
+ * - i.e. user Identity and its proofs (Authentications).<p>
+ * As an output data object, Authorization will specify the status of the request (Successful or Failed).<p>
+ * In case it has been successful - details will be added to it - such as validity fields, the JWT itself.<p>
+ * In case of failure, some failure indicative information will be shared - such as error code and description.
+ *
+ * */
 @Path("/{resource: authorizations|Authorizations}")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 class Authorization {
+
+    /**
+     * Request and Response field. Defines which Authorization is requested.
+     */
     String authorizationName
+
+    /**
+     * Response field. Filled by Authorization Granting process. Is referenced in the following tables:<p>
+     *     - Authorization Usage log (Authorization Validation)<p>
+     *     - Authorization Revocation (Authorization Granting - for Refresh Authorizations, Authorization Validation - for Access Authorizations).<p>
+     */
     Long authorizationId
 
     Identity identity
 
     Scope scope
 
+    /**
+     * Response field. Filled by Authorization Granting process. Used in Common Authorization Validation workflow.
+     */
     Integer durationSeconds
 
+    /**
+     * Response field. Filled by Authorization Granting process. Used in Common Authorization Validation workflow.<p>
+     *     Null means any number of times.
+     */
     @JsonProperty("usage_limit")
     Integer maxUsageCount
 
+    /**
+     * Response field. Filled by Authorization Granting process - Common Authentication Workflow - using Authentication Modules.<p>
+     * Functional data to be used by the frontend (Mobile app).<p>
+     * Values get appended by Authentication Modules as well as being copied from Prerequisite Authorizations.<p>
+     * In case of conflict of appended field names (e.g. when a field with same name exists but has a different value) - Authorization Grating process fails.<p>
+     */
     @JsonProperty("functional_data")
     HashMap<String, String> functionalFieldMap
 
     Authorization prerequisiteAuthorization
+
     @JsonIgnore
     Authorization refreshAuthorization
+
+    /**
+     * Response field. Filled by Authorization Granting process. UTC Time Zone.<p>
+     *     Example: "2017-08-16T10:52:15"
+     */
     @JsonFormat(timezone = "UTC")
     Date creationDate
+
+    /**
+     * Response field. Filled by Authorization Granting process. UTC Time Zone.<p>
+     *     Example: "2017-08-16T10:52:15"
+     */
     @JsonFormat(timezone = "UTC")
     Date expiryDate
+
+    /**
+     * Response field. Filled by Authorization Granting process. Possible values:<P>
+     *     - Successful
+     *     - Failed
+     *     - New
+     */
     @JsonProperty("status")
     String authorizationStatus = GC_STATUS_NEW
+
+    /**
+     * Response field. Filled by Authorization Granting process. Please refer to dictionary of Authorization Granting Error Codes.
+     */
     @JsonProperty("mdwl_error_number")
     String errorCode
+
+    /**
+     * Response field. Filled by Authorization Granting process. In case when "mdwl_error_number" = "mdwl8001" (Failed Authentication), it contains the name of failed Authentication.<p>
+     *     Otherwise it contains optional textual description that may accompany the "mdwl_error_number" field.
+     */
     @JsonProperty("mdwl_error_text")
     String errorText
+
     @JsonProperty("token")
     String jwt
+
     String authorizationType
 
     @Autowired
@@ -198,6 +271,11 @@ class Authorization {
         Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
             for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
+                if (not(merge_field_maps(l_user_authentication.keyFieldMap, l_user_authentication.functionalFieldMap))) {
+                    failure(GC_AUTHORIZATION_ERROR_CODE_18A_AUTHENTICATION_PREVALIDATION)
+                    return
+                }
+                field_map_prevalidation(l_user_authentication.keyFieldMap, l_user_authentication.functionalFieldMap)
                 l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], i_context, this)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
                     this.errorText = l_sorted_conf_authentication_list[l_authentication_index].authenticationName
@@ -234,7 +312,11 @@ class Authorization {
         }
     }
 
-    Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
+    Boolean field_map_prevalidation(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
+        return merge_field_maps(i_key_field_map, i_functional_field_map, true)
+    }
+
+    Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map, Boolean i_prevalidation = false) {
         if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
         if (scope?.keyFieldMap == null) scope?.keyFieldMap = new HashMap<String, String>()
         HashMap l_local_key_field_map = new HashMap()
@@ -253,8 +335,10 @@ class Authorization {
                 else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
             } else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
         }
-        scope?.keyFieldMap = l_local_key_field_map
-        functionalFieldMap = l_local_functional_field_map
+        if (not(i_prevalidation)) {
+            scope?.keyFieldMap = l_local_key_field_map
+            functionalFieldMap = l_local_functional_field_map
+        }
         return true
     }
 
@@ -369,6 +453,7 @@ class Authorization {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    //TODO: Response time of this API should be normalized to prevent response time-based data attacks
     Response post_list(String i_json_string) {
         Object l_parsed_json = new JsonSlurper().parseText(i_json_string)
         Response l_granting_response

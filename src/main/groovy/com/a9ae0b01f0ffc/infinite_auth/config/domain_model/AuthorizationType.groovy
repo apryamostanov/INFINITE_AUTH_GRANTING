@@ -31,7 +31,7 @@ class AuthorizationType implements I_overridable_by_accessor {
     String authorizationName
 
     /**
-     *  Accessor Type associated with this Authorizatino Type.<p>
+     *  Accessor Type associated with this Authorization Type.<p>
      *  Authorization Types sharing same Authorization Name can override each other within a list of Accessor Types
      *  (with Accessor Role "Authorization control") applicable to specific accessor.<p><p>
      *
@@ -63,6 +63,7 @@ class AuthorizationType implements I_overridable_by_accessor {
 
     /**
      *  Defines for how many seconds the successful Authorization is valid<p>
+     *  Used in Common Authentication Validation Workflow.
      *  This setting is overrideable by Accessor Type (within same Authorization Names)<p><p>
      *
      * Example: "1800"
@@ -71,7 +72,8 @@ class AuthorizationType implements I_overridable_by_accessor {
     Integer durationSeconds
 
     /**
-     *  Defines for how validations the successful Authorization is valid<p>
+     *  Defines for how many successful validations the Authorization is valid<p>
+     *  Used in Common Authentication Validation Workflow.
      *  Null means no limitation<p>
      *  This setting is overrideable by Accessor Type (within same Authorization Names)<p><p>
      *

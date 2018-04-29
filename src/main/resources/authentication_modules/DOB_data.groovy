@@ -15,7 +15,7 @@ System.out.println(this.getClass().getSimpleName())
 
 def io_user_authentication = binding.getVariable("io_user_authentication")
 
-
+//TODO: support isPublicDataValid
         String l_get_card_details_request_body_string = """<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
           <s:Body>
             <GetCardDetail xmlns="www.corecard.com">

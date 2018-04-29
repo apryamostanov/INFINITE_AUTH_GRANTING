@@ -9,7 +9,19 @@ import javax.persistence.*
  * Used in Common Authentication Workflow to:<p>
  * - Find out if Authentication Public Data record is locked out (i.e. too many wrong password login attempts for specific username)<p>
  * - To log Failed Authentication Attempt in case Authentication Public Data record is not yet locked out and the Authentication
- * Validation Module returns failure result of Authentication.
+ * Validation Module returns failure result of Authentication.<p><p>
+ * Note: it is recommended to store this entity on a separate specially designed high-volume storage.<p>
+ * The data can grow very large over the time (billions of records), thus appropriate partitioning of table is required, as well as
+ * periodical archiving and cleanup (currently out of scope of the solution).<p>
+ * Special attention has to be done to attack scenarios with overflooding of authentication data. Such scenarios
+ * are subject of additional design and development within the solution.<p>
+ * Specifically it is suggested that Authentication Modules should support Authentication indicator "isPublicDataValid" showing whether the Public Data
+ * has been recognized by the System of Record (Authentication Provider) - therefore allowing to bypass logging deliberately wrong Public Data -
+ * thus only logging attempts with wrong Private Data.<p>
+ * (it will be a tradeoff between storage utilization for wrong Public Data - and additional load on Authentication Providers).<p><p>
+ * Main recommendation is to completely delegate the lockout functionality to Authentication providers and use it on Authorization Server only
+ * for those Authentication Modules, which do not support this on the side of System of Record. (e.g. DOB_data).<p>
+ * Additional recommendation is to only have it enabled for Authentications used in L3 authentication only - i.e. Step Up Authorizations (updates, transfers, etc).
  *
  * */
 @CompileStatic

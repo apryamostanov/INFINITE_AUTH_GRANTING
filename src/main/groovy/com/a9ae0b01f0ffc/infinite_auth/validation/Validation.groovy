@@ -2,13 +2,10 @@ package com.a9ae0b01f0ffc.infinite_auth.validation
 
 import com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_5_context
 import com.a9ae0b01f0ffc.infinite_auth.config.domain_model.GrantType
-import com.a9ae0b01f0ffc.infinite_auth.granting.Authentication
 import com.a9ae0b01f0ffc.infinite_auth.granting.Authorization
 import com.a9ae0b01f0ffc.infinite_auth.server.ApiException
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import org.json.JSONObject
-import org.json.XML
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -138,7 +135,7 @@ class Validation {
                     return GC_JWT_VALIDITY_INVALID
                 }
                 if (is_not_null(l_grant.maxUsageCountWithinScope)) {
-                    if (p_app_context.p_usage_repository.findByAuthorizationIdAndUsedGrantType(l_authorization.authorizationId, l_used_grant_type).size() >= l_grant.maxUsageCountWithinScope) {
+                    if (p_app_context.p_usage_repository.findByAuthorizationIdAndUsedGrantType(l_authorization.authorizationId, l_used_grant_type.id).size() >= l_grant.maxUsageCountWithinScope) {
                         System.out.println(21)
                         return GC_JWT_VALIDITY_INVALID
                     }
@@ -152,7 +149,7 @@ class Validation {
                 l_binding.setVariable("i_url_path", i_url_path)
                 l_binding.setVariable("i_authorization", l_authorization)
                 if (i_context.get_validation_runner().run(l_grant.validationModuleName + i_context.app_conf().validationModulesExtension, l_binding)) {
-                    Usage l_usage = new Usage(authorizationId: l_authorization.authorizationId, usageDate: new Date(), usedGrantType: l_used_grant_type)
+                    Usage l_usage = new Usage(authorizationId: l_authorization.authorizationId, usageDate: new Date(), usedGrantTypeId: l_used_grant_type.id)
                     p_app_context.p_usage_repository.save([l_usage])
                     return GC_JWT_VALIDITY_OK
                 } else {

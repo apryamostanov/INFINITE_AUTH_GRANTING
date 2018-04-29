@@ -15,11 +15,11 @@ interface I_grant_type_repository extends JpaRepository<GrantType, Long> {
 
     Set<GrantType> findByRestResourceName(@Param("restResourceName") String restResourceName)
 
-    Set<GrantType> findByRestResourceNameAndKeyFieldRuleName(@Param("restResourceName") String restResourceName, @Param("keyFieldRuleName") String keyFieldRuleName)
+    Set<GrantType> findByRestResourceNameAndKeyFieldRuleName(@Param("restResourceName") String restResourceName, @Param("validationModuleName") String keyFieldRuleName)
 
     Set<GrantType> findByRestResourceNameAndKeyFieldRuleNameAndMaxUsageCountWithinScope(@Param("restResourceName") String restResourceName
-            , @Param("keyFieldRuleName") String keyFieldRuleName
-            , @Param("maxUsageCountWithinScope") Integer maxUsageCountWithinScope
+            , @Param("validationModuleName") String keyFieldRuleName
+            , @Param("maxUsageCountWithinAuthorization") Integer maxUsageCountWithinScope
     )
 
 }

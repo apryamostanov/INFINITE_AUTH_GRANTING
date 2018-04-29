@@ -33,6 +33,7 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_AUTHORIZATION_ERROR_CODE_17 = "17"
     static final String GC_AUTHORIZATION_ERROR_CODE_17A = "17A"
     static final String GC_AUTHORIZATION_ERROR_CODE_18_DATA_CONSISTENCY = "18"
+    static final String GC_AUTHORIZATION_ERROR_CODE_18A_AUTHENTICATION_PREVALIDATION = "18A"
     static final String GC_AUTHORIZATION_ERROR_CODE_19_USER_SUPPLIED_JWT = "19"
     static final String GC_AUTHORIZATION_ERROR_CODE_20_MISSING_ACCESSOR_DATA = "20"
     static final Integer GC_JWT_VALIDITY_OK = 1
@@ -48,5 +49,8 @@ class T_auth_grant_base_4_const extends T_common_base_3_utils {
     static final String GC_MODE_VALIDATION = "VALIDATION"
     static final Integer GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER = 0
     static final Integer GC_AUTHENTICATION_LOCKOUT_DURATION_ZERO = 0
+    static final Boolean GC_PRIVATE_DATA_VALIDITY_UNKNOWN = GC_NULL_OBJ_REF
+    static final Boolean GC_PRIVATE_DATA_INVALID = false
+    static final Boolean GC_PRIVATE_DATA_VALID = true
 
 }

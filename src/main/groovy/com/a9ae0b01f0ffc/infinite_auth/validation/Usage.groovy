@@ -28,7 +28,6 @@ class Usage {
 
     Date usageDate
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    GrantType usedGrantType
+    Long usedGrantTypeId
 
 }

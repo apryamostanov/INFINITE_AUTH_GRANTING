@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.time.TimeCategory
 import sun.misc.BASE64Encoder
 
+import javax.persistence.Transient
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 
@@ -17,8 +18,25 @@ import static base.T_common_base_3_utils.is_null
 import static base.T_common_base_3_utils.not
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 
+
+/**
+ *
+ * Authentication is a data object used for the following purposes:
+ * 1 - Contains Authentication Module Name (Authentication Name)
+ * 2 - Contains a set of input (public, private) data for Authentication Module Name<p>
+ * 3 - Contains the resulting authentication status<p>
+ *
+ * */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Authentication {
+
+    /**
+     *  Specifies Authentication Module Name to be used for validating Public and Private Data.<p>
+     *  Authentication Module is a custom script in certain location, containing business logic of validating Private and Public data.<p>
+     *
+     * Example: "User_data"
+     *
+     * */
     String authenticationName
 
     @JsonProperty("authentication_data")
@@ -33,6 +51,12 @@ class Authentication {
     @JsonIgnore
     HashMap<String, String> functionalFieldMap
 
+    /**
+     *  Specifies result of Authentication processing, including Common Authentication Workflow, pre- and post- checks.<p>
+     *
+     * Example: "Successful"
+     *
+     * */
     @JsonProperty("status")
     String authenticationStatus = GC_STATUS_NEW
 
@@ -41,6 +65,10 @@ class Authentication {
 
     @JsonIgnore
     T_auth_grant_base_5_context p_context
+
+    @JsonIgnore
+    @Transient
+    Boolean isPrivateDataValid = GC_PRIVATE_DATA_VALIDITY_UNKNOWN
 
     void failure() {
         this.authenticationStatus = GC_STATUS_FAILED
@@ -80,7 +108,7 @@ class Authentication {
             l_new_attempt.status = GC_STATUS_SUCCESSFUL
             l_new_attempt.currentAttemptCount = GC_ZERO
         }
-        if (i_conf_authentication.lockoutMaxAttemptCount != GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER && authenticationStatus == GC_STATUS_FAILED) {
+        if (i_conf_authentication.lockoutMaxAttemptCount != GC_AUTHENTICATION_LOCKOUT_COUNT_NEVER && authenticationStatus == GC_STATUS_FAILED && isPrivateDataValid in [GC_PRIVATE_DATA_INVALID, GC_PRIVATE_DATA_VALIDITY_UNKNOWN]) {
             i_context.p_authentication_attempt_repository.save([l_new_attempt])
         }
     }
