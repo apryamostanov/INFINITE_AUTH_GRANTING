@@ -11,6 +11,7 @@ import static base.T_common_base_1_const.GC_NULL_OBJ_REF
 
 /**
  * Scope Type is a group of Grant Types<p>
+ * Scope corresponds either to a specific screen/activity/functionality on the Client application - or a logical group of services<p>
  * Defines which Grants (APIs) are allowed within a Authorization<p><p>
  * Scope Type is supporting Accessor overriding (using item 1 - Scope Name and Accessor Role "Scope control")
  *
@@ -51,6 +52,8 @@ class ScopeType implements I_overridable_by_accessor {
      *  List of Grant Types accessible using this Authorization Type.<p>
      *  Note: ALL of the Grant Types are allowed.<p>
      *  This setting is overrideable by Accessor Type (within same Scope Names)<p><p>
+     * This structure is passed to Validation Module of specific Grant during the Authroziation Validation process - to validate against
+     * the Functional API request data (Query parameters or Payload fields).<p>
      *
      * */
     @ManyToMany(fetch = FetchType.EAGER)

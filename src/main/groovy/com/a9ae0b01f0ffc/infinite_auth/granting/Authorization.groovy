@@ -54,29 +54,45 @@ import static com.a9ae0b01f0ffc.infinite_auth.validation.Validation.remove_jwt_b
 class Authorization {
 
     /**
-     * Request and Response field. Defines which Authorization is requested.
+     * Request and Response field. Defines which Authorization is requested.<p><p>
+     *     Example: "Read"
      */
     String authorizationName
 
     /**
      * Response field. Filled by Authorization Granting process. Is referenced in the following tables:<p>
      *     - Authorization Usage log (Authorization Validation)<p>
-     *     - Authorization Revocation (Authorization Granting - for Refresh Authorizations, Authorization Validation - for Access Authorizations).<p>
+     *     - Authorization Revocation (Authorization Granting - for Refresh Authorizations, Authorization Validation - for Access Authorizations).<p><p>
+     *         Example: 923674263
      */
     Long authorizationId
 
+    /**
+     *  Request and Response field.<p><p>
+     *  Identity object, containing Authentications.<p>
+     *
+     * */
     Identity identity
 
+    /**
+     *  Request and Response field.<p><p>
+     *  Scope object, containing needed Scope Name (request) and resulting set of Grants (response).<p>
+     *
+     * */
     Scope scope
 
     /**
-     * Response field. Filled by Authorization Granting process. Used in Common Authorization Validation workflow.
+     * Response field. Filled by Authorization Granting process. Used in Common Authorization Validation workflow.<p><p>
+     *     Example: 1800
      */
     Integer durationSeconds
 
     /**
      * Response field. Filled by Authorization Granting process. Used in Common Authorization Validation workflow.<p>
-     *     Null means any number of times.
+     *  Defines for how many successful validations the Authorization is valid<p>
+     *      Note: checking is done against Authorization Name - ignoring Accessor Overriding (specific Authorization Type Id)<p>
+     *     Null means any number of times.<p><p>
+     *         Example: 3
      */
     @JsonProperty("usage_limit")
     Integer maxUsageCount
@@ -85,11 +101,18 @@ class Authorization {
      * Response field. Filled by Authorization Granting process - Common Authentication Workflow - using Authentication Modules.<p>
      * Functional data to be used by the frontend (Mobile app).<p>
      * Values get appended by Authentication Modules as well as being copied from Prerequisite Authorizations.<p>
-     * In case of conflict of appended field names (e.g. when a field with same name exists but has a different value) - Authorization Grating process fails.<p>
+     * In case of conflict of appended field names (e.g. when a field with same name exists but has a different value) - Authorization Grating process fails.<p><p>
+     *     Example: ["card_type_id_enhanced": 1, "login_flag": 2]
+     *
      */
     @JsonProperty("functional_data")
     HashMap<String, String> functionalFieldMap
 
+    /**
+     * Request field. In response this field is truncated.<p>
+     *     Prerequisite authorization of user choice - one of the required by Authorization Validation for a step-up authorization<p>
+     *         Can be either full Authorization object - or only its "token" field, containing the JWT.
+     */
     Authorization prerequisiteAuthorization
 
     @JsonIgnore
@@ -131,9 +154,25 @@ class Authorization {
     @JsonProperty("mdwl_error_text")
     String errorText
 
+    /**
+     * Response field. Filled by Authorization Granting process only in case when the Authorization is successful.<p>
+     * This field contains its enclosing response Authorization object serialized as JSON, compressed (ZIP)
+     * and added as "token" claim JWT API and serialized using <a href="https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-25#section-7">JWT Compact Serialization</a> specification
+     * <p><p>
+     *     Note: JWT key is taken accordingly to "authorizationType" field - either Access or Referesh key.
+     *
+     */
     @JsonProperty("token")
     String jwt
 
+    /**
+     * Authorization Type.<p>
+     * Response field (all requests are for Access Authorizations only; server may or may not provide Refresh Authorization).<p>
+     * Filled by Authorization Granting process. Possible values:<P>
+     *     - Access - authorization that can be provided to Authorization Validation Server in "Authorization" header and containing actual functional API authorization data<p>
+     *     - Refresh - used only to refresh expired Access authorization - by providing it to "Refresh_data" built-in Authentication Module.<p>
+     *     For more information please refer to "Refresh" concept description in the documentation.
+     */
     String authorizationType
 
     @Autowired

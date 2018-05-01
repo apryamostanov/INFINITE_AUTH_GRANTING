@@ -73,6 +73,7 @@ class AuthorizationType implements I_overridable_by_accessor {
 
     /**
      *  Defines for how many successful validations the Authorization is valid<p>
+     *      Note: checking is done against Authorization Name - ignoring Accessor Overriding (specific Authorization Type Id)<p>
      *  Used in Common Authentication Validation Workflow.
      *  Null means no limitation<p>
      *  This setting is overrideable by Accessor Type (within same Authorization Names)<p><p>

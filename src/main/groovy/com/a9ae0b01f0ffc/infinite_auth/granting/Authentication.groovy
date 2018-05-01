@@ -31,6 +31,7 @@ import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
 class Authentication {
 
     /**
+     *  Request and Response field.<p><p>
      *  Specifies Authentication Module Name to be used for validating Public and Private Data.<p>
      *  Authentication Module is a custom script in certain location, containing business logic of validating Private and Public data.<p>
      *
@@ -39,6 +40,11 @@ class Authentication {
      * */
     String authenticationName
 
+    /**
+     *  Request and Response field.<p><p>
+     *  Authentication_data object, containing Public and Private Data.<p>
+     *
+     * */
     @JsonProperty("authentication_data")
     Authentication_data authenticationData
 

@@ -121,7 +121,7 @@ class GrantType implements I_overridable_by_accessor {
         l_user_grant.urlMask = this.urlMask
         l_user_grant.validationModuleName = new HashSet<String>()
         l_user_grant.validationModuleName = this.validationModuleName
-        l_user_grant.maxUsageCountWithinScope = this.maxUsageCountWithinAuthorization
+        l_user_grant.maxUsageCountWithinAuthorization = this.maxUsageCountWithinAuthorization
         l_user_grant.grantTypeId = this.id
         return l_user_grant
     }
