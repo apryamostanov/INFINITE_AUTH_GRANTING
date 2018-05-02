@@ -10,6 +10,6 @@ return new Object() {
     String GC_CORECARD_API_IP = "10.10.98.101"
     String GC_CORECARD_API_SOURCE = "YND"
     String GC_CORECARD_API_VERSION = "1.2"
-    String GC_CORECARD_API_URL = "https://10.10.99.24/UAT/EMEA/CoreCardServices/CoreCardServices.svc/basic"
+    String GC_CORECARD_API_URL = "https://wp1wcewb1t4/UAT/EMEA/CoreCardServices/CoreCardServices.svc/basic"//"https://10.10.99.24/UAT/EMEA/CoreCardServices/CoreCardServices.svc/basic"
     String GC_CORECARD_API_CONTENT_TYPE = "text/xml"
 }

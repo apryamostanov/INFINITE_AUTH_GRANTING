@@ -80,7 +80,7 @@ OkHttpClient.Builder l_builder = new OkHttpClient.Builder().hostnameVerifier(io_
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                 return new ArrayList<X509Certificate>().toArray() as X509Certificate[];
             }
-        }).proxy(l_proxy)
+        })//.proxy(l_proxy)
 OkHttpClient l_client = l_builder.build()
 
 Response l_self_service_login_response = l_client.newCall(l_self_service_login_request).execute()

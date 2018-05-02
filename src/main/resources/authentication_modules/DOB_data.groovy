@@ -75,7 +75,7 @@ OkHttpClient.Builder l_builder = new OkHttpClient.Builder().hostnameVerifier(io_
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                 return new ArrayList<X509Certificate>().toArray() as X509Certificate[];
             }
-        }).proxy(l_proxy)
+        })//.proxy(l_proxy)
         OkHttpClient l_client = l_builder.build()
         Request l_get_card_details_request = new Request.Builder().post(RequestBody.create(MediaType.parse(io_user_authentication.p_conf.GC_CORECARD_API_CONTENT_TYPE as String), l_get_card_details_request_body_string)).url(io_user_authentication.p_conf.GC_CORECARD_API_URL as String).addHeader("SOAPAction", "www.corecard.com/ICoreCardServices/GetCardDetail").build()
         Response l_get_card_details_response = l_client.newCall(l_get_card_details_request).execute()
