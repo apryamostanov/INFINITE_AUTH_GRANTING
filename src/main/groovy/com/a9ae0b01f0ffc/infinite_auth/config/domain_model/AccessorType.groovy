@@ -181,6 +181,22 @@ class AccessorType {
     String resourceEndpointName = GC_EMPTY_STRING
 
     /**
+     *  Specifies which products are allowed for this accessor.<p>
+     *  Prevents any step-up Authorizations with Authentications (e.g. User_data) with resulting Product ID not within this list. <p>
+     *  Null means no restriction.<p>
+     *  Comma-separated string list; when at least 1 product is set - list should start and end with comma<p><p>
+     *
+     *  Examples:<p>
+     *      -",2230,2241,2242,"<p>
+     *      -",2230,"<p>
+     *      -"" (empty string) or null - not restriction<p>
+     *      "," - wrong usage<p>
+     *      ",," - wrong usage<p>
+     *
+     * */
+    String allowedProducts = GC_EMPTY_STRING
+
+    /**
      *  AccessorType id, generated field
      *
      * */

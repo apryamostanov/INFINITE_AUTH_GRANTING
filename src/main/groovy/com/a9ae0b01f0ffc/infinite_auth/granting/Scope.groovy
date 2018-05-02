@@ -39,7 +39,7 @@ class Scope {
      * Values get appended by Authentication Modules as well as being copied from Prerequisite Authorization.<p>
      * In case of conflict of appended field names (e.g. when a field with same name exists but has a different value) - Authorization Grating process fails.<p><p>
      *     Example: ["proxy_number": 34252345, "account_number": 3485438748573234]<p>
-     * This structure is passed to Validation Module of specific Grant during the Authroziation Validation process - to validate against
+     * This structure is passed to Validation Module of specific Grant during the Authorization Validation process - to validate against
      * the Functional API request data (Query parameters or Payload fields).<p>
      *
      */

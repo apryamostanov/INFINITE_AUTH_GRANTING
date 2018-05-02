@@ -109,8 +109,9 @@ class Authorization {
     HashMap<String, String> functionalFieldMap
 
     /**
-     * Request field. In response this field is truncated.<p>
+     * Request and Response field.<p>
      *     Prerequisite authorization of user choice - one of the required by Authorization Validation for a step-up authorization<p>
+     *         May be used by Authorization Granting to lookup Accessor_data authentication and Product Id.
      *         Can be either full Authorization object - or only its "token" field, containing the JWT.
      */
     Authorization prerequisiteAuthorization
@@ -400,6 +401,7 @@ class Authorization {
         jwt = GC_EMPTY_STRING
         Authorization l_lookup_accessor_authorization = this
         //if it is Anonymous authorization - force the Accessor_data authentication preliminary
+        //todo: find the user_data authentication - and take Product from there
         Authentication l_accessor_authentication = find_accessor_authentication(l_lookup_accessor_authorization, i_context)
         if (is_null(l_accessor_authentication)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_20_MISSING_ACCESSOR_DATA)

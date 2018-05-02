@@ -9,7 +9,9 @@ import javax.net.ssl.X509TrustManager
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 
+import static base.T_common_base_3_utils.is_not_null
 import static base.T_common_base_3_utils.is_null
+import static base.T_common_base_3_utils.not
 
 System.out.println(this.getClass().getSimpleName())
 
@@ -149,6 +151,13 @@ if (!l_self_service_login_response.isSuccessful()) {
                 return
             } else {
                 def l_product_id = l_slurped_get_card_details_response.Body.GetCardDetailResponse.GetCardDetailResult.ProductDetail.ProductID
+                if (is_not_null(io_user_authentication.p_parent_authorization?.scope?.keyFieldMap?.get("allowed_products"))) {
+                    String l_allowed_products = io_user_authentication.p_parent_authorization.scope.keyFieldMap.get("allowed_products")
+                    if (not(l_allowed_products.contains("," + l_product_id + ","))) {
+                        io_user_authentication.failure()
+                        return
+                    }
+                }
                 def l_status_type_description = l_slurped_get_card_details_response.Body.GetCardDetailResponse.GetCardDetailResult.CardDetail.CardTypeDescription
                 def l_card_type_id_enhanced
                 if (l_status_type_description == "Primary Card") {

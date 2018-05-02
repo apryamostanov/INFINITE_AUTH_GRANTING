@@ -109,6 +109,7 @@ if (l_accessor_set_to_match_routing.first().isForbidden) {
 io_user_authentication.keyFieldMap = new HashMap<String, String>()
 io_user_authentication.functionalFieldMap = new HashMap<String, String>()
 io_user_authentication.keyFieldMap.put("accessor_id", l_accessor_set_to_match.first().accessorName)
+io_user_authentication.keyFieldMap.put("allowed_products", l_accessor_set_to_match.first().allowedProducts)
 io_user_authentication.keyFieldMap.put("granting_endpoint_name", io_user_authentication.p_context.app_conf().granting_endpoint_name)
 io_user_authentication.keyFieldMap.put("validation_endpoint_group_name", l_accessor_set_to_match_routing.first().validationEndpointGroupName)
 io_user_authentication.keyFieldMap.put("resource_endpoint_name", l_accessor_set_to_match_routing.first().resourceEndpointName)
