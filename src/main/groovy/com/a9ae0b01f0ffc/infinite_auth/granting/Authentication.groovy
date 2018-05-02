@@ -76,6 +76,10 @@ class Authentication {
     @Transient
     Boolean isPrivateDataValid = GC_PRIVATE_DATA_VALIDITY_UNKNOWN
 
+
+    @JsonIgnore
+    Boolean p_is_trustful = GC_FALSE
+
     void failure() {
         this.authenticationStatus = GC_STATUS_FAILED
     }

@@ -25,7 +25,6 @@ import java.security.Key
 import static base.T_common_base_1_const.*
 import static base.T_common_base_3_utils.*
 import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.*
-import static com.a9ae0b01f0ffc.infinite_auth.base.T_auth_grant_base_4_const.GC_AUTHORIZATION_ERROR_CODE_18A_AUTHENTICATION_PREVALIDATION
 import static com.a9ae0b01f0ffc.infinite_auth.validation.Validation.remove_jwt_bearer
 
 /**
@@ -311,11 +310,10 @@ class Authorization {
         Integer l_authentication_index = GC_ZERO
         if (l_is_authentication_needed) {
             for (Authentication l_user_authentication in l_sorted_user_authentication_list) {
-                if (not(merge_field_maps(l_user_authentication.keyFieldMap, l_user_authentication.functionalFieldMap))) {
+                if (not(prevalidate_key_field_map(l_user_authentication.authenticationData.publicDataFieldMap))) {
                     failure(GC_AUTHORIZATION_ERROR_CODE_18A_AUTHENTICATION_PREVALIDATION)
                     return
                 }
-                field_map_prevalidation(l_user_authentication.keyFieldMap, l_user_authentication.functionalFieldMap)
                 l_user_authentication.common_authentication_validation(l_sorted_conf_authentication_list[l_authentication_index], i_context, this)
                 if (l_user_authentication.authenticationStatus == GC_STATUS_FAILED) {
                     this.errorText = l_sorted_conf_authentication_list[l_authentication_index].authenticationName
@@ -351,12 +349,23 @@ class Authorization {
             l_user_authorization.refreshAuthorization.success(i_context)
         }
     }
-
-    Boolean field_map_prevalidation(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map) {
-        return merge_field_maps(i_key_field_map, i_functional_field_map, true)
+    Boolean prevalidate_key_field_map(HashMap<String, Object> i_key_field_map) {
+        if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
+        if (scope?.keyFieldMap == null) scope?.keyFieldMap = new HashMap<String, String>()
+        HashMap l_local_key_field_map = new HashMap()
+        l_local_key_field_map.putAll(scope?.keyFieldMap)
+        HashMap l_local_functional_field_map = new HashMap()
+        l_local_functional_field_map.putAll(functionalFieldMap)
+        for (String l_key in i_key_field_map.keySet()) {
+            if (l_local_key_field_map.containsKey(l_key)) {
+                if (is_not_null(i_key_field_map.get(l_key)) && is_not_null(l_local_key_field_map.get(l_key)) && l_local_key_field_map.get(l_key) != i_key_field_map.get(l_key)) return false
+                else l_local_key_field_map.put(l_key, i_key_field_map.get(l_key))
+            } else l_local_key_field_map.put(l_key, i_key_field_map.get(l_key))
+        }
+        return true
     }
 
-    Boolean merge_field_maps(HashMap<String, String> i_key_field_map, HashMap<String, String> i_functional_field_map, Boolean i_prevalidation = false) {
+    Boolean merge_field_maps(HashMap<String, Object> i_key_field_map, HashMap<String, String> i_functional_field_map) {
         if (functionalFieldMap == null) functionalFieldMap = new HashMap<String, String>()
         if (scope?.keyFieldMap == null) scope?.keyFieldMap = new HashMap<String, String>()
         HashMap l_local_key_field_map = new HashMap()
@@ -375,10 +384,8 @@ class Authorization {
                 else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
             } else l_local_functional_field_map.put(l_key, i_functional_field_map.get(l_key))
         }
-        if (not(i_prevalidation)) {
-            scope?.keyFieldMap = l_local_key_field_map
-            functionalFieldMap = l_local_functional_field_map
-        }
+        scope?.keyFieldMap = l_local_key_field_map
+        functionalFieldMap = l_local_functional_field_map
         return true
     }
 
@@ -401,11 +408,15 @@ class Authorization {
         jwt = GC_EMPTY_STRING
         Authorization l_lookup_accessor_authorization = this
         //if it is Anonymous authorization - force the Accessor_data authentication preliminary
-        //todo: find the user_data authentication - and take Product from there
-        Authentication l_accessor_authentication = find_accessor_authentication(l_lookup_accessor_authorization, i_context)
+        Authentication l_accessor_authentication = find_any_authentication(l_lookup_accessor_authorization, i_context, "Accessor_data")
+        Authentication l_user_data_authentication = find_trustful_authentication(l_lookup_accessor_authorization, i_context, "User_data")
         if (is_null(l_accessor_authentication)) {
             failure(GC_AUTHORIZATION_ERROR_CODE_20_MISSING_ACCESSOR_DATA)
             return
+        }
+        String l_product_id = "Any"
+        if (is_not_null(l_user_data_authentication)) {
+            l_product_id = l_user_data_authentication.p_parent_authorization.scope?.keyFieldMap?.get("product_id")
         }
         Set<AuthorizationType> l_authorization_types = get_authorization_types(
                 scope?.scopeName
@@ -413,7 +424,7 @@ class Authorization {
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("platform") as String
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("app_version") as String
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("FIID") as String
-                , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product") as String
+                , l_product_id
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("product_group") as String
                 , l_accessor_authentication?.authenticationData?.publicDataFieldMap?.get("api_major_version") as String
                 , i_context.p_app_conf.granting_endpoint_name
@@ -446,9 +457,29 @@ class Authorization {
         }
     }
 
-    static Authentication find_accessor_authentication(Authorization l_lookup_accessor_authorization, T_auth_grant_base_5_context i_context) {
-        Authentication l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {
-            it.authenticationName == "Accessor_data"
+    static Authentication find_trustful_authentication(Authorization l_lookup_accessor_authorization, T_auth_grant_base_5_context i_context, String i_authentication_name) {
+        Authentication l_accessor_authentication = GC_NULL_OBJ_REF as Authentication
+        Integer l_number_of_step_ups = GC_ZERO
+        while (is_not_null(l_lookup_accessor_authorization) && is_null(l_accessor_authentication) && l_number_of_step_ups < i_context.p_app_conf.max_number_of_step_ups) {
+            if (is_not_null(l_lookup_accessor_authorization.jwt)) {
+                if (!is_invalid_access_jwt(l_lookup_accessor_authorization.jwt, i_context)) {
+                    Authorization l_prerequisite_authorization_unwrapped = access_jwt2authorization(l_lookup_accessor_authorization.jwt, i_context)
+                    l_accessor_authentication = l_prerequisite_authorization_unwrapped.identity?.authenticationSet?.find {
+                        it.authenticationName == i_authentication_name
+                    }
+                    l_accessor_authentication?.p_parent_authorization = l_prerequisite_authorization_unwrapped
+                    l_lookup_accessor_authorization = l_prerequisite_authorization_unwrapped.prerequisiteAuthorization
+                }
+            }
+            l_number_of_step_ups++
+        }
+        return l_accessor_authentication
+    }
+
+    static Authentication find_any_authentication(Authorization l_lookup_accessor_authorization, T_auth_grant_base_5_context i_context, String i_authentication_name) {
+        Authentication l_accessor_authentication = GC_NULL_OBJ_REF as Authentication
+        l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {
+            it.authenticationName == i_authentication_name
         }
         if (is_null(l_accessor_authentication)) {
             Integer l_number_of_step_ups = GC_ZERO
@@ -457,14 +488,17 @@ class Authorization {
                     if (!is_invalid_access_jwt(l_lookup_accessor_authorization.jwt, i_context)) {
                         Authorization l_prerequisite_authorization_unwrapped = access_jwt2authorization(l_lookup_accessor_authorization.jwt, i_context)
                         l_accessor_authentication = l_prerequisite_authorization_unwrapped.identity?.authenticationSet?.find {
-                            it.authenticationName == "Accessor_data"
+                            it.authenticationName == i_authentication_name
                         }
+                        l_accessor_authentication?.p_parent_authorization = l_prerequisite_authorization_unwrapped
+                        l_accessor_authentication?.p_is_trustful = GC_TRUE
                         l_lookup_accessor_authorization = l_prerequisite_authorization_unwrapped.prerequisiteAuthorization
                     }
                 } else {
                     l_accessor_authentication = l_lookup_accessor_authorization.identity?.authenticationSet?.find {
-                        it.authenticationName == "Accessor_data"
+                        it.authenticationName == i_authentication_name
                     }
+                    l_accessor_authentication?.p_parent_authorization = l_lookup_accessor_authorization
                     l_lookup_accessor_authorization = l_lookup_accessor_authorization.prerequisiteAuthorization
                 }
                 l_number_of_step_ups++

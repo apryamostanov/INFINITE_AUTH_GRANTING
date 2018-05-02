@@ -15,6 +15,6 @@ interface UsageRepository extends JpaRepository<Usage, Long> {
 
     Set<Usage> findByAuthorizationId(@Param("authorizationId") Long authorizationId)
 
-    Set<Usage> findByAuthorizationIdAndUsedGrantType(@Param("authorizationId") Long authorizationId, @Param("usedGrantTypeId") Long usedGrantTypeId)
+    Set<Usage> findByAuthorizationIdAndUsedGrantTypeId(@Param("authorizationId") Long authorizationId, @Param("usedGrantTypeId") Long usedGrantTypeId)
 
 }

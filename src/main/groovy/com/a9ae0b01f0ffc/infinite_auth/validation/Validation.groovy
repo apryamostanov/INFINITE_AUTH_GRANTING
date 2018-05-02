@@ -135,7 +135,7 @@ class Validation {
                     return GC_JWT_VALIDITY_INVALID
                 }
                 if (is_not_null(l_grant.maxUsageCountWithinAuthorization)) {
-                    if (p_app_context.p_usage_repository.findByAuthorizationIdAndUsedGrantType(l_authorization.authorizationId, l_used_grant_type.id).size() >= l_grant.maxUsageCountWithinAuthorization) {
+                    if (p_app_context.p_usage_repository.findByAuthorizationIdAndUsedGrantTypeId(l_authorization.authorizationId, l_used_grant_type.id).size() >= l_grant.maxUsageCountWithinAuthorization) {
                         System.out.println(21)
                         return GC_JWT_VALIDITY_INVALID
                     }
