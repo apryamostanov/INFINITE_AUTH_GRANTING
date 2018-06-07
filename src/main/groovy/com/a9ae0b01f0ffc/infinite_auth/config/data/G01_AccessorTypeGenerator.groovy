@@ -14,7 +14,7 @@ class G01_AccessorTypeGenerator {
         Set<AccessorType> l_entity_set = new HashSet<AccessorType>()
 
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_ACCESS_CONTROL
-                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Access: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))
+                , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Access: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%", allowedProducts: ",17891,"))
 
         l_entity_set.add(new AccessorType(accessorRole: GC_ACCESSOR_TYPE_AUTHENTICATION_CONTROL
                 , lookupPriority: 0, osName: "%", platform: "%", appVersion: "%", fiid: "%", product: "%", productGroup: "%", accessorName: "Authentication: Any accessor", appName: "%", grantingEndpointName: "%", apiVersionName: "%"))

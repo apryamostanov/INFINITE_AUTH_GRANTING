@@ -408,6 +408,7 @@ class Authorization {
         jwt = GC_EMPTY_STRING
         Authorization l_lookup_accessor_authorization = this
         //if it is Anonymous authorization - force the Accessor_data authentication preliminary
+        //TODO: just look for data scope of first prerequisite authorization
         Authentication l_accessor_authentication = find_any_authentication(l_lookup_accessor_authorization, i_context, "Accessor_data")
         Authentication l_user_data_authentication = find_trustful_authentication(l_lookup_accessor_authorization, i_context, "User_data")
         if (is_null(l_accessor_authentication)) {

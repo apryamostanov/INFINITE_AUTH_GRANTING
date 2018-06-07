@@ -41,6 +41,7 @@ class Scope {
      *     Example: ["proxy_number": 34252345, "account_number": 3485438748573234]<p>
      * This structure is passed to Validation Module of specific Grant during the Authorization Validation process - to validate against
      * the Functional API request data (Query parameters or Payload fields).<p>
+     *     This is a superset of all underlying prerequisite authorizations<p><p>
      *
      */
     @JsonProperty("data_scope")

@@ -52,6 +52,7 @@ class AccessorType {
 
     /**
      * Rule Matching field.<p>
+     *     Unreliable field.<p>
      * Client software name, as hardcoded on the client side.<p>
      * E.g. name of the app.<p>
      * Supported SQL "like" syntax - e.g. "%" wildcard.<p><p>
@@ -72,6 +73,7 @@ class AccessorType {
 
     /**
      * Rule Matching field.<p>
+     *     Unreliable field.<p>
      * Client software platform name (e.g. iOS, Android, React), hardcoded on the client side<p>
      * Supported SQL "like" syntax - e.g. "%" wildcard.<p><p>
      *
@@ -82,6 +84,7 @@ class AccessorType {
 
     /**
      * Rule Matching field.<p>
+     *     Unreliable field.<p>
      * Client software operating system name (e.g. iOS 10, Android KitCat, Windows 10), hardcoded on the client side<p>
      * Supported SQL "like" syntax - e.g. "%" wildcard.<p><p>
      *
@@ -92,6 +95,7 @@ class AccessorType {
 
     /**
      * Rule Matching field.<p>
+     *     Unreliable field.<p>
      * Client software application version name, hardcoded on the client side<p>
      * Supported SQL "like" syntax - e.g. "%" wildcard.<p><p>
      *
@@ -102,6 +106,7 @@ class AccessorType {
 
     /**
      * Rule Matching field.<p>
+     *     Unreliable field.<p>
      * Program manager/business associate ID (in case there are multiple app names for same fiid), hardcoded on the client side<p>
      * Supported SQL "like" syntax - e.g. "%" wildcard.<p><p>
      *
@@ -112,7 +117,9 @@ class AccessorType {
 
     /**
      * Rule Matching field.<p>
-     * Card Product, hardcoded on the client side.<p>
+     *     Reliable field.<p>
+     *
+     * Card Product, returned by User_data Authentication Module.<p>
      * Supported SQL "like" syntax - e.g. "%" wildcard.<p><p>
      *
      * Example: "2209"<p>
@@ -122,12 +129,15 @@ class AccessorType {
 
     /**
      * Rule Matching field.<p>
-     * Card Product Group.<p>
+     *     Unreliable field.<p>
+     * Card Product Group as hardcoded on the App.<p>
      * Supported SQL "like" syntax - e.g. "%" wildcard, hardcoded on the client side.<p><p>
      *
      * Example: "Multicurrency"<p>
      *
      * */
+    //todo: rename to app group
+    //todo: FIID - on middleware side
     String productGroup = GC_EMPTY_STRING
 
     /**
@@ -139,8 +149,13 @@ class AccessorType {
      * */
     Boolean isForbidden
 
+    //todo: add product group, user group, user
+    //todo: revoke prerequisite authorization
+
     /**
      * Rule Matching field.<p>
+     *     Reliable field.<p>
+     *
      * Endpoint ID / object as configured on Authorization Granting Server).<p>
      * Used when more then one Authorization Granting Server instance is sharing same Authorization Granting Configuration Database.
      * Supported SQL "like" syntax - e.g. "%" wildcard.<p><p>
