@@ -1,0 +1,53 @@
+Anonymous Services -> Everything else
+
+run_service("CardSearchEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("CheckIDDocumentValidation", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("FXRateSearch", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetCardDetailEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetFees", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetProductParameters", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetProductParametersEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetTransactionDetail", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetTransactionHistory", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("RetrieveProductWallets", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("RevealPINValidationParameter", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("SearchWalletAccount", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("AccountCreationWithKYC", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("AddressLookup", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("CardLockUnlockRequest", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("CreateEEPaymentRequest", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("FundingAmountInquiry", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("RevealPIN", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateEEPaymentResponse", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateProfileWithPhone", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateProfileWithoutPhone", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateSecurityQuestionAnswer", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateWalletPriority", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("ValidateIDDocument", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("ValidateLoad", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("W2WTransferConfirmEnhanced", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("W2WTransferInitiateEnhanced", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+
+Customer Onboarding -> Everything else
+
+run_service("CardSearchEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("FXRateSearch", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetCardDetailEnhanced", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetTransactionDetail", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("GetTransactionHistory", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("RevealPINValidationParameter", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("SearchWalletAccount", "GET", "?ProxyNumber=" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "")
+run_service("CardLockUnlockRequest", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("RevealPIN", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateProfileWithPhone", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateProfileWithoutPhone", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateSecurityQuestionAnswer", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("UpdateWalletPriority", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("W2WTransferConfirmEnhanced", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+run_service("W2WTransferInitiateEnhanced", "POST", ", \"ProxyNumber\": \"" + testRunner.testCase.testSuite.project.getPropertyValue("proxy_number") + "\"")
+
+Read -> Everything else
+
+POST UpdateProfileWithoutPhone
+POST UpdateProfileWithPhone
+POST UpdateSecurityQuestionAnswer

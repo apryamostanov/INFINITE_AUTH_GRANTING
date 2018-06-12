@@ -63,55 +63,58 @@ class G03_ScopeTypeGenerator {
         ]))
 
         l_entity_set.add(new ScopeType(scopeName: "Anonymous Services", accessor: p_accessor_repository.find_accessor_by_name("Scope: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_SCOPE_CONTROL).first(), grantSet: [
+                p_grant_repository.findByRestResourceName("ChangePassword").first(),
+                p_grant_repository.findByRestResourceName("Document_metadata").first(),
+                p_grant_repository.findByRestResourceName("GenerateOTP").first(),
+                p_grant_repository.findByRestResourceName("GetSecretKey").first(),
                 p_grant_repository.findByRestResourceName("UserRegistration").first(),
                 p_grant_repository.findByRestResourceName("UserRegistrationValidationParametersEnhanced").first(),
                 p_grant_repository.findByRestResourceName("CardActivationSS").first(),
-                p_grant_repository.findByRestResourceName("CardActivationValidationParameterSSEnhanced").first(),
                 p_grant_repository.findByRestResourceName("ForgotPassword").first(),
                 p_grant_repository.findByRestResourceName("ForgotPasswordValidationParameterEnhanced").first(),
-                p_grant_repository.findByRestResourceName("GetSecretKey").first(),
-                p_grant_repository.findByRestResourceName("ForgotUserId").first(),
-                p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first(),
+                p_grant_repository.findByRestResourceName("ForgotUserIdEnhanced").first(),
+                p_grant_repository.findByRestResourceName("ForgotUserIdValidationParameterEnhanced").first(),
+                p_grant_repository.findByRestResourceName("CardActivationValidationParameterSSEnhanced").first(),
+                p_grant_repository.findByRestResourceName("SendActivationCode").first(),
                 p_grant_repository.findByRestResourceNameAndValidationModuleName("SendOTPSMS", "NA").first(),
-                p_grant_repository.findByRestResourceNameAndValidationModuleName("ValidateOTPSMS", "NA").first()
+                p_grant_repository.findByRestResourceNameAndValidationModuleName("ValidateOTPSMS", "NA").first(),
+                p_grant_repository.findByRestResourceName("FXRateSearchEnhanced").first()
         ]))
 
+        p_scope_repository.save(l_entity_set)
+        l_entity_set.clear()
+
         l_entity_set.add(new ScopeType(scopeName: "Main Screen", accessor: p_accessor_repository.find_accessor_by_name("Scope: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_SCOPE_CONTROL).first(), grantSet: [
+                p_grant_repository.findByRestResourceName("ChangePassword").first(),
+                p_grant_repository.findByRestResourceName("GetFees").first(),
+                p_grant_repository.findByRestResourceName("RevealPIN").first(),
+                p_grant_repository.findByRestResourceName("RevealPINValidationParameter").first(),
+                p_grant_repository.findByRestResourceName("RetrieveProductWallets").first(),
+                p_grant_repository.findByRestResourceName("ValidateLoad").first(),
+                p_grant_repository.findByRestResourceName("FundingAmountInquiry").first(),
+                p_grant_repository.findByRestResourceName("CreateEEPaymentRequest").first(),
+                p_grant_repository.findByRestResourceName("UpdateEEPaymentResponse").first(),
+                p_grant_repository.findByRestResourceName("GetProductParameters").first(),
                 p_grant_repository.findByRestResourceName("GetCardDetailEnhanced").first(),
-                p_grant_repository.findByRestResourceName("GetCVC").first(),
-                p_grant_repository.findByRestResourceName("CardActivationSS").first(),
-                p_grant_repository.findByRestResourceName("CardActivationValidationParameterSSEnhanced").first(),
                 p_grant_repository.findByRestResourceName("CardSearchEnhanced").first(),
-                p_grant_repository.findByRestResourceName("UserRegistration").first(),
-                p_grant_repository.findByRestResourceName("UserRegistrationValidationParametersEnhanced").first(),
-                p_grant_repository.findByRestResourceName("ForgotPassword").first(),
-                p_grant_repository.findByRestResourceName("ForgotPasswordValidationParameterEnhanced").first(),
                 p_grant_repository.findByRestResourceName("W2WTransferInitiateEnhanced").first(),
                 p_grant_repository.findByRestResourceName("GetTransactionHistory").first(),
                 p_grant_repository.findByRestResourceName("CardLockUnlockRequest").first(),
                 p_grant_repository.findByRestResourceName("FXRateSearch").first(),
                 p_grant_repository.findByRestResourceName("GetSecretKey").first(),
                 p_grant_repository.findByRestResourceName("GetTransactionDetail").first(),
-                p_grant_repository.findByRestResourceName("SetStatementDate").first(),
                 p_grant_repository.findByRestResourceName("SearchWalletAccount").first(),
-                p_grant_repository.findByRestResourceName("StatementInformationMultiCurrency").first(),
-                p_grant_repository.findByRestResourceName("StatementsInformation").first(),
                 p_grant_repository.findByRestResourceName("UpdateWalletPriority").first(),
-                p_grant_repository.findByRestResourceName("VirtualCardCreate").first(),
-                p_grant_repository.findByRestResourceName("VirtualCardUpdate").first(),
-                p_grant_repository.findByRestResourceName("W2WTransferConfirm").first(),
-                p_grant_repository.findByRestResourceName("ForgotPIN").first(),
-                p_grant_repository.findByRestResourceName("ForgotPINValidationParameters").first(),
-                p_grant_repository.findByRestResourceName("GenerateOTP").first(),
-                p_grant_repository.findByRestResourceNameAndValidationModuleName("SendOTPSMS", "[CardNumber, ProxyNumber]").first(),
-                p_grant_repository.findByRestResourceName("ValidateOTP").first(),
-                p_grant_repository.findByRestResourceNameAndValidationModuleName("ValidateOTPSMS", "[CardNumber, ProxyNumber]").first(),
-                p_grant_repository.findByRestResourceName("ForgotUserId").first(),
-                p_grant_repository.findByRestResourceName("ForgotUserIdValidationParametersEnhanced").first(),
-                p_grant_repository.findByRestResourceName("Document").first(),
+                p_grant_repository.findByRestResourceName("SendOTPSMS").first(),
+                p_grant_repository.findByRestResourceName("ValidateOTPSMS").first(),
                 p_grant_repository.findByRestResourceName("Document_metadata").first(),
-                p_grant_repository.findByRestResourceName("GetProductParametersEnhanced").first()
+                p_grant_repository.findByRestResourceName("GetProductParametersEnhanced").first(),
+                p_grant_repository.findByRestResourceName("FXRateSearchEnhanced").first(),
+                p_grant_repository.findByRestResourceName("W2WTransferConfirmEnhanced").first()
         ]))
+
+        p_scope_repository.save(l_entity_set)
+        l_entity_set.clear()
 
         l_entity_set.add(new ScopeType(scopeName: "Update Profile", accessor: p_accessor_repository.find_accessor_by_name("Scope: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_SCOPE_CONTROL).first(), grantSet: [
                 p_grant_repository.findByRestResourceName("UpdateProfileWithoutPhone").first()
@@ -130,15 +133,19 @@ class G03_ScopeTypeGenerator {
         ]))
 
         l_entity_set.add(new ScopeType(scopeName: "Customer Onboarding", accessor: p_accessor_repository.find_accessor_by_name("Scope: Any LMN", T_auth_grant_base_4_const.GC_ACCESSOR_TYPE_SCOPE_CONTROL).first(), grantSet: [
-                p_grant_repository.findByRestResourceName("AccountCreation").first(),
+                p_grant_repository.findByRestResourceName("AddressLookup").first(),
+                p_grant_repository.findByRestResourceName("RetrieveProductWallets").first(),
+                p_grant_repository.findByRestResourceName("GetProductParametersEnhanced").first(),
+                p_grant_repository.findByRestResourceName("AccountCreationWithKYC").first(),
                 p_grant_repository.findByRestResourceName("ValidateIDDocument").first(),
                 p_grant_repository.findByRestResourceName("CheckIDDocumentValidation").first(),
-                p_grant_repository.findByRestResourceName("GetFee").first(),
-                p_grant_repository.findByRestResourceNameAndValidationModuleName("FXRateSearch", "NA").first(),
+                p_grant_repository.findByRestResourceName("GetFees").first(),
+                p_grant_repository.findByRestResourceName("FXRateSearchEnhanced").first(),
                 p_grant_repository.findByRestResourceName("ValidateLoad").first(),
                 p_grant_repository.findByRestResourceName("FundingAmountInquiry").first(),
                 p_grant_repository.findByRestResourceName("CreateEEPaymentRequest").first(),
-                p_grant_repository.findByRestResourceName("UpdateEEPaymentResponse").first()
+                p_grant_repository.findByRestResourceName("UpdateEEPaymentResponse").first(),
+                p_grant_repository.findByRestResourceName("GetProductParameters").first()
         ]))
 
 
